@@ -1,0 +1,302 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+
+const freePrompts = (await getCollection('prompts', ({ data }) =>
+  data.tier === 'free' && data.published !== false
+)).sort((a, b) => a.data.title.localeCompare(b.data.title));
+
+const categories = [...new Set(freePrompts.map(p => p.data.category))].sort();
+---
+
+<Layout
+  title="Free Cybersecurity Prompts — SecureLayer"
+  description="Free tested cybersecurity AI prompts from SecureLayer. Copy and use in any AI assistant."
+>
+  <main>
+
+    <div class="page-hero">
+      <div class="hero-badge">
+        <span class="badge-dot"></span>
+        Free · Tested · Ready to Use
+      </div>
+      <h1>Free Cybersecurity Prompts</h1>
+      <p>
+        Tested by security engineers. Copy, paste into any AI assistant,
+        fill in the <code>[REPLACE]</code> placeholders, and run.
+      </p>
+      <div class="hero-meta">
+        <span id="visible-count">{freePrompts.length}</span> prompt{freePrompts.length !== 1 ? 's' : ''}
+        <span class="sep">·</span>
+        <strong>Free</strong>
+      </div>
+    </div>
+
+    {categories.length > 1 && (
+      <div class="filter-bar">
+        <span class="filter-label">Category:</span>
+        <div class="filter-pills">
+          <button class="pill active" data-filter="all">All</button>
+          {categories.map(cat => (
+            <button class="pill" data-filter={cat}>{cat}</button>
+          ))}
+        </div>
+      </div>
+    )}
+
+    <div class="prompts-grid" id="prompts-grid">
+      {freePrompts.map(prompt => (
+        <div class="card" data-category={prompt.data.category}>
+
+          <div class="card-top">
+            <div class="card-badges">
+              <span class="badge-tier free">Free</span>
+              {prompt.data.tested && (
+                <span class="badge-tested">
+                  <svg width="11" height="11" viewBox="0 0 16 16" fill="none">
+                    <path d="M8 1L2 4v4c0 3.3 2.5 6.4 6 7 3.5-.6 6-3.7 6-7V4L8 1z" fill="#22c55e" opacity=".3"/>
+                    <path d="M6 8l2 2 3-3" stroke="#22c55e" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                  Tested
+                </span>
+              )}
+            </div>
+            <span class="badge-tokens">~{prompt.data.token_estimate} tokens</span>
+          </div>
+
+          <h3 class="card-title">{prompt.data.title}</h3>
+
+          <div class="card-meta">
+            <span class="badge-cat">{prompt.data.category}</span>
+            <span class="badge-expertise">{prompt.data.expertise}</span>
+          </div>
+
+          <div class="card-tags">
+            {prompt.data.tags.slice(0, 3).map(tag => <span class="tag">{tag}</span>)}
+          </div>
+
+          <div class="card-actions">
+            <button class="btn-copy" data-prompt-id={prompt.data.id}>
+              <svg width="13" height="13" viewBox="0 0 16 16" fill="none">
+                <rect x="5" y="5" width="9" height="9" rx="1.5" stroke="currentColor" stroke-width="1.5"/>
+                <path d="M11 5V3.5A1.5 1.5 0 009.5 2H3.5A1.5 1.5 0 002 3.5v6A1.5 1.5 0 003.5 11H5" stroke="currentColor" stroke-width="1.5"/>
+              </svg>
+              Copy
+            </button>
+            <details class="prompt-details">
+              <summary>View prompt</summary>
+              <pre class="prompt-body" id={`prompt-${prompt.data.id}`}>{prompt.body}</pre>
+              <p class="tested-note">Tested on: {prompt.data.tested_on?.join(' · ') ?? 'multiple AI models'}</p>
+            </details>
+          </div>
+
+        </div>
+      ))}
+    </div>
+
+    <div class="contribute-banner">
+      <div class="contribute-inner">
+        <div>
+          <h3>Want to contribute a prompt?</h3>
+          <p>Open a pull request — every submission goes through automated schema validation and a human security review before publishing.</p>
+        </div>
+        <a href="https://github.com" class="btn-contribute" target="_blank" rel="noopener noreferrer">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+            <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/>
+          </svg>
+          Contribute on GitHub
+        </a>
+      </div>
+    </div>
+
+  </main>
+</Layout>
+
+<script>
+  // Filter pills
+  const pills = document.querySelectorAll<HTMLButtonElement>('.pill');
+  const cards = document.querySelectorAll<HTMLElement>('.card');
+  const countEl = document.getElementById('visible-count');
+
+  pills.forEach(pill => {
+    pill.addEventListener('click', () => {
+      pills.forEach(p => p.classList.remove('active'));
+      pill.classList.add('active');
+      const filter = pill.dataset.filter ?? 'all';
+      let visible = 0;
+      cards.forEach(card => {
+        const show = filter === 'all' || card.dataset.category === filter;
+        card.style.display = show ? '' : 'none';
+        if (show) visible++;
+      });
+      if (countEl) countEl.textContent = String(visible);
+    });
+  });
+</script>
+
+<style>
+  main { padding-top: 64px; }
+
+  .page-hero {
+    max-width: 640px;
+    margin: 0 auto;
+    padding: 72px 24px 48px;
+    text-align: center;
+  }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(34,197,94,0.1); border: 1px solid rgba(34,197,94,0.2);
+    color: var(--green); font-size: 0.7rem; font-weight: 600;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    padding: 5px 14px; border-radius: 100px; margin-bottom: 24px;
+  }
+  .badge-dot { width: 6px; height: 6px; background: var(--green); border-radius: 50%; animation: pulse 2s infinite; }
+  @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+  .page-hero h1 { font-family: var(--font-head); font-size: clamp(1.6rem, 4vw, 2.4rem); font-weight: 700; color: var(--white); margin-bottom: 12px; }
+  .page-hero p { color: var(--muted); font-size: 0.95rem; margin-bottom: 20px; }
+  .page-hero code { font-family: var(--font-mono); font-size: 0.85em; background: var(--bg3); border: 1px solid var(--border); padding: 1px 5px; border-radius: 4px; color: var(--cyan); }
+  .hero-meta { font-size: 0.8rem; color: var(--muted); }
+  .hero-meta .sep { margin: 0 6px; opacity: 0.4; }
+  .hero-meta strong { color: var(--green); }
+
+  /* FILTER */
+  .filter-bar {
+    max-width: 1100px; margin: 0 auto 28px; padding: 0 24px;
+    display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+  }
+  .filter-label { font-size: 0.78rem; color: var(--muted); font-weight: 500; white-space: nowrap; }
+  .filter-pills { display: flex; gap: 8px; flex-wrap: wrap; }
+  .pill {
+    background: var(--bg2); border: 1px solid var(--border); color: var(--muted);
+    font-size: 0.75rem; font-weight: 500; padding: 4px 13px; border-radius: 100px;
+    cursor: pointer; transition: all 0.15s; font-family: var(--font);
+  }
+  .pill:hover { border-color: var(--cyan); color: var(--text); }
+  .pill.active { background: var(--cyan-dim); border-color: rgba(56,189,248,0.4); color: var(--cyan); }
+
+  /* GRID */
+  .prompts-grid {
+    max-width: 1100px; margin: 0 auto;
+    padding: 0 24px 80px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 16px;
+    align-items: start;
+  }
+
+  /* CARD */
+  .card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    transition: border-color 0.2s;
+  }
+  .card:hover { border-color: rgba(56,189,248,0.25); }
+
+  .card-top { display: flex; align-items: center; justify-content: space-between; }
+  .card-badges { display: flex; align-items: center; gap: 6px; }
+
+  .badge-tier.free {
+    background: rgba(34,197,94,0.12); color: var(--green);
+    border: 1px solid rgba(34,197,94,0.2);
+    font-size: 0.65rem; font-weight: 700; letter-spacing: 0.06em;
+    text-transform: uppercase; padding: 2px 8px; border-radius: 100px;
+  }
+  .badge-tested {
+    display: inline-flex; align-items: center; gap: 3px;
+    font-size: 0.68rem; color: var(--green); font-weight: 500;
+  }
+  .badge-tokens {
+    font-size: 0.68rem; color: var(--muted);
+    background: var(--bg3); border: 1px solid var(--border2);
+    padding: 2px 7px; border-radius: 5px;
+  }
+
+  .card-title {
+    font-family: var(--font-head); font-size: 0.9rem;
+    font-weight: 600; color: var(--white); line-height: 1.4;
+  }
+
+  .card-meta { display: flex; align-items: center; gap: 6px; }
+  .badge-cat {
+    font-size: 0.68rem; color: var(--cyan); background: var(--cyan-dim);
+    border: 1px solid rgba(56,189,248,0.15); padding: 2px 7px; border-radius: 5px;
+  }
+  .badge-expertise {
+    font-size: 0.68rem; color: var(--purple);
+    background: rgba(167,139,250,0.08); border: 1px solid rgba(167,139,250,0.15);
+    padding: 2px 7px; border-radius: 5px;
+  }
+
+  .card-tags { display: flex; gap: 5px; flex-wrap: wrap; }
+  .tag {
+    font-size: 0.65rem; color: var(--muted);
+    background: var(--bg3); border: 1px solid var(--border2);
+    padding: 1px 7px; border-radius: 4px;
+  }
+
+  /* ACTIONS */
+  .card-actions { display: flex; flex-direction: column; gap: 0; margin-top: 4px; }
+
+  .btn-copy {
+    display: inline-flex; align-items: center; gap: 6px;
+    align-self: flex-start;
+    background: var(--cyan-dim); border: 1px solid rgba(56,189,248,0.25);
+    color: var(--cyan); font-size: 0.78rem; font-weight: 500;
+    padding: 6px 13px; border-radius: 7px; cursor: pointer;
+    transition: background 0.2s; font-family: var(--font); margin-bottom: 8px;
+  }
+  .btn-copy:hover { background: rgba(56,189,248,0.2); }
+
+  /* EXPAND */
+  .prompt-details { border-top: 1px solid var(--border); padding-top: 10px; }
+  .prompt-details summary {
+    font-size: 0.75rem; color: var(--muted); cursor: pointer;
+    list-style: none; display: flex; align-items: center; gap: 5px;
+    user-select: none; transition: color 0.15s;
+  }
+  .prompt-details summary::-webkit-details-marker { display: none; }
+  .prompt-details summary::before {
+    content: '▶';
+    font-size: 0.55rem;
+    transition: transform 0.15s;
+    display: inline-block;
+  }
+  .prompt-details[open] summary::before { transform: rotate(90deg); }
+  .prompt-details summary:hover { color: var(--text); }
+  .prompt-details[open] summary { color: var(--text); margin-bottom: 12px; }
+
+  .prompt-body {
+    font-family: var(--font-mono); font-size: 0.75rem; line-height: 1.7;
+    color: #cbd5e1; background: #0a0f1a; padding: 14px;
+    border-radius: 8px; border: 1px solid var(--border);
+    overflow-x: auto; white-space: pre-wrap; word-break: break-word;
+    margin-bottom: 8px;
+  }
+  .tested-note { font-size: 0.7rem; color: var(--muted); }
+
+  /* CONTRIBUTE */
+  .contribute-banner {
+    background: var(--bg2); border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border); padding: 48px 24px;
+  }
+  .contribute-inner {
+    max-width: 1100px; margin: 0 auto;
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 32px; flex-wrap: wrap;
+  }
+  .contribute-inner h3 { font-family: var(--font-head); font-size: 1rem; color: var(--white); margin-bottom: 6px; }
+  .contribute-inner p { color: var(--muted); font-size: 0.875rem; max-width: 500px; }
+  .btn-contribute {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--bg3); border: 1px solid var(--border);
+    color: var(--text); font-size: 0.875rem; font-weight: 500;
+    padding: 10px 18px; border-radius: 9px; text-decoration: none;
+    white-space: nowrap; transition: border-color 0.2s, color 0.2s;
+  }
+  .btn-contribute:hover { border-color: var(--cyan); color: var(--cyan); }
+</style>

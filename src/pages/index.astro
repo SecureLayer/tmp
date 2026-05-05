@@ -1,0 +1,335 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+
+const freePrompts = (await getCollection('prompts', ({ data }) =>
+  data.tier === 'free' && data.published !== false
+));
+
+const plans = [
+  {
+    name: "Basic Protection",
+    price: "Free",
+    sub: "Start secure, today",
+    highlight: false,
+    features: [
+      "HTTP security headers hardening",
+      "HTTPS & TLS configuration",
+      "Basic OWASP Top 10 coverage",
+      "Cookie security flags",
+      "Community tested prompts",
+    ],
+    cta: "Free Prompts",
+    ctaHref: "/prompts",
+  },
+  {
+    name: "Tailored Protection",
+    price: "Custom",
+    sub: "contact us",
+    highlight: true,
+    features: [
+      "Everything in Basic",
+      "Full OWASP Top 10 prompt suite",
+      "Threat modeling & attack surface review",
+      "Cloud security (AWS / GCP / Azure)",
+      "Token-optimized for every AI model",
+      "Expertise levels: beginner → expert",
+      "Monthly tested prompt updates",
+      "Prompts built for your exact stack",
+      "Compliance alignment (SOC2, ISO 27001, GDPR)",
+      "Dedicated security prompt review",
+      "SLA-backed delivery",
+    ],
+    cta: "Contact Us",
+    ctaHref: "#get-started",
+  },
+];
+---
+
+<Layout
+  title="SecureLayer — Cybersecurity AI Prompts"
+  description="SecureLayer delivers precision cybersecurity prompts for AI assistants — optimised for token consumption, expertise level, and certification objectives."
+>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-badge">
+      <span class="badge-dot"></span>
+      Cybersecurity Prompt Engineering
+    </div>
+    <h1>Make Sure Your AI Assistant<br /><span>Is Really Implementing</span><br />the Right Security Practices</h1>
+    <p class="hero-sub">
+      Generic AI responses leave critical security gaps.
+      SecureLayer prompts are <strong>purpose-built for cybersecurity</strong>, tested by security engineers,
+      and optimised for token efficiency, expertise level, and certification objectives.
+    </p>
+    <div class="hero-actions">
+      <a href="/prompts" class="btn-primary">Try Free Prompts</a>
+      <a href="#pricing" class="btn-ghost">View Packages</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat">
+        <span>Tested</span>
+        <p>on GPT-4o & Claude</p>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat">
+        <span>40%</span>
+        <p>fewer tokens used</p>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat">
+        <span>OWASP</span>
+        <p>Top 10 aligned</p>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat">
+        <span>100+</span>
+        <p>cert paths covered</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- TRUST BANNER -->
+  <div class="trust-banner">
+    <div class="trust-inner">
+      <div class="trust-item">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 1L2 4v4c0 3.3 2.5 6.4 6 7 3.5-.6 6-3.7 6-7V4L8 1z" fill="#22c55e" opacity=".3"/><path d="M6 8l2 2 3-3" stroke="#22c55e" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        All prompts validated by human security engineers
+      </div>
+      <div class="trust-sep">·</div>
+      <div class="trust-item">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6" stroke="#38bdf8" stroke-width="1.5"/><path d="M8 5v3l2 2" stroke="#38bdf8" stroke-width="1.5" stroke-linecap="round"/></svg>
+        Tested on real AI models before publishing
+      </div>
+      <div class="trust-sep">·</div>
+      <div class="trust-item">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="2" y="3" width="12" height="10" rx="2" stroke="#a78bfa" stroke-width="1.5"/><path d="M5 7h6M5 10h4" stroke="#a78bfa" stroke-width="1.5" stroke-linecap="round"/></svg>
+        Token-optimised — no filler, no wasted credits
+      </div>
+    </div>
+  </div>
+
+  <!-- FEATURES -->
+  <section class="features" id="features">
+    <div class="section-label">Why SecureLayer</div>
+    <h2>Your AI Doesn't Know Enough About Security — Yet</h2>
+    <p class="section-sub">Without the right prompt, AI assistants give vague, incomplete, or outright wrong security advice. SecureLayer fixes that.</p>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon">🔒</div>
+        <h3>Cybersecurity-Specific</h3>
+        <p>Every prompt is written by security engineers. Coverage spans OWASP Top 10, network hardening, cloud security, secure coding, and compliance frameworks.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">⚡</div>
+        <h3>Token-Optimised</h3>
+        <p>Prompts are engineered to extract maximum security depth with minimum token spend — so your AI budget goes further without sacrificing accuracy.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🎯</div>
+        <h3>Expertise-Tuned</h3>
+        <p>Junior dev or seasoned pentester — prompts adapt in depth, vocabulary, and assumed knowledge. No wasted context, no condescending explanations.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FREE PROMPTS PREVIEW -->
+  <section class="free-prompts-preview" id="free-prompts">
+    <div class="section-label">Free Prompts</div>
+    <h2>Start Securing Your Site — For Free</h2>
+    <p class="section-sub">Tested prompts, ready to copy. No account required.</p>
+    <div class="preview-cards">
+      {freePrompts.map(prompt => (
+        <div class="preview-card">
+          <div class="preview-meta">
+            <span class="badge-tier free">Free</span>
+            <span class="badge-tested">
+              <svg width="12" height="12" viewBox="0 0 16 16" fill="none"><path d="M8 1L2 4v4c0 3.3 2.5 6.4 6 7 3.5-.6 6-3.7 6-7V4L8 1z" fill="#22c55e" opacity=".3"/><path d="M6 8l2 2 3-3" stroke="#22c55e" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              Tested
+            </span>
+            <span class="badge-tokens">~{prompt.data.token_estimate} tokens</span>
+          </div>
+          <h3>{prompt.data.title}</h3>
+          <div class="preview-tags">
+            {prompt.data.tags.slice(0, 4).map(tag => <span class="tag">{tag}</span>)}
+          </div>
+        </div>
+      ))}
+    </div>
+    <a href="/prompts" class="btn-view-all">
+      View All Free Prompts
+      <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </a>
+  </section>
+
+  <!-- PRICING -->
+  <section class="pricing" id="pricing">
+    <div class="section-label">Packages</div>
+    <h2>Choose Your Protection Level</h2>
+    <p class="section-sub">From essential web hardening to enterprise-grade tailored security prompts.</p>
+    <div class="pricing-grid">
+      {plans.map(plan => (
+        <div class={`plan-card${plan.highlight ? ' plan-highlight' : ''}`}>
+          {plan.badge && <div class="plan-badge">{plan.badge}</div>}
+          <div class="plan-header">
+            <h3>{plan.name}</h3>
+            <div class="plan-price">
+              <span class="price-value">{plan.price}</span>
+              {plan.sub && <span class="price-sub">{plan.sub}</span>}
+            </div>
+          </div>
+          <ul class="plan-features">
+            {plan.features.map(f => (
+              <li>
+                <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8l4 4 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                {f}
+              </li>
+            ))}
+          </ul>
+          <a href={plan.ctaHref} class={`plan-cta${plan.highlight ? ' plan-cta-highlight' : ''}`}>{plan.cta}</a>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section class="how" id="how">
+    <div class="section-label">Process</div>
+    <h2>From Prompt to Secure Implementation</h2>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">01</div>
+        <div class="step-content">
+          <h3>Pick your prompt</h3>
+          <p>Choose a tested security prompt matched to your expertise level, stack, and objective — web hardening, cloud security, OWASP audit, or cert prep.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">02</div>
+        <div class="step-content">
+          <h3>Fill in your context</h3>
+          <p>Replace the <code>[REPLACE]</code> placeholders with your stack, framework, and specific requirements. The prompt already knows what to ask.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">03</div>
+        <div class="step-content">
+          <h3>Run it — get real security</h3>
+          <p>Paste into any AI assistant. Get precise, actionable security output — not generic advice. Verified by our engineers before it ever reached you.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta" id="get-started">
+    <h2>Stop Trusting Untested AI Security Advice</h2>
+    <p>Join developers and security teams who use SecureLayer prompts to get real, verified security output from every AI interaction.</p>
+    <form class="cta-form" onsubmit="return false;">
+      <input type="email" placeholder="Enter your email address" required />
+      <button type="submit">Get Early Access</button>
+    </form>
+    <p class="cta-note">Free tier available. No credit card required.</p>
+  </section>
+
+</Layout>
+
+<style>
+  /* HERO */
+  .hero { max-width: 860px; margin: 0 auto; padding: 140px 24px 80px; text-align: center; }
+  .hero-badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(34,197,94,0.1); border: 1px solid rgba(34,197,94,0.2); color: var(--green); font-size: 0.72rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; padding: 6px 16px; border-radius: 100px; margin-bottom: 32px; }
+  .badge-dot { width: 7px; height: 7px; background: var(--green); border-radius: 50%; animation: pulse 2s infinite; }
+  @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+  .hero h1 { font-family: var(--font-head); font-size: clamp(2rem, 5.5vw, 3.6rem); font-weight: 700; color: var(--white); line-height: 1.18; margin-bottom: 24px; }
+  .hero h1 span { color: var(--cyan); }
+  .hero-sub { font-size: 1.1rem; color: var(--muted); max-width: 640px; margin: 0 auto 40px; }
+  .hero-sub strong { color: var(--text); }
+  .hero-actions { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; margin-bottom: 64px; }
+  .btn-primary { background: var(--cyan); color: #080c14; padding: 14px 32px; border-radius: 10px; font-weight: 700; font-size: 1rem; text-decoration: none; transition: opacity 0.2s; }
+  .btn-primary:hover { opacity: 0.88; }
+  .btn-ghost { border: 1px solid var(--border); color: var(--text); padding: 14px 32px; border-radius: 10px; font-size: 1rem; text-decoration: none; transition: border-color 0.2s, color 0.2s; }
+  .btn-ghost:hover { border-color: var(--cyan); color: var(--cyan); }
+  .hero-stats { display: flex; justify-content: center; align-items: center; flex-wrap: wrap; }
+  .stat { padding: 0 32px; text-align: center; }
+  .stat span { display: block; font-family: var(--font-head); font-size: 1.6rem; font-weight: 700; color: var(--cyan); }
+  .stat p { font-size: 0.78rem; color: var(--muted); margin-top: 4px; }
+  .stat-divider { width: 1px; height: 44px; background: var(--border); }
+
+  /* TRUST BANNER */
+  .trust-banner { background: rgba(34,197,94,0.05); border-top: 1px solid rgba(34,197,94,0.1); border-bottom: 1px solid rgba(34,197,94,0.1); padding: 14px 24px; }
+  .trust-inner { max-width: 900px; margin: 0 auto; display: flex; align-items: center; justify-content: center; gap: 16px; flex-wrap: wrap; }
+  .trust-item { display: flex; align-items: center; gap: 8px; font-size: 0.8rem; color: var(--muted); }
+  .trust-sep { color: var(--border); font-size: 1.2rem; }
+
+  /* FEATURES */
+  .features { max-width: 1100px; margin: 0 auto; padding: 100px 24px; text-align: center; }
+  .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; }
+  .feature-card { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius); padding: 28px; text-align: left; transition: border-color 0.2s, transform 0.2s; }
+  .feature-card:hover { border-color: var(--cyan); transform: translateY(-3px); }
+  .feature-icon { font-size: 1.6rem; margin-bottom: 16px; }
+  .feature-card h3 { font-family: var(--font-head); font-size: 1rem; color: var(--white); margin-bottom: 10px; }
+  .feature-card p { font-size: 0.875rem; color: var(--muted); line-height: 1.65; }
+
+  /* FREE PROMPTS PREVIEW */
+  .free-prompts-preview { max-width: 1100px; margin: 0 auto; padding: 80px 24px; text-align: center; }
+  .preview-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin-bottom: 32px; }
+  .preview-card { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius); padding: 24px; text-align: left; transition: border-color 0.2s; }
+  .preview-card:hover { border-color: rgba(34,197,94,0.3); }
+  .preview-meta { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 14px; }
+  .badge-tier.free { background: rgba(34,197,94,0.12); color: var(--green); border: 1px solid rgba(34,197,94,0.2); font-size: 0.7rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; padding: 3px 10px; border-radius: 100px; }
+  .badge-tested { display: inline-flex; align-items: center; gap: 4px; font-size: 0.72rem; color: var(--green); font-weight: 500; }
+  .badge-tokens { font-size: 0.72rem; color: var(--muted); background: var(--bg); border: 1px solid var(--border2); padding: 2px 8px; border-radius: 6px; }
+  .preview-card h3 { font-family: var(--font-head); font-size: 0.95rem; color: var(--white); margin-bottom: 14px; line-height: 1.4; }
+  .preview-tags { display: flex; gap: 6px; flex-wrap: wrap; }
+  .tag { font-size: 0.68rem; color: var(--muted); background: var(--bg3); border: 1px solid var(--border2); padding: 2px 8px; border-radius: 4px; }
+  .btn-view-all { display: inline-flex; align-items: center; gap: 8px; background: var(--bg2); border: 1px solid var(--border); color: var(--text); padding: 12px 24px; border-radius: 10px; font-size: 0.9rem; font-weight: 500; text-decoration: none; transition: border-color 0.2s, color 0.2s; }
+  .btn-view-all:hover { border-color: var(--cyan); color: var(--cyan); }
+
+  /* PRICING */
+  .pricing { max-width: 1100px; margin: 0 auto; padding: 100px 24px; text-align: center; }
+  .pricing-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 420px)); gap: 20px; margin-top: 60px; justify-content: center; }
+  @media (max-width: 720px) { .pricing-grid { grid-template-columns: 1fr; } }
+  .plan-card { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius); padding: 32px 28px; text-align: left; position: relative; display: flex; flex-direction: column; transition: border-color 0.2s; }
+  .plan-card:hover { border-color: rgba(99,179,237,0.3); }
+  .plan-highlight { border-color: var(--cyan); background: linear-gradient(145deg, rgba(56,189,248,0.06) 0%, var(--bg2) 60%); }
+  .plan-badge { position: absolute; top: -12px; left: 50%; transform: translateX(-50%); background: var(--cyan); color: #080c14; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; padding: 4px 14px; border-radius: 100px; white-space: nowrap; }
+  .plan-header { margin-bottom: 24px; }
+  .plan-header h3 { font-family: var(--font-head); font-size: 1.1rem; color: var(--white); margin-bottom: 12px; }
+  .plan-price { display: flex; align-items: baseline; gap: 6px; }
+  .price-value { font-family: var(--font-head); font-size: 2rem; font-weight: 700; color: var(--cyan); }
+  .price-sub { font-size: 0.8rem; color: var(--muted); }
+  .plan-features { list-style: none; display: flex; flex-direction: column; gap: 12px; flex: 1; margin-bottom: 28px; }
+  .plan-features li { display: flex; align-items: flex-start; gap: 10px; font-size: 0.875rem; color: var(--muted); }
+  .plan-features li svg { margin-top: 3px; flex-shrink: 0; color: var(--green); }
+  .plan-cta { display: block; text-align: center; padding: 13px 24px; border-radius: 10px; font-size: 0.9rem; font-weight: 600; text-decoration: none; border: 1px solid var(--border); color: var(--text); transition: border-color 0.2s, color 0.2s; }
+  .plan-cta:hover { border-color: var(--cyan); color: var(--cyan); }
+  .plan-cta-highlight { background: var(--cyan); color: #080c14; border-color: var(--cyan); }
+  .plan-cta-highlight:hover { opacity: 0.88; color: #080c14; border-color: var(--cyan); }
+
+  /* HOW */
+  .how { background: var(--bg2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 100px 24px; text-align: center; }
+  .how h2, .how .section-label { max-width: 1100px; margin-left: auto; margin-right: auto; }
+  .steps { display: flex; flex-direction: column; max-width: 680px; margin: 56px auto 0; }
+  .step { display: flex; gap: 32px; align-items: flex-start; padding: 28px 0; border-bottom: 1px solid var(--border); text-align: left; }
+  .step:last-child { border-bottom: none; }
+  .step-num { font-family: var(--font-head); font-size: 1.8rem; font-weight: 700; color: var(--cyan); opacity: 0.4; min-width: 52px; padding-top: 4px; }
+  .step-content h3 { font-family: var(--font-head); font-size: 1rem; color: var(--white); margin-bottom: 8px; }
+  .step-content p { color: var(--muted); font-size: 0.9rem; }
+  .step-content code { font-family: var(--font-mono); font-size: 0.82rem; background: var(--bg3); border: 1px solid var(--border); padding: 1px 6px; border-radius: 4px; color: var(--cyan); }
+
+  /* CTA */
+  .cta { background: var(--bg2); border-top: 1px solid var(--border); padding: 100px 24px; text-align: center; }
+  .cta p { color: var(--muted); max-width: 480px; margin: 16px auto 40px; }
+  .cta-form { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; max-width: 520px; margin: 0 auto; }
+  .cta-form input { flex: 1; min-width: 240px; background: var(--bg3); border: 1px solid var(--border); border-radius: 10px; padding: 13px 20px; color: var(--text); font-size: 0.95rem; outline: none; transition: border-color 0.2s; font-family: var(--font); }
+  .cta-form input:focus { border-color: var(--cyan); }
+  .cta-form input::placeholder { color: var(--muted); }
+  .cta-form button { background: var(--cyan); color: #080c14; border: none; border-radius: 10px; padding: 13px 28px; font-size: 0.95rem; font-weight: 700; cursor: pointer; transition: opacity 0.2s; font-family: var(--font); }
+  .cta-form button:hover { opacity: 0.88; }
+  .cta-note { font-size: 0.78rem; color: var(--muted); margin-top: 16px; }
+
+  @media (max-width: 640px) {
+    .stat { padding: 0 16px; }
+  }
+</style>
