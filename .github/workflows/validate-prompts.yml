@@ -1,0 +1,97 @@
+name: Validate Prompts
+
+on:
+  pull_request:
+    paths:
+      - 'src/content/prompts/**'
+    branches:
+      - main
+
+# Minimal permissions — read-only except for PR comments
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  validate:
+    name: Schema & Security Check
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci --ignore-scripts
+
+      - name: Scan for secrets / forbidden patterns
+        run: |
+          echo "Scanning for secrets in prompt files..."
+          if grep -rEn \
+            "(api[_-]?key\s*[:=]\s*['\"][a-zA-Z0-9_\-]{16,}|password\s*[:=]\s*['\"][^'\"]{6,}|-----BEGIN (RSA |EC )?PRIVATE KEY-----|ghp_[a-zA-Z0-9]{36}|sk-[a-zA-Z0-9]{32,})" \
+            src/content/prompts/; then
+            echo "::error::Potential secret found in prompt file(s). Remove before merging."
+            exit 1
+          fi
+          echo "No secrets detected."
+
+      - name: Run local validation script
+        run: node scripts/validate-prompts.mjs
+
+      - name: Build site (validates Zod schema + full compilation)
+        run: npm run build
+
+      - name: Comment success on PR
+        if: success()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            await github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: [
+                '### SecureLayer Prompt Validation',
+                '',
+                '**Status:** All checks passed',
+                '',
+                '- No secrets or forbidden patterns detected',
+                '- Frontmatter schema validated',
+                '- Site build successful',
+                '',
+                'Safe to review and merge.'
+              ].join('\n')
+            });
+
+      - name: Comment failure on PR
+        if: failure()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            await github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: [
+                '### SecureLayer Prompt Validation',
+                '',
+                '**Status:** Validation failed',
+                '',
+                'Check the [Actions log](' + context.serverUrl + '/' + context.repo.owner + '/' + context.repo.repo + '/actions/runs/' + context.runId + ') for details.',
+                '',
+                'Common issues:',
+                '- Missing required frontmatter fields',
+                '- Invalid `tier`, `category`, or `expertise` value',
+                '- `id` is not kebab-case',
+                '- Potential secret detected in content'
+              ].join('\n')
+            });
