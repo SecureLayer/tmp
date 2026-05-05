@@ -4,7 +4,7 @@ dist/
 .astro/
 
 # dependencies
-node_modules/
+# node_modules/
 
 # logs
 npm-debug.log*
@@ -22,3 +22,61 @@ pnpm-debug.log*
 
 # jetbrains setting folder
 .idea/
+
+# Environment variables and secrets
+.env
+.env.local
+.env.*.local
+.env.production
+.secrets
+secrets.json
+
+# API keys and credentials
+.aws/credentials
+.aws/config
+~/.ssh/
+id_rsa
+id_ed25519
+*.pem
+*.key
+*.pfx
+
+# Application secrets
+config/secrets.yml
+config/database.yml
+.credentials
+
+# Private configuration
+private/
+secrets/
+
+# IDE and editor secrets
+.vscode/settings.json
+.idea/misc.xml
+
+# Node.js
+node_modules/
+.npmrc
+.npm-debug.log
+
+# Python
+.venv/
+venv/
+pip.log
+
+# Ruby/Rails
+config/master.key
+.ruby-version
+
+# Docker
+.dockercfg
+.docker/config.json
+
+# Cloud provider credentials
+gcp-key.json
+service-account-key.json
+kubeconfig
+
+# Database backups
+*.sql
+*.dump
