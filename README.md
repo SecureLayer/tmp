@@ -1,43 +1,62 @@
-# Astro Starter Kit: Minimal
+# SecureLayer
+
+**Precision cybersecurity prompts for AI assistants.**
+
+SecureLayer provides purpose-built, engineer-tested security prompts for Claude, GPT-4o, Gemini, and other AI models. Every prompt is optimised for token efficiency, tuned to your expertise level, and aligned with recognised security standards — OWASP Top 10, cloud hardening, and compliance frameworks including SOC 2, ISO 27001, and GDPR.
+
+**Live site:** [securelayer.co](https://securelayer.co)
+
+---
+
+## Getting started
+
+No installation required to use the prompts. Browse and copy free prompts at [securelayer.co/free-cybersecurity-ai-prompts](https://securelayer.co/free-cybersecurity-ai-prompts).
+
+To run the site locally:
 
 ```sh
-npm create astro@latest -- --template minimal
+# Prerequisites: Node.js >= 22.12.0
+npm install
+npm run dev        # dev server at http://localhost:4321
+npm run build      # production build → ./dist/
+npm run preview    # preview the production build locally
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+---
 
-## 🚀 Project Structure
+## Testing
 
-Inside of your Astro project, you'll see the following folders and files:
-
-```text
-/
-├── public/
-├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
+```sh
+npm run validate-prompts   # schema validation + secret scan on all prompt files
+npm run build              # full Astro build — also validates Zod schema
 ```
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+CI runs both checks automatically on every pull request that touches `src/content/prompts/`.
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+---
 
-Any static assets, like images, can be placed in the `public/` directory.
+## Versioning
 
-## 🧞 Commands
+This project uses [Calendar Versioning](https://calver.org/) (`YYYY.MM.PATCH`). Releases are tagged in git and documented in [CHANGELOG.md](CHANGELOG.md).
 
-All commands are run from the root of the project, from a terminal:
+---
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+## Feedback and bug reports
 
-## 👀 Want to learn more?
+Open an issue on GitHub. All reports are acknowledged within 14 days.
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+To report a security vulnerability privately, see [SECURITY.md](SECURITY.md).
+
+---
+
+## Contributing
+
+Contributions are welcome — new prompts, prompt improvements, site fixes, and CI improvements.
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for submission requirements and the prompt review process.
+
+---
+
+## License
+
+[AGPL-3.0-only](LICENSE) © 2026 SecureLayer
