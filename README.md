@@ -1,3 +1,5 @@
+[![OpenSSF Baseline](https://www.bestpractices.dev/projects/11681/baseline)](https://www.bestpractices.dev/projects/11681)
+
 # SecureLayer
 
 **Precision cybersecurity prompts for AI assistants.**

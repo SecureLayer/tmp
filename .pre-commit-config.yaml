@@ -8,7 +8,7 @@ repos:
         entry: trufflehog filesystem .
         language: python
         types: [python]
-        stages: [commit]
+        stages: [pre-commit]
 
   # Detect secrets using detect-secrets
   - repo: https://github.com/Yelp/detect-secrets
