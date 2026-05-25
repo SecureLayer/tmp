@@ -6,6 +6,17 @@ const freePrompts = (await getCollection('prompts', ({ data }) =>
   data.tier === 'free' && data.published !== false
 ));
 
+const latestPosts = (await getCollection('posts', ({ data }) => data.published !== false))
+  .sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime())
+  .slice(0, 2);
+
+const categoryLabel: Record<string, string> = {
+  'case-study': 'Case Study',
+  'guide': 'Guide',
+  'tutorial': 'Tutorial',
+  'analysis': 'Analysis',
+};
+
 const plans = [
   {
     name: "Basic Protection",
@@ -18,6 +29,7 @@ const plans = [
       "Basic OWASP Top 10 coverage",
       "Cookie security flags",
       "Community tested prompts",
+      "Instant GitHub repository security assessment",
     ],
     cta: "Free Prompts",
     ctaHref: "/free-cybersecurity-ai-prompts",
@@ -44,25 +56,24 @@ const plans = [
 ---
 
 <Layout
-  title="SecureLayer — Cybersecurity AI Prompts"
-  description="SecureLayer delivers precision cybersecurity prompts for AI assistants — optimised for token consumption, expertise level, and certification objectives."
+  title="SecureLayer — AI Cybersecurity Tools & Prompts"
+  description="SecureLayer delivers AI-powered cybersecurity tools — precision prompts and instant GitHub security assessments, built and tested by security engineers."
 >
 
   <!-- HERO -->
   <section class="hero">
     <div class="hero-badge">
       <span class="badge-dot"></span>
-      Cybersecurity Prompt Engineering
+      AI Security Tools
     </div>
     <h1>Make Sure Your AI Assistant<br /><span>Is Really Implementing</span><br />the Right Security Practices</h1>
     <p class="hero-sub">
       Generic AI responses leave critical security gaps.
-      SecureLayer prompts are <strong>purpose-built for cybersecurity</strong>, tested by security engineers,
-      and optimised for token efficiency, expertise level, and certification objectives.
+      SecureLayer delivers <strong>purpose-built cybersecurity prompts</strong> and an <strong>instant GitHub repository audit</strong> — tested by security engineers, ready to use for free.
     </p>
     <div class="hero-actions">
       <a href="/free-cybersecurity-ai-prompts" class="btn-primary">Try Free Prompts</a>
-      <a href="#pricing" class="btn-ghost">View Packages</a>
+      <a href="/github-security-assessment" class="btn-ghost">GitHub Audit →</a>
     </div>
     <div class="hero-stats">
       <div class="stat">
@@ -81,8 +92,8 @@ const plans = [
       </div>
       <div class="stat-divider"></div>
       <div class="stat">
-        <span>100+</span>
-        <p>cert paths covered</p>
+        <span>Free</span>
+        <p>GitHub audit tool</p>
       </div>
     </div>
   </section>
@@ -96,7 +107,7 @@ const plans = [
       </div>
       <div class="trust-sep">·</div>
       <div class="trust-item">
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6" stroke="#38bdf8" stroke-width="1.5"/><path d="M8 5v3l2 2" stroke="#38bdf8" stroke-width="1.5" stroke-linecap="round"/></svg>
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6" stroke="#a78bfa" stroke-width="1.5"/><path d="M8 5v3l2 2" stroke="#a78bfa" stroke-width="1.5" stroke-linecap="round"/></svg>
         Tested on real AI models before publishing
       </div>
       <div class="trust-sep">·</div>
@@ -111,7 +122,7 @@ const plans = [
   <section class="features" id="features">
     <div class="section-label">Why SecureLayer</div>
     <h2>Your AI Doesn't Know Enough About Security — Yet</h2>
-    <p class="section-sub">Without the right prompt, AI assistants give vague, incomplete, or outright wrong security advice. SecureLayer fixes that.</p>
+    <p class="section-sub">Without the right tools, AI assistants give vague, incomplete, or outright wrong security advice. SecureLayer fixes that.</p>
     <div class="features-grid">
       <div class="feature-card">
         <div class="feature-icon">🔒</div>
@@ -128,14 +139,32 @@ const plans = [
         <h3>Expertise-Tuned</h3>
         <p>Junior dev or seasoned pentester — prompts adapt in depth, vocabulary, and assumed knowledge. No wasted context, no condescending explanations.</p>
       </div>
+      <div class="feature-card">
+        <div class="feature-icon">🔍</div>
+        <h3>Instant GitHub Audit</h3>
+        <p>Paste any public GitHub repo and get a security score in seconds. Checks security policy, Dependabot, CI/CD, activity, license, and archive status — free, no login needed.</p>
+      </div>
     </div>
   </section>
 
-  <!-- FREE PROMPTS PREVIEW -->
+  <!-- FREE TOOLS PREVIEW -->
   <section class="free-prompts-preview" id="free-prompts">
-    <div class="section-label">Free Prompts</div>
-    <h2>Start Securing Your Site — For Free</h2>
-    <p class="section-sub">Tested prompts, ready to copy. No account required.</p>
+    <div class="section-label">Free Tools</div>
+    <h2>Start Securing — For Free</h2>
+    <p class="section-sub">Two free security tools. No account, no login required.</p>
+    <a href="/github-security-assessment" class="github-tool-card">
+      <div class="github-tool-left">
+        <div class="github-tool-icon">
+          <svg width="22" height="22" viewBox="0 0 16 16" fill="none"><path d="M8 1L2 4v4c0 3.3 2.5 6.4 6 7 3.5-.6 6-3.7 6-7V4L8 1z" fill="rgba(167,139,250,.18)"/><path d="M6 8l2 2 3-3" stroke="#a78bfa" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div>
+          <div class="github-tool-label">GitHub Security Assessment</div>
+          <div class="github-tool-desc">Instant repo audit — security policy, Dependabot, CI/CD, license & more. Scored A–F.</div>
+        </div>
+      </div>
+      <div class="github-tool-cta">Try it →</div>
+    </a>
+    <div class="section-label" style="margin-top:48px;margin-bottom:8px;">Free Prompts</div>
     <div class="preview-cards">
       {freePrompts.map(prompt => (
         <div class="preview-card">
@@ -156,6 +185,30 @@ const plans = [
     </div>
     <a href="/free-cybersecurity-ai-prompts" class="btn-view-all">
       View All Free Prompts
+      <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </a>
+  </section>
+
+  <!-- BLOG PREVIEW -->
+  <section class="blog-preview" id="blog">
+    <div class="section-label">From the Blog</div>
+    <h2>Security in Practice</h2>
+    <p class="section-sub">Real tool audits and practical guides — no filler.</p>
+    <div class="blog-grid">
+      {latestPosts.map(post => (
+        <a href={`/blog/${post.id}`} class="blog-card">
+          <div class="blog-card-meta">
+            <span class={`badge-cat cat-${post.data.category}`}>{categoryLabel[post.data.category] ?? post.data.category}</span>
+            <span class="blog-date">{new Date(post.data.date).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}</span>
+          </div>
+          <h3>{post.data.title}</h3>
+          <p>{post.data.description}</p>
+          <span class="blog-read">Read →</span>
+        </a>
+      ))}
+    </div>
+    <a href="/blog" class="btn-view-all" style="margin-top:32px;">
+      All posts
       <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
     </a>
   </section>
@@ -277,8 +330,15 @@ const plans = [
   .feature-card h3 { font-family: var(--font-head); font-size: 1rem; color: var(--white); margin-bottom: 10px; }
   .feature-card p { font-size: 0.875rem; color: var(--muted); line-height: 1.65; }
 
-  /* FREE PROMPTS PREVIEW */
+  /* FREE TOOLS PREVIEW */
   .free-prompts-preview { max-width: 1100px; margin: 0 auto; padding: 80px 24px; text-align: center; }
+  .github-tool-card { display: flex; align-items: center; justify-content: space-between; background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px 24px; margin-bottom: 16px; text-decoration: none; transition: border-color 0.2s, transform 0.2s; gap: 16px; }
+  .github-tool-card:hover { border-color: var(--cyan); transform: translateY(-2px); }
+  .github-tool-left { display: flex; align-items: center; gap: 16px; text-align: left; }
+  .github-tool-icon { width: 40px; height: 40px; background: var(--cyan-dim); border: 1px solid rgba(167,139,250,.2); border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .github-tool-label { font-family: var(--font-head); font-size: 1rem; color: var(--white); margin-bottom: 4px; }
+  .github-tool-desc { font-size: 0.82rem; color: var(--muted); }
+  .github-tool-cta { font-size: 0.85rem; font-weight: 600; color: var(--cyan); white-space: nowrap; flex-shrink: 0; }
   .preview-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin-bottom: 32px; }
   .preview-card { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius); padding: 24px; text-align: left; transition: border-color 0.2s; }
   .preview-card:hover { border-color: rgba(34,197,94,0.3); }
@@ -291,6 +351,22 @@ const plans = [
   .tag { font-size: 0.68rem; color: var(--muted); background: var(--bg3); border: 1px solid var(--border2); padding: 2px 8px; border-radius: 4px; }
   .btn-view-all { display: inline-flex; align-items: center; gap: 8px; background: var(--bg2); border: 1px solid var(--border); color: var(--text); padding: 12px 24px; border-radius: 10px; font-size: 0.9rem; font-weight: 500; text-decoration: none; transition: border-color 0.2s, color 0.2s; }
   .btn-view-all:hover { border-color: var(--cyan); color: var(--cyan); }
+
+  /* BLOG PREVIEW */
+  .blog-preview { max-width: 1100px; margin: 0 auto; padding: 80px 24px; text-align: center; }
+  .blog-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px; margin-bottom: 8px; }
+  .blog-card { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius); padding: 28px; text-align: left; text-decoration: none; display: flex; flex-direction: column; gap: 12px; transition: border-color .2s, transform .2s; }
+  .blog-card:hover { border-color: var(--cyan); transform: translateY(-2px); }
+  .blog-card-meta { display: flex; align-items: center; gap: 10px; }
+  .badge-cat { font-size: .7rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; padding: 3px 10px; border-radius: 100px; }
+  .cat-case-study { background: rgba(167,139,250,.12); color: var(--cyan); border: 1px solid rgba(167,139,250,.2); }
+  .cat-guide { background: rgba(34,197,94,.1); color: var(--green); border: 1px solid rgba(34,197,94,.2); }
+  .cat-tutorial { background: rgba(251,191,36,.08); color: #fbbf24; border: 1px solid rgba(251,191,36,.2); }
+  .cat-analysis { background: rgba(196,181,253,.08); color: var(--purple); border: 1px solid rgba(196,181,253,.15); }
+  .blog-date { font-size: .75rem; color: var(--muted); }
+  .blog-card h3 { font-family: var(--font-head); font-size: 1rem; color: var(--white); line-height: 1.35; }
+  .blog-card p { font-size: .85rem; color: var(--muted); line-height: 1.6; flex: 1; }
+  .blog-read { font-size: .82rem; font-weight: 600; color: var(--cyan); }
 
   /* PRICING */
   .pricing { max-width: 1100px; margin: 0 auto; padding: 100px 24px; text-align: center; }

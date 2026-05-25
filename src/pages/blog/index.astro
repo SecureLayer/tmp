@@ -1,0 +1,75 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+
+const posts = (await getCollection('posts', ({ data }) => data.published !== false))
+  .sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime());
+
+const categoryLabel: Record<string, string> = {
+  'case-study': 'Case Study',
+  'guide': 'Guide',
+  'tutorial': 'Tutorial',
+  'analysis': 'Analysis',
+};
+---
+
+<Layout
+  title="Blog — SecureLayer"
+  description="Security assessments, tool reviews, and practical guides from the SecureLayer team."
+>
+  <section class="blog-hero">
+    <div class="section-label">Blog</div>
+    <h1>Security in Practice</h1>
+    <p class="blog-sub">Real tool audits, practical guides, and security insights — no filler.</p>
+  </section>
+
+  <section class="blog-list">
+    {posts.map(post => {
+      const cat = post.data.category;
+      return (
+        <a href={`/blog/${post.id}`} class="post-card">
+          <div class="post-meta">
+            <span class={`badge-cat cat-${cat}`}>{categoryLabel[cat] ?? cat}</span>
+            <span class="post-date">{new Date(post.data.date).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}</span>
+            {post.data.readingTime && <span class="post-read">{post.data.readingTime} min read</span>}
+          </div>
+          <h2>{post.data.title}</h2>
+          <p class="post-desc">{post.data.description}</p>
+          <div class="post-tags">
+            {post.data.tags.slice(0, 5).map(tag => <span class="tag">{tag}</span>)}
+          </div>
+          <div class="post-arrow">Read →</div>
+        </a>
+      );
+    })}
+  </section>
+</Layout>
+
+<style>
+  .blog-hero { max-width: 860px; margin: 0 auto; padding: 140px 24px 64px; text-align: center; }
+  .blog-hero h1 { font-family: var(--font-head); font-size: clamp(2rem, 5vw, 3rem); font-weight: 700; color: var(--white); margin-bottom: 16px; }
+  .blog-sub { color: var(--muted); font-size: 1.05rem; }
+
+  .blog-list { max-width: 760px; margin: 0 auto; padding: 0 24px 120px; display: flex; flex-direction: column; gap: 16px; }
+
+  .post-card { display: block; background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius); padding: 28px; text-decoration: none; transition: border-color .2s, transform .2s; }
+  .post-card:hover { border-color: var(--cyan); transform: translateY(-2px); }
+
+  .post-meta { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 14px; }
+  .badge-cat { font-size: .7rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; padding: 3px 10px; border-radius: 100px; }
+  .cat-case-study { background: rgba(167,139,250,.12); color: var(--cyan); border: 1px solid rgba(167,139,250,.2); }
+  .cat-guide { background: rgba(34,197,94,.1); color: var(--green); border: 1px solid rgba(34,197,94,.2); }
+  .cat-tutorial { background: rgba(251,191,36,.08); color: #fbbf24; border: 1px solid rgba(251,191,36,.2); }
+  .cat-analysis { background: rgba(196,181,253,.08); color: var(--purple); border: 1px solid rgba(196,181,253,.15); }
+
+  .post-date { font-size: .78rem; color: var(--muted); }
+  .post-read { font-size: .78rem; color: var(--muted); }
+
+  .post-card h2 { font-family: var(--font-head); font-size: 1.15rem; color: var(--white); margin-bottom: 10px; line-height: 1.35; }
+  .post-desc { font-size: .875rem; color: var(--muted); line-height: 1.6; margin-bottom: 16px; }
+
+  .post-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 20px; }
+  .tag { font-size: .68rem; color: var(--muted); background: var(--bg3); border: 1px solid var(--border2); padding: 2px 8px; border-radius: 4px; }
+
+  .post-arrow { font-size: .82rem; font-weight: 600; color: var(--cyan); }
+</style>
