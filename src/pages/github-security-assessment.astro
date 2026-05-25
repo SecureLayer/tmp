@@ -1,470 +1,317 @@
 ---
 import Layout from '../layouts/Layout.astro';
-
-const popularRepos = [
-  { label: "expressjs/express",       desc: "Node.js web framework" },
-  { label: "django/django",           desc: "Python web framework" },
-  { label: "laravel/laravel",         desc: "PHP web framework" },
-  { label: "nodejs/node",             desc: "Node.js runtime" },
-  { label: "projectdiscovery/nuclei", desc: "Security scanner" },
-  { label: "aquasecurity/trivy",      desc: "Vulnerability scanner" },
-  { label: "zaproxy/zaproxy",         desc: "OWASP ZAP proxy" },
-  { label: "gitleaks/gitleaks",       desc: "Secret detection" },
-];
 ---
 
 <Layout
   title="GitHub Security Assessment — SecureLayer"
-  description="Instant security audit for any public GitHub repository. Check security policy, Dependabot, CI/CD, maintenance status, and more."
+  description="Pre-audited open-source repositories scored across 6 security checks. See which tools are safe to install — updated weekly."
 >
   <main>
 
     <div class="page-hero">
-      <div class="section-label">GitHub Security Audit</div>
-      <h1>Instant Security Assessment<br /><span>for Any Public GitHub Repo</span></h1>
+      <div class="section-label">Security Intelligence</div>
+      <h1>Repository Security<br /><span>Assessments</span></h1>
       <p class="hero-sub">
-        Enter any public repository. We check security policy, dependency monitoring, CI/CD pipeline,
-        maintenance status and more — using the GitHub public API, no login required.
+        We audit popular open-source repos across 6 security checks before you install them.
+        Scores are pre-computed — no live API calls, no rate limits.
       </p>
     </div>
 
-    <section class="tool-section">
-      <form class="scan-form" id="scan-form">
-        <div class="input-wrap">
-          <svg class="input-icon" width="16" height="16" viewBox="0 0 24 24" fill="none">
-            <circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2"/>
-            <path d="M20 20l-3-3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-          </svg>
-          <input
-            id="repo-input"
-            type="text"
-            placeholder="owner/repo  or  https://github.com/owner/repo"
-            autocomplete="off"
-            spellcheck="false"
-          />
-        </div>
-        <button type="submit" class="btn-scan" id="btn-scan">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
-            <circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2"/>
-            <path d="M20 20l-3-3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-          </svg>
-          Scan
-        </button>
-      </form>
-
-      <div class="popular-repos">
-        <span class="pop-label">Quick scan:</span>
-        {popularRepos.map(r => (
-          <button class="pop-chip" data-repo={r.label} title={r.desc}>{r.label}</button>
-        ))}
-      </div>
+    <!-- Assessed repos grid -->
+    <section class="assessed-wrap">
+      <div id="assess-status" class="assess-status">Loading assessments…</div>
+      <div id="assess-grid" class="assess-grid" style="display:none"></div>
     </section>
 
-    <div class="error-box" id="error-box" style="display:none">
-      <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-        <circle cx="8" cy="8" r="6" stroke="#f87171" stroke-width="1.5"/>
-        <path d="M8 5v3M8 10v.5" stroke="#f87171" stroke-width="1.5" stroke-linecap="round"/>
-      </svg>
-      <span id="error-msg"></span>
-    </div>
-
-    <section class="results-section" id="results" style="display:none">
-
-      <div class="repo-meta" id="repo-meta"></div>
-
-      <div class="score-row">
-        <div class="score-card">
-          <div class="score-grade" id="score-grade">—</div>
-          <div class="score-label">Security Score</div>
-          <div class="score-value" id="score-value">—/100</div>
-        </div>
-        <div class="score-summary" id="score-summary"></div>
-      </div>
-
-      <div class="checks-grid" id="checks-grid"></div>
-
-      <p class="api-note">
-        <svg width="13" height="13" viewBox="0 0 16 16" fill="none">
-          <circle cx="8" cy="8" r="6" stroke="currentColor" stroke-width="1.5"/>
-          <path d="M8 7v4M8 5.5v.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-        </svg>
-        Checks use the GitHub public API (unauthenticated · 60 req/hr limit). Branch protection and
-        secret scanning require admin access and are not included in this assessment.
-      </p>
+    <!-- Vote for next -->
+    <section class="vote-wrap" id="vote-wrap" style="display:none">
+      <h2>Vote for the next assessment</h2>
+      <p class="vote-desc">Which repo should we audit next? One vote per day — we scan the top-voted repo weekly and publish the full report.</p>
+      <div id="vote-list" class="vote-list"></div>
     </section>
+
+    <p class="assess-note">ⓘ Scores are pre-computed weekly using the GitHub public API. Branch protection and secret scanning require admin access and are not included.</p>
 
   </main>
 </Layout>
 
 <style is:global>
-  main { padding-top: 64px; }
+  /* Wrappers */
+  .assessed-wrap { max-width: 800px; margin: 0 auto; padding: 0 24px 32px; }
+  .assess-status { color: var(--muted); font-size: .875rem; text-align: center; padding: 48px 0; }
+  .assess-grid   { display: flex; flex-direction: column; gap: 12px; }
 
-  .page-hero { max-width: 800px; margin: 0 auto; padding: 80px 24px 48px; text-align: center; }
-  .page-hero h1 { font-family: var(--font-head); font-size: clamp(1.8rem, 4.5vw, 3rem); font-weight: 700; color: var(--white); line-height: 1.2; margin-bottom: 20px; }
-  .page-hero h1 span { color: var(--cyan); }
-  .hero-sub { color: var(--muted); font-size: 1rem; max-width: 580px; margin: 0 auto; line-height: 1.7; }
+  .vote-wrap  { max-width: 800px; margin: 0 auto; padding: 48px 24px 64px; border-top: 1px solid var(--border); }
+  .vote-wrap h2 { font-size: 1.25rem; color: var(--text); margin-bottom: 6px; }
+  .vote-desc  { color: var(--muted); font-size: .875rem; margin-bottom: 24px; }
+  .vote-list  { display: flex; flex-direction: column; gap: 8px; }
 
-  .tool-section { max-width: 760px; margin: 0 auto; padding: 0 24px 40px; }
-  .scan-form { display: flex; gap: 12px; }
-  .input-wrap { flex: 1; position: relative; }
-  .input-icon { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: var(--muted); pointer-events: none; }
-  #repo-input { width: 100%; background: var(--bg2); border: 1px solid var(--border); border-radius: 10px; padding: 13px 16px 13px 40px; color: var(--text); font-size: .95rem; outline: none; transition: border-color .2s; font-family: var(--font-mono); }
-  #repo-input:focus { border-color: var(--cyan); }
-  #repo-input::placeholder { color: var(--muted); font-family: var(--font); }
-  .btn-scan { display: inline-flex; align-items: center; gap: 8px; background: var(--cyan); color: #080c14; border: none; border-radius: 10px; padding: 13px 24px; font-size: .95rem; font-weight: 700; cursor: pointer; white-space: nowrap; font-family: var(--font); transition: opacity .2s; }
-  .btn-scan:hover { opacity: .88; }
-  .btn-scan:disabled { opacity: .5; cursor: not-allowed; }
+  .assess-note { max-width: 800px; margin: 0 auto; padding: 0 24px 64px; color: var(--muted); font-size: .75rem; }
 
-  .popular-repos { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-top: 16px; }
-  .pop-label { font-size: .75rem; color: var(--muted); font-weight: 500; white-space: nowrap; }
-  .pop-chip { background: var(--bg2); border: 1px solid var(--border2); color: var(--muted); font-size: .72rem; font-family: var(--font-mono); padding: 4px 10px; border-radius: 6px; cursor: pointer; transition: border-color .2s, color .2s; }
-  .pop-chip:hover { border-color: var(--cyan); color: var(--cyan); }
+  /* Assessment cards */
+  .assess-card         { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; cursor: pointer; transition: border-color .15s; }
+  .assess-card:hover   { border-color: var(--border2); }
+  .assess-card.expanded { border-color: var(--cyan-dim); }
 
-  .error-box { max-width: 760px; margin: 0 auto 32px; padding: 14px 20px; background: rgba(248,113,113,.06); border: 1px solid rgba(248,113,113,.2); border-radius: 10px; display: flex; align-items: center; gap: 10px; font-size: .875rem; color: #f87171; }
+  .card-header { display: flex; align-items: flex-start; gap: 16px; padding: 16px 20px; }
+  .card-grade  { font-family: var(--font-head); font-size: 1.75rem; font-weight: 700; line-height: 1; min-width: 28px; text-align: center; flex-shrink: 0; margin-top: 2px; }
+  .card-main   { flex: 1; min-width: 0; }
 
-  .results-section { max-width: 760px; margin: 0 auto; padding: 0 24px 80px; }
+  .card-repo        { font-family: var(--font-head); font-size: .9375rem; font-weight: 700; color: var(--cyan); text-decoration: none; }
+  .card-repo:hover  { text-decoration: underline; }
+  .card-chips-row   { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px; }
+  .card-chip        { font-size: .7rem; color: var(--muted); background: var(--bg3); border: 1px solid var(--border); border-radius: 4px; padding: 2px 6px; }
+  .card-desc        { font-size: .8125rem; color: var(--muted); margin-top: 5px; }
 
-  .repo-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 20px; padding: 16px 20px; background: var(--bg2); border: 1px solid var(--border); border-radius: 12px; margin-bottom: 24px; font-size: .85rem; }
-  .meta-chip { color: var(--muted); display: inline-flex; align-items: center; gap: 5px; font-size: .8rem; }
+  .card-right   { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; flex-shrink: 0; }
+  .card-score-val { font-family: var(--font-mono); font-size: .8125rem; color: var(--muted); white-space: nowrap; }
+  .card-dots    { display: flex; gap: 4px; }
+  .card-dot     { width: 8px; height: 8px; border-radius: 50%; }
+  .card-expand  { font-size: .75rem; color: var(--muted); }
 
-  .score-row { display: flex; gap: 20px; margin-bottom: 24px; align-items: stretch; }
-  .score-card { background: var(--bg2); border: 1px solid var(--border); border-radius: 12px; padding: 28px 32px; text-align: center; min-width: 140px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; }
-  .score-grade { font-family: var(--font-head); font-size: 3rem; font-weight: 700; line-height: 1; }
-  .score-label { font-size: .7rem; text-transform: uppercase; letter-spacing: .1em; color: var(--muted); font-weight: 600; }
-  .score-value { font-size: .9rem; color: var(--muted); font-family: var(--font-mono); }
-  .score-summary { flex: 1; background: var(--bg2); border: 1px solid var(--border); border-radius: 12px; padding: 20px 24px; display: flex; flex-direction: column; justify-content: center; gap: 8px; font-size: .875rem; color: var(--muted); line-height: 1.6; }
+  /* Expanded check list */
+  .card-details      { border-top: 1px solid var(--border); }
+  .check-row-sm      { display: flex; align-items: center; gap: 12px; padding: 10px 20px; border-bottom: 1px solid var(--border); font-size: .8125rem; }
+  .check-row-sm:last-child { border-bottom: none; }
+  .check-icon-sm     { font-size: .875rem; min-width: 16px; }
+  .check-row-sm.pass .check-icon-sm { color: #22c55e; }
+  .check-row-sm.fail .check-icon-sm { color: #f87171; }
+  .check-row-sm.warn .check-icon-sm { color: #f59e0b; }
+  .check-name-sm     { flex: 1; color: var(--text); }
+  .check-row-sm.fail .check-name-sm { color: var(--muted); }
+  .check-pts         { font-family: var(--font-mono); font-size: .75rem; color: var(--muted); white-space: nowrap; }
 
-  .checks-grid { display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px; }
-  .check-item { background: var(--bg2); border: 1px solid var(--border); border-radius: 10px; padding: 16px 20px; display: flex; gap: 14px; align-items: flex-start; }
-  .check-item.pass { border-left: 3px solid #22c55e; }
-  .check-item.warn { border-left: 3px solid #f59e0b; }
-  .check-item.fail { border-left: 3px solid #f87171; }
-  .check-icon { font-size: .9rem; margin-top: 2px; flex-shrink: 0; width: 20px; text-align: center; font-weight: 700; }
-  .check-body { flex: 1; min-width: 0; }
-  .check-name { font-family: var(--font-head); font-size: .9rem; color: var(--white); margin-bottom: 3px; }
-  .check-desc { font-size: .8rem; color: var(--muted); line-height: 1.5; }
-  .check-risk { font-size: .78rem; color: #f87171; margin-top: 6px; padding: 6px 10px; background: rgba(248,113,113,.06); border-radius: 6px; line-height: 1.5; }
-  .check-fix { font-size: .78rem; color: #fbbf24; margin-top: 4px; line-height: 1.5; }
-  .check-badge { flex-shrink: 0; font-size: .65rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; padding: 3px 9px; border-radius: 100px; align-self: flex-start; margin-top: 2px; white-space: nowrap; }
-  .badge-pass { background: rgba(34,197,94,.12); color: #22c55e; border: 1px solid rgba(34,197,94,.2); }
-  .badge-warn { background: rgba(245,158,11,.1); color: #f59e0b; border: 1px solid rgba(245,158,11,.2); }
-  .badge-fail { background: rgba(248,113,113,.1); color: #f87171; border: 1px solid rgba(248,113,113,.2); }
-
-  .api-note { font-size: .75rem; color: var(--muted); display: flex; align-items: flex-start; gap: 6px; line-height: 1.5; }
-  .api-note svg { flex-shrink: 0; margin-top: 1px; opacity: .5; }
-
-  @media (max-width: 600px) {
-    .scan-form { flex-direction: column; }
-    .score-row { flex-direction: column; }
-  }
-  @keyframes spin { to { transform: rotate(360deg); } }
+  /* Vote rows */
+  .vote-row      { display: flex; align-items: center; gap: 12px; background: var(--bg2); border: 1px solid var(--border); border-radius: 10px; padding: 14px 16px; }
+  .vote-info     { flex: 1; min-width: 0; }
+  .vote-repo     { font-family: var(--font-head); font-size: .875rem; font-weight: 700; color: var(--text); }
+  .vote-repo-desc { font-size: .75rem; color: var(--muted); margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .vote-stars    { font-size: .75rem; color: var(--muted); white-space: nowrap; flex-shrink: 0; }
+  .vote-count    { font-family: var(--font-mono); font-size: .8125rem; color: var(--muted); white-space: nowrap; min-width: 56px; text-align: right; flex-shrink: 0; }
+  .vote-btn      { background: none; border: 1px solid var(--border2); border-radius: 6px; color: var(--text); font-size: .8125rem; font-family: var(--font-head); font-weight: 700; padding: 6px 14px; cursor: pointer; transition: border-color .15s, color .15s; white-space: nowrap; flex-shrink: 0; }
+  .vote-btn:hover:not(:disabled) { border-color: var(--cyan); color: var(--cyan); }
+  .vote-btn:disabled { opacity: .5; cursor: default; }
+  .vote-btn.voted    { border-color: #22c55e; color: #22c55e; }
 </style>
 
 <script>
-const CHECKS = [
-  {
-    id: 'security_policy',
-    name: 'Security Policy (SECURITY.md)',
-    desc: 'Defines how vulnerabilities should be reported — the foundation of responsible disclosure.',
-    weight: 20,
-    risk: 'No responsible disclosure process. Vulnerabilities may be publicly exploited before maintainers are aware.',
-    fix: '→ Add SECURITY.md to the root or .github/ directory describing how to report vulnerabilities.',
-  },
-  {
-    id: 'dependabot',
-    name: 'Automated Dependency Updates',
-    desc: 'Dependabot monitors dependencies for known CVEs and opens automated PRs.',
-    weight: 25,
-    risk: 'Known vulnerabilities in dependencies won\'t be detected automatically — a primary supply chain attack vector.',
-    fix: '→ Add .github/dependabot.yml to enable automatic dependency version tracking.',
-  },
-  {
-    id: 'ci_cd',
-    name: 'CI/CD Pipeline (GitHub Actions)',
-    desc: 'Automated workflows enforce tests and security checks on every push or pull request.',
-    weight: 20,
-    risk: 'No automated checks. Security regressions, broken code, or malicious PRs go undetected before merge.',
-    fix: '→ Add .github/workflows/ with at least a build, test, and lint workflow.',
-  },
-  {
-    id: 'active',
-    name: 'Active Maintenance',
-    desc: 'Repository received at least one push in the last 12 months.',
-    weight: 20,
-    risk: 'Unmaintained code accumulates unpatched CVEs. Users inherit all known vulnerabilities with no fix in sight.',
-    fix: '→ Archive the repo or guide users toward an actively maintained fork.',
-  },
-  {
-    id: 'license',
-    name: 'Open Source License',
-    desc: 'A LICENSE file clarifies usage rights and security support expectations.',
-    weight: 10,
-    risk: 'Without a license, all rights are reserved by default. Legal ambiguity and unclear security responsibility.',
-    fix: '→ Add a LICENSE file — MIT, Apache 2.0, or GPL depending on your goals.',
-  },
-  {
-    id: 'not_archived',
-    name: 'Repository Not Archived',
-    desc: 'Active repositories receive security patches and issue responses.',
-    weight: 5,
-    risk: 'Archived repositories will never receive security patches. Depending on this code carries unmitigable risk.',
-    fix: '→ Find and migrate to an actively maintained alternative or fork.',
-  },
-];
+  const CHECKS = [
+    { id: 'security_policy', name: 'Security Policy (SECURITY.md)',       weight: 20 },
+    { id: 'dependabot',      name: 'Automated Dependency Updates',        weight: 25 },
+    { id: 'ci_cd',           name: 'CI/CD Pipeline (GitHub Actions)',     weight: 20 },
+    { id: 'active',          name: 'Active Maintenance (< 12 months)',    weight: 20 },
+    { id: 'license',         name: 'Open Source License',                 weight: 10 },
+    { id: 'not_archived',    name: 'Repository Not Archived',             weight: 5  },
+  ];
 
-function esc(str) {
-  return String(str)
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&#039;');
-}
-
-function parseRepo(input) {
-  const s = input.trim().replace(/\/$/, '');
-  const ghMatch = s.match(/github\.com\/([^/\s]+)\/([^/\s?#]+)/);
-  if (ghMatch) return { owner: ghMatch[1], repo: ghMatch[2] };
-  const slashMatch = s.match(/^([A-Za-z0-9_.-]+)\/([A-Za-z0-9_.-]+)$/);
-  if (slashMatch) return { owner: slashMatch[1], repo: slashMatch[2] };
-  return null;
-}
-
-function scoreGrade(score) {
-  if (score >= 90) return { grade: 'A', color: '#22c55e' };
-  if (score >= 75) return { grade: 'B', color: '#86efac' };
-  if (score >= 55) return { grade: 'C', color: '#f59e0b' };
-  if (score >= 35) return { grade: 'D', color: '#fb923c' };
-  return { grade: 'F', color: '#f87171' };
-}
-
-function timeAgo(dateStr) {
-  const months = Math.floor((Date.now() - new Date(dateStr).getTime()) / (1000 * 60 * 60 * 24 * 30));
-  if (months < 1) return 'this month';
-  if (months === 1) return '1 month ago';
-  if (months < 12) return `${months} months ago`;
-  const y = Math.floor(months / 12);
-  return y === 1 ? '1 year ago' : `${y} years ago`;
-}
-
-function numFmt(n) {
-  return n >= 1000 ? (n / 1000).toFixed(1) + 'k' : String(n);
-}
-
-async function ghFetch(path) {
-  const r = await fetch('https://api.github.com' + path, {
-    headers: { Accept: 'application/vnd.github.v3+json' },
-  });
-  return { status: r.status, data: r.status === 200 ? await r.json() : null };
-}
-
-async function runScan(input) {
-  const parsed = parseRepo(input);
-  if (!parsed) throw new Error('Could not parse repository. Use format owner/repo or a GitHub URL.');
-  const { owner, repo } = parsed;
-
-  const [repoRes, secRes, depRes, wfRes] = await Promise.all([
-    ghFetch(`/repos/${owner}/${repo}`),
-    ghFetch(`/repos/${owner}/${repo}/contents/SECURITY.md`),
-    ghFetch(`/repos/${owner}/${repo}/contents/.github/dependabot.yml`),
-    ghFetch(`/repos/${owner}/${repo}/contents/.github/workflows`),
-  ]);
-
-  if (repoRes.status === 404) throw new Error(`Repository "${owner}/${repo}" not found or is private.`);
-  if (repoRes.status === 403) throw new Error('GitHub API rate limit reached (60 req/hr unauthenticated). Try again in a few minutes.');
-  if (repoRes.status !== 200) throw new Error(`GitHub API error ${repoRes.status}.`);
-
-  const r = repoRes.data;
-  const monthsOld = (Date.now() - new Date(r.pushed_at).getTime()) / (1000 * 60 * 60 * 24 * 30);
-
-  return {
-    checks: {
-      security_policy: secRes.status === 200,
-      dependabot:      depRes.status === 200,
-      ci_cd:           wfRes.status === 200 && Array.isArray(wfRes.data) && wfRes.data.length > 0,
-      active:          monthsOld <= 12,
-      license:         r.license !== null,
-      not_archived:    !r.archived,
-    },
-    meta: r,
-  };
-}
-
-function renderMeta(meta) {
-  const el = document.getElementById('repo-meta');
-
-  const link = document.createElement('a');
-  link.href = `https://github.com/${esc(meta.full_name)}`;
-  link.target = '_blank';
-  link.rel = 'noopener noreferrer';
-  link.textContent = meta.full_name;
-  link.style.cssText = 'color:var(--cyan);text-decoration:none;font-family:var(--font-head);font-size:1rem;font-weight:700';
-
-  const stars = document.createElement('span');
-  stars.className = 'meta-chip';
-  stars.textContent = `★ ${numFmt(meta.stargazers_count)}`;
-
-  const updated = document.createElement('span');
-  updated.className = 'meta-chip';
-  updated.textContent = `updated ${timeAgo(meta.pushed_at)}`;
-
-  el.textContent = '';
-  el.append(link, stars, updated);
-
-  if (meta.language) {
-    const lang = document.createElement('span');
-    lang.className = 'meta-chip';
-    lang.textContent = meta.language;
-    el.appendChild(lang);
+  function gradeColor(s: number) {
+    return s >= 90 ? '#22c55e' : s >= 75 ? '#86efac' : s >= 55 ? '#f59e0b' : s >= 35 ? '#fb923c' : '#f87171';
   }
 
-  if (meta.archived) {
-    const arc = document.createElement('span');
-    arc.className = 'meta-chip';
-    arc.style.color = '#f87171';
-    arc.textContent = 'archived';
-    el.appendChild(arc);
-  }
+  function fmtStars(n: number) { return n >= 1000 ? (n / 1000).toFixed(1) + 'k' : String(n); }
 
-  if (meta.description) {
-    const desc = document.createElement('p');
-    desc.style.cssText = 'color:var(--muted);font-size:.8rem;width:100%;margin-top:2px';
-    desc.textContent = meta.description;
-    el.appendChild(desc);
-  }
-}
+  function renderCard(a: any) {
+    const color = gradeColor(a.score);
+    const card  = document.createElement('div');
+    card.className = 'assess-card';
 
-function renderScore(checks) {
-  let score = 0;
-  CHECKS.forEach(c => { if (checks[c.id]) score += c.weight; });
+    /* ── header ── */
+    const header = document.createElement('div');
+    header.className = 'card-header';
 
-  const { grade, color } = scoreGrade(score);
-  const gradeEl = document.getElementById('score-grade');
-  gradeEl.textContent = grade;
-  gradeEl.style.color = color;
-  document.getElementById('score-value').textContent = `${score}/100`;
+    const gradeEl = document.createElement('div');
+    gradeEl.className = 'card-grade';
+    gradeEl.style.color = color;
+    gradeEl.textContent = a.grade;
 
-  const passing = CHECKS.filter(c => checks[c.id]).length;
-  const failing = CHECKS.filter(c => !checks[c.id]);
-  const summaryEl = document.getElementById('score-summary');
-  summaryEl.textContent = '';
+    const main = document.createElement('div');
+    main.className = 'card-main';
 
-  const p1 = document.createElement('p');
-  const b1 = document.createElement('strong');
-  b1.style.color = 'var(--text)';
-  b1.textContent = `${passing} of ${CHECKS.length} checks passing.`;
-  p1.appendChild(b1);
+    const link = document.createElement('a');
+    link.className = 'card-repo';
+    link.href = 'https://github.com/' + a.repo;
+    link.target = '_blank';
+    link.rel = 'noopener noreferrer';
+    link.textContent = a.repo;
+    link.addEventListener('click', e => e.stopPropagation());
 
-  const p2 = document.createElement('p');
-  p2.textContent = score >= 75
-    ? 'This repository follows most security best practices.'
-    : score >= 50
-      ? 'Several security gaps detected — review the failing checks below.'
-      : 'Significant security gaps. Address all failing checks before depending on this repository.';
+    const chipsRow = document.createElement('div');
+    chipsRow.className = 'card-chips-row';
+    ['★ ' + fmtStars(a.stars), a.language, 'assessed ' + (a.assessed_at ?? '').slice(0, 7)]
+      .filter(Boolean)
+      .forEach(t => {
+        const chip = document.createElement('span');
+        chip.className = 'card-chip';
+        chip.textContent = t;
+        chipsRow.appendChild(chip);
+      });
 
-  summaryEl.append(p1, p2);
+    main.append(link, chipsRow);
 
-  if (failing.length > 0) {
-    const p3 = document.createElement('p');
-    p3.style.marginTop = '6px';
-    p3.textContent = 'Missing: ';
-    const b2 = document.createElement('strong');
-    b2.style.color = 'var(--text)';
-    b2.textContent = failing.map(c => c.name.split(' (')[0]).join(', ');
-    p3.appendChild(b2);
-    summaryEl.appendChild(p3);
-  }
-}
-
-function renderChecks(checks) {
-  const grid = document.getElementById('checks-grid');
-  grid.textContent = '';
-
-  CHECKS.forEach(c => {
-    const pass = checks[c.id];
-    const level = pass ? 'pass' : (c.id === 'license' ? 'warn' : 'fail');
-
-    const item = document.createElement('div');
-    item.className = `check-item ${level}`;
-
-    const icon = document.createElement('div');
-    icon.className = 'check-icon';
-    icon.style.color = pass ? '#22c55e' : level === 'warn' ? '#f59e0b' : '#f87171';
-    icon.textContent = pass ? '✓' : '✕';
-
-    const body = document.createElement('div');
-    body.className = 'check-body';
-
-    const name = document.createElement('div');
-    name.className = 'check-name';
-    name.textContent = c.name;
-
-    const desc = document.createElement('div');
-    desc.className = 'check-desc';
-    desc.textContent = c.desc;
-
-    body.append(name, desc);
-
-    if (!pass) {
-      const risk = document.createElement('div');
-      risk.className = 'check-risk';
-      risk.textContent = c.risk;
-
-      const fix = document.createElement('div');
-      fix.className = 'check-fix';
-      fix.textContent = c.fix;
-
-      body.append(risk, fix);
+    if (a.description) {
+      const desc = document.createElement('div');
+      desc.className = 'card-desc';
+      desc.textContent = a.description;
+      main.appendChild(desc);
     }
 
-    const badge = document.createElement('span');
-    badge.className = `check-badge badge-${level}`;
-    badge.textContent = level;
+    const right = document.createElement('div');
+    right.className = 'card-right';
 
-    item.append(icon, body, badge);
-    grid.appendChild(item);
-  });
-}
+    const scoreEl = document.createElement('div');
+    scoreEl.className = 'card-score-val';
+    scoreEl.textContent = a.score + '/100';
 
-async function scan(input) {
-  const btn = document.getElementById('btn-scan');
-  const resultsEl = document.getElementById('results');
-  const errorEl = document.getElementById('error-box');
+    const dots = document.createElement('div');
+    dots.className = 'card-dots';
+    CHECKS.forEach(c => {
+      const dot = document.createElement('div');
+      dot.className = 'card-dot';
+      dot.style.background = a.checks[c.id] ? '#22c55e' : '#f87171';
+      dot.title = c.name + ': ' + (a.checks[c.id] ? 'pass' : 'fail');
+      dots.appendChild(dot);
+    });
 
-  btn.disabled = true;
-  btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" style="animation:spin .8s linear infinite"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2" stroke-dasharray="28 56"/></svg> Scanning…';
-  document.querySelectorAll<HTMLButtonElement>('.pop-chip').forEach(c => c.disabled = true);
-  errorEl.style.display = 'none';
-  resultsEl.style.display = 'none';
+    const expandEl = document.createElement('div');
+    expandEl.className = 'card-expand';
+    expandEl.textContent = '▾';
 
-  try {
-    const { checks, meta } = await runScan(input);
-    renderMeta(meta);
-    renderScore(checks);
-    renderChecks(checks);
-    resultsEl.style.display = 'block';
-    resultsEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  } catch (err) {
-    document.getElementById('error-msg').textContent = err instanceof Error ? err.message : String(err);
-    errorEl.style.display = 'flex';
-  } finally {
-    btn.disabled = false;
-    btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2"/><path d="M20 20l-3-3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> Scan';
-    document.querySelectorAll<HTMLButtonElement>('.pop-chip').forEach(c => c.disabled = false);
+    right.append(scoreEl, dots, expandEl);
+    header.append(gradeEl, main, right);
+
+    /* ── details ── */
+    const details = document.createElement('div');
+    details.className = 'card-details';
+    details.style.display = 'none';
+
+    CHECKS.forEach(c => {
+      const pass  = a.checks[c.id];
+      const level = pass ? 'pass' : (c.id === 'license' ? 'warn' : 'fail');
+      const row   = document.createElement('div');
+      row.className = 'check-row-sm ' + level;
+
+      const icon = document.createElement('div');
+      icon.className = 'check-icon-sm';
+      icon.textContent = pass ? '✓' : '✕';
+
+      const name = document.createElement('div');
+      name.className = 'check-name-sm';
+      name.textContent = c.name;
+
+      const pts = document.createElement('div');
+      pts.className = 'check-pts';
+      pts.textContent = (pass ? c.weight : 0) + '/' + c.weight + ' pts';
+
+      row.append(icon, name, pts);
+      details.appendChild(row);
+    });
+
+    header.addEventListener('click', () => {
+      const open = details.style.display !== 'none';
+      details.style.display = open ? 'none' : 'block';
+      expandEl.textContent  = open ? '▾' : '▴';
+      card.classList.toggle('expanded', !open);
+    });
+
+    card.append(header, details);
+    return card;
   }
-}
 
-document.getElementById('scan-form')?.addEventListener('submit', e => {
-  e.preventDefault();
-  const val = (document.getElementById('repo-input') as HTMLInputElement).value.trim();
-  if (val) scan(val);
-});
+  function renderVoteRow(c: any, onVote: (repo: string, btn: HTMLButtonElement, countEl: HTMLElement) => void) {
+    const row = document.createElement('div');
+    row.className = 'vote-row';
 
-document.querySelectorAll('.pop-chip').forEach(chip => {
-  chip.addEventListener('click', () => {
-    const repo = (chip as HTMLElement).dataset.repo ?? '';
-    (document.getElementById('repo-input') as HTMLInputElement).value = repo;
-    scan(repo);
-  });
-});
+    const info = document.createElement('div');
+    info.className = 'vote-info';
+
+    const name = document.createElement('div');
+    name.className = 'vote-repo';
+    name.textContent = c.repo;
+
+    const desc = document.createElement('div');
+    desc.className = 'vote-repo-desc';
+    desc.textContent = c.desc;
+
+    info.append(name, desc);
+
+    const stars = document.createElement('div');
+    stars.className = 'vote-stars';
+    stars.textContent = '★ ' + fmtStars(c.stars);
+
+    const countEl = document.createElement('div');
+    countEl.className = 'vote-count';
+    countEl.textContent = c.votes + (c.votes === 1 ? ' vote' : ' votes');
+
+    const btn = document.createElement('button');
+    btn.className = 'vote-btn';
+    btn.textContent = 'Vote ↑';
+    btn.addEventListener('click', () => onVote(c.repo, btn, countEl));
+
+    row.append(info, stars, countEl, btn);
+    return row;
+  }
+
+  async function init() {
+    const statusEl = document.getElementById('assess-status')!;
+    const gridEl   = document.getElementById('assess-grid')!;
+
+    try {
+      const res  = await fetch('/api/assessments');
+      if (res.status === 404) { statusEl.textContent = 'No assessments published yet — check back soon.'; return; }
+      if (!res.ok) throw new Error();
+      const data: any[] = await res.json();
+
+      gridEl.textContent = '';
+      data.forEach(a => gridEl.appendChild(renderCard(a)));
+      statusEl.style.display = 'none';
+      gridEl.style.display   = 'flex';
+    } catch {
+      statusEl.textContent = 'Assessments temporarily unavailable.';
+    }
+
+    // Vote section — silently omit if Worker not yet deployed
+    try {
+      const res = await fetch('/api/vote/candidates');
+      if (!res.ok) return;
+      const candidates: any[] = await res.json();
+
+      const listEl    = document.getElementById('vote-list')!;
+      const wrapEl    = document.getElementById('vote-wrap')!;
+
+      candidates.forEach(c => {
+        listEl.appendChild(renderVoteRow(c, async (repo, btn, countEl) => {
+          btn.disabled    = true;
+          btn.textContent = '…';
+          try {
+            const r    = await fetch('/api/vote', {
+              method:  'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body:    JSON.stringify({ repo }),
+            });
+            const body = await r.json();
+            if (r.status === 429 || body.alreadyVoted) {
+              btn.textContent = 'Voted ✓';
+              btn.className   = 'vote-btn voted';
+            } else if (r.ok) {
+              btn.textContent  = 'Voted ✓';
+              btn.className    = 'vote-btn voted';
+              countEl.textContent = body.votes + (body.votes === 1 ? ' vote' : ' votes');
+            } else {
+              btn.textContent = 'Vote ↑';
+              btn.disabled    = false;
+            }
+          } catch {
+            btn.textContent = 'Vote ↑';
+            btn.disabled    = false;
+          }
+        }));
+      });
+
+      wrapEl.style.display = 'block';
+    } catch {
+      // Worker not deployed — vote section stays hidden
+    }
+  }
+
+  init();
 </script>
