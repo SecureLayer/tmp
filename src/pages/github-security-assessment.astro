@@ -96,7 +96,7 @@ const popularRepos = [
   </main>
 </Layout>
 
-<style>
+<style is:global>
   main { padding-top: 64px; }
 
   .page-hero { max-width: 800px; margin: 0 auto; padding: 80px 24px 48px; text-align: center; }
@@ -433,6 +433,7 @@ async function scan(input) {
 
   btn.disabled = true;
   btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" style="animation:spin .8s linear infinite"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2" stroke-dasharray="28 56"/></svg> Scanning…';
+  document.querySelectorAll<HTMLButtonElement>('.pop-chip').forEach(c => c.disabled = true);
   errorEl.style.display = 'none';
   resultsEl.style.display = 'none';
 
@@ -449,6 +450,7 @@ async function scan(input) {
   } finally {
     btn.disabled = false;
     btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2"/><path d="M20 20l-3-3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> Scan';
+    document.querySelectorAll<HTMLButtonElement>('.pop-chip').forEach(c => c.disabled = false);
   }
 }
 
