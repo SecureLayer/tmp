@@ -1,6 +1,0 @@
-/*
-  Content-Security-Policy: default-src 'none'; base-uri 'none'; object-src 'none'; script-src 'self' 'unsafe-inline' static.cloudflareinsights.com ajax.cloudflare.com; style-src 'self' 'unsafe-inline'; connect-src 'self' https://api.github.com cloudflareinsights.com; img-src 'self' https://i.imgur.com; font-src https://fonts.gstatic.com; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests;
-  X-Content-Type-Options: nosniff
-  X-Frame-Options: DENY
-  Referrer-Policy: strict-origin-when-cross-origin
-  Permissions-Policy: geolocation=(), microphone=(), camera=()
