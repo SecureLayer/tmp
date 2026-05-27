@@ -254,15 +254,15 @@ import Layout from '../layouts/Layout.astro';
 
 <script>
   const CHECKS = [
-    { id: 'security_policy',   name: 'Security Policy (SECURITY.md)',     weight: 15 },
-    { id: 'dependabot',        name: 'Automated Dependency Updates',       weight: 15 },
-    { id: 'ci_cd',             name: 'CI/CD Pipeline (GitHub Actions)',    weight: 15 },
-    { id: 'active',            name: 'Active Maintenance (< 12 months)',   weight: 15 },
-    { id: 'branch_protection', name: 'Branch Protection / Rulesets',      weight: 10 },
-    { id: 'license',           name: 'Open Source License',               weight: 10 },
-    { id: 'credential_hygiene', name: 'Workflow Token & Tag Controls',          weight: 10 },
-    { id: 'code_of_conduct',   name: 'Code of Conduct',                   weight:  5 },
-    { id: 'contributing',      name: 'Contributing Guidelines',           weight:  5 },
+    { id: 'security_policy',    name: 'Security Policy (SECURITY.md)',    weight: 15 },
+    { id: 'dependabot',         name: 'Automated Dependency Updates',      weight: 15 },
+    { id: 'branch_protection',  name: 'Branch Protection / Rulesets',     weight: 15 },
+    { id: 'credential_hygiene', name: 'Workflow Token & Tag Controls',     weight: 15 },
+    { id: 'active',             name: 'Active Maintenance (< 12 months)', weight: 10 },
+    { id: 'ci_cd',              name: 'CI/CD Pipeline (GitHub Actions)',   weight: 10 },
+    { id: 'license',            name: 'Open Source License',              weight: 10 },
+    { id: 'code_of_conduct',    name: 'Code of Conduct',                  weight:  5 },
+    { id: 'contributing',       name: 'Contributing Guidelines',          weight:  5 },
   ];
 
   // Curated subset shown on cards — keeps the surface small and focused
