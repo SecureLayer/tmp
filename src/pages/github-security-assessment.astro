@@ -23,11 +23,16 @@ import Layout from '../layouts/Layout.astro';
       <div id="assess-body" style="display:none"></div>
     </section>
 
-    <!-- Vote for next -->
-    <section class="vote-wrap" id="vote-wrap" style="display:none">
-      <h2>Vote for the next assessment</h2>
-      <p class="vote-desc">Which repo should we audit next? One vote per day — we scan the top-voted repo weekly and publish the full report.</p>
-      <div id="vote-list" class="vote-list"></div>
+    <!-- Live scan CTA -->
+    <section class="livescan-cta">
+      <div class="livescan-inner">
+        <div class="livescan-text">
+          <div class="livescan-eyebrow">Coming soon</div>
+          <h2>Want to scan your own repo?</h2>
+          <p>Live scanning with GitHub OAuth is in our roadmap. Vote to tell us you want it — we'll build it when we hit our milestone.</p>
+        </div>
+        <a href="https://github.securelayer.co" class="livescan-btn" target="_blank" rel="noopener">Vote to build this →</a>
+      </div>
     </section>
 
     <p class="assess-note">ⓘ Scores pre-computed weekly using the GitHub API and OpenSSF Scorecard. A–B grades are shown individually. C through F repos are grouped under "Below Security Baseline" — specific gap details are kept private to avoid creating a targeted attack surface. An active security incident deducts 10 pts from the base score.</p>
@@ -204,22 +209,15 @@ import Layout from '../layouts/Layout.astro';
   .check-row-sm.fail .check-name-sm { color: var(--muted); }
   .check-pts { font-family: var(--font-mono); font-size: .7rem; color: var(--muted); white-space: nowrap; }
 
-  /* ── Vote ── */
-  .vote-wrap  { max-width: 860px; margin: 0 auto; padding: 40px 24px 64px; border-top: 1px solid var(--border); }
-  .vote-wrap h2 { font-size: 1.125rem; color: var(--white); font-family: var(--font-head); font-weight: 700; margin-bottom: 6px; }
-  .vote-desc  { color: var(--muted); font-size: .875rem; margin-bottom: 20px; }
-  .vote-list  { display: flex; flex-direction: column; gap: 6px; }
-
-  .vote-row { display: flex; align-items: center; gap: 12px; background: var(--bg2); border: 1px solid var(--border); border-radius: 8px; padding: 10px 14px; }
-  .vote-info { flex: 1; min-width: 0; }
-  .vote-repo { font-family: var(--font-head); font-size: .8125rem; font-weight: 700; color: var(--text); }
-  .vote-repo-desc { font-size: .7rem; color: var(--muted); margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .vote-stars { font-size: .7rem; color: var(--muted); white-space: nowrap; flex-shrink: 0; }
-  .vote-count { font-family: var(--font-mono); font-size: .75rem; color: var(--muted); white-space: nowrap; min-width: 52px; text-align: right; flex-shrink: 0; }
-  .vote-btn { background: none; border: 1px solid var(--border2); border-radius: 6px; color: var(--text); font-size: .75rem; font-family: var(--font-head); font-weight: 700; padding: 5px 12px; cursor: pointer; transition: border-color .15s, color .15s; white-space: nowrap; flex-shrink: 0; }
-  .vote-btn:hover:not(:disabled) { border-color: var(--cyan); color: var(--cyan); }
-  .vote-btn:disabled { opacity: .5; cursor: default; }
-  .vote-btn.voted { border-color: #22c55e; color: #22c55e; }
+  /* ── Live scan CTA ── */
+  .livescan-cta { max-width: 860px; margin: 0 auto; padding: 40px 24px 64px; border-top: 1px solid var(--border); }
+  .livescan-inner { display: flex; align-items: center; justify-content: space-between; gap: 32px; background: var(--bg2); border: 1px solid var(--border); border-radius: 12px; padding: 28px 32px; }
+  .livescan-eyebrow { font-size: .7rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--cyan); margin-bottom: 8px; }
+  .livescan-text h2 { font-size: 1rem; font-weight: 700; color: var(--white); font-family: var(--font-head); margin-bottom: 8px; }
+  .livescan-text p  { font-size: .8125rem; color: var(--muted); max-width: 480px; line-height: 1.6; }
+  .livescan-btn { flex-shrink: 0; background: none; border: 1px solid var(--border2); border-radius: 8px; color: var(--text); font-size: .8125rem; font-family: var(--font-head); font-weight: 700; padding: 10px 20px; text-decoration: none; white-space: nowrap; transition: border-color .15s, color .15s; }
+  .livescan-btn:hover { border-color: var(--cyan); color: var(--cyan); }
+  @media (max-width: 600px) { .livescan-inner { flex-direction: column; align-items: flex-start; padding: 20px; } }
 
   /* ── Locked CTA row (D/F expanded details) ── */
   .check-row-locked { background: rgba(251,146,60,.05); border-top: 1px dashed rgba(251,146,60,.25) !important; }
@@ -563,37 +561,6 @@ import Layout from '../layouts/Layout.astro';
   }
 
 
-  function renderVoteRow(c: any, onVote: (repo: string, btn: HTMLButtonElement, countEl: HTMLElement) => void) {
-    const row = document.createElement('div');
-    row.className = 'vote-row';
-
-    const info = document.createElement('div');
-    info.className = 'vote-info';
-    const name = document.createElement('div');
-    name.className = 'vote-repo';
-    name.textContent = c.repo;
-    const desc = document.createElement('div');
-    desc.className = 'vote-repo-desc';
-    desc.textContent = c.desc;
-    info.append(name, desc);
-
-    const stars = document.createElement('div');
-    stars.className = 'vote-stars';
-    stars.textContent = '★ ' + fmtStars(c.stars);
-
-    const countEl = document.createElement('div');
-    countEl.className = 'vote-count';
-    countEl.textContent = c.votes + (c.votes === 1 ? ' vote' : ' votes');
-
-    const btn = document.createElement('button');
-    btn.className = 'vote-btn';
-    btn.textContent = 'Vote ↑';
-    btn.addEventListener('click', () => onVote(c.repo, btn, countEl));
-
-    row.append(info, stars, countEl, btn);
-    return row;
-  }
-
   async function init() {
     const statusEl = document.getElementById('assess-status')!;
     const bodyEl   = document.getElementById('assess-body')!;
@@ -628,34 +595,6 @@ import Layout from '../layouts/Layout.astro';
       statusEl.textContent = 'Assessments temporarily unavailable.';
     }
 
-    try {
-      const res = await fetch('/api/vote/candidates');
-      if (!res.ok) return;
-      const candidates: any[] = await res.json();
-      const listEl = document.getElementById('vote-list')!;
-      const wrapEl = document.getElementById('vote-wrap')!;
-      candidates.forEach(c => {
-        listEl.appendChild(renderVoteRow(c, async (repo, btn, countEl) => {
-          btn.disabled = true;
-          btn.textContent = '…';
-          try {
-            const r    = await fetch('/api/vote', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ repo }) });
-            const body = await r.json();
-            if (r.status === 429 || body.alreadyVoted) {
-              btn.textContent = 'Voted ✓'; btn.className = 'vote-btn voted';
-            } else if (r.ok) {
-              btn.textContent = 'Voted ✓'; btn.className = 'vote-btn voted';
-              countEl.textContent = body.votes + (body.votes === 1 ? ' vote' : ' votes');
-            } else {
-              btn.textContent = 'Vote ↑'; btn.disabled = false;
-            }
-          } catch {
-            btn.textContent = 'Vote ↑'; btn.disabled = false;
-          }
-        }));
-      });
-      wrapEl.style.display = 'block';
-    } catch { /* vote section stays hidden */ }
   }
 
   init();
