@@ -1,0 +1,174 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout
+  title="Environmental Posture — SecureLayer"
+  description="SecureLayer's environmental footprint: Digital Beacon A+, Website Carbon A+ (cleaner than 97% of pages globally), green hosting verified."
+>
+  <main>
+
+    <div class="sus-hero">
+      <div class="section-label">Environmental Posture</div>
+      <h1>Green by <span>design</span></h1>
+      <p class="sus-sub">SecureLayer is a static site served from Cloudflare's CDN — no origin server, no database, minimal compute per visitor. Here is what the numbers say.</p>
+    </div>
+
+    <!-- Score cards -->
+    <section class="sus-section">
+      <div class="sus-cards">
+
+        <div class="sus-card">
+          <div class="sus-card-top">
+            <div class="sus-grade grade-a">A+</div>
+            <div class="sus-card-meta">
+              <div class="sus-card-tool">Digital Beacon</div>
+              <div class="sus-card-date">Verified May 28, 2026</div>
+            </div>
+          </div>
+          <ul class="sus-metrics">
+            <li><span class="metric-label">CO₂ first visit</span><span class="metric-value">0.044 g</span></li>
+            <li><span class="metric-label">CO₂ return visit</span><span class="metric-value">0.003 g</span></li>
+            <li><span class="metric-label">Page weight</span><span class="metric-value">143 KB</span></li>
+            <li><span class="metric-label">Server response</span><span class="metric-value">0 ms</span></li>
+            <li><span class="metric-label">Green hosting</span><span class="metric-value pass">✓ Confirmed</span></li>
+          </ul>
+          <a class="sus-link" href="https://digitalbeacon.co/report/securelayer-co" target="_blank" rel="noopener">View full report ↗</a>
+        </div>
+
+        <div class="sus-card">
+          <div class="sus-card-top">
+            <div class="sus-grade grade-a">A+</div>
+            <div class="sus-card-meta">
+              <div class="sus-card-tool">Website Carbon</div>
+              <div class="sus-card-date">Verified May 27, 2026</div>
+            </div>
+          </div>
+          <ul class="sus-metrics">
+            <li><span class="metric-label">Global percentile</span><span class="metric-value">Top 3%</span></li>
+            <li><span class="metric-label">Cleaner than</span><span class="metric-value">97% of pages</span></li>
+            <li><span class="metric-label">Green hosting</span><span class="metric-value pass">✓ Confirmed</span></li>
+          </ul>
+          <a class="sus-link" href="https://www.websitecarbon.com/website/securelayer-co/" target="_blank" rel="noopener">View full report ↗</a>
+        </div>
+
+        <div class="sus-card">
+          <div class="sus-card-top">
+            <div class="sus-grade grade-a" style="font-size:.9rem">GWF ✓</div>
+            <div class="sus-card-meta">
+              <div class="sus-card-tool">Green Web Foundation</div>
+              <div class="sus-card-date">Via Cloudflare CDN</div>
+            </div>
+          </div>
+          <ul class="sus-metrics">
+            <li><span class="metric-label">Infrastructure</span><span class="metric-value">Cloudflare CDN</span></li>
+            <li><span class="metric-label">Renewable energy</span><span class="metric-value pass">✓ Certified</span></li>
+            <li><span class="metric-label">Origin compute</span><span class="metric-value pass">Zero per visit</span></li>
+          </ul>
+          <a class="sus-link" href="https://www.thegreenwebfoundation.org/" target="_blank" rel="noopener">About GWF ↗</a>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Why section -->
+    <section class="sus-section">
+      <div class="section-label">Why it's low</div>
+      <div class="sus-why">
+        <div class="why-item">
+          <div class="why-icon">⚡</div>
+          <div>
+            <div class="why-title">Static architecture</div>
+            <div class="why-desc">The entire site is pre-built HTML/CSS/JS. No server runs when you visit — pages are served cold from Cloudflare's global edge network.</div>
+          </div>
+        </div>
+        <div class="why-item">
+          <div class="why-icon">📦</div>
+          <div>
+            <div class="why-title">Pre-computed data</div>
+            <div class="why-desc">Security assessments are computed once weekly by a local scanner and stored in R2. Your browser fetches a single JSON file — no live GitHub API calls, no chained requests.</div>
+          </div>
+        </div>
+        <div class="why-item">
+          <div class="why-icon">🚫</div>
+          <div>
+            <div class="why-title">No tracking, no analytics</div>
+            <div class="why-desc">Zero tracking pixels, no analytics scripts, no third-party calls beyond Google Fonts. Less data transferred means less energy consumed per visit.</div>
+          </div>
+        </div>
+        <div class="why-item">
+          <div class="why-icon">🌱</div>
+          <div>
+            <div class="why-title">Green CDN</div>
+            <div class="why-desc">Cloudflare is Green Web Foundation certified — the infrastructure that delivers every page runs on renewable energy.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- What's next -->
+    <section class="sus-section sus-next">
+      <div class="section-label">What's next</div>
+      <p>One remaining improvement: self-hosting the Google Fonts request would eliminate the only external round-trip and tighten the CSP further. It's a 20-minute task — tracked in our <a href="https://securelayer.co/github-security-assessment">backlog</a>.</p>
+    </section>
+
+  </main>
+</Layout>
+
+<style>
+  /* ── Hero ── */
+  .sus-hero {
+    max-width: 860px; margin: 0 auto;
+    padding: 64px 24px 48px;
+  }
+  .sus-hero h1 { font-size: clamp(1.75rem, 4vw, 2.5rem); font-weight: 800; color: var(--white); line-height: 1.15; margin-bottom: 16px; letter-spacing: -.5px; }
+  .sus-hero h1 span { color: var(--cyan); }
+  .sus-sub { font-size: .9375rem; color: var(--muted); max-width: 560px; line-height: 1.7; }
+
+  /* ── Sections ── */
+  .sus-section { max-width: 860px; margin: 0 auto; padding: 0 24px 56px; }
+
+  /* ── Score cards ── */
+  .sus-cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 14px; }
+
+  .sus-card {
+    background: var(--bg2); border: 1px solid var(--border); border-radius: 12px;
+    padding: 24px; display: flex; flex-direction: column; gap: 16px;
+  }
+  .sus-card-top { display: flex; align-items: center; gap: 16px; }
+
+  .sus-grade {
+    width: 56px; height: 56px; border-radius: 50%; border: 2px solid;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.25rem; font-weight: 800; flex-shrink: 0;
+  }
+  .grade-a { color: #4ade80; background: rgba(74,222,128,.08); border-color: #166534; }
+
+  .sus-card-tool { font-size: .8125rem; font-weight: 700; color: var(--white); }
+  .sus-card-date { font-size: .7rem; color: var(--muted); margin-top: 3px; }
+
+  .sus-metrics { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+  .sus-metrics li { display: flex; justify-content: space-between; align-items: center; font-size: .8125rem; }
+  .metric-label { color: var(--muted); }
+  .metric-value { color: var(--text); font-family: var(--font-mono); font-size: .75rem; }
+  .metric-value.pass { color: #4ade80; font-family: inherit; }
+
+  .sus-link { font-size: .75rem; color: var(--cyan); text-decoration: none; margin-top: auto; }
+  .sus-link:hover { text-decoration: underline; }
+
+  /* ── Why ── */
+  .sus-why { display: flex; flex-direction: column; gap: 16px; }
+  .why-item {
+    display: flex; gap: 16px; align-items: flex-start;
+    background: var(--bg2); border: 1px solid var(--border); border-radius: 8px;
+    padding: 18px 20px;
+  }
+  .why-icon { font-size: 1.25rem; flex-shrink: 0; margin-top: 1px; }
+  .why-title { font-size: .875rem; font-weight: 700; color: var(--white); margin-bottom: 4px; }
+  .why-desc { font-size: .8125rem; color: var(--muted); line-height: 1.6; }
+
+  /* ── What's next ── */
+  .sus-next p { font-size: .875rem; color: var(--muted); line-height: 1.7; }
+  .sus-next a { color: var(--cyan); text-decoration: none; }
+  .sus-next a:hover { text-decoration: underline; }
+</style>
