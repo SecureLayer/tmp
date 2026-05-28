@@ -39,6 +39,9 @@ const { title, description } = Astro.props;
         <a href="/" class="logo">Secure<span>Layer</span></a>
         <p>Precision cybersecurity prompts — tested, optimised, and ready to use.</p>
         <p class="footer-copy">&copy; 2026 SecureLayer. All rights reserved.</p>
+        <a href="/sustainability" class="footer-green-link">
+          <img src="https://app.greenweb.org/api/v3/greencheckimage/securelayer.co?nocache=true" alt="This website runs on green hosting - verified by thegreenwebfoundation.org" width="200" height="95" />
+        </a>
       </div>
     </footer>
   </body>
@@ -111,6 +114,8 @@ const { title, description } = Astro.props;
   .footer-inner .logo { display: inline-block; margin-bottom: 12px; }
   .footer-inner p { color: var(--muted); font-size: .875rem; }
   .footer-copy { margin-top: 24px; font-size: .75rem; }
+  .footer-green-link { display: inline-block; margin-top: 20px; opacity: .85; transition: opacity .2s; }
+  .footer-green-link:hover { opacity: 1; }
 
   @media (max-width: 640px) {
     .nav-links a:not(.btn-nav) { display: none; }
