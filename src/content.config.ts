@@ -24,17 +24,4 @@ const prompts = defineCollection({
   }),
 });
 
-const posts = defineCollection({
-  loader: glob({ pattern: '**/*.md', base: './src/content/posts' }),
-  schema: z.object({
-    title: z.string(),
-    description: z.string(),
-    date: z.string(),
-    category: z.enum(['tutorial', 'case-study', 'guide', 'analysis']),
-    tags: z.array(z.string()),
-    readingTime: z.number().optional(),
-    published: z.boolean().default(true),
-  }),
-});
-
-export const collections = { prompts, posts };
+export const collections = { prompts };

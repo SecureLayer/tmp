@@ -9,10 +9,6 @@ SecureLayer audits popular open-source GitHub repositories across 9 security che
 - [GitHub Security Assessments](https://securelayer.co/github-security-assessment): Pre-audited repos scored across 9 checks (SECURITY.md quality, Dependabot, branch protection, credential hygiene, CI/CD, active maintenance, license, code of conduct, contributing guidelines). Grades A+ to F. Penalties for known incidents (−10 pts) and open critical/high CVEs (−5 pts).
 - [Free AI Security Prompts](https://securelayer.co/free-cybersecurity-ai-prompts): 12 free prompt templates for security tasks — threat modelling, code review, dependency audit, incident response, and more.
 
-## Blog
-
-- [Before you run curl | bash](https://securelayer.co/blog): Series auditing real open-source repos before installation. Each post documents specific security gaps found during assessment.
-
 ## Scoring methodology
 
 9 binary checks weighted 1–15 pts each (total 100). OpenSSF Scorecard score adds up to 10 bonus pts. Known security incidents deduct 10 pts. Open CRITICAL or HIGH CVEs (OSV.dev) deduct 5 pts. Grade bands: A ≥85 · B ≥70 · C ≥55 · D ≥40 · F <40.

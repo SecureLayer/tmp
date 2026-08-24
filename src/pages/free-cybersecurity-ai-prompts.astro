@@ -1,19 +1,248 @@
 ---
-import Layout from '../layouts/Layout.astro';
 import { getCollection } from 'astro:content';
 
 const freePrompts = (await getCollection('prompts', ({ data }) =>
   data.tier === 'free' && data.published !== false
 )).sort((a, b) => a.data.title.localeCompare(b.data.title));
-
-const categories = [...new Set(freePrompts.map(p => p.data.category))].sort();
 ---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Free Cybersecurity Prompts — SecureLayer</title>
+  <meta name="description" content="Free tested cybersecurity AI prompts from SecureLayer. Copy and use in any AI assistant." />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-<Layout
-  title="Free Cybersecurity Prompts — SecureLayer"
-  description="Free tested cybersecurity AI prompts from SecureLayer. Copy and use in any AI assistant."
->
-  <main>
+    body {
+      background: #0a0f0f;
+      color: #e0e0e0;
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      font-size: 14px;
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    .page { max-width: 1240px; margin: 0 auto; padding: 40px 24px 0; }
+
+    a { color: inherit; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    /* ── Browser chrome (Brave) ── */
+    .browser-window { min-height: 100vh; display: flex; flex-direction: column; }
+
+    .browser-titlebar {
+      display: flex; align-items: center; gap: 14px;
+      background: #170f20; padding: 10px 16px 0;
+      border-bottom: 1px solid #2a2038;
+    }
+    .traffic-lights { display: flex; gap: 8px; padding-bottom: 10px; flex-shrink: 0; }
+    .tl { width: 12px; height: 12px; border-radius: 50%; }
+    .tl.red { background: #ff5f57; }
+    .tl.yellow { background: #febc2e; }
+    .tl.green { background: #28c840; }
+
+    .browser-tab {
+      display: flex; align-items: center; gap: 8px;
+      background: #241a30; border-radius: 8px 8px 0 0;
+      padding: 8px 12px; max-width: 260px;
+    }
+    .tab-favicon { width: 15px; height: 15px; flex-shrink: 0; }
+    .tab-title { font-size: 12.5px; color: #e4dcf0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .tab-close { margin-left: auto; color: #7a6f8c; font-size: 15px; line-height: 1; flex-shrink: 0; }
+    .tab-add { color: #7a6f8c; font-size: 18px; padding: 0 10px 10px; line-height: 1; align-self: center; }
+    .tab-chevron { color: #7a6f8c; font-size: 11px; margin-left: auto; padding-bottom: 10px; align-self: center; }
+
+    .browser-navbar {
+      display: flex; align-items: center; gap: 14px;
+      background: #1d1428; padding: 10px 16px;
+      border-bottom: 1px solid #2a2038;
+    }
+    .nav-icon { color: #8a7fa0; flex-shrink: 0; display: flex; align-items: center; }
+    .nav-icon svg { width: 17px; height: 17px; }
+    .nav-icon.disabled { color: #453b56; }
+    .address-pill {
+      flex: 1; display: flex; align-items: center; gap: 8px;
+      background: #2a2038; border-radius: 7px; padding: 7px 14px;
+      max-width: 640px; margin: 0 auto;
+    }
+    .address-pill svg { width: 14px; height: 14px; color: #8a7fa0; flex-shrink: 0; }
+    .addr-text { font-size: 13px; color: #e4dcf0; }
+    .addr-path { color: #8a7fa0; }
+    .nav-divider { width: 1px; height: 20px; background: #362a48; flex-shrink: 0; }
+    .nav-brave { width: 20px; height: 20px; flex-shrink: 0; }
+    .nav-menu svg { width: 18px; height: 18px; }
+
+    .browser-body { flex: 1; }
+
+    /* ── Hero ── */
+    .page-hero { max-width: 640px; margin: 0 auto; padding: 8px 24px 40px; text-align: center; }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(74,222,128,.1); border: 1px solid rgba(74,222,128,.2);
+      color: #4ade80; font-size: .7rem; font-weight: 600;
+      letter-spacing: .08em; text-transform: uppercase;
+      padding: 5px 14px; border-radius: 100px; margin-bottom: 20px;
+    }
+    .badge-dot { width: 6px; height: 6px; background: #4ade80; border-radius: 50%; animation: pulse 2s infinite; }
+    @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: .4; } }
+    .page-hero h1 { font-size: clamp(1.4rem, 3.4vw, 2rem); font-weight: 700; color: #fff; margin-bottom: 10px; }
+    .page-hero p { color: #999; font-size: .875rem; margin-bottom: 16px; line-height: 1.6; }
+    .page-hero code { font-size: .85em; background: #142424; border: 1px solid #1a3030; padding: 1px 5px; border-radius: 4px; color: #5eead4; }
+    .hero-meta { font-size: .78rem; color: #888; }
+    .hero-meta .sep { margin: 0 6px; opacity: .4; }
+    .hero-meta strong { color: #4ade80; }
+
+    /* ── Grid ── */
+    .prompts-grid {
+      max-width: 1240px; margin: 0 auto;
+      padding: 0 24px 56px;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 16px;
+      align-items: start;
+    }
+
+    /* ── Card ── */
+    .card {
+      background: #0d1a1a;
+      border: 1px solid #1a3030;
+      border-radius: 12px;
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      transition: border-color .2s;
+    }
+    .card:hover { border-color: rgba(94,234,212,.3); }
+
+    .card-top { display: flex; align-items: center; justify-content: space-between; }
+    .card-badges { display: flex; align-items: center; gap: 6px; }
+
+    .badge-tier.free {
+      background: rgba(74,222,128,.12); color: #4ade80;
+      border: 1px solid rgba(74,222,128,.25);
+      font-size: .65rem; font-weight: 700; letter-spacing: .06em;
+      text-transform: uppercase; padding: 2px 8px; border-radius: 100px;
+    }
+    .badge-tested {
+      display: inline-flex; align-items: center; gap: 3px;
+      font-size: .68rem; color: #4ade80; font-weight: 500;
+    }
+    .badge-tokens {
+      font-size: .68rem; color: #888;
+      background: #142424; border: 1px solid #1a3030;
+      padding: 2px 7px; border-radius: 5px;
+    }
+
+    .card-title { font-size: .9rem; font-weight: 600; color: #fff; line-height: 1.4; }
+
+    .card-meta { display: flex; align-items: center; gap: 6px; }
+    .badge-cat {
+      font-size: .68rem; color: #5eead4; background: rgba(94,234,212,.08);
+      border: 1px solid rgba(94,234,212,.15); padding: 2px 7px; border-radius: 5px;
+    }
+    .badge-expertise {
+      font-size: .68rem; color: #c4b5fd;
+      background: rgba(196,181,253,.08); border: 1px solid rgba(196,181,253,.15);
+      padding: 2px 7px; border-radius: 5px;
+    }
+
+    .card-tags { display: flex; gap: 5px; flex-wrap: wrap; }
+    .tag {
+      font-size: .65rem; color: #888;
+      background: #142424; border: 1px solid #1a3030;
+      padding: 1px 7px; border-radius: 4px;
+    }
+
+    /* ── Actions ── */
+    .card-actions { display: flex; flex-direction: column; gap: 0; margin-top: 4px; }
+
+    .btn-copy {
+      display: inline-flex; align-items: center; gap: 6px;
+      align-self: flex-start;
+      background: rgba(94,234,212,.08); border: 1px solid rgba(94,234,212,.25);
+      color: #5eead4; font-size: .78rem; font-weight: 500;
+      padding: 6px 13px; border-radius: 7px; cursor: pointer;
+      transition: background .2s; font-family: inherit; margin-bottom: 8px;
+    }
+    .btn-copy:hover { background: rgba(94,234,212,.18); }
+
+    /* ── Expand ── */
+    .prompt-details { border-top: 1px solid #1a3030; padding-top: 10px; }
+    .prompt-details summary {
+      font-size: .75rem; color: #888; cursor: pointer;
+      list-style: none; display: flex; align-items: center; gap: 5px;
+      user-select: none; transition: color .15s;
+    }
+    .prompt-details summary::-webkit-details-marker { display: none; }
+    .prompt-details summary::before {
+      content: '▶'; font-size: .55rem; transition: transform .15s; display: inline-block;
+    }
+    .prompt-details[open] summary::before { transform: rotate(90deg); }
+    .prompt-details summary:hover { color: #e0e0e0; }
+    .prompt-details[open] summary { color: #e0e0e0; margin-bottom: 12px; }
+
+    .prompt-body {
+      font-size: .75rem; line-height: 1.7;
+      color: #cbd5e1; background: #071010; padding: 14px;
+      border-radius: 8px; border: 1px solid #1a3030;
+      overflow-x: auto; white-space: pre-wrap; word-break: break-word;
+      margin-bottom: 8px;
+    }
+    .tested-note { font-size: .7rem; color: #888; }
+
+    /* ── Contribute ── */
+    .contribute-banner {
+      background: #0d1a1a; border-top: 1px solid #1a3030;
+      padding: 48px 24px;
+    }
+    .contribute-inner {
+      max-width: 1240px; margin: 0 auto;
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 32px; flex-wrap: wrap;
+    }
+    .contribute-inner h3 { font-size: 1rem; color: #fff; margin-bottom: 6px; }
+    .contribute-inner p { color: #999; font-size: .875rem; max-width: 500px; }
+    .btn-contribute {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: #142424; border: 1px solid #1a3030;
+      color: #e0e0e0; font-size: .875rem; font-weight: 500;
+      padding: 10px 18px; border-radius: 9px; text-decoration: none;
+      white-space: nowrap; transition: border-color .2s, color .2s;
+    }
+    .btn-contribute:hover { border-color: #5eead4; color: #5eead4; }
+  </style>
+</head>
+<body>
+<div class="browser-window">
+  <div class="browser-titlebar">
+    <div class="traffic-lights">
+      <span class="tl red"></span><span class="tl yellow"></span><span class="tl green"></span>
+    </div>
+    <div class="browser-tab">
+      <img class="tab-favicon" src="/favicon.svg" alt="" />
+      <span class="tab-title">Free Cybersecurity Prompts — SecureLayer</span>
+      <span class="tab-close">&times;</span>
+    </div>
+    <span class="tab-add">+</span>
+    <span class="tab-chevron">&#9660;</span>
+  </div>
+  <div class="browser-navbar">
+    <span class="nav-icon nav-back"><svg viewBox="0 0 24 24" fill="none"><path d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+    <span class="nav-icon nav-forward disabled"><svg viewBox="0 0 24 24" fill="none"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+    <span class="nav-icon nav-reload"><svg viewBox="0 0 24 24" fill="none"><path d="M4 12a8 8 0 0 1 14-5.3M20 12a8 8 0 0 1-14 5.3M4 4v5h5M20 20v-5h-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+    <span class="nav-icon nav-bookmark"><svg viewBox="0 0 24 24" fill="none"><path d="M6 3h12a1 1 0 0 1 1 1v17l-7-4-7 4V4a1 1 0 0 1 1-1Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg></span>
+    <div class="address-pill">
+      <svg viewBox="0 0 24 24" fill="none"><path d="M4 6h16M7 12h10M10 18h4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      <span class="addr-text">securelayer.co<span class="addr-path">/free-cybersecurity-ai-prompts/</span></span>
+    </div>
+    <span class="nav-divider"></span>
+    <img class="nav-brave" src="/images/dock-icons/brave.png" alt="Brave" />
+    <span class="nav-menu"><svg viewBox="0 0 24 24" fill="none"><path d="M4 6h16M4 12h16M4 18h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>
+  </div>
+  <div class="browser-body">
 
     <div class="page-hero">
       <div class="hero-badge">
@@ -32,18 +261,6 @@ const categories = [...new Set(freePrompts.map(p => p.data.category))].sort();
       </div>
     </div>
 
-    {categories.length > 1 && (
-      <div class="filter-bar">
-        <span class="filter-label">Category:</span>
-        <div class="filter-pills">
-          <button class="pill active" data-filter="all">All</button>
-          {categories.map(cat => (
-            <button class="pill" data-filter={cat}>{cat}</button>
-          ))}
-        </div>
-      </div>
-    )}
-
     <div class="prompts-grid" id="prompts-grid">
       {freePrompts.map(prompt => (
         <div class="card" data-category={prompt.data.category}>
@@ -54,8 +271,8 @@ const categories = [...new Set(freePrompts.map(p => p.data.category))].sort();
               {prompt.data.tested && (
                 <span class="badge-tested">
                   <svg width="11" height="11" viewBox="0 0 16 16" fill="none">
-                    <path d="M8 1L2 4v4c0 3.3 2.5 6.4 6 7 3.5-.6 6-3.7 6-7V4L8 1z" fill="#22c55e" opacity=".3"/>
-                    <path d="M6 8l2 2 3-3" stroke="#22c55e" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M8 1L2 4v4c0 3.3 2.5 6.4 6 7 3.5-.6 6-3.7 6-7V4L8 1z" fill="#4ade80" opacity=".3"/>
+                    <path d="M6 8l2 2 3-3" stroke="#4ade80" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                   </svg>
                   Tested
                 </span>
@@ -109,174 +326,7 @@ const categories = [...new Set(freePrompts.map(p => p.data.category))].sort();
       </div>
     </div>
 
-  </main>
-</Layout>
-
-<script is:inline src="/scripts/prompts-filter.js"></script>
-
-<style>
-  main { padding-top: 64px; }
-
-  .page-hero {
-    max-width: 640px;
-    margin: 0 auto;
-    padding: 72px 24px 48px;
-    text-align: center;
-  }
-  .hero-badge {
-    display: inline-flex; align-items: center; gap: 8px;
-    background: rgba(34,197,94,0.1); border: 1px solid rgba(34,197,94,0.2);
-    color: var(--green); font-size: 0.7rem; font-weight: 600;
-    letter-spacing: 0.08em; text-transform: uppercase;
-    padding: 5px 14px; border-radius: 100px; margin-bottom: 24px;
-  }
-  .badge-dot { width: 6px; height: 6px; background: var(--green); border-radius: 50%; animation: pulse 2s infinite; }
-  @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
-  .page-hero h1 { font-family: var(--font-head); font-size: clamp(1.6rem, 4vw, 2.4rem); font-weight: 700; color: var(--white); margin-bottom: 12px; }
-  .page-hero p { color: var(--muted); font-size: 0.95rem; margin-bottom: 20px; }
-  .page-hero code { font-family: var(--font-mono); font-size: 0.85em; background: var(--bg3); border: 1px solid var(--border); padding: 1px 5px; border-radius: 4px; color: var(--cyan); }
-  .hero-meta { font-size: 0.8rem; color: var(--muted); }
-  .hero-meta .sep { margin: 0 6px; opacity: 0.4; }
-  .hero-meta strong { color: var(--green); }
-
-  /* FILTER */
-  .filter-bar {
-    max-width: 1100px; margin: 0 auto 28px; padding: 0 24px;
-    display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
-  }
-  .filter-label { font-size: 0.78rem; color: var(--muted); font-weight: 500; white-space: nowrap; }
-  .filter-pills { display: flex; gap: 8px; flex-wrap: wrap; }
-  .pill {
-    background: var(--bg2); border: 1px solid var(--border); color: var(--muted);
-    font-size: 0.75rem; font-weight: 500; padding: 4px 13px; border-radius: 100px;
-    cursor: pointer; transition: all 0.15s; font-family: var(--font);
-  }
-  .pill:hover { border-color: var(--cyan); color: var(--text); }
-  .pill.active { background: var(--cyan-dim); border-color: rgba(56,189,248,0.4); color: var(--cyan); }
-
-  /* GRID */
-  .prompts-grid {
-    max-width: 1100px; margin: 0 auto;
-    padding: 0 24px 80px;
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 16px;
-    align-items: start;
-  }
-
-  /* CARD */
-  .card {
-    background: var(--bg2);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 18px;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    transition: border-color 0.2s;
-  }
-  .card:hover { border-color: rgba(56,189,248,0.25); }
-
-  .card-top { display: flex; align-items: center; justify-content: space-between; }
-  .card-badges { display: flex; align-items: center; gap: 6px; }
-
-  .badge-tier.free {
-    background: rgba(34,197,94,0.12); color: var(--green);
-    border: 1px solid rgba(34,197,94,0.2);
-    font-size: 0.65rem; font-weight: 700; letter-spacing: 0.06em;
-    text-transform: uppercase; padding: 2px 8px; border-radius: 100px;
-  }
-  .badge-tested {
-    display: inline-flex; align-items: center; gap: 3px;
-    font-size: 0.68rem; color: var(--green); font-weight: 500;
-  }
-  .badge-tokens {
-    font-size: 0.68rem; color: var(--muted);
-    background: var(--bg3); border: 1px solid var(--border2);
-    padding: 2px 7px; border-radius: 5px;
-  }
-
-  .card-title {
-    font-family: var(--font-head); font-size: 0.9rem;
-    font-weight: 600; color: var(--white); line-height: 1.4;
-  }
-
-  .card-meta { display: flex; align-items: center; gap: 6px; }
-  .badge-cat {
-    font-size: 0.68rem; color: var(--cyan); background: var(--cyan-dim);
-    border: 1px solid rgba(56,189,248,0.15); padding: 2px 7px; border-radius: 5px;
-  }
-  .badge-expertise {
-    font-size: 0.68rem; color: var(--purple);
-    background: rgba(167,139,250,0.08); border: 1px solid rgba(167,139,250,0.15);
-    padding: 2px 7px; border-radius: 5px;
-  }
-
-  .card-tags { display: flex; gap: 5px; flex-wrap: wrap; }
-  .tag {
-    font-size: 0.65rem; color: var(--muted);
-    background: var(--bg3); border: 1px solid var(--border2);
-    padding: 1px 7px; border-radius: 4px;
-  }
-
-  /* ACTIONS */
-  .card-actions { display: flex; flex-direction: column; gap: 0; margin-top: 4px; }
-
-  .btn-copy {
-    display: inline-flex; align-items: center; gap: 6px;
-    align-self: flex-start;
-    background: var(--cyan-dim); border: 1px solid rgba(56,189,248,0.25);
-    color: var(--cyan); font-size: 0.78rem; font-weight: 500;
-    padding: 6px 13px; border-radius: 7px; cursor: pointer;
-    transition: background 0.2s; font-family: var(--font); margin-bottom: 8px;
-  }
-  .btn-copy:hover { background: rgba(56,189,248,0.2); }
-
-  /* EXPAND */
-  .prompt-details { border-top: 1px solid var(--border); padding-top: 10px; }
-  .prompt-details summary {
-    font-size: 0.75rem; color: var(--muted); cursor: pointer;
-    list-style: none; display: flex; align-items: center; gap: 5px;
-    user-select: none; transition: color 0.15s;
-  }
-  .prompt-details summary::-webkit-details-marker { display: none; }
-  .prompt-details summary::before {
-    content: '▶';
-    font-size: 0.55rem;
-    transition: transform 0.15s;
-    display: inline-block;
-  }
-  .prompt-details[open] summary::before { transform: rotate(90deg); }
-  .prompt-details summary:hover { color: var(--text); }
-  .prompt-details[open] summary { color: var(--text); margin-bottom: 12px; }
-
-  .prompt-body {
-    font-family: var(--font-mono); font-size: 0.75rem; line-height: 1.7;
-    color: #cbd5e1; background: #0a0f1a; padding: 14px;
-    border-radius: 8px; border: 1px solid var(--border);
-    overflow-x: auto; white-space: pre-wrap; word-break: break-word;
-    margin-bottom: 8px;
-  }
-  .tested-note { font-size: 0.7rem; color: var(--muted); }
-
-  /* CONTRIBUTE */
-  .contribute-banner {
-    background: var(--bg2); border-top: 1px solid var(--border);
-    border-bottom: 1px solid var(--border); padding: 48px 24px;
-  }
-  .contribute-inner {
-    max-width: 1100px; margin: 0 auto;
-    display: flex; align-items: center; justify-content: space-between;
-    gap: 32px; flex-wrap: wrap;
-  }
-  .contribute-inner h3 { font-family: var(--font-head); font-size: 1rem; color: var(--white); margin-bottom: 6px; }
-  .contribute-inner p { color: var(--muted); font-size: 0.875rem; max-width: 500px; }
-  .btn-contribute {
-    display: inline-flex; align-items: center; gap: 8px;
-    background: var(--bg3); border: 1px solid var(--border);
-    color: var(--text); font-size: 0.875rem; font-weight: 500;
-    padding: 10px 18px; border-radius: 9px; text-decoration: none;
-    white-space: nowrap; transition: border-color 0.2s, color 0.2s;
-  }
-  .btn-contribute:hover { border-color: var(--cyan); color: var(--cyan); }
-</style>
+  </div>
+</div>
+</body>
+</html>

@@ -1,15 +1,297 @@
----
-import Layout from '../layouts/Layout.astro';
----
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GitHub Security Assessment — SecureLayer</title>
+  <meta name="description" content="Pre-audited open-source repositories scored across 6 security checks. See which tools are safe to install — updated weekly." />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-<Layout
-  title="GitHub Security Assessment — SecureLayer"
-  description="Pre-audited open-source repositories scored across 6 security checks. See which tools are safe to install — updated weekly."
->
-  <main>
+    body {
+      background: #0a0f0f;
+      color: #e0e0e0;
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      font-size: 14px;
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    /* ── Browser chrome (Brave) ── */
+    .browser-window { min-height: 100vh; display: flex; flex-direction: column; }
+
+    .browser-titlebar {
+      display: flex; align-items: center; gap: 14px;
+      background: #170f20; padding: 10px 16px 0;
+      border-bottom: 1px solid #2a2038;
+    }
+    .traffic-lights { display: flex; gap: 8px; padding-bottom: 10px; flex-shrink: 0; }
+    .tl { width: 12px; height: 12px; border-radius: 50%; }
+    .tl.red { background: #ff5f57; }
+    .tl.yellow { background: #febc2e; }
+    .tl.green { background: #28c840; }
+
+    .browser-tab {
+      display: flex; align-items: center; gap: 8px;
+      background: #241a30; border-radius: 8px 8px 0 0;
+      padding: 8px 12px; max-width: 260px;
+    }
+    .tab-favicon { width: 15px; height: 15px; flex-shrink: 0; }
+    .tab-title { font-size: 12.5px; color: #e4dcf0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .tab-close { margin-left: auto; color: #7a6f8c; font-size: 15px; line-height: 1; flex-shrink: 0; }
+    .tab-add { color: #7a6f8c; font-size: 18px; padding: 0 10px 10px; line-height: 1; align-self: center; }
+    .tab-chevron { color: #7a6f8c; font-size: 11px; margin-left: auto; padding-bottom: 10px; align-self: center; }
+
+    .browser-navbar {
+      display: flex; align-items: center; gap: 14px;
+      background: #1d1428; padding: 10px 16px;
+      border-bottom: 1px solid #2a2038;
+    }
+    .nav-icon { color: #8a7fa0; flex-shrink: 0; display: flex; align-items: center; }
+    .nav-icon svg { width: 17px; height: 17px; }
+    .nav-icon.disabled { color: #453b56; }
+    .address-pill {
+      flex: 1; display: flex; align-items: center; gap: 8px;
+      background: #2a2038; border-radius: 7px; padding: 7px 14px;
+      max-width: 640px; margin: 0 auto;
+    }
+    .address-pill svg { width: 14px; height: 14px; color: #8a7fa0; flex-shrink: 0; }
+    .addr-text { font-size: 13px; color: #e4dcf0; }
+    .addr-path { color: #8a7fa0; }
+    .nav-divider { width: 1px; height: 20px; background: #362a48; flex-shrink: 0; }
+    .nav-brave { width: 20px; height: 20px; flex-shrink: 0; }
+    .nav-menu svg { width: 18px; height: 18px; }
+
+    .browser-body { flex: 1; }
+
+    /* ── Hero ── */
+    .assess-hero { max-width: 800px; margin: 0 auto; padding: 48px 24px 40px; text-align: center; }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(94,234,212,.1); border: 1px solid rgba(94,234,212,.2);
+      color: #5eead4; font-size: .7rem; font-weight: 600;
+      letter-spacing: .08em; text-transform: uppercase;
+      padding: 5px 14px; border-radius: 100px; margin-bottom: 20px;
+    }
+    .assess-hero h1 { font-size: clamp(1.6rem, 3.6vw, 2.2rem); font-weight: 700; color: #fff; line-height: 1.15; margin-bottom: 16px; }
+    .assess-hero h1 span { color: #5eead4; }
+    .assess-hero-sub { color: #999; font-size: .9375rem; max-width: 560px; margin: 0 auto; line-height: 1.6; }
+
+    /* ── Layout ── */
+    .assess-wrap  { max-width: 860px; margin: 0 auto; padding: 0 24px 48px; }
+    .assess-body-hidden { display: none; }
+    .assess-status { color: #888; font-size: .875rem; text-align: center; padding: 48px 0; }
+
+    /* ── Grade group ── */
+    .grade-group { margin-bottom: 36px; }
+    .grade-group-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid #1a3030;
+    }
+    .grade-letter {
+      font-size: .875rem;
+      font-weight: 700;
+      min-width: 34px;
+      height: 26px;
+      border-radius: 6px;
+      padding: 0 5px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      letter-spacing: -.5px;
+    }
+    .grade-label { font-size: .8125rem; font-weight: 600; color: #888; }
+    .grade-count {
+      font-size: .7rem;
+      color: #888;
+      background: #0d1a1a;
+      border: 1px solid #1a3030;
+      border-radius: 10px;
+      padding: 1px 7px;
+      margin-left: auto;
+    }
+    .grade-letter-below {
+      color: #9ca3af;
+      background: rgba(156,163,175,.14);
+      font-size: .75rem;
+      letter-spacing: -.25px;
+    }
+
+    .grade-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 6px;
+    }
+    @media (max-width: 600px) { .grade-grid { grid-template-columns: 1fr; } }
+
+    /* ── Compact cards ── */
+    .assess-card {
+      background: #0d1a1a;
+      border: 1px solid #1a3030;
+      border-radius: 10px;
+      overflow: hidden;
+      cursor: pointer;
+      transition: border-color .15s;
+    }
+    .assess-card:hover   { border-color: rgba(94,234,212,.35); }
+    .assess-card.expanded { border-color: rgba(94,234,212,.5); }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 14px;
+    }
+    .card-main  { flex: 1; min-width: 0; }
+    .card-repo  {
+      font-size: .8125rem;
+      font-weight: 700;
+      color: #5eead4;
+      text-decoration: none;
+      display: block;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .card-repo:hover { text-decoration: underline; }
+
+    .card-chips-row { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 4px; }
+    .card-chip {
+      font-size: .65rem;
+      color: #888;
+      background: #142424;
+      border: 1px solid #1a3030;
+      border-radius: 3px;
+      padding: 1px 5px;
+    }
+
+    .card-expand { font-size: .7rem; color: #888; flex-shrink: 0; }
+
+    /* ── Footer bar (always visible) ── */
+    .card-footer-bar {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      padding: 8px 14px 10px;
+      border-top: 1px solid #1a3030;
+      gap: 8px;
+    }
+    .card-date  { font-size: .6rem; color: #888; align-self: flex-end; }
+    .card-footer-right { display: flex; flex-direction: column; align-items: flex-end; gap: 4px; }
+    .card-dots      { display: flex; gap: 3px; align-items: center; }
+    .card-dot       { width: 7px; height: 7px; border-radius: 50%; }
+    .card-dot-locked { filter: blur(1.5px); opacity: .45; }
+    .card-score-val {
+      font-size: .7rem;
+      color: #888;
+      white-space: nowrap;
+    }
+
+    /* ── Expanded details ── */
+    .card-details { border-top: 1px solid #1a3030; }
+    .card-desc-row {
+      font-size: .75rem;
+      color: #888;
+      padding: 8px 14px;
+      border-bottom: 1px solid #1a3030;
+      line-height: 1.5;
+    }
+    .check-row-sm {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 7px 14px;
+      border-bottom: 1px solid #1a3030;
+      font-size: .75rem;
+    }
+    .check-row-sm:last-child { border-bottom: none; }
+    .check-icon-sm { font-size: .8rem; min-width: 14px; }
+    .check-row-sm.pass .check-icon-sm { color: #4ade80; }
+    .check-row-sm.fail .check-icon-sm { color: #f87171; }
+    .check-row-sm.warn .check-icon-sm { color: #f59e0b; }
+    .check-name-sm { flex: 1; color: #e0e0e0; }
+    .check-row-sm.fail .check-name-sm { color: #888; }
+    .check-pts { font-size: .7rem; color: #888; white-space: nowrap; }
+
+    /* ── Live scan CTA ── */
+    .livescan-cta { max-width: 860px; margin: 0 auto; padding: 40px 24px 64px; border-top: 1px solid #1a3030; }
+    .livescan-inner { display: flex; align-items: center; justify-content: space-between; gap: 32px; background: #0d1a1a; border: 1px solid #1a3030; border-radius: 12px; padding: 28px 32px; }
+    .livescan-eyebrow { font-size: .7rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: #5eead4; margin-bottom: 8px; }
+    .livescan-text h2 { font-size: 1rem; font-weight: 700; color: #fff; margin-bottom: 8px; }
+    .livescan-text p  { font-size: .8125rem; color: #999; max-width: 480px; line-height: 1.6; }
+    .livescan-btn { flex-shrink: 0; background: none; border: 1px solid #1a3030; border-radius: 8px; color: #e0e0e0; font-size: .8125rem; font-weight: 700; padding: 10px 20px; text-decoration: none; white-space: nowrap; transition: border-color .15s, color .15s; }
+    .livescan-btn:hover { border-color: #5eead4; color: #5eead4; }
+    @media (max-width: 600px) { .livescan-inner { flex-direction: column; align-items: flex-start; padding: 20px; } }
+
+    /* ── Locked CTA row (D/F expanded details) ── */
+    .check-row-locked { background: rgba(251,146,60,.06); border-top: 1px dashed rgba(251,146,60,.3) !important; }
+    .check-row-locked .check-name-sm { color: #888; font-style: italic; }
+    .locked-cta {
+      display: block;
+      padding: 9px 14px;
+      font-size: .75rem;
+      font-weight: 600;
+      color: #fb923c;
+      text-decoration: none;
+      border-top: 1px solid #1a3030;
+    }
+    .locked-cta:hover { text-decoration: underline; }
+
+    /* ── Incident chip + row ── */
+    .chip-incident { color: #f87171 !important; border-color: rgba(248,113,113,.35) !important; }
+    .incident-row { background: rgba(239,68,68,.08); }
+    .incident-row .check-icon-sm { color: #f87171; }
+    .incident-row .check-name-sm { color: #fca5a5; font-weight: 600; }
+    .incident-pts { color: #f87171 !important; font-weight: 700; }
+
+    /* ── OpenSSF chip + supplementary row (in expanded details) ── */
+    .chip-openssf { color: #a78bfa !important; border-color: rgba(167,139,250,.35) !important; }
+    .openssf-row .check-icon-sm { color: #a78bfa; }
+    .openssf-row .check-name-sm { color: #888; font-style: italic; }
+    .openssf-row { border-top: 1px dashed #1a3030; }
+
+    /* ── Note ── */
+    .assess-note { max-width: 860px; margin: 0 auto; padding: 0 24px 64px; color: #888; font-size: .7rem; }
+  </style>
+</head>
+<body>
+<div class="browser-window">
+  <div class="browser-titlebar">
+    <div class="traffic-lights">
+      <span class="tl red"></span><span class="tl yellow"></span><span class="tl green"></span>
+    </div>
+    <div class="browser-tab">
+      <img class="tab-favicon" src="/favicon.svg" alt="" />
+      <span class="tab-title">GitHub Security Assessment — SecureLayer</span>
+      <span class="tab-close">&times;</span>
+    </div>
+    <span class="tab-add">+</span>
+    <span class="tab-chevron">&#9660;</span>
+  </div>
+  <div class="browser-navbar">
+    <span class="nav-icon nav-back"><svg viewBox="0 0 24 24" fill="none"><path d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+    <span class="nav-icon nav-forward disabled"><svg viewBox="0 0 24 24" fill="none"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+    <span class="nav-icon nav-reload"><svg viewBox="0 0 24 24" fill="none"><path d="M4 12a8 8 0 0 1 14-5.3M20 12a8 8 0 0 1-14 5.3M4 4v5h5M20 20v-5h-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+    <span class="nav-icon nav-bookmark"><svg viewBox="0 0 24 24" fill="none"><path d="M6 3h12a1 1 0 0 1 1 1v17l-7-4-7 4V4a1 1 0 0 1 1-1Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg></span>
+    <div class="address-pill">
+      <svg viewBox="0 0 24 24" fill="none"><path d="M4 6h16M7 12h10M10 18h4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      <span class="addr-text">securelayer.co<span class="addr-path">/github-security-assessment/</span></span>
+    </div>
+    <span class="nav-divider"></span>
+    <img class="nav-brave" src="/images/dock-icons/brave.png" alt="Brave" />
+    <span class="nav-menu"><svg viewBox="0 0 24 24" fill="none"><path d="M4 6h16M4 12h16M4 18h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>
+  </div>
+  <div class="browser-body">
 
     <div class="assess-hero">
-      <div class="section-label">Security Intelligence</div>
+      <div class="hero-badge">Security Intelligence</div>
       <h1>Repository Security <span>Assessments</span></h1>
       <p class="assess-hero-sub">
         We audit popular open-source repos across 8 security checks before you install them.
@@ -37,218 +319,8 @@ import Layout from '../layouts/Layout.astro';
 
     <p class="assess-note">ⓘ Scores pre-computed weekly using the GitHub API and OpenSSF Scorecard. A–B grades are shown individually. C through F repos are grouped under "Below Security Baseline" — specific gap details are kept private to avoid creating a targeted attack surface. An active security incident deducts 10 pts from the base score.</p>
 
-  </main>
-</Layout>
-
-<style is:global>
-  /* ── Hero ── */
-  .assess-hero {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 120px 24px 48px;
-    text-align: center;
-  }
-  .assess-hero h1 {
-    font-family: var(--font-head);
-    font-size: clamp(1.75rem, 4vw, 2.5rem);
-    font-weight: 700;
-    color: var(--white);
-    line-height: 1.15;
-    margin-bottom: 16px;
-  }
-  .assess-hero h1 span { color: var(--cyan); }
-  .assess-hero-sub {
-    color: var(--muted);
-    font-size: .9375rem;
-    max-width: 560px;
-    margin: 0 auto;
-    line-height: 1.6;
-  }
-
-  /* ── Layout ── */
-  .assess-wrap  { max-width: 860px; margin: 0 auto; padding: 0 24px 48px; }
-  .assess-body-hidden { display: none; }
-  .assess-status { color: var(--muted); font-size: .875rem; text-align: center; padding: 48px 0; }
-
-  /* ── Grade group ── */
-  .grade-group { margin-bottom: 36px; }
-  .grade-group-header {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 10px;
-    padding-bottom: 8px;
-    border-bottom: 1px solid var(--border);
-  }
-  .grade-letter {
-    font-family: var(--font-head);
-    font-size: .875rem;
-    font-weight: 700;
-    min-width: 34px;
-    height: 26px;
-    border-radius: 6px;
-    padding: 0 5px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-    letter-spacing: -.5px;
-  }
-  .grade-label { font-size: .8125rem; font-weight: 600; color: var(--muted); }
-  .grade-count {
-    font-size: .7rem;
-    font-family: var(--font-mono);
-    color: var(--muted);
-    background: var(--bg2);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 1px 7px;
-    margin-left: auto;
-  }
-  .grade-letter-below {
-    color: #6b7280;
-    background: rgba(107,114,128,.12);
-    font-size: .75rem;
-    letter-spacing: -.25px;
-  }
-
-  .grade-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 6px;
-  }
-  @media (max-width: 600px) { .grade-grid { grid-template-columns: 1fr; } }
-
-  /* ── Compact cards ── */
-  .assess-card {
-    background: var(--bg2);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    overflow: hidden;
-    cursor: pointer;
-    transition: border-color .15s;
-  }
-  .assess-card:hover   { border-color: rgba(167,139,250,.3); }
-  .assess-card.expanded { border-color: var(--cyan-dim); }
-
-  .card-header {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 10px 14px;
-  }
-  .card-main  { flex: 1; min-width: 0; }
-  .card-repo  {
-    font-family: var(--font-head);
-    font-size: .8125rem;
-    font-weight: 700;
-    color: var(--cyan);
-    text-decoration: none;
-    display: block;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-  .card-repo:hover { text-decoration: underline; }
-
-  .card-chips-row { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 4px; }
-  .card-chip {
-    font-size: .65rem;
-    color: var(--muted);
-    background: var(--bg3);
-    border: 1px solid var(--border);
-    border-radius: 3px;
-    padding: 1px 5px;
-  }
-
-  .card-expand { font-size: .7rem; color: var(--muted); flex-shrink: 0; }
-
-  /* ── Footer bar (always visible) ── */
-  .card-footer-bar {
-    display: flex;
-    align-items: flex-end;
-    justify-content: space-between;
-    padding: 8px 14px 10px;
-    border-top: 1px solid var(--border);
-    gap: 8px;
-  }
-  .card-date  { font-size: .6rem; color: var(--muted); font-family: var(--font-mono); align-self: flex-end; }
-  .card-footer-right { display: flex; flex-direction: column; align-items: flex-end; gap: 4px; }
-  .card-dots      { display: flex; gap: 3px; align-items: center; }
-  .card-dot       { width: 7px; height: 7px; border-radius: 50%; }
-  .card-dot-locked { filter: blur(1.5px); opacity: .45; }
-  .card-score-val {
-    font-family: var(--font-mono);
-    font-size: .7rem;
-    color: var(--muted);
-    white-space: nowrap;
-  }
-
-  /* ── Expanded details ── */
-  .card-details { border-top: 1px solid var(--border); }
-  .card-desc-row {
-    font-size: .75rem;
-    color: var(--muted);
-    padding: 8px 14px;
-    border-bottom: 1px solid var(--border);
-    line-height: 1.5;
-  }
-  .check-row-sm {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 7px 14px;
-    border-bottom: 1px solid var(--border);
-    font-size: .75rem;
-  }
-  .check-row-sm:last-child { border-bottom: none; }
-  .check-icon-sm { font-size: .8rem; min-width: 14px; }
-  .check-row-sm.pass .check-icon-sm { color: #22c55e; }
-  .check-row-sm.fail .check-icon-sm { color: #f87171; }
-  .check-row-sm.warn .check-icon-sm { color: #f59e0b; }
-  .check-name-sm { flex: 1; color: var(--text); }
-  .check-row-sm.fail .check-name-sm { color: var(--muted); }
-  .check-pts { font-family: var(--font-mono); font-size: .7rem; color: var(--muted); white-space: nowrap; }
-
-  /* ── Live scan CTA ── */
-  .livescan-cta { max-width: 860px; margin: 0 auto; padding: 40px 24px 64px; border-top: 1px solid var(--border); }
-  .livescan-inner { display: flex; align-items: center; justify-content: space-between; gap: 32px; background: var(--bg2); border: 1px solid var(--border); border-radius: 12px; padding: 28px 32px; }
-  .livescan-eyebrow { font-size: .7rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--cyan); margin-bottom: 8px; }
-  .livescan-text h2 { font-size: 1rem; font-weight: 700; color: var(--white); font-family: var(--font-head); margin-bottom: 8px; }
-  .livescan-text p  { font-size: .8125rem; color: var(--muted); max-width: 480px; line-height: 1.6; }
-  .livescan-btn { flex-shrink: 0; background: none; border: 1px solid var(--border2); border-radius: 8px; color: var(--text); font-size: .8125rem; font-family: var(--font-head); font-weight: 700; padding: 10px 20px; text-decoration: none; white-space: nowrap; transition: border-color .15s, color .15s; }
-  .livescan-btn:hover { border-color: var(--cyan); color: var(--cyan); }
-  @media (max-width: 600px) { .livescan-inner { flex-direction: column; align-items: flex-start; padding: 20px; } }
-
-  /* ── Locked CTA row (D/F expanded details) ── */
-  .check-row-locked { background: rgba(251,146,60,.05); border-top: 1px dashed rgba(251,146,60,.25) !important; }
-  .check-row-locked .check-name-sm { color: var(--muted); font-style: italic; }
-  .locked-cta {
-    display: block;
-    padding: 9px 14px;
-    font-size: .75rem;
-    font-weight: 600;
-    color: #fb923c;
-    text-decoration: none;
-    border-top: 1px solid var(--border);
-  }
-  .locked-cta:hover { text-decoration: underline; }
-
-  /* ── Incident chip + row ── */
-  .chip-incident { color: #f87171 !important; border-color: rgba(248,113,113,.35) !important; }
-  .incident-row { background: rgba(239,68,68,.06); }
-  .incident-row .check-icon-sm { color: #f87171; }
-  .incident-row .check-name-sm { color: #fca5a5; font-weight: 600; }
-  .incident-pts { color: #f87171 !important; font-weight: 700; }
-
-  /* ── OpenSSF chip + supplementary row (in expanded details) ── */
-  .chip-openssf { color: #a78bfa !important; border-color: rgba(167,139,250,.3) !important; }
-  .openssf-row .check-icon-sm { color: #a78bfa; }
-  .openssf-row .check-name-sm { color: var(--muted); font-style: italic; }
-  .openssf-row { border-top: 1px dashed var(--border); }
-
-  /* ── Note ── */
-  .assess-note { max-width: 860px; margin: 0 auto; padding: 0 24px 64px; color: var(--muted); font-size: .7rem; }
-</style>
-
+  </div>
+</div>
 <script is:inline src="/scripts/assessment.js"></script>
+</body>
+</html>
