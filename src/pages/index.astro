@@ -78,7 +78,7 @@ const logoMark = logoSource
       </div>
 
       <!-- WIDGET · file -->
-      <div class="widget widget-file pos-mr">
+      <a class="widget widget-file pos-mr" href="/docs/securelayer.co.pdf" target="_blank" rel="noopener">
         <div class="pdf-page">
           <div class="pdf-thumb"></div>
           <div class="pdf-badge">
@@ -87,7 +87,7 @@ const logoMark = logoSource
           <div class="pdf-label">PDF</div>
         </div>
         <span>Make-Security-Pay-For-Itself.pdf</span>
-      </div>
+      </a>
 
       <!-- WIDGET · quick-look preview (revealed on menu-bar hover) -->
       <div class="widget widget-preview pos-bl" id="preview-window">
@@ -197,7 +197,7 @@ const logoMark = logoSource
   .widget-todo-item { display: flex; align-items: center; gap: 10px; font-size: .74rem; color: rgba(0,0,0,.82); padding: 7px 0; }
   .todo-check { width: 14px; height: 14px; border-radius: 50%; border: 1.3px solid rgba(0,0,0,.25); flex-shrink: 0; }
 
-  .widget-file { display: flex; flex-direction: column; align-items: center; gap: 6px; background: transparent; border: none; box-shadow: none; overflow: visible; text-align: center; }
+  .widget-file { display: flex; flex-direction: column; align-items: center; gap: 6px; background: transparent; border: none; box-shadow: none; overflow: visible; text-align: center; text-decoration: none; cursor: pointer; }
   .pdf-page { width: 62px; height: 76px; background: #fdfdfd; border-radius: 2px; position: relative; box-shadow: 0 4px 10px rgba(0,0,0,.22); }
   .pdf-page::before { content: ""; position: absolute; top: 0; right: 0; width: 0; height: 0; border-style: solid; border-width: 0 14px 14px 0; border-color: transparent #dcdcdc transparent transparent; }
   .pdf-thumb { position: absolute; top: 12px; left: 8px; right: 8px; height: 32px; border-radius: 2px; background: url('/images/wallpaper-beach.webp') center 60% / cover no-repeat; box-shadow: 0 0 0 1px rgba(0,0,0,.06); }
