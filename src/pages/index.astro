@@ -264,7 +264,9 @@ const logoMark = logoSource
     .pos-tl, .pos-tr, .pos-mr, .pos-bl { top: auto; left: auto; right: auto; bottom: auto; }
     .widget-preview { display: none; }
     .desktop { display: flex; flex-direction: column; padding: 24px 0; min-height: 0; }
-    .dock { position: relative; left: auto; bottom: auto; transform: none; width: 100%; border-radius: 0; background: rgba(23,20,15,.55); backdrop-filter: blur(10px); box-shadow: none; border: none; }
+    .dock { position: relative; left: auto; bottom: auto; transform: none; width: 100%; max-width: 100%; border-radius: 0; background: rgba(23,20,15,.55); backdrop-filter: blur(10px); box-shadow: none; border: none; gap: 6px; padding: 7px 10px; }
+    .dock-icon { width: 28px; height: 28px; padding: 4px; border-radius: 8px; }
+    .dock-sep { height: 20px; margin: 0 2px; }
   }
 </style>
 
