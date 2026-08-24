@@ -259,6 +259,14 @@
 
     /* ── Note ── */
     .assess-note { max-width: 860px; margin: 0 auto; padding: 0 24px 64px; color: #888; font-size: .7rem; }
+
+    /* ── Mobile: drop the icon row, keep tab + address pill only ── */
+    @media (max-width: 640px) {
+      .browser-tab { max-width: 140px; }
+      .tab-add, .tab-chevron { display: none; }
+      .nav-icon, .nav-divider, .nav-brave, .nav-fox, .nav-menu, .vpn-badge, .private-badge { display: none; }
+      .address-pill { max-width: none; margin: 0; }
+    }
   </style>
 </head>
 <body>

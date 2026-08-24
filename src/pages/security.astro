@@ -241,6 +241,14 @@
     .nav-menu svg { width: 18px; height: 18px; }
 
     .browser-body { flex: 1; }
+
+    /* ── Mobile: drop the icon row, keep tab + address pill only ── */
+    @media (max-width: 640px) {
+      .browser-tab { max-width: 140px; }
+      .tab-add, .tab-chevron { display: none; }
+      .nav-icon, .nav-divider, .nav-brave, .nav-fox, .nav-menu, .vpn-badge, .private-badge { display: none; }
+      .address-pill { max-width: none; margin: 0; }
+    }
   </style>
 </head>
 <body>

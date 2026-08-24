@@ -140,6 +140,14 @@
       transition: background .2s; text-decoration: none;
     }
     .pcard-link:hover { background: rgba(94,234,212,.18); text-decoration: none; }
+
+    /* ── Mobile: drop the icon row, keep tab + address pill only ── */
+    @media (max-width: 640px) {
+      .browser-tab { max-width: 140px; }
+      .tab-add, .tab-chevron { display: none; }
+      .nav-icon, .nav-divider, .nav-brave, .nav-fox, .nav-menu, .vpn-badge, .private-badge { display: none; }
+      .address-pill { max-width: none; margin: 0; }
+    }
   </style>
 </head>
 <body>

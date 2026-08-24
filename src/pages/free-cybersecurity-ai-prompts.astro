@@ -213,6 +213,14 @@ const freePrompts = (await getCollection('prompts', ({ data }) =>
       white-space: nowrap; transition: border-color .2s, color .2s;
     }
     .btn-contribute:hover { border-color: #5eead4; color: #5eead4; }
+
+    /* ── Mobile: drop the icon row, keep tab + address pill only ── */
+    @media (max-width: 640px) {
+      .browser-tab { max-width: 140px; }
+      .tab-add, .tab-chevron { display: none; }
+      .nav-icon, .nav-divider, .nav-brave, .nav-fox, .nav-menu, .vpn-badge, .private-badge { display: none; }
+      .address-pill { max-width: none; margin: 0; }
+    }
   </style>
 </head>
 <body>
