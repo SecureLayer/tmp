@@ -58,9 +58,9 @@ const logoMark = logoSource
       <div class="widget widget-todo pos-tr">
         <div class="widget-watermark todo-watermark" set:html={logoMark} />
         <div class="todo-bar">
-          <span class="todo-dot" style="background:#ff5f57;"></span>
-          <span class="todo-dot" style="background:#febc2e;"></span>
-          <span class="todo-dot" style="background:#28c840;"></span>
+          <span class="todo-dot dot-red"></span>
+          <span class="todo-dot dot-yellow"></span>
+          <span class="todo-dot dot-green"></span>
           <span class="todo-add">+</span>
         </div>
         <div class="todo-titlerow">
@@ -186,6 +186,9 @@ const logoMark = logoSource
   .widget-todo { background: #fdfdfd; border-color: rgba(0,0,0,.08); padding: 16px 18px 18px; max-width: 320px; }
   .todo-bar { display: flex; align-items: center; gap: 7px; margin-bottom: 14px; }
   .todo-dot { width: 10px; height: 10px; border-radius: 50%; }
+  .todo-dot.dot-red { background: #ff5f57; }
+  .todo-dot.dot-yellow { background: #febc2e; }
+  .todo-dot.dot-green { background: #28c840; }
   .todo-add { margin-left: auto; width: 20px; height: 20px; border-radius: 50%; border: 1px solid rgba(0,0,0,.15); color: rgba(0,0,0,.6); font-size: .8rem; display: flex; align-items: center; justify-content: center; }
   .todo-titlerow { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 8px; }
   .todo-title { font-family: var(--font-round); font-weight: 900; font-size: 1.3rem; color: #0a6cff; }

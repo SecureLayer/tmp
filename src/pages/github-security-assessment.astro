@@ -20,7 +20,7 @@ import Layout from '../layouts/Layout.astro';
     <!-- Grade groups rendered by JS -->
     <section class="assess-wrap">
       <div id="assess-status" class="assess-status">Loading assessments…</div>
-      <div id="assess-body" style="display:none"></div>
+      <div id="assess-body" class="assess-body-hidden"></div>
     </section>
 
     <!-- Live scan CTA -->
@@ -67,6 +67,7 @@ import Layout from '../layouts/Layout.astro';
 
   /* ── Layout ── */
   .assess-wrap  { max-width: 860px; margin: 0 auto; padding: 0 24px 48px; }
+  .assess-body-hidden { display: none; }
   .assess-status { color: var(--muted); font-size: .875rem; text-align: center; padding: 48px 0; }
 
   /* ── Grade group ── */
