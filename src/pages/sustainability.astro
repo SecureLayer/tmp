@@ -1,175 +1,289 @@
----
-import Layout from '../layouts/Layout.astro';
----
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sustainability — securelayer.co</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-<Layout
-  title="Environmental Posture — SecureLayer"
-  description="SecureLayer's environmental footprint: Digital Beacon A+, Website Carbon A+ (cleaner than 97% of pages globally), green hosting verified."
->
-  <main>
+    body {
+      background: #0a0f0f;
+      color: #e0e0e0;
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      font-size: 14px;
+      line-height: 1.6;
+      min-height: 100vh;
+    }
 
-    <div class="sus-hero">
-      <div class="section-label">Environmental Posture</div>
-      <h1>Green by <span>design</span></h1>
-      <p class="sus-sub">SecureLayer is a static site served from Cloudflare's CDN — no origin server, no database, minimal compute per visitor. Here is what the numbers say.</p>
+    .page { max-width: 1240px; margin: 0 auto; padding: 40px 24px 80px; }
+
+    a { color: inherit; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    .section-title { font-size: 13px; font-weight: 700; color: #888; letter-spacing: 0.8px; text-transform: uppercase; margin-bottom: 16px; }
+
+    .pipeline-card { background: #0d1a1a; border: 1px solid #1a3030; border-radius: 8px; padding: 24px; margin-bottom: 48px; }
+    .pipeline-checks { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; }
+    .check-item { display: flex; align-items: flex-start; gap: 10px; }
+    .check-icon { color: #4ade80; font-size: 14px; font-weight: 800; flex-shrink: 0; margin-top: 2px; }
+    .check-label strong { color: #e0e0e0; font-size: 12px; font-weight: 700; display: block; margin-bottom: 3px; }
+    .check-label .check-desc { font-size: 11px; color: #555; line-height: 1.5; }
+
+    /* ── Browser chrome (Firefox) ── */
+    .browser-window { min-height: 100vh; display: flex; flex-direction: column; }
+
+    .browser-titlebar {
+      display: flex; align-items: center; gap: 14px;
+      background: #1c1b22; padding: 10px 16px 0;
+      border-bottom: 1px solid #2f2e38;
+    }
+    .traffic-lights { display: flex; gap: 8px; padding-bottom: 10px; flex-shrink: 0; }
+    .tl { width: 12px; height: 12px; border-radius: 50%; }
+    .tl.red { background: #ff5f57; }
+    .tl.yellow { background: #febc2e; }
+    .tl.green { background: #28c840; }
+
+    .browser-tab {
+      display: flex; align-items: center; gap: 8px;
+      background: #2b2a33; border-radius: 8px 8px 0 0;
+      padding: 8px 12px; max-width: 260px;
+    }
+    .tab-favicon { width: 15px; height: 15px; flex-shrink: 0; }
+    .tab-title { font-size: 12.5px; color: #e8e6ee; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .tab-close { margin-left: auto; color: #8a8794; font-size: 15px; line-height: 1; flex-shrink: 0; }
+    .tab-add { color: #8a8794; font-size: 18px; padding: 0 10px 10px; line-height: 1; align-self: center; }
+    .tab-chevron { color: #8a8794; font-size: 11px; padding-bottom: 10px; align-self: center; }
+
+    .private-badge {
+      margin-left: auto; display: flex; align-items: center; gap: 6px;
+      color: #c689ff; font-size: 12px; padding-bottom: 10px; white-space: nowrap;
+    }
+    .private-badge svg { width: 15px; height: 15px; }
+
+    .browser-navbar {
+      display: flex; align-items: center; gap: 12px;
+      background: #2b2a33; padding: 10px 16px;
+      border-bottom: 1px solid #2f2e38;
+    }
+    .nav-icon { color: #9d9aa8; flex-shrink: 0; display: flex; align-items: center; }
+    .nav-icon svg { width: 17px; height: 17px; }
+    .nav-icon.disabled { color: #514f5c; }
+    .address-pill {
+      flex: 1; display: flex; align-items: center; gap: 8px;
+      background: #42414d; border-radius: 7px; padding: 7px 14px;
+      max-width: 640px; margin: 0 auto;
+    }
+    .address-pill svg { width: 14px; height: 14px; color: #9d9aa8; flex-shrink: 0; }
+    .addr-text { font-size: 13px; color: #e8e6ee; flex: 1; }
+    .addr-path { color: #9d9aa8; }
+    .addr-star { margin-left: auto; }
+    .vpn-badge {
+      display: flex; align-items: center; gap: 5px;
+      background: rgba(255,95,87,.12); border: 1px solid rgba(255,95,87,.35);
+      color: #ff8a80; font-size: 11px; font-weight: 700; letter-spacing: .04em;
+      padding: 4px 9px; border-radius: 5px; flex-shrink: 0;
+    }
+    .vpn-badge svg { width: 11px; height: 11px; }
+    .nav-fox { width: 20px; height: 20px; flex-shrink: 0; }
+    .nav-menu svg { width: 18px; height: 18px; }
+
+    .browser-body { flex: 1; }
+
+    /* ── free-prompts-style hero ── */
+    .page-hero { max-width: 640px; margin: 0 auto; padding: 8px 24px 40px; text-align: center; }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(74,222,128,.1); border: 1px solid rgba(74,222,128,.2);
+      color: #4ade80; font-size: .7rem; font-weight: 600;
+      letter-spacing: .08em; text-transform: uppercase;
+      padding: 5px 14px; border-radius: 100px; margin-bottom: 20px;
+    }
+    .badge-dot { width: 6px; height: 6px; background: #4ade80; border-radius: 50%; }
+    .page-hero h1 { font-size: clamp(1.4rem, 3.4vw, 2rem); font-weight: 700; color: #fff; margin-bottom: 10px; }
+    .page-hero p { color: #999; font-size: .875rem; margin-bottom: 16px; line-height: 1.6; }
+    .hero-meta { font-size: .78rem; color: #888; }
+    .hero-meta .sep { margin: 0 6px; opacity: .4; }
+    .hero-meta strong { color: #4ade80; }
+
+    /* ── free-prompts-style card grid ── */
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 320px));
+      justify-content: center;
+      gap: 16px;
+      margin-bottom: 48px;
+    }
+    .pcard {
+      background: #0d1a1a; border: 1px solid #1a3030; border-radius: 12px;
+      padding: 18px; display: flex; flex-direction: column; gap: 12px;
+      transition: border-color .2s;
+    }
+    .pcard:hover { border-color: rgba(94,234,212,.3); }
+    .pcard-top { display: flex; align-items: center; justify-content: space-between; }
+    .pcard-badge-verified {
+      background: rgba(74,222,128,.12); color: #4ade80; border: 1px solid rgba(74,222,128,.25);
+      font-size: .65rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase;
+      padding: 2px 8px; border-radius: 100px;
+    }
+    .pcard-date { font-size: .68rem; color: #666; background: #142424; border: 1px solid #1a3030; padding: 2px 7px; border-radius: 5px; }
+    .pcard-title { font-size: .9rem; font-weight: 600; color: #fff; line-height: 1.4; }
+    .pcard-meta { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+    .pcard-cat { font-size: .68rem; color: #5eead4; background: rgba(94,234,212,.08); border: 1px solid rgba(94,234,212,.15); padding: 2px 7px; border-radius: 5px; }
+    .pcard-tags { display: flex; gap: 5px; flex-wrap: wrap; }
+    .pcard-tag { font-size: .65rem; color: #888; background: #142424; border: 1px solid #1a3030; padding: 1px 7px; border-radius: 4px; }
+    .pcard-link {
+      display: inline-flex; align-items: center; gap: 6px; align-self: flex-start;
+      background: rgba(94,234,212,.08); border: 1px solid rgba(94,234,212,.25);
+      color: #5eead4; font-size: .78rem; font-weight: 500;
+      padding: 6px 13px; border-radius: 7px; margin-top: 2px;
+      transition: background .2s; text-decoration: none;
+    }
+    .pcard-link:hover { background: rgba(94,234,212,.18); text-decoration: none; }
+  </style>
+</head>
+<body>
+<div class="browser-window">
+  <div class="browser-titlebar">
+    <div class="traffic-lights">
+      <span class="tl red"></span><span class="tl yellow"></span><span class="tl green"></span>
+    </div>
+    <div class="browser-tab">
+      <img class="tab-favicon" src="/favicon.svg" alt="" />
+      <span class="tab-title">Sustainability — securelayer.co</span>
+      <span class="tab-close">&times;</span>
+    </div>
+    <span class="tab-add">+</span>
+    <span class="tab-chevron">&#9660;</span>
+    <span class="private-badge">
+      <svg viewBox="0 0 24 24" fill="none"><path d="M8 12a4 4 0 1 1 4 4c-1.5 0-2.5-1-4-1s-2.5 1-4 1a4 4 0 1 1 4-4Zm8 0a4 4 0 1 0 4 4c-1.5 0-2.5-1-4-1s-2.5 1-4 1a4 4 0 1 0 4-4Z" stroke="currentColor" stroke-width="1.6"/></svg>
+      Private browsing
+    </span>
+  </div>
+  <div class="browser-navbar">
+    <span class="nav-icon nav-sidebar"><svg viewBox="0 0 24 24" fill="none"><rect x="3" y="4" width="18" height="16" rx="2" stroke="currentColor" stroke-width="1.6"/><path d="M9 4v16" stroke="currentColor" stroke-width="1.6"/></svg></span>
+    <span class="nav-icon nav-back"><svg viewBox="0 0 24 24" fill="none"><path d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+    <span class="nav-icon nav-forward disabled"><svg viewBox="0 0 24 24" fill="none"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+    <span class="nav-icon nav-reload"><svg viewBox="0 0 24 24" fill="none"><path d="M4 12a8 8 0 0 1 14-5.3M20 12a8 8 0 0 1-14 5.3M4 4v5h5M20 20v-5h-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+    <div class="address-pill">
+      <svg viewBox="0 0 24 24" fill="none"><path d="M12 3l7 3v5c0 4.6-3 7.9-7 9-4-1.1-7-4.4-7-9V6l7-3Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="m9.5 12 1.8 1.8L15 10" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span class="addr-text">securelayer.co<span class="addr-path">/sustainability/</span></span>
+      <span class="addr-star"><svg viewBox="0 0 24 24" fill="none"><path d="m12 3 2.7 5.9 6.3.7-4.7 4.4 1.3 6.3L12 17.2l-5.6 3.1 1.3-6.3-4.7-4.4 6.3-.7L12 3Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg></span>
+    </div>
+    <span class="vpn-badge"><svg viewBox="0 0 24 24" fill="none"><path d="M18 6 6 18M6 6l12 12" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>VPN</span>
+    <span class="nav-icon nav-profile"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="3.3" stroke="currentColor" stroke-width="1.6"/><path d="M5 20c1.3-3.4 4-5 7-5s5.7 1.6 7 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></span>
+    <span class="nav-icon nav-ext"><svg viewBox="0 0 24 24" fill="none"><path d="M9 3h6v3.5a2 2 0 0 0 2 2H21v6h-3.5a2 2 0 0 0-2 2V21H9v-3.5a2 2 0 0 0-2-2H3v-6h3.5a2 2 0 0 0 2-2V3Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg></span>
+    <img class="nav-fox" src="/images/dock-icons/firefox.png" alt="Firefox" />
+    <span class="nav-menu"><svg viewBox="0 0 24 24" fill="none"><path d="M4 6h16M4 12h16M4 18h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>
+  </div>
+  <div class="browser-body">
+<div class="page">
+
+  <div class="page-hero">
+    <div class="hero-badge">
+      <span class="badge-dot"></span>
+      Green Hosting · Low Carbon · Verified
+    </div>
+    <h1>Green by design</h1>
+    <p>SecureLayer is a static site served from Cloudflare's CDN — no origin server, no database, minimal compute per visitor. Here is what the numbers say.</p>
+    <div class="hero-meta"><span>3</span> assessments <span class="sep">·</span> <strong>All verified</strong></div>
+  </div>
+
+  <div class="cards-grid">
+
+    <div class="pcard">
+      <div class="pcard-top">
+        <span class="pcard-badge-verified">A+</span>
+        <span class="pcard-date">Verified May 28, 2026</span>
+      </div>
+      <h3 class="pcard-title">Digital Beacon Carbon Report</h3>
+      <div class="pcard-meta">
+        <span class="pcard-cat">Carbon emissions</span>
+      </div>
+      <div class="pcard-tags">
+        <span class="pcard-tag">0.044g CO₂ first visit</span>
+        <span class="pcard-tag">0.003g return</span>
+        <span class="pcard-tag">143 KB</span>
+        <span class="pcard-tag">0ms server</span>
+      </div>
+      <a class="pcard-link" href="https://digitalbeacon.co/report/securelayer-co" target="_blank" rel="noopener noreferrer">View full report ↗</a>
     </div>
 
-    <!-- Score cards -->
-    <section class="sus-section">
-      <div class="sus-cards">
-
-        <div class="sus-card">
-          <div class="sus-card-top">
-            <div class="sus-grade grade-a">A+</div>
-            <div class="sus-card-meta">
-              <div class="sus-card-tool">Digital Beacon</div>
-              <div class="sus-card-date">Verified May 28, 2026</div>
-            </div>
-          </div>
-          <ul class="sus-metrics">
-            <li><span class="metric-label">CO₂ first visit</span><span class="metric-value">0.044 g</span></li>
-            <li><span class="metric-label">CO₂ return visit</span><span class="metric-value">0.003 g</span></li>
-            <li><span class="metric-label">Page weight</span><span class="metric-value">143 KB</span></li>
-            <li><span class="metric-label">Server response</span><span class="metric-value">0 ms</span></li>
-            <li><span class="metric-label">Green hosting</span><span class="metric-value pass">✓ Confirmed</span></li>
-          </ul>
-          <a class="sus-link" href="https://digitalbeacon.co/report/securelayer-co" target="_blank" rel="noopener">View full report ↗</a>
-        </div>
-
-        <div class="sus-card">
-          <div class="sus-card-top">
-            <div class="sus-grade grade-a">A+</div>
-            <div class="sus-card-meta">
-              <div class="sus-card-tool">Website Carbon</div>
-              <div class="sus-card-date">Verified May 27, 2026</div>
-            </div>
-          </div>
-          <ul class="sus-metrics">
-            <li><span class="metric-label">Global percentile</span><span class="metric-value">Top 3%</span></li>
-            <li><span class="metric-label">Cleaner than</span><span class="metric-value">97% of pages</span></li>
-            <li><span class="metric-label">Green hosting</span><span class="metric-value pass">✓ Confirmed</span></li>
-          </ul>
-          <a class="sus-link" href="https://www.websitecarbon.com/website/securelayer-co/" target="_blank" rel="noopener">View full report ↗</a>
-        </div>
-
-        <div class="sus-card">
-          <div class="sus-card-top">
-            <div class="sus-grade grade-a sus-grade-compact">GWF ✓</div>
-            <div class="sus-card-meta">
-              <div class="sus-card-tool">Green Web Foundation</div>
-              <div class="sus-card-date">Via Cloudflare CDN</div>
-            </div>
-          </div>
-          <ul class="sus-metrics">
-            <li><span class="metric-label">Infrastructure</span><span class="metric-value">Cloudflare CDN</span></li>
-            <li><span class="metric-label">Renewable energy</span><span class="metric-value pass">✓ Certified</span></li>
-            <li><span class="metric-label">Origin compute</span><span class="metric-value pass">Zero per visit</span></li>
-          </ul>
-          <a class="sus-link" href="https://www.thegreenwebfoundation.org/green-web-check/?url=securelayer.co" target="_blank" rel="noopener">Verify ↗</a>
-        </div>
-
+    <div class="pcard">
+      <div class="pcard-top">
+        <span class="pcard-badge-verified">A+</span>
+        <span class="pcard-date">Verified May 27, 2026</span>
       </div>
-    </section>
-
-    <!-- Why section -->
-    <section class="sus-section">
-      <div class="section-label">Why it's low</div>
-      <div class="sus-why">
-        <div class="why-item">
-          <div class="why-icon">⚡</div>
-          <div>
-            <div class="why-title">Static architecture</div>
-            <div class="why-desc">The entire site is pre-built HTML/CSS/JS. No server runs when you visit — pages are served cold from Cloudflare's global edge network.</div>
-          </div>
-        </div>
-        <div class="why-item">
-          <div class="why-icon">📦</div>
-          <div>
-            <div class="why-title">Pre-computed data</div>
-            <div class="why-desc">Security assessments are computed once weekly by a local scanner and stored in R2. Your browser fetches a single JSON file — no live GitHub API calls, no chained requests.</div>
-          </div>
-        </div>
-        <div class="why-item">
-          <div class="why-icon">🚫</div>
-          <div>
-            <div class="why-title">No tracking, no analytics</div>
-            <div class="why-desc">Zero tracking pixels, no analytics scripts, no third-party calls beyond Google Fonts. Less data transferred means less energy consumed per visit.</div>
-          </div>
-        </div>
-        <div class="why-item">
-          <div class="why-icon">🌱</div>
-          <div>
-            <div class="why-title">Green CDN</div>
-            <div class="why-desc">Cloudflare is Green Web Foundation certified — the infrastructure that delivers every page runs on renewable energy.</div>
-          </div>
-        </div>
+      <h3 class="pcard-title">Website Carbon Calculator</h3>
+      <div class="pcard-meta">
+        <span class="pcard-cat">Carbon emissions</span>
       </div>
-    </section>
+      <div class="pcard-tags">
+        <span class="pcard-tag">Top 3% globally</span>
+        <span class="pcard-tag">Cleaner than 97%</span>
+      </div>
+      <a class="pcard-link" href="https://www.websitecarbon.com/website/securelayer-co/" target="_blank" rel="noopener noreferrer">View full report ↗</a>
+    </div>
 
-    <!-- What's next -->
-    <section class="sus-section sus-next">
-      <div class="section-label">What's next</div>
-      <p>One remaining improvement: self-hosting the Google Fonts request would eliminate the only external round-trip and tighten the CSP further. It's a 20-minute task — tracked in our <a href="https://securelayer.co/github-security-assessment">backlog</a>.</p>
-    </section>
+    <div class="pcard">
+      <div class="pcard-top">
+        <span class="pcard-badge-verified">Verified</span>
+        <span class="pcard-date">Via Cloudflare CDN</span>
+      </div>
+      <h3 class="pcard-title">Green Web Foundation</h3>
+      <div class="pcard-meta">
+        <span class="pcard-cat">Green hosting</span>
+      </div>
+      <div class="pcard-tags">
+        <span class="pcard-tag">Renewable energy certified</span>
+        <span class="pcard-tag">Zero origin compute</span>
+      </div>
+      <a class="pcard-link" href="https://www.thegreenwebfoundation.org/green-web-check/?url=securelayer.co" target="_blank" rel="noopener noreferrer">View full report ↗</a>
+    </div>
 
-  </main>
-</Layout>
+  </div>
 
-<style>
-  /* ── Hero ── */
-  .sus-hero {
-    max-width: 860px; margin: 0 auto;
-    padding: 64px 24px 48px;
-  }
-  .sus-hero h1 { font-size: clamp(1.75rem, 4vw, 2.5rem); font-weight: 800; color: var(--white); line-height: 1.15; margin-bottom: 16px; letter-spacing: -.5px; }
-  .sus-hero h1 span { color: var(--cyan); }
-  .sus-sub { font-size: .9375rem; color: var(--muted); max-width: 560px; line-height: 1.7; }
+  <p class="section-title">Why it's low</p>
+  <div class="pipeline-card">
+    <div class="pipeline-checks">
 
-  /* ── Sections ── */
-  .sus-section { max-width: 860px; margin: 0 auto; padding: 0 24px 56px; }
+      <div class="check-item">
+        <span class="check-icon">✓</span>
+        <span class="check-label">
+          <strong>Static architecture</strong>
+          <span class="check-desc">The entire site is pre-built HTML/CSS/JS. No server runs when you visit — pages are served cold from Cloudflare's global edge network.</span>
+        </span>
+      </div>
 
-  /* ── Score cards ── */
-  .sus-cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 14px; }
+      <div class="check-item">
+        <span class="check-icon">✓</span>
+        <span class="check-label">
+          <strong>Pre-computed data</strong>
+          <span class="check-desc">Security assessments are computed once weekly by a local scanner and stored in R2. Your browser fetches a single JSON file — no live GitHub API calls, no chained requests.</span>
+        </span>
+      </div>
 
-  .sus-card {
-    background: var(--bg2); border: 1px solid var(--border); border-radius: 12px;
-    padding: 24px; display: flex; flex-direction: column; gap: 16px;
-  }
-  .sus-card-top { display: flex; align-items: center; gap: 16px; }
+      <div class="check-item">
+        <span class="check-icon">✓</span>
+        <span class="check-label">
+          <strong>No tracking, no analytics</strong>
+          <span class="check-desc">Zero tracking pixels, no analytics scripts, no third-party calls beyond Google Fonts. Less data transferred means less energy consumed per visit.</span>
+        </span>
+      </div>
 
-  .sus-grade {
-    width: 56px; height: 56px; border-radius: 50%; border: 2px solid;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 1.25rem; font-weight: 800; flex-shrink: 0;
-  }
-  .grade-a { color: #4ade80; background: rgba(74,222,128,.08); border-color: #166534; }
-  .sus-grade-compact { font-size: .9rem; }
+      <div class="check-item">
+        <span class="check-icon">✓</span>
+        <span class="check-label">
+          <strong>Green CDN</strong>
+          <span class="check-desc">Cloudflare is Green Web Foundation certified — the infrastructure that delivers every page runs on renewable energy.</span>
+        </span>
+      </div>
 
-  .sus-card-tool { font-size: .8125rem; font-weight: 700; color: var(--white); }
-  .sus-card-date { font-size: .7rem; color: var(--muted); margin-top: 3px; }
+    </div>
+  </div>
 
-  .sus-metrics { list-style: none; display: flex; flex-direction: column; gap: 8px; }
-  .sus-metrics li { display: flex; justify-content: space-between; align-items: center; font-size: .8125rem; }
-  .metric-label { color: var(--muted); }
-  .metric-value { color: var(--text); font-family: var(--font-mono); font-size: .75rem; }
-  .metric-value.pass { color: #4ade80; font-family: inherit; }
-
-  .sus-link { font-size: .75rem; color: var(--cyan); text-decoration: none; margin-top: auto; }
-  .sus-link:hover { text-decoration: underline; }
-
-  /* ── Why ── */
-  .sus-why { display: flex; flex-direction: column; gap: 16px; }
-  .why-item {
-    display: flex; gap: 16px; align-items: flex-start;
-    background: var(--bg2); border: 1px solid var(--border); border-radius: 8px;
-    padding: 18px 20px;
-  }
-  .why-icon { font-size: 1.25rem; flex-shrink: 0; margin-top: 1px; }
-  .why-title { font-size: .875rem; font-weight: 700; color: var(--white); margin-bottom: 4px; }
-  .why-desc { font-size: .8125rem; color: var(--muted); line-height: 1.6; }
-
-  /* ── What's next ── */
-  .sus-next p { font-size: .875rem; color: var(--muted); line-height: 1.7; }
-  .sus-next a { color: var(--cyan); text-decoration: none; }
-  .sus-next a:hover { text-decoration: underline; }
-</style>
+</div>
+  </div>
+</div>
+</body>
+</html>
