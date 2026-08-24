@@ -1,285 +1,396 @@
----
-import Layout from '../layouts/Layout.astro';
----
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Security — securelayer.co</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-<Layout
-  title="Security Policy — SecureLayer"
-  description="SecureLayer's responsible disclosure policy: how to report vulnerabilities, response timelines, and scope."
->
-  <main class="sec-main">
+    body {
+      background: #0a0f0f;
+      color: #e0e0e0;
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      font-size: 14px;
+      line-height: 1.6;
+      min-height: 100vh;
+    }
 
-    <div class="sec-hero">
-      <div class="section-label">Security Policy</div>
-      <h1>Responsible <span>Disclosure</span></h1>
-      <p class="sec-sub">We take security seriously. If you find a vulnerability, please report it privately — we will acknowledge within 14 days and resolve within 60.</p>
+    .page { max-width: 860px; margin: 0 auto; padding: 40px 24px 80px; }
+
+    a { color: inherit; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    .header-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+    }
+
+    .site-title {
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: -0.3px;
+      color: #fff;
+    }
+
+    .back-link {
+      font-size: 12px;
+      color: #555;
+      text-decoration: none;
+      letter-spacing: 0.3px;
+    }
+    .back-link:hover { color: #888; }
+
+    .page-title { font-size: 20px; font-weight: 700; margin-bottom: 4px; }
+    .subtitle { font-size: 13px; color: #666; margin-bottom: 40px; }
+
+    .scores-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 16px;
+      margin-bottom: 48px;
+    }
+
+    .score-card {
+      background: #0d1a1a;
+      border: 1px solid #1a3030;
+      border-radius: 8px;
+      padding: 24px;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .service-name {
+      font-size: 13px;
+      font-weight: 700;
+      color: #aaa;
+      letter-spacing: 0.3px;
+    }
+
+    .grade-badge {
+      font-size: 22px;
+      font-weight: 800;
+      padding: 4px 12px;
+      border-radius: 6px;
+      line-height: 1.4;
+      flex-shrink: 0;
+    }
+    .grade-Aplus  { color: #4ade80; background: #0d2a0d; border: 1px solid #166534; }
+    .grade-A      { color: #a3e635; background: #1a2a08; border: 1px solid #365314; }
+    .grade-safe   { color: #5eead4; background: #0d2a2a; border: 1px solid #0d9488; font-size: 13px; }
+    .grade-pending { color: #a78bfa; background: #1a0d2a; border: 1px solid #6d28d9; font-size: 12px; }
+    .grade-silver { color: #cbd5e1; background: #1a1e26; border: 1px solid #64748b; font-size: 13px; }
+
+    .card-desc {
+      font-size: 12px;
+      color: #555;
+      line-height: 1.5;
+    }
+
+    .card-link {
+      font-size: 11px;
+      color: #0d9488;
+      letter-spacing: 0.3px;
+    }
+
+    .section-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: #888;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+
+    .contact-box {
+      background: #0d1a1a;
+      border: 1px solid #1a3030;
+      border-radius: 8px;
+      padding: 20px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      flex-wrap: wrap;
+      margin-bottom: 48px;
+    }
+    .contact-box p { font-size: 13px; color: #aaa; }
+    .contact-btn {
+      display: inline-block;
+      background: #0d2a2a;
+      border: 1px solid #0d9488;
+      border-radius: 5px;
+      color: #5eead4;
+      font-size: 13px;
+      font-weight: 600;
+      padding: 8px 20px;
+      text-decoration: none;
+      white-space: nowrap;
+      transition: background 0.15s;
+      flex-shrink: 0;
+    }
+    .contact-btn:hover { background: #0d3535; }
+
+    .pipeline-card {
+      background: #0d1a1a;
+      border: 1px solid #1a3030;
+      border-radius: 8px;
+      padding: 24px;
+      margin-bottom: 48px;
+    }
+
+    .pipeline-checks {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+    }
+
+    .check-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+    }
+
+    .check-icon {
+      color: #4ade80;
+      font-size: 14px;
+      font-weight: 800;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .check-icon.pending { color: #a78bfa; }
+
+    .check-label strong {
+      color: #e0e0e0;
+      font-size: 12px;
+      font-weight: 700;
+      display: block;
+      margin-bottom: 3px;
+    }
+
+    .check-label .check-desc {
+      font-size: 11px;
+      color: #555;
+      line-height: 1.5;
+    }
+
+    .policy-section { margin-bottom: 40px; }
+    .policy-section h2 {
+      font-size: 13px;
+      font-weight: 700;
+      color: #888;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+    .policy-section p { color: #999; font-size: 13px; line-height: 1.7; margin-bottom: 12px; }
+
+    .timeline-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .timeline-card { background: #0d1a1a; border: 1px solid #1a3030; border-radius: 8px; padding: 20px; }
+    .tl-days { font-size: 1.75rem; font-weight: 800; color: #5eead4; line-height: 1; margin-bottom: 4px; }
+    .tl-label { font-size: .75rem; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: #e0e0e0; margin-bottom: 8px; }
+    .tl-desc { font-size: .8rem; color: #666; line-height: 1.5; }
+
+    .sec-list { list-style: none; display: flex; flex-direction: column; gap: 6px; }
+    .sec-list li { font-size: 13px; color: #999; padding-left: 18px; position: relative; }
+    .sec-list li::before { content: '—'; position: absolute; left: 0; color: #0d9488; }
+    .sec-list.muted li::before { color: #333; }
+
+    @media (max-width: 480px) {
+      .timeline-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <div class="header-row">
+    <h1 class="site-title"><a href="/">SecureLayer</a></h1>
+    <a class="back-link" href="/">← Back</a>
+  </div>
+
+  <p class="page-title">🔒 Security</p>
+  <p class="subtitle">Third-party security assessments for securelayer.co</p>
+
+  <div class="scores-grid">
+
+    <div class="score-card">
+      <div class="card-header">
+        <span class="service-name">HTTP Headers<br>Security Grade</span>
+        <span class="grade-badge grade-pending">Pending</span>
+      </div>
+      <p class="card-desc">Tests HTTP headers, CSP, cookies, and HTTPS configuration against Mozilla's security guidelines. Not yet run against this domain.</p>
+      <a class="card-link" href="https://developer.mozilla.org/en-US/observatory/analyze?host=securelayer.co" target="_blank" rel="noopener noreferrer">Run scan ↗</a>
     </div>
 
-    <div class="sec-content">
-
-      <!-- Report -->
-      <section class="sec-section">
-        <h2>Reporting a vulnerability</h2>
-        <p>Do not open a public GitHub issue for security vulnerabilities.</p>
-        <div class="sec-contact">
-          <div class="contact-row">
-            <span class="contact-label">Email</span>
-            <a href="mailto:contact@securelayer.co" class="contact-value">contact@securelayer.co</a>
-          </div>
-          <div class="contact-row">
-            <span class="contact-label">Subject</span>
-            <code class="contact-value">[SECURITY] &lt;short description&gt;</code>
-          </div>
-        </div>
-        <p>Include in your report:</p>
-        <ul class="sec-list">
-          <li>Description of the vulnerability</li>
-          <li>Steps to reproduce</li>
-          <li>Affected component (prompt content, site code, CI pipeline)</li>
-          <li>Potential impact</li>
-        </ul>
-      </section>
-
-      <!-- Timeline -->
-      <section class="sec-section">
-        <h2>Response timeline</h2>
-        <div class="timeline-grid">
-          <div class="timeline-card">
-            <div class="tl-days">14 days</div>
-            <div class="tl-label">Acknowledgement</div>
-            <div class="tl-desc">We confirm receipt of your report and begin investigation.</div>
-          </div>
-          <div class="timeline-card">
-            <div class="tl-days">60 days</div>
-            <div class="tl-label">Resolution</div>
-            <div class="tl-desc">Target for resolving confirmed vulnerabilities from date of confirmation.</div>
-          </div>
-        </div>
-      </section>
-
-      <!-- Supported versions -->
-      <section class="sec-section">
-        <h2>Supported versions</h2>
-        <div class="version-row">
-          <span class="version-name">latest (main branch)</span>
-          <span class="version-badge supported">Supported</span>
-        </div>
-      </section>
-
-      <!-- Scope -->
-      <section class="sec-section">
-        <h2>Scope</h2>
-        <p>SecureLayer is a static site serving cybersecurity prompt content. The primary security concerns are:</p>
-        <ul class="sec-list">
-          <li>Prompt content containing secrets or misleading security advice</li>
-          <li>Supply chain issues in build dependencies</li>
-          <li>Deployment pipeline integrity</li>
-        </ul>
-      </section>
-
-      <!-- Out of scope -->
-      <section class="sec-section">
-        <h2>Out of scope</h2>
-        <ul class="sec-list muted">
-          <li>Social engineering</li>
-          <li>Issues in third-party infrastructure (GitHub, Cloudflare)</li>
-        </ul>
-      </section>
-
+    <div class="score-card">
+      <div class="card-header">
+        <span class="service-name">SSL/TLS Server<br>Security Grade</span>
+        <span class="grade-badge grade-pending">Scanning…</span>
+      </div>
+      <p class="card-desc">Qualys SSL Labs deep analysis of TLS configuration, certificate chain, and cipher suites. First scan for this domain is in progress.</p>
+      <a class="card-link" href="https://www.ssllabs.com/ssltest/analyze.html?d=securelayer.co" target="_blank" rel="noopener noreferrer">View live report ↗</a>
     </div>
 
-  </main>
-</Layout>
+    <div class="score-card">
+      <div class="card-header">
+        <span class="service-name">Security Headers<br>Grade</span>
+        <span class="grade-badge grade-pending">Pending</span>
+      </div>
+      <p class="card-desc">Scans and grades HTTP response headers for completeness and security best practices. CSP, HSTS, X-Frame-Options, X-Content-Type-Options, and Referrer-Policy are already present — grade not yet confirmed.</p>
+      <a class="card-link" href="https://securityheaders.com/?q=https%3A%2F%2Fsecurelayer.co" target="_blank" rel="noopener noreferrer">Run scan ↗</a>
+    </div>
 
-<style>
-  .sec-main {
-    max-width: 720px;
-    margin: 0 auto;
-    padding: 80px 24px 120px;
-  }
+    <div class="score-card">
+      <div class="card-header">
+        <span class="service-name">Blacklight<br>Privacy Checker</span>
+        <span class="grade-badge grade-pending">Pending</span>
+      </div>
+      <p class="card-desc">Checks for ad trackers, third-party cookies, fingerprinting, session recording, keylogging, and social pixels. Not yet run against this domain.</p>
+      <a class="card-link" href="https://themarkup.org/blacklight?url=securelayer.co" target="_blank" rel="noopener noreferrer">Run scan ↗</a>
+    </div>
 
-  .sec-hero {
-    margin-bottom: 56px;
-  }
+    <div class="score-card">
+      <div class="card-header">
+        <span class="service-name">Google<br>Safe Browsing</span>
+        <span class="grade-badge grade-pending">Pending</span>
+      </div>
+      <p class="card-desc">Checks for malware, phishing, or unwanted software flagged on this site.</p>
+      <a class="card-link" href="https://transparencyreport.google.com/safe-browsing/search?url=securelayer.co" target="_blank" rel="noopener noreferrer">Check report ↗</a>
+    </div>
 
-  .section-label {
-    font-size: .75rem;
-    font-weight: 700;
-    letter-spacing: .1em;
-    text-transform: uppercase;
-    color: var(--cyan);
-    margin-bottom: 12px;
-  }
+    <div class="score-card">
+      <div class="card-header">
+        <span class="service-name">GDPR<br>Compliance Checker</span>
+        <span class="grade-badge grade-pending">Pending</span>
+      </div>
+      <p class="card-desc">Scans for consent violations, cookie issues, and data protection concerns.</p>
+      <a class="card-link" href="https://2gdpr.com/" target="_blank" rel="noopener noreferrer">Run scan ↗</a>
+    </div>
 
-  .sec-hero h1 {
-    font-size: clamp(2rem, 5vw, 2.75rem);
-    font-weight: 800;
-    color: var(--text);
-    line-height: 1.15;
-    margin-bottom: 16px;
-  }
+    <div class="score-card">
+      <div class="card-header">
+        <span class="service-name">OpenSSF Scorecard</span>
+        <span class="grade-badge grade-pending">Not yet scanned</span>
+      </div>
+      <p class="card-desc">Automated supply-chain security analysis of github.com/SecureLayer/tmp — checks branch protection, token permissions, and CI hygiene. Workflow just added; first score pending.</p>
+      <a class="card-link" href="https://scorecard.dev/viewer/?uri=github.com/SecureLayer/tmp" target="_blank" rel="noopener noreferrer">View scorecard ↗</a>
+    </div>
 
-  .sec-hero h1 span { color: var(--cyan); }
+    <div class="score-card">
+      <div class="card-header">
+        <span class="service-name">OpenSSF<br>Best Practices</span>
+        <span class="grade-badge grade-pending">13% — in progress</span>
+      </div>
+      <p class="card-desc">CII Best Practices badge — certifies the project follows open-source security and quality standards. Registered, questionnaire in progress.</p>
+      <a class="card-link" href="https://www.bestpractices.dev/en/projects/11681" target="_blank" rel="noopener noreferrer">View progress ↗</a>
+    </div>
 
-  .sec-sub {
-    font-size: 1.05rem;
-    color: var(--muted);
-    line-height: 1.7;
-    max-width: 560px;
-  }
+    <div class="score-card">
+      <div class="card-header">
+        <span class="service-name">Snyk</span>
+        <span class="grade-badge grade-pending">Not connected</span>
+      </div>
+      <p class="card-desc">Dependency vulnerability scanning for github.com/SecureLayer/tmp. Not yet connected to Snyk.</p>
+      <a class="card-link" href="https://snyk.io/test/github/SecureLayer/tmp" target="_blank" rel="noopener noreferrer">Run scan ↗</a>
+    </div>
 
-  .sec-content { display: flex; flex-direction: column; gap: 48px; }
+  </div>
 
-  .sec-section h2 {
-    font-size: 1rem;
-    font-weight: 700;
-    color: var(--text);
-    margin-bottom: 16px;
-    padding-bottom: 10px;
-    border-bottom: 1px solid var(--border);
-  }
+  <p class="section-title">Platform Integrity</p>
+  <div class="pipeline-card">
+    <div class="pipeline-checks">
 
-  .sec-section p {
-    color: var(--muted);
-    font-size: .95rem;
-    line-height: 1.7;
-    margin-bottom: 16px;
-  }
+      <div class="check-item">
+        <span class="check-icon">✓</span>
+        <span class="check-label">
+          <strong>Cloudflare edge security</strong>
+          <span class="check-desc">Bot Fight Mode and WAF custom rules active in front of the origin.</span>
+        </span>
+      </div>
 
-  .sec-contact {
-    background: var(--card-bg);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 20px 24px;
-    margin: 20px 0;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-  }
+      <div class="check-item">
+        <span class="check-icon">✓</span>
+        <span class="check-label">
+          <strong>Dependabot</strong>
+          <span class="check-desc">Automated dependency PRs, verified active — npm packages kept current on a weekly schedule.</span>
+        </span>
+      </div>
 
-  .contact-row {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-  }
+      <div class="check-item">
+        <span class="check-icon">✓</span>
+        <span class="check-label">
+          <strong>Security response headers</strong>
+          <span class="check-desc">CSP, HSTS (1yr + subdomains), X-Frame-Options: DENY, X-Content-Type-Options: nosniff, Referrer-Policy: no-referrer.</span>
+        </span>
+      </div>
 
-  .contact-label {
-    font-size: .75rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: .08em;
-    color: var(--muted);
-    width: 56px;
-    flex-shrink: 0;
-  }
+      <div class="check-item">
+        <span class="check-icon pending">◐</span>
+        <span class="check-label">
+          <strong>OpenSSF Scorecard CI</strong>
+          <span class="check-desc">Scorecard workflow added — publishes automatically to the code-scanning dashboard on next push to main.</span>
+        </span>
+      </div>
 
-  .contact-value {
-    font-size: .95rem;
-    color: var(--cyan);
-    text-decoration: none;
-  }
+    </div>
+  </div>
 
-  .contact-value:hover { text-decoration: underline; }
+  <div class="policy-section">
+    <h2>Reporting a vulnerability</h2>
+    <p>Do not open a public GitHub issue for security vulnerabilities.</p>
+  </div>
 
-  code.contact-value {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: .85rem;
-    background: var(--border);
-    padding: 2px 8px;
-    border-radius: 4px;
-  }
+  <div class="contact-box">
+    <p>Email <strong style="color:#5eead4">contact@securelayer.co</strong> with subject <code style="color:#5eead4">[SECURITY] &lt;short description&gt;</code> — include steps to reproduce, affected component, and potential impact.</p>
+    <a class="contact-btn" href="mailto:contact@securelayer.co?subject=%5BSECURITY%5D%20">Report by email ↗</a>
+  </div>
 
-  .sec-list {
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    margin: 0;
-    padding: 0;
-  }
+  <div class="policy-section">
+    <h2>Response timeline</h2>
+    <div class="timeline-grid">
+      <div class="timeline-card">
+        <div class="tl-days">14 days</div>
+        <div class="tl-label">Acknowledgement</div>
+        <div class="tl-desc">We confirm receipt of your report and begin investigation.</div>
+      </div>
+      <div class="timeline-card">
+        <div class="tl-days">60 days</div>
+        <div class="tl-label">Resolution</div>
+        <div class="tl-desc">Target for resolving confirmed vulnerabilities from date of confirmation.</div>
+      </div>
+    </div>
+  </div>
 
-  .sec-list li {
-    font-size: .95rem;
-    color: var(--muted);
-    padding-left: 20px;
-    position: relative;
-    line-height: 1.6;
-  }
+  <div class="policy-section">
+    <h2>Scope</h2>
+    <p>SecureLayer is a static site serving cybersecurity prompt content. The primary security concerns are:</p>
+    <ul class="sec-list">
+      <li>Prompt content containing secrets or misleading security advice</li>
+      <li>Supply chain issues in build dependencies</li>
+      <li>Deployment pipeline integrity</li>
+    </ul>
+  </div>
 
-  .sec-list li::before {
-    content: '—';
-    position: absolute;
-    left: 0;
-    color: var(--cyan);
-  }
+  <div class="policy-section">
+    <h2>Out of scope</h2>
+    <ul class="sec-list muted">
+      <li>Social engineering</li>
+      <li>Issues in third-party infrastructure (GitHub, Cloudflare)</li>
+    </ul>
+  </div>
 
-  .sec-list.muted li::before { color: var(--border); }
-
-  .timeline-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 16px;
-  }
-
-  .timeline-card {
-    background: var(--card-bg);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 24px;
-  }
-
-  .tl-days {
-    font-size: 2rem;
-    font-weight: 800;
-    color: var(--cyan);
-    line-height: 1;
-    margin-bottom: 4px;
-  }
-
-  .tl-label {
-    font-size: .8rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: .08em;
-    color: var(--text);
-    margin-bottom: 10px;
-  }
-
-  .tl-desc {
-    font-size: .875rem;
-    color: var(--muted);
-    line-height: 1.6;
-  }
-
-  .version-row {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background: var(--card-bg);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 16px 20px;
-  }
-
-  .version-name {
-    font-size: .95rem;
-    color: var(--muted);
-    font-family: 'JetBrains Mono', monospace;
-  }
-
-  .version-badge {
-    font-size: .75rem;
-    font-weight: 700;
-    padding: 3px 10px;
-    border-radius: 4px;
-  }
-
-  .version-badge.supported {
-    background: rgba(34, 197, 94, .1);
-    color: #22c55e;
-    border: 1px solid rgba(34, 197, 94, .25);
-  }
-
-  @media (max-width: 480px) {
-    .timeline-grid { grid-template-columns: 1fr; }
-  }
-</style>
+</div>
+</body>
+</html>
