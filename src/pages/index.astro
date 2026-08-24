@@ -1,419 +1,322 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import { getCollection } from 'astro:content';
+import logoSource from '../../public/logo.svg?raw';
 
-const freePrompts = (await getCollection('prompts', ({ data }) =>
-  data.tier === 'free' && data.published !== false
-));
-
-const latestPosts = (await getCollection('posts', ({ data }) => data.published !== false))
-  .sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime())
-  .slice(0, 2);
-
-const categoryLabel: Record<string, string> = {
-  'case-study': 'Case Study',
-  'guide': 'Guide',
-  'tutorial': 'Tutorial',
-  'analysis': 'Analysis',
-};
-
-const plans = [
-  {
-    name: "Basic Protection",
-    price: "Free",
-    sub: "Start secure, today",
-    highlight: false,
-    features: [
-      "HTTP security headers hardening",
-      "HTTPS & TLS configuration",
-      "Basic OWASP Top 10 coverage",
-      "Cookie security flags",
-      "Community tested prompts",
-      "Instant GitHub repository security assessment",
-    ],
-    cta: "Free Prompts",
-    ctaHref: "/free-cybersecurity-ai-prompts",
-  },
-  {
-    name: "Tailored AI Protection",
-    price: "Custom",
-    sub: "contact us",
-    highlight: true,
-    features: [
-      "Everything in Basic",
-      "List of efficient and tested cybersecurity Claude skills or Custom GPTs",
-      "Audit every OWASP Top 10 vector — systematically",
-      "Run threat models like an AppSec engineer",
-      "Secure cloud environments the way cloud architects do",
-      "Work at the right depth — prompts matched to your level",
-      "Prompts built specifically for your tech stack",
-      "Prompts reviewed by certified security engineers",
-    ],
-    cta: "Contact Us",
-    ctaHref: "#get-started",
-  },
-];
+// Inlined (not <img>) so the glowing wallpaper mark can be recolored via
+// CSS `currentColor` — the source file hardcodes fill="#000000" and also
+// carries a tiny (~2% viewBox height) accessibility label that would read
+// as visual noise at large size, so both are stripped here.
+const logoMark = logoSource
+  .replace('fill="#000000"', 'fill="currentColor"')
+  .replace(/<text[^>]*>.*?<\/text>/s, '');
 ---
 
 <Layout
-  title="SecureLayer — GitHub Security Assessment & AI Secured Prompts"
-  description="SecureLayer delivers AI-powered cybersecurity tools — precision prompts and instant GitHub security assessments, built and tested by security engineers."
+  title="SecureLayer — Security is a habit, not a project"
+  description="SecureLayer delivers tested cybersecurity prompts and an instant GitHub repository audit — the tools that make checking your security a habit, not a once-a-year project."
 >
 
-  <!-- HERO -->
-  <section class="hero">
-    <div class="hero-badge">
-      <span class="badge-dot"></span>
-      AI Security Tools
-    </div>
-    <h1>Make Sure Your AI Assistant<br /><span>Is Really Implementing</span><br />the Right Security Practices</h1>
-    <p class="hero-sub">
-      Generic AI responses leave critical security gaps.
-      SecureLayer delivers <strong>purpose-built cybersecurity prompts</strong> and an <strong>instant GitHub repository audit</strong> — tested by security engineers, ready to use for free.
-    </p>
-    <div class="hero-actions">
-      <a href="/free-cybersecurity-ai-prompts" class="btn-primary">Try Free Prompts</a>
-      <a href="/github-security-assessment" class="btn-ghost">GitHub Audit →</a>
-    </div>
-    <div class="hero-stats">
-      <div class="stat">
-        <span>Tested</span>
-        <p>on GPT-4o & Claude</p>
-      </div>
-      <div class="stat-divider"></div>
-      <div class="stat">
-        <span>40%</span>
-        <p>fewer tokens used</p>
-      </div>
-      <div class="stat-divider"></div>
-      <div class="stat">
-        <span>OWASP</span>
-        <p>Top 10 aligned</p>
-      </div>
-      <div class="stat-divider"></div>
-      <div class="stat">
-        <span>Free</span>
-        <p>GitHub audit tool</p>
-      </div>
-    </div>
-  </section>
+  <div class="os">
 
-  <!-- TRUST BANNER -->
-  <div class="trust-banner">
-    <div class="trust-inner">
-      <div class="trust-item">
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 1L2 4v4c0 3.3 2.5 6.4 6 7 3.5-.6 6-3.7 6-7V4L8 1z" fill="#22c55e" opacity=".3"/><path d="M6 8l2 2 3-3" stroke="#22c55e" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        All prompts validated by human security engineers
+    <!-- MENU BAR -->
+    <div class="menu-bar">
+      <div class="menu-left">
+        <img src="/logo.svg" alt="" class="menu-logo" />
+        <span class="menu-brand">SecureLayer</span>
+        <a href="#" class="menu-item" data-preview-file="secdevops-pipeline.png" data-preview-accent="#3a3428" data-preview-img="/images/previews/secdevops-pipeline.png">SecDevOps</a>
+        <a href="#" class="menu-item" data-preview-file="security-page.png" data-preview-accent="var(--cyan)" data-preview-img="/images/previews/security-page.png">AppSec</a>
+        <a href="#" class="menu-item" data-preview-file="itsec-overview.png" data-preview-accent="#7d7460" data-preview-img="/images/previews/itsec-overview.png">IT Sec</a>
       </div>
-      <div class="trust-sep">·</div>
-      <div class="trust-item">
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6" stroke="#a78bfa" stroke-width="1.5"/><path d="M8 5v3l2 2" stroke="#a78bfa" stroke-width="1.5" stroke-linecap="round"/></svg>
-        Tested on real AI models before publishing
-      </div>
-      <div class="trust-sep">·</div>
-      <div class="trust-item">
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="2" y="3" width="12" height="10" rx="2" stroke="#a78bfa" stroke-width="1.5"/><path d="M5 7h6M5 10h4" stroke="#a78bfa" stroke-width="1.5" stroke-linecap="round"/></svg>
-        Token-optimised — no filler, no wasted credits
+      <div class="menu-right">
+        <span class="menu-battery-pct">88%</span>
+        <svg class="menu-icon" width="20" height="14" viewBox="0 0 22 14" fill="none">
+          <rect x="1" y="1.5" width="17" height="11" rx="2.5" stroke="currentColor" stroke-width="1.3"/>
+          <rect x="19" y="5" width="2" height="4" rx="1" fill="currentColor"/>
+          <path d="M11 2.3L6.6 7.8h3.1L8.2 12.2l4.9-5.5H10L11 2.3z" fill="currentColor"/>
+        </svg>
+        <svg class="menu-icon" width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M1 6c4-3.5 10-3.5 14 0M3.4 8.6c3-2.3 6.2-2.3 9.2 0M5.8 11.1c1.7-1.2 2.7-1.2 4.4 0" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/><circle cx="8" cy="13.2" r="1" fill="currentColor"/></svg>
+        <span class="menu-clock" id="menu-clock"></span>
       </div>
     </div>
+
+    <!-- DESKTOP -->
+    <div class="desktop">
+      <div class="wallpaper-photo" aria-hidden="true"></div>
+      <div class="wallpaper-scrim" aria-hidden="true"></div>
+
+      <!-- WIDGET · project note (macOS Stickies style) -->
+      <div class="widget widget-note pos-tl">
+        <div class="widget-watermark" set:html={logoMark} />
+        <div class="note-body">
+          <p><em>Security</em> is not a project,</p>
+          <p>It's a <em>habit</em>,</p>
+          <p>We can <strong>help you</strong><br /><em>make it stick</em>.</p>
+        </div>
+      </div>
+
+      <!-- WIDGET · checklist -->
+      <div class="widget widget-todo pos-tr">
+        <div class="widget-watermark todo-watermark" set:html={logoMark} />
+        <div class="todo-bar">
+          <span class="todo-dot" style="background:#ff5f57;"></span>
+          <span class="todo-dot" style="background:#febc2e;"></span>
+          <span class="todo-dot" style="background:#28c840;"></span>
+          <span class="todo-add">+</span>
+        </div>
+        <div class="todo-titlerow">
+          <span class="todo-title">Reminders</span>
+          <span class="todo-count">5</span>
+        </div>
+        <div class="todo-subrow"><span>0 Completed</span> · <a href="#">Clear</a><span class="todo-show">Show</span></div>
+        <div class="todo-list">
+          <div class="widget-todo-item"><span class="todo-check"></span>Improve the Open SSF ScoreCard</div>
+          <div class="widget-todo-item"><span class="todo-check"></span>Check the Headers Security Grade</div>
+          <div class="widget-todo-item"><span class="todo-check"></span>Check the SSL/TLS Server Security Grade</div>
+          <div class="widget-todo-item"><span class="todo-check"></span>Merge some PRs related to cybersecurity</div>
+          <div class="widget-todo-item"><span class="todo-check"></span>Assess the security level of Canva</div>
+        </div>
+      </div>
+
+      <!-- WIDGET · file -->
+      <div class="widget widget-file pos-mr">
+        <div class="pdf-page">
+          <div class="pdf-thumb"></div>
+          <div class="pdf-badge">
+            <svg width="11" height="11" viewBox="0 0 16 16" fill="none"><circle cx="7" cy="7" r="5" stroke="#fff" stroke-width="1.6"/><path d="M11 11l3.5 3.5" stroke="#fff" stroke-width="1.6" stroke-linecap="round"/></svg>
+          </div>
+          <div class="pdf-label">PDF</div>
+        </div>
+        <span>Make-Security-Pay-For-Itself.pdf</span>
+      </div>
+
+      <!-- WIDGET · quick-look preview (revealed on menu-bar hover) -->
+      <div class="widget widget-preview pos-bl" id="preview-window">
+        <div class="preview-titlebar">
+          <span class="preview-btn preview-close">&times;</span>
+          <span class="preview-btn preview-expand">
+            <svg width="10" height="10" viewBox="0 0 16 16" fill="none"><path d="M6 2H2v4M10 14h4v-4M2 2l5 5M14 14l-5-5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+          <span class="preview-filename" id="preview-filename">security-page.png</span>
+        </div>
+        <div class="preview-body" id="preview-body">
+          <img class="preview-img" id="preview-img" alt="" />
+          <div class="preview-placeholder" id="preview-placeholder">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none"><path d="M12 3l7 3v5c0 4.6-3 7.9-7 9-4-1.1-7-4.4-7-9V6l7-3z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg>
+            <span>Preview coming soon</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DOCK · the real toolkit used for security work -->
+    <div class="dock">
+      <span class="dock-icon" title="Finder"><img src="/images/dock-icons/finder.png" alt="Finder" /></span>
+      <span class="dock-icon" title="Tutanota" data-tooltip="contact@securelayer.co"><img src="/images/dock-icons/tuta.png" alt="Tutanota" /></span>
+      <span class="dock-icon" title="Proton Mail" data-tooltip="contact@securelayer.co"><img src="/images/dock-icons/proton.png" alt="Proton Mail" /></span>
+      <span class="dock-icon" title="Signal"><img src="/images/dock-icons/signal.png" alt="Signal" /></span>
+      <span class="dock-icon" title="Molly"><img src="/images/dock-icons/molly.png" alt="Molly" /></span>
+      <span class="dock-icon" title="VS Code"><img src="/images/dock-icons/vscode.png" alt="VS Code" /></span>
+      <span class="dock-icon" title="Jupyter"><img src="/images/dock-icons/jupyter.png" alt="Jupyter" /></span>
+      <span class="dock-icon" title="1Password"><img src="/images/dock-icons/1password.png" alt="1Password" /></span>
+      <span class="dock-icon" title="iTerm2"><img src="/images/dock-icons/iterm2.svg" alt="iTerm2" /></span>
+      <span class="dock-icon" title="NordVPN"><img src="/images/dock-icons/nordvpn.svg" alt="NordVPN" /></span>
+      <span class="dock-icon" title="OWASP ZAP"><img src="/images/dock-icons/zap.svg" alt="OWASP ZAP" /></span>
+      <span class="dock-icon" title="Multipass"><img src="/images/dock-icons/multipass.png" alt="Multipass" /></span>
+      <span class="dock-icon" title="Yubico Authenticator"><img src="/images/dock-icons/yubico.png" alt="Yubico Authenticator" /></span>
+      <span class="dock-icon" title="Obsidian"><img src="/images/dock-icons/obsidian.png" alt="Obsidian" /></span>
+      <span class="dock-icon" title="Bitwarden"><img src="/images/dock-icons/bitwarden.png" alt="Bitwarden" /></span>
+      <span class="dock-icon" title="OrbStack"><img src="/images/dock-icons/orbstack.png" alt="OrbStack" /></span>
+      <span class="dock-icon" title="Ollama"><img src="/images/dock-icons/ollama.png" alt="Ollama" /></span>
+      <a class="dock-icon" href="https://securelayer.co/security" title="Brave" data-tooltip="How secure is this website?"><img src="/images/dock-icons/brave.png" alt="Brave" /></a>
+      <a class="dock-icon" href="https://securelayer.co/sustainability/" title="Firefox" data-tooltip="What is the impact of this website on the environment?"><img src="/images/dock-icons/firefox.png" alt="Firefox" /></a>
+      <div class="dock-sep"></div>
+      <div class="dock-icon dock-trash" title="Trash">
+        <img src="/images/dock-icons/trash.png" alt="Trash" />
+      </div>
+    </div>
+
+    <div class="dock-tooltip" id="dock-tooltip"></div>
+
   </div>
-
-  <!-- FEATURES -->
-  <section class="features" id="features">
-    <div class="section-label">Why SecureLayer</div>
-    <h2>Your AI Doesn't Know Enough About Security — Yet</h2>
-    <p class="section-sub">Without the right tools, AI assistants give vague, incomplete, or outright wrong security advice. SecureLayer fixes that.</p>
-    <div class="features-grid">
-      <div class="feature-card">
-        <div class="feature-icon">🔒</div>
-        <h3>Cybersecurity-Specific</h3>
-        <p>Every prompt is written by security engineers. Coverage spans OWASP Top 10, network hardening, cloud security, secure coding, and compliance frameworks.</p>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon">⚡</div>
-        <h3>Token-Optimised</h3>
-        <p>Prompts are engineered to extract maximum security depth with minimum token spend — so your AI budget goes further without sacrificing accuracy.</p>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon">🎯</div>
-        <h3>Expertise-Tuned</h3>
-        <p>Junior dev or seasoned pentester — prompts adapt in depth, vocabulary, and assumed knowledge. No wasted context, no condescending explanations.</p>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon">🔍</div>
-        <h3>Instant GitHub Audit</h3>
-        <p>Paste any public GitHub repo and get a security score in seconds. Checks security policy, Dependabot, CI/CD, activity, license, and archive status — free, no login needed.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- FREE TOOLS PREVIEW -->
-  <section class="free-prompts-preview" id="free-prompts">
-    <div class="section-label">Free Tools</div>
-    <h2>Start Securing — For Free</h2>
-    <p class="section-sub">Two free security tools. No account, no login required.</p>
-    <a href="/github-security-assessment" class="github-tool-card">
-      <div class="github-tool-left">
-        <div class="github-tool-icon">
-          <svg width="22" height="22" viewBox="0 0 16 16" fill="none"><path d="M8 1L2 4v4c0 3.3 2.5 6.4 6 7 3.5-.6 6-3.7 6-7V4L8 1z" fill="rgba(167,139,250,.18)"/><path d="M6 8l2 2 3-3" stroke="#a78bfa" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </div>
-        <div>
-          <div class="github-tool-label">GitHub Security Assessment</div>
-          <div class="github-tool-desc">Instant repo audit — security policy, Dependabot, CI/CD, license & more. Scored A–F.</div>
-        </div>
-      </div>
-      <div class="github-tool-cta">Try it →</div>
-    </a>
-    <div class="section-label" style="margin-top:48px;margin-bottom:8px;">Free Prompts</div>
-    <div class="preview-cards">
-      {freePrompts.map(prompt => (
-        <div class="preview-card">
-          <div class="preview-meta">
-            <span class="badge-tier free">Free</span>
-            <span class="badge-tested">
-              <svg width="12" height="12" viewBox="0 0 16 16" fill="none"><path d="M8 1L2 4v4c0 3.3 2.5 6.4 6 7 3.5-.6 6-3.7 6-7V4L8 1z" fill="#22c55e" opacity=".3"/><path d="M6 8l2 2 3-3" stroke="#22c55e" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              Tested
-            </span>
-            <span class="badge-tokens">~{prompt.data.token_estimate} tokens</span>
-          </div>
-          <h3>{prompt.data.title}</h3>
-          <div class="preview-tags">
-            {prompt.data.tags.slice(0, 4).map(tag => <span class="tag">{tag}</span>)}
-          </div>
-        </div>
-      ))}
-    </div>
-    <a href="/free-cybersecurity-ai-prompts" class="btn-view-all">
-      View All Free Prompts
-      <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-    </a>
-  </section>
-
-  <!-- BLOG PREVIEW -->
-  <section class="blog-preview" id="blog">
-    <div class="section-label">From the Blog</div>
-    <h2>Security in Practice</h2>
-    <p class="section-sub">Real tool audits and practical guides — no filler.</p>
-    <div class="blog-grid">
-      {latestPosts.map(post => (
-        <a href={`/blog/${post.id}`} class="blog-card">
-          <div class="blog-card-meta">
-            <span class={`badge-cat cat-${post.data.category}`}>{categoryLabel[post.data.category] ?? post.data.category}</span>
-            <span class="blog-date">{new Date(post.data.date).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}</span>
-          </div>
-          <h3>{post.data.title}</h3>
-          <p>{post.data.description}</p>
-          <span class="blog-read">Read →</span>
-        </a>
-      ))}
-    </div>
-    <a href="/blog" class="btn-view-all" style="margin-top:32px;">
-      All posts
-      <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-    </a>
-  </section>
-
-  <!-- PRICING -->
-  <section class="pricing" id="pricing">
-    <div class="section-label">Packages</div>
-    <h2>Choose Your Protection Level</h2>
-    <p class="section-sub">From essential web hardening to enterprise-grade tailored security prompts.</p>
-    <div class="pricing-grid">
-      {plans.map(plan => (
-        <div class={`plan-card${plan.highlight ? ' plan-highlight' : ''}`}>
-          {plan.badge && <div class="plan-badge">{plan.badge}</div>}
-          <div class="plan-header">
-            <h3>{plan.name}</h3>
-            <div class="plan-price">
-              <span class="price-value">{plan.price}</span>
-              {plan.sub && <span class="price-sub">{plan.sub}</span>}
-            </div>
-          </div>
-          <ul class="plan-features">
-            {plan.features.map(f => (
-              <li>
-                <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8l4 4 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                {f}
-              </li>
-            ))}
-          </ul>
-          <a href={plan.ctaHref} class={`plan-cta${plan.highlight ? ' plan-cta-highlight' : ''}`}>{plan.cta}</a>
-        </div>
-      ))}
-    </div>
-  </section>
-
-  <!-- HOW IT WORKS -->
-  <section class="how" id="how">
-    <div class="section-label">Process</div>
-    <h2>From Prompt to Secure Implementation</h2>
-    <div class="steps">
-      <div class="step">
-        <div class="step-num">01</div>
-        <div class="step-content">
-          <h3>Pick your prompt</h3>
-          <p>Choose a tested security prompt matched to your expertise level, stack, and objective — web hardening, cloud security, OWASP audit, or cert prep.</p>
-        </div>
-      </div>
-      <div class="step">
-        <div class="step-num">02</div>
-        <div class="step-content">
-          <h3>Fill in your context</h3>
-          <p>Replace the <code>[REPLACE]</code> placeholders with your stack, framework, and specific requirements. The prompt already knows what to ask.</p>
-        </div>
-      </div>
-      <div class="step">
-        <div class="step-num">03</div>
-        <div class="step-content">
-          <h3>Run it — get real security</h3>
-          <p>Paste into any AI assistant. Get precise, actionable security output — not generic advice. Verified by our engineers before it ever reached you.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- CTA -->
-  <section class="cta" id="get-started">
-    <h2>Stop Trusting Untested AI Security Advice</h2>
-    <p>Interested in Premium or Tailored access? Drop us a line — we'll get back to you within 24 hours.</p>
-    <button
-      class="btn-contact"
-      data-u="contact"
-      data-d="securelayer.co"
-      data-s="Early Access Request"
-      aria-label="Contact us by email"
-    >
-      <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-        <rect x="1" y="3" width="14" height="10" rx="2" stroke="currentColor" stroke-width="1.5"/>
-        <path d="M1 5l7 5 7-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-      </svg>
-      Get Early Access
-    </button>
-    <p class="cta-note">No forms. No data collection. Just a direct conversation.</p>
-  </section>
 
 </Layout>
 
 <style>
-  /* HERO */
-  .hero { max-width: 860px; margin: 0 auto; padding: 140px 24px 80px; text-align: center; }
-  .hero-badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(34,197,94,0.1); border: 1px solid rgba(34,197,94,0.2); color: var(--green); font-size: 0.72rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; padding: 6px 16px; border-radius: 100px; margin-bottom: 32px; }
-  .badge-dot { width: 7px; height: 7px; background: var(--green); border-radius: 50%; animation: pulse 2s infinite; }
-  @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
-  .hero h1 { font-family: var(--font-head); font-size: clamp(2rem, 5.5vw, 3.6rem); font-weight: 700; color: var(--white); line-height: 1.18; margin-bottom: 24px; }
-  .hero h1 span { color: var(--cyan); }
-  .hero-sub { font-size: 1.1rem; color: var(--muted); max-width: 640px; margin: 0 auto 40px; }
-  .hero-sub strong { color: var(--text); }
-  .hero-actions { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; margin-bottom: 64px; }
-  .btn-primary { background: var(--cyan); color: #080c14; padding: 14px 32px; border-radius: 10px; font-weight: 700; font-size: 1rem; text-decoration: none; transition: opacity 0.2s; }
-  .btn-primary:hover { opacity: 0.88; }
-  .btn-ghost { border: 1px solid var(--border); color: var(--text); padding: 14px 32px; border-radius: 10px; font-size: 1rem; text-decoration: none; transition: border-color 0.2s, color 0.2s; }
-  .btn-ghost:hover { border-color: var(--cyan); color: var(--cyan); }
-  .hero-stats { display: flex; justify-content: center; align-items: center; flex-wrap: wrap; }
-  .stat { padding: 0 32px; text-align: center; }
-  .stat span { display: block; font-family: var(--font-head); font-size: 1.6rem; font-weight: 700; color: var(--cyan); }
-  .stat p { font-size: 0.78rem; color: var(--muted); margin-top: 4px; }
-  .stat-divider { width: 1px; height: 44px; background: var(--border); }
+  /* the desktop's own menu bar replaces the standard site nav on this page,
+     and a footer doesn't fit a full-viewport desktop scene */
+  :global(nav) { display: none; }
+  :global(footer) { display: none; }
 
-  /* TRUST BANNER */
-  .trust-banner { background: rgba(34,197,94,0.05); border-top: 1px solid rgba(34,197,94,0.1); border-bottom: 1px solid rgba(34,197,94,0.1); padding: 14px 24px; }
-  .trust-inner { max-width: 900px; margin: 0 auto; display: flex; align-items: center; justify-content: center; gap: 16px; flex-wrap: wrap; }
-  .trust-item { display: flex; align-items: center; gap: 8px; font-size: 0.8rem; color: var(--muted); }
-  .trust-sep { color: var(--border); font-size: 1.2rem; }
+  .os { position: relative; min-height: 100vh; display: flex; flex-direction: column; }
 
-  /* FEATURES */
-  .features { max-width: 1100px; margin: 0 auto; padding: 100px 24px; text-align: center; }
-  .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; }
-  .feature-card { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius); padding: 28px; text-align: left; transition: border-color 0.2s, transform 0.2s; }
-  .feature-card:hover { border-color: var(--cyan); transform: translateY(-3px); }
-  .feature-icon { font-size: 1.6rem; margin-bottom: 16px; }
-  .feature-card h3 { font-family: var(--font-head); font-size: 1rem; color: var(--white); margin-bottom: 10px; }
-  .feature-card p { font-size: 0.875rem; color: var(--muted); line-height: 1.65; }
+  /* MENU BAR */
+  .menu-bar { display: flex; align-items: center; justify-content: space-between; padding: 0 16px; height: 27px; background: transparent; position: absolute; top: 0; left: 0; right: 0; z-index: 5; }
+  .menu-left { display: flex; align-items: center; gap: 14px; overflow-x: auto; scrollbar-width: none; }
+  .menu-left::-webkit-scrollbar { display: none; }
+  .menu-logo { height: 15px; width: 15px; flex-shrink: 0; filter: brightness(0) invert(60%); opacity: .85; }
+  .menu-brand { font-family: var(--font-round); font-weight: 800; font-size: .74rem; color: #4a4a4a; margin-right: 2px; flex-shrink: 0; white-space: nowrap; }
+  .menu-item { font-size: .74rem; color: #4a4a4a; text-decoration: none; transition: color .15s; white-space: nowrap; flex-shrink: 0; }
+  .menu-item:hover { color: #c4c4c4; }
+  .menu-right { display: flex; align-items: center; gap: 12px; color: #4a4a4a; }
+  .menu-clock { font-size: .74rem; line-height: normal; font-variant-numeric: tabular-nums; color: #4a4a4a; }
+  .menu-battery-pct { font-size: .74rem; line-height: normal; font-variant-numeric: tabular-nums; color: #4a4a4a; }
 
-  /* FREE TOOLS PREVIEW */
-  .free-prompts-preview { max-width: 1100px; margin: 0 auto; padding: 80px 24px; text-align: center; }
-  .github-tool-card { display: flex; align-items: center; justify-content: space-between; background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px 24px; margin-bottom: 16px; text-decoration: none; transition: border-color 0.2s, transform 0.2s; gap: 16px; }
-  .github-tool-card:hover { border-color: var(--cyan); transform: translateY(-2px); }
-  .github-tool-left { display: flex; align-items: center; gap: 16px; text-align: left; }
-  .github-tool-icon { width: 40px; height: 40px; background: var(--cyan-dim); border: 1px solid rgba(167,139,250,.2); border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-  .github-tool-label { font-family: var(--font-head); font-size: 1rem; color: var(--white); margin-bottom: 4px; }
-  .github-tool-desc { font-size: 0.82rem; color: var(--muted); }
-  .github-tool-cta { font-size: 0.85rem; font-weight: 600; color: var(--cyan); white-space: nowrap; flex-shrink: 0; }
-  .preview-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin-bottom: 32px; }
-  .preview-card { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius); padding: 24px; text-align: left; transition: border-color 0.2s; }
-  .preview-card:hover { border-color: rgba(34,197,94,0.3); }
-  .preview-meta { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 14px; }
-  .badge-tier.free { background: rgba(34,197,94,0.12); color: var(--green); border: 1px solid rgba(34,197,94,0.2); font-size: 0.7rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; padding: 3px 10px; border-radius: 100px; }
-  .badge-tested { display: inline-flex; align-items: center; gap: 4px; font-size: 0.72rem; color: var(--green); font-weight: 500; }
-  .badge-tokens { font-size: 0.72rem; color: var(--muted); background: var(--bg); border: 1px solid var(--border2); padding: 2px 8px; border-radius: 6px; }
-  .preview-card h3 { font-family: var(--font-head); font-size: 0.95rem; color: var(--white); margin-bottom: 14px; line-height: 1.4; }
-  .preview-tags { display: flex; gap: 6px; flex-wrap: wrap; }
-  .tag { font-size: 0.68rem; color: var(--muted); background: var(--bg3); border: 1px solid var(--border2); padding: 2px 8px; border-radius: 4px; }
-  .btn-view-all { display: inline-flex; align-items: center; gap: 8px; background: var(--bg2); border: 1px solid var(--border); color: var(--text); padding: 12px 24px; border-radius: 10px; font-size: 0.9rem; font-weight: 500; text-decoration: none; transition: border-color 0.2s, color 0.2s; }
-  .btn-view-all:hover { border-color: var(--cyan); color: var(--cyan); }
+  /* DESKTOP */
+  .desktop { position: relative; flex: 1; min-height: 640px; overflow: hidden; background: var(--bg); }
+  .wallpaper-photo { position: absolute; inset: 0; background: url('/images/wallpaper-beach.webp') center 55% / cover no-repeat; }
+  .wallpaper-scrim { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(23,20,15,.06), rgba(23,20,15,.22) 55%, rgba(23,20,15,.4)); }
 
-  /* BLOG PREVIEW */
-  .blog-preview { max-width: 1100px; margin: 0 auto; padding: 80px 24px; text-align: center; }
-  .blog-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px; margin-bottom: 8px; }
-  .blog-card { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius); padding: 28px; text-align: left; text-decoration: none; display: flex; flex-direction: column; gap: 12px; transition: border-color .2s, transform .2s; }
-  .blog-card:hover { border-color: var(--cyan); transform: translateY(-2px); }
-  .blog-card-meta { display: flex; align-items: center; gap: 10px; }
-  .badge-cat { font-size: .7rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; padding: 3px 10px; border-radius: 100px; }
-  .cat-case-study { background: rgba(167,139,250,.12); color: var(--cyan); border: 1px solid rgba(167,139,250,.2); }
-  .cat-guide { background: rgba(34,197,94,.1); color: var(--green); border: 1px solid rgba(34,197,94,.2); }
-  .cat-tutorial { background: rgba(251,191,36,.08); color: #fbbf24; border: 1px solid rgba(251,191,36,.2); }
-  .cat-analysis { background: rgba(196,181,253,.08); color: var(--purple); border: 1px solid rgba(196,181,253,.15); }
-  .blog-date { font-size: .75rem; color: var(--muted); }
-  .blog-card h3 { font-family: var(--font-head); font-size: 1rem; color: var(--white); line-height: 1.35; }
-  .blog-card p { font-size: .85rem; color: var(--muted); line-height: 1.6; flex: 1; }
-  .blog-read { font-size: .82rem; font-weight: 600; color: var(--cyan); }
+  .widget-watermark { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 120px; opacity: .1; color: #17140f; pointer-events: none; z-index: 0; }
+  .widget-watermark :global(svg) { width: 100%; height: auto; display: block; }
+  .todo-watermark { color: #17140f; opacity: .05; }
 
-  /* PRICING */
-  .pricing { max-width: 1100px; margin: 0 auto; padding: 100px 24px; text-align: center; }
-  .pricing-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 420px)); gap: 20px; margin-top: 60px; justify-content: center; }
-  @media (max-width: 720px) { .pricing-grid { grid-template-columns: 1fr; } }
-  .plan-card { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius); padding: 32px 28px; text-align: left; position: relative; display: flex; flex-direction: column; transition: border-color 0.2s; }
-  .plan-card:hover { border-color: rgba(99,179,237,0.3); }
-  .plan-highlight { border-color: var(--cyan); background: linear-gradient(145deg, rgba(56,189,248,0.06) 0%, var(--bg2) 60%); }
-  .plan-badge { position: absolute; top: -12px; left: 50%; transform: translateX(-50%); background: var(--cyan); color: #080c14; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; padding: 4px 14px; border-radius: 100px; white-space: nowrap; }
-  .plan-header { margin-bottom: 24px; }
-  .plan-header h3 { font-family: var(--font-head); font-size: 1.1rem; color: var(--white); margin-bottom: 12px; }
-  .plan-price { display: flex; align-items: baseline; gap: 6px; }
-  .price-value { font-family: var(--font-head); font-size: 2rem; font-weight: 700; color: var(--cyan); }
-  .price-sub { font-size: 0.8rem; color: var(--muted); }
-  .plan-features { list-style: none; display: flex; flex-direction: column; gap: 12px; flex: 1; margin-bottom: 28px; }
-  .plan-features li { display: flex; align-items: flex-start; gap: 10px; font-size: 0.875rem; color: var(--muted); }
-  .plan-features li svg { margin-top: 3px; flex-shrink: 0; color: var(--green); }
-  .plan-cta { display: block; text-align: center; padding: 13px 24px; border-radius: 10px; font-size: 0.9rem; font-weight: 600; text-decoration: none; border: 1px solid var(--border); color: var(--text); transition: border-color 0.2s, color 0.2s; }
-  .plan-cta:hover { border-color: var(--cyan); color: var(--cyan); }
-  .plan-cta-highlight { background: var(--cyan); color: #080c14; border-color: var(--cyan); }
-  .plan-cta-highlight:hover { opacity: 0.88; color: #080c14; border-color: var(--cyan); }
+  /* WIDGETS */
+  .widget { position: absolute; z-index: 2; overflow: hidden; background: var(--bg2); border: 1px solid var(--border); border-radius: 16px; padding: 18px 20px; box-shadow: 0 20px 40px -24px rgba(23,20,15,.3); max-width: 260px; }
+  .pos-tl { top: 28px; left: 40px; }
+  .pos-tr { top: 32px; right: 32px; }
+  .pos-mr { top: 230px; left: 50%; transform: translateX(30px); }
+  .pos-bl { top: 306px; left: 31px; }
 
-  /* HOW */
-  .how { background: var(--bg2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 100px 24px; text-align: center; }
-  .how h2, .how .section-label { max-width: 1100px; margin-left: auto; margin-right: auto; }
-  .steps { display: flex; flex-direction: column; max-width: 680px; margin: 56px auto 0; }
-  .step { display: flex; gap: 32px; align-items: flex-start; padding: 28px 0; border-bottom: 1px solid var(--border); text-align: left; }
-  .step:last-child { border-bottom: none; }
-  .step-num { font-family: var(--font-head); font-size: 1.8rem; font-weight: 700; color: var(--cyan); opacity: 0.4; min-width: 52px; padding-top: 4px; }
-  .step-content h3 { font-family: var(--font-head); font-size: 1rem; color: var(--white); margin-bottom: 8px; }
-  .step-content p { color: var(--muted); font-size: 0.9rem; }
-  .step-content code { font-family: var(--font-mono); font-size: 0.82rem; background: var(--bg3); border: 1px solid var(--border); padding: 1px 6px; border-radius: 4px; color: var(--cyan); }
+  .widget-note { background: #eee6a8; border-color: #d9cd7a; width: 265px; height: 265px; max-width: 265px; padding: 22px 20px; border-radius: 3px; display: flex; flex-direction: column; justify-content: center; }
+  .widget-note p { font-family: var(--font-head); font-size: 1.4rem; font-weight: 400; color: #2b2410; line-height: 1.3; }
+  .widget-note p + p { margin-top: 16px; }
+  .widget-note em { font-style: italic; font-weight: 700; }
+  .widget-note strong { font-style: normal; font-weight: 700; }
 
-  /* CTA */
-  .cta { background: var(--bg2); border-top: 1px solid var(--border); padding: 100px 24px; text-align: center; }
-  .cta p { color: var(--muted); max-width: 480px; margin: 16px auto 32px; }
-  .btn-contact { display: inline-flex; align-items: center; gap: 10px; background: var(--cyan); color: #080c14; border: none; border-radius: 10px; padding: 14px 32px; font-size: 1rem; font-weight: 700; cursor: pointer; transition: opacity 0.2s; font-family: var(--font); }
-  .btn-contact:hover { opacity: 0.88; }
-  .cta-note { font-size: 0.78rem; color: var(--muted); margin-top: 16px; }
+  .widget-todo { background: #fdfdfd; border-color: rgba(0,0,0,.08); padding: 16px 18px 18px; max-width: 320px; }
+  .todo-bar { display: flex; align-items: center; gap: 7px; margin-bottom: 14px; }
+  .todo-dot { width: 10px; height: 10px; border-radius: 50%; }
+  .todo-add { margin-left: auto; width: 20px; height: 20px; border-radius: 50%; border: 1px solid rgba(0,0,0,.15); color: rgba(0,0,0,.6); font-size: .8rem; display: flex; align-items: center; justify-content: center; }
+  .todo-titlerow { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 8px; }
+  .todo-title { font-family: var(--font-round); font-weight: 900; font-size: 1.3rem; color: #0a6cff; }
+  .todo-count { font-family: var(--font-round); font-weight: 800; font-size: 1.6rem; color: #0a6cff; }
+  .todo-subrow { font-size: .68rem; color: rgba(0,0,0,.4); padding-bottom: 10px; border-bottom: 1px solid rgba(0,0,0,.08); margin-bottom: 4px; }
+  .todo-subrow a { color: #0a6cff; text-decoration: none; }
+  .todo-show { float: right; color: #0a6cff; }
+  .todo-list { display: flex; flex-direction: column; }
+  .widget-todo-item { display: flex; align-items: center; gap: 10px; font-size: .74rem; color: rgba(0,0,0,.82); padding: 7px 0; }
+  .todo-check { width: 14px; height: 14px; border-radius: 50%; border: 1.3px solid rgba(0,0,0,.25); flex-shrink: 0; }
 
-  @media (max-width: 640px) {
-    .stat { padding: 0 16px; }
+  .widget-file { display: flex; flex-direction: column; align-items: center; gap: 6px; background: transparent; border: none; box-shadow: none; overflow: visible; text-align: center; }
+  .pdf-page { width: 62px; height: 76px; background: #fdfdfd; border-radius: 2px; position: relative; box-shadow: 0 4px 10px rgba(0,0,0,.22); }
+  .pdf-page::before { content: ""; position: absolute; top: 0; right: 0; width: 0; height: 0; border-style: solid; border-width: 0 14px 14px 0; border-color: transparent #dcdcdc transparent transparent; }
+  .pdf-thumb { position: absolute; top: 12px; left: 8px; right: 8px; height: 32px; border-radius: 2px; background: url('/images/wallpaper-beach.webp') center 60% / cover no-repeat; box-shadow: 0 0 0 1px rgba(0,0,0,.06); }
+  .pdf-badge { position: absolute; bottom: 16px; right: 6px; width: 20px; height: 20px; border-radius: 50%; background: linear-gradient(180deg, #c6c6c6, #8c8c8c); display: flex; align-items: center; justify-content: center; box-shadow: 0 1px 3px rgba(0,0,0,.35); }
+  .pdf-label { position: absolute; bottom: 4px; left: 0; right: 0; text-align: center; font-family: var(--font-round); font-size: .58rem; font-weight: 800; letter-spacing: .04em; color: #555; }
+  .widget-file span { font-size: .72rem; color: #fff; font-weight: 600; text-shadow: 0 1px 4px rgba(0,0,0,.4); }
+
+  .widget-preview {
+    --preview-accent: var(--cyan);
+    background: rgba(40,37,30,.6); backdrop-filter: blur(14px); border: 1px solid rgba(240,233,218,.14);
+    padding: 0; opacity: 0; transform: translateY(6px) scale(.98); pointer-events: none;
+    transition: opacity .18s ease, transform .18s ease; max-width: none;
+  }
+  .widget-preview.is-visible { opacity: 1; transform: translateY(0) scale(1); }
+  .preview-titlebar { display: flex; align-items: center; gap: 8px; padding: 10px 12px; }
+  .preview-btn { width: 16px; height: 16px; border-radius: 50%; background: rgba(240,233,218,.14); color: rgba(240,233,218,.75); display: flex; align-items: center; justify-content: center; font-size: .8rem; line-height: 1; flex-shrink: 0; }
+  .preview-filename { font-size: .7rem; color: rgba(240,233,218,.85); font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .preview-body { width: 293px; height: 297px; margin: 0 12px 12px; border-radius: 10px; background: linear-gradient(155deg, color-mix(in srgb, var(--preview-accent) 55%, transparent), rgba(0,0,0,.2)); border: 1px dashed rgba(240,233,218,.25); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; color: rgba(240,233,218,.75); overflow: hidden; }
+  .preview-body span { font-size: .68rem; font-weight: 600; }
+  .preview-img { display: none; width: 100%; height: 100%; object-fit: cover; object-position: top; }
+  .preview-body.has-image { border-style: solid; border-color: rgba(240,233,218,.18); background: #0e0e0e; }
+  .preview-body.has-image .preview-img { display: block; }
+  .preview-body.has-image .preview-placeholder { display: none; }
+
+  /* DOCK */
+  .dock {
+    position: absolute; left: 50%; bottom: 22px; transform: translateX(-50%); z-index: 6;
+    display: flex; align-items: center; gap: 9px; padding: 9px 12px;
+    background: rgba(255,255,255,.14); backdrop-filter: blur(20px) saturate(160%); -webkit-backdrop-filter: blur(20px) saturate(160%);
+    border: 1px solid rgba(255,255,255,.25); border-radius: 20px; box-shadow: 0 14px 34px rgba(0,0,0,.35);
+    max-width: calc(100vw - 32px); overflow-x: auto; scrollbar-width: none;
+  }
+  .dock::-webkit-scrollbar { display: none; }
+  .dock-icon {
+    width: 38px; height: 38px; box-sizing: border-box; padding: 6px; border-radius: 10px;
+    background: #fbfaf8; box-shadow: 0 1px 3px rgba(0,0,0,.25), inset 0 0 0 1px rgba(0,0,0,.04);
+    display: flex; align-items: center; justify-content: center; text-decoration: none; transition: transform .15s; flex-shrink: 0;
+  }
+  .dock-icon img { width: 100%; height: 100%; object-fit: contain; }
+  .dock-icon:hover { transform: translateY(-6px); }
+  .dock-sep { width: 1px; height: 28px; background: rgba(240,233,218,.2); margin: 0 4px; flex-shrink: 0; }
+  .dock-trash { background: transparent; box-shadow: none; padding: 0; }
+
+  .dock-tooltip {
+    position: fixed; z-index: 20; top: 0; left: 0; transform: translate(-50%, calc(-100% - 15px)) translateY(4px);
+    background: #fbfaf8; color: #2b2410; font-family: var(--font-round); font-weight: 700; font-size: .78rem;
+    padding: 7px 12px; border-radius: 8px; box-shadow: 0 8px 20px rgba(0,0,0,.35); white-space: nowrap;
+    opacity: 0; pointer-events: none; transition: opacity .15s ease, transform .15s ease;
+  }
+  .dock-tooltip::after {
+    content: ""; position: absolute; top: 100%; left: 50%; transform: translateX(-50%);
+    border: 6px solid transparent; border-top-color: #fbfaf8;
+  }
+  .dock-tooltip.is-visible { opacity: 1; transform: translate(-50%, calc(-100% - 15px)) translateY(0); }
+
+  @media (max-width: 860px) {
+    .menu-left { gap: 12px; }
+    .menu-item { display: none; }
+    .widget { position: relative; max-width: none; margin: 12px auto; width: calc(100% - 32px); }
+    .widget-note { width: 265px; max-width: calc(100% - 32px); }
+    .pos-tl, .pos-tr, .pos-mr, .pos-bl { top: auto; left: auto; right: auto; bottom: auto; }
+    .widget-preview { display: none; }
+    .desktop { display: flex; flex-direction: column; padding: 24px 0; min-height: 0; }
+    .dock { position: relative; left: auto; bottom: auto; transform: none; width: 100%; border-radius: 0; background: rgba(23,20,15,.55); backdrop-filter: blur(10px); box-shadow: none; border: none; }
   }
 </style>
 
 <script>
-  document.querySelectorAll<HTMLButtonElement>('.btn-contact').forEach(btn => {
+  const clockEl = document.getElementById('menu-clock');
+  if (clockEl) {
+    const fmt = () => new Intl.DateTimeFormat('en-GB', {
+      weekday: 'short', day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit',
+    }).format(new Date());
+    clockEl.textContent = fmt();
+    setInterval(() => { clockEl.textContent = fmt(); }, 30000);
+  }
+
+  const previewWindow = document.getElementById('preview-window');
+  const previewFilename = document.getElementById('preview-filename');
+  const previewBody = document.getElementById('preview-body');
+  const previewImg = document.getElementById('preview-img') as HTMLImageElement | null;
+  if (previewWindow && previewFilename && previewBody && previewImg) {
+    document.querySelectorAll<HTMLAnchorElement>('.menu-item[data-preview-file]').forEach(item => {
+      item.addEventListener('mouseenter', () => {
+        previewFilename.textContent = item.dataset.previewFile ?? '';
+        previewBody.style.setProperty('--preview-accent', item.dataset.previewAccent ?? 'var(--cyan)');
+        const imgSrc = item.dataset.previewImg;
+        if (imgSrc) {
+          previewImg.src = imgSrc;
+          previewBody.classList.add('has-image');
+        } else {
+          previewImg.src = '';
+          previewBody.classList.remove('has-image');
+        }
+        previewWindow.classList.add('is-visible');
+      });
+      item.addEventListener('mouseleave', () => {
+        previewWindow.classList.remove('is-visible');
+      });
+    });
+  }
+
+  const dockTooltip = document.getElementById('dock-tooltip');
+  if (dockTooltip) {
+    document.querySelectorAll<HTMLElement>('.dock-icon[data-tooltip]').forEach(icon => {
+      icon.addEventListener('mouseenter', () => {
+        const rect = icon.getBoundingClientRect();
+        dockTooltip.textContent = icon.dataset.tooltip ?? '';
+        dockTooltip.style.left = `${rect.left + rect.width / 2}px`;
+        dockTooltip.style.top = `${rect.top}px`;
+        dockTooltip.classList.add('is-visible');
+      });
+      icon.addEventListener('mouseleave', () => {
+        dockTooltip.classList.remove('is-visible');
+      });
+    });
+  }
+
+  document.querySelectorAll<HTMLButtonElement>('[data-u]').forEach(btn => {
     btn.addEventListener('click', () => {
       const u = btn.dataset.u ?? '';
       const d = btn.dataset.d ?? '';
