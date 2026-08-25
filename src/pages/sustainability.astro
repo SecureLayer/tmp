@@ -106,40 +106,24 @@
     .hero-meta .sep { margin: 0 6px; opacity: .4; }
     .hero-meta strong { color: #4ade80; }
 
-    /* ── free-prompts-style card grid ── */
-    .cards-grid {
+    /* ── score-card pattern (matches security.astro) ── */
+    .scores-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 320px));
-      justify-content: center;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
       gap: 16px;
       margin-bottom: 48px;
     }
-    .pcard {
-      background: #0d1a1a; border: 1px solid #1a3030; border-radius: 12px;
-      padding: 18px; display: flex; flex-direction: column; gap: 12px;
-      transition: border-color .2s;
+    .score-card {
+      background: #0d1a1a; border: 1px solid #1a3030; border-radius: 8px;
+      padding: 24px; color: inherit; display: flex; flex-direction: column; gap: 16px;
     }
-    .pcard:hover { border-color: rgba(94,234,212,.3); }
-    .pcard-top { display: flex; align-items: center; justify-content: space-between; }
-    .pcard-badge-verified {
-      background: rgba(74,222,128,.12); color: #4ade80; border: 1px solid rgba(74,222,128,.25);
-      font-size: .65rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase;
-      padding: 2px 8px; border-radius: 100px;
-    }
-    .pcard-date { font-size: .68rem; color: #666; background: #142424; border: 1px solid #1a3030; padding: 2px 7px; border-radius: 5px; }
-    .pcard-title { font-size: .9rem; font-weight: 600; color: #fff; line-height: 1.4; }
-    .pcard-meta { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
-    .pcard-cat { font-size: .68rem; color: #5eead4; background: rgba(94,234,212,.08); border: 1px solid rgba(94,234,212,.15); padding: 2px 7px; border-radius: 5px; }
-    .pcard-tags { display: flex; gap: 5px; flex-wrap: wrap; }
-    .pcard-tag { font-size: .65rem; color: #888; background: #142424; border: 1px solid #1a3030; padding: 1px 7px; border-radius: 4px; }
-    .pcard-link {
-      display: inline-flex; align-items: center; gap: 6px; align-self: flex-start;
-      background: rgba(94,234,212,.08); border: 1px solid rgba(94,234,212,.25);
-      color: #5eead4; font-size: .78rem; font-weight: 500;
-      padding: 6px 13px; border-radius: 7px; margin-top: 2px;
-      transition: background .2s; text-decoration: none;
-    }
-    .pcard-link:hover { background: rgba(94,234,212,.18); text-decoration: none; }
+    .card-header { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+    .service-name { font-size: 13px; font-weight: 700; color: #aaa; letter-spacing: 0.3px; }
+    .grade-badge { font-size: 22px; font-weight: 800; padding: 4px 12px; border-radius: 6px; line-height: 1.4; flex-shrink: 0; }
+    .grade-Aplus { color: #4ade80; background: #0d2a0d; border: 1px solid #166534; }
+    .grade-safe  { color: #5eead4; background: #0d2a2a; border: 1px solid #0d9488; font-size: 13px; }
+    .card-desc { font-size: 12px; color: #555; line-height: 1.5; }
+    .card-link { font-size: 11px; color: #0d9488; letter-spacing: 0.3px; }
 
     /* ── Mobile: drop the icon row, keep tab + address pill only ── */
     @media (max-width: 640px) {
@@ -208,56 +192,33 @@
     <div class="hero-meta"><span>3</span> assessments <span class="sep">·</span> <strong>All verified</strong></div>
   </div>
 
-  <div class="cards-grid">
+  <div class="scores-grid">
 
-    <div class="pcard">
-      <div class="pcard-top">
-        <span class="pcard-badge-verified">A+</span>
-        <span class="pcard-date">Verified May 28, 2026</span>
+    <div class="score-card">
+      <div class="card-header">
+        <span class="service-name">Digital Beacon<br>Carbon Report</span>
+        <span class="grade-badge grade-Aplus">A+</span>
       </div>
-      <h3 class="pcard-title">Digital Beacon Carbon Report</h3>
-      <div class="pcard-meta">
-        <span class="pcard-cat">Carbon emissions</span>
-      </div>
-      <div class="pcard-tags">
-        <span class="pcard-tag">0.044g CO₂ first visit</span>
-        <span class="pcard-tag">0.003g return</span>
-        <span class="pcard-tag">143 KB</span>
-        <span class="pcard-tag">0ms server</span>
-      </div>
-      <a class="pcard-link" href="https://digitalbeacon.co/report/securelayer-co" target="_blank" rel="noopener noreferrer">View full report ↗</a>
+      <p class="card-desc">0.044g CO₂ first visit, 0.003g return · 143 KB page weight · 0ms server response.</p>
+      <a class="card-link" href="https://digitalbeacon.co/report/securelayer-co" target="_blank" rel="noopener noreferrer">View full report ↗</a>
     </div>
 
-    <div class="pcard">
-      <div class="pcard-top">
-        <span class="pcard-badge-verified">A+</span>
-        <span class="pcard-date">Verified May 27, 2026</span>
+    <div class="score-card">
+      <div class="card-header">
+        <span class="service-name">Website Carbon<br>Calculator</span>
+        <span class="grade-badge grade-Aplus">A+</span>
       </div>
-      <h3 class="pcard-title">Website Carbon Calculator</h3>
-      <div class="pcard-meta">
-        <span class="pcard-cat">Carbon emissions</span>
-      </div>
-      <div class="pcard-tags">
-        <span class="pcard-tag">Top 3% globally</span>
-        <span class="pcard-tag">Cleaner than 97%</span>
-      </div>
-      <a class="pcard-link" href="https://www.websitecarbon.com/website/securelayer-co/" target="_blank" rel="noopener noreferrer">View full report ↗</a>
+      <p class="card-desc">Top 3% globally — cleaner than 97% of pages tested.</p>
+      <a class="card-link" href="https://www.websitecarbon.com/website/securelayer-co/" target="_blank" rel="noopener noreferrer">View full report ↗</a>
     </div>
 
-    <div class="pcard">
-      <div class="pcard-top">
-        <span class="pcard-badge-verified">Verified</span>
-        <span class="pcard-date">Via Cloudflare CDN</span>
+    <div class="score-card">
+      <div class="card-header">
+        <span class="service-name">Green Web<br>Foundation</span>
+        <span class="grade-badge grade-safe">Verified</span>
       </div>
-      <h3 class="pcard-title">Green Web Foundation</h3>
-      <div class="pcard-meta">
-        <span class="pcard-cat">Green hosting</span>
-      </div>
-      <div class="pcard-tags">
-        <span class="pcard-tag">Renewable energy certified</span>
-        <span class="pcard-tag">Zero origin compute</span>
-      </div>
-      <a class="pcard-link" href="https://www.thegreenwebfoundation.org/green-web-check/?url=securelayer.co" target="_blank" rel="noopener noreferrer">View full report ↗</a>
+      <p class="card-desc">Served via Cloudflare CDN — renewable energy certified, zero origin compute per visit.</p>
+      <a class="card-link" href="https://www.thegreenwebfoundation.org/green-web-check/?url=securelayer.co" target="_blank" rel="noopener noreferrer">View full report ↗</a>
     </div>
 
   </div>
