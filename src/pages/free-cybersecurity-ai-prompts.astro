@@ -221,6 +221,17 @@ const freePrompts = (await getCollection('prompts', ({ data }) =>
       .nav-icon, .nav-divider, .nav-brave, .nav-fox, .nav-menu, .vpn-badge, .private-badge { display: none; }
       .address-pill { max-width: none; margin: 0; }
     }
+
+    /* ── Footer ── */
+    .site-footer { border-top: 1px solid #1a3030; padding: 40px 24px; text-align: center; margin-top: 24px; }
+    .site-footer p { color: #888; font-size: 13px; }
+    .footer-links { margin-top: 14px; display: flex; justify-content: center; gap: 20px; }
+    .footer-links a { font-size: 12px; color: #888; text-decoration: none; }
+    .footer-links a:hover { color: #5eead4; }
+    .footer-green-link { display: inline-block; margin-top: 18px; opacity: .85; transition: opacity .2s; }
+    .footer-green-link:hover { opacity: 1; }
+    .footer-green-link img { display: block; width: 60px; height: auto; margin: 0 auto; }
+    .footer-copy { margin-top: 12px; font-size: 11px; }
   </style>
 </head>
 <body>
@@ -333,6 +344,19 @@ const freePrompts = (await getCollection('prompts', ({ data }) =>
         </a>
       </div>
     </div>
+
+    <footer class="site-footer">
+      <p>Choose cybersecurity, it's cheaper.</p>
+      <p class="footer-links">
+        <a href="/">Home</a>
+        <a href="/security">Security</a>
+        <a href="/sustainability">Environment</a>
+      </p>
+      <a href="/sustainability" class="footer-green-link">
+        <img src="/gwf-badge.png" alt="This website runs on green hosting - verified by thegreenwebfoundation.org" />
+      </a>
+      <p class="footer-copy">&copy; 2026 SecureLayer. All rights reserved.</p>
+    </footer>
 
   </div>
 </div>
