@@ -111,9 +111,9 @@ const logoMark = logoSource
     <!-- DOCK · the real toolkit used for security work -->
     <div class="dock">
       <span class="dock-icon" title="Finder"><img src="/images/dock-icons/finder.png" alt="Finder" /></span>
-      <span class="dock-icon" title="Tutanota" data-tooltip="contact@securelayer.co"><img src="/images/dock-icons/tuta.png" alt="Tutanota" /></span>
-      <span class="dock-icon" title="Proton Mail" data-tooltip="contact@securelayer.co"><img src="/images/dock-icons/proton.png" alt="Proton Mail" /></span>
-      <span class="dock-icon" title="Signal"><img src="/images/dock-icons/signal.png" alt="Signal" /></span>
+      <span class="dock-icon dock-mobile-keep" title="Tutanota" data-tooltip="contact@securelayer.co"><img src="/images/dock-icons/tuta.png" alt="Tutanota" /></span>
+      <span class="dock-icon dock-mobile-keep" title="Proton Mail" data-tooltip="contact@securelayer.co"><img src="/images/dock-icons/proton.png" alt="Proton Mail" /></span>
+      <span class="dock-icon dock-mobile-keep" title="Signal"><img src="/images/dock-icons/signal.png" alt="Signal" /></span>
       <span class="dock-icon" title="Molly"><img src="/images/dock-icons/molly.png" alt="Molly" /></span>
       <span class="dock-icon" title="VS Code"><img src="/images/dock-icons/vscode.png" alt="VS Code" /></span>
       <span class="dock-icon" title="Jupyter"><img src="/images/dock-icons/jupyter.png" alt="Jupyter" /></span>
@@ -127,8 +127,8 @@ const logoMark = logoSource
       <span class="dock-icon" title="Bitwarden"><img src="/images/dock-icons/bitwarden.png" alt="Bitwarden" /></span>
       <span class="dock-icon" title="OrbStack"><img src="/images/dock-icons/orbstack.png" alt="OrbStack" /></span>
       <span class="dock-icon" title="Ollama"><img src="/images/dock-icons/ollama.png" alt="Ollama" /></span>
-      <a class="dock-icon" href="https://securelayer.co/security" title="Brave" data-tooltip="How secure is this website?"><img src="/images/dock-icons/brave.png" alt="Brave" /></a>
-      <a class="dock-icon" href="https://securelayer.co/sustainability/" title="Firefox" data-tooltip="What is the impact of this website on the environment?"><img src="/images/dock-icons/firefox.png" alt="Firefox" /></a>
+      <a class="dock-icon dock-mobile-keep" href="https://securelayer.co/security" title="Brave" data-tooltip="How secure is this website?"><img src="/images/dock-icons/brave.png" alt="Brave" /></a>
+      <a class="dock-icon dock-mobile-keep" href="https://securelayer.co/sustainability/" title="Firefox" data-tooltip="What is the impact of this website on the environment?"><img src="/images/dock-icons/firefox.png" alt="Firefox" /></a>
       <div class="dock-sep"></div>
       <div class="dock-icon dock-trash" title="Trash">
         <img src="/images/dock-icons/trash.png" alt="Trash" />
@@ -264,9 +264,10 @@ const logoMark = logoSource
     .pos-tl, .pos-tr, .pos-mr, .pos-bl { top: auto; left: auto; right: auto; bottom: auto; }
     .widget-preview { display: none; }
     .desktop { display: flex; flex-direction: column; padding: 24px 0; min-height: 0; }
-    .dock { position: relative; left: auto; bottom: auto; transform: none; width: 100%; max-width: 100%; border-radius: 0; background: rgba(23,20,15,.55); backdrop-filter: blur(10px); box-shadow: none; border: none; gap: 6px; padding: 7px 10px; }
+    .dock { position: relative; left: auto; bottom: auto; transform: none; width: 100%; max-width: 100%; border-radius: 0; background: rgba(23,20,15,.55); backdrop-filter: blur(10px); box-shadow: none; border: none; gap: 10px; padding: 7px 10px; justify-content: center; }
     .dock-icon { width: 28px; height: 28px; padding: 4px; border-radius: 8px; }
-    .dock-sep { height: 20px; margin: 0 2px; }
+    .dock-icon:not(.dock-mobile-keep) { display: none; }
+    .dock-sep { display: none; }
   }
 </style>
 
