@@ -137,6 +137,165 @@ const logoMark = logoSource
 
     <div class="dock-tooltip" id="dock-tooltip"></div>
 
+    <!-- MOBILE SCENE · lock/unlock widget-stack (Phase B push, 2026-08-26) -->
+    <div class="m-scene" id="mScene">
+      <div class="m-statusbar">
+        <div class="m-statusbar-brand">SecureLayer</div>
+        <div class="m-statusbar-icons">
+          <svg width="16" height="11" viewBox="0 0 16 11" fill="#fff"><rect x="0" y="7" width="3" height="4" rx=".5"/><rect x="4.5" y="5" width="3" height="6" rx=".5"/><rect x="9" y="3" width="3" height="8" rx=".5"/><rect x="13" y="0" width="3" height="11" rx=".5"/></svg>
+          <svg width="15" height="13" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.55a11 11 0 0 1 14.08 0"/><path d="M1.42 9a16 16 0 0 1 21.16 0"/><path d="M8.53 16.11a6 6 0 0 1 6.95 0"/><line x1="12" y1="20" x2="12.01" y2="20"/></svg>
+          <svg width="22" height="11" viewBox="0 0 24 12" fill="none"><rect x="1" y="1.5" width="19" height="9" rx="2.5" stroke="#fff" stroke-width="1.2"/><rect x="21.5" y="4.3" width="2" height="3.4" rx="1" fill="#fff"/><rect x="2.5" y="3" width="14" height="6" rx="1.2" fill="#fff"/></svg>
+        </div>
+      </div>
+      <div class="m-hp-body">
+        <div class="m-stack-bg"></div>
+        <div class="m-stack-scrim"></div>
+
+        <div class="m-stack">
+
+          <div class="m-card m-card-collage" style="--d:.05s">
+            <div class="m-collage-grid">
+              <img class="m-collage-img" src="/images/previews/secdevops-pipeline.png" alt="">
+              <img class="m-collage-img" src="/images/previews/security-page.png" alt="">
+              <img class="m-collage-img m-collage-wide" src="/images/previews/itsec-overview.png" alt="">
+            </div>
+            <div class="m-collage-text">
+              <div class="m-card-eyebrow">Expertise</div>
+              <h3>Need a hand with your SecDevOps, AppSec, IT Sec?</h3>
+              <a class="m-btn-amber" href="mailto:contact@securelayer.co">Let's discuss →</a>
+            </div>
+          </div>
+
+          <div class="m-row-note" style="--d:.1s">
+            <div class="m-card m-card-note m-card-note-square">
+              <div class="m-card-note-eyebrow">PRO TIPS</div>
+              <p><em>Security</em> is not a project,</p>
+              <p>It's a <em>habit</em>,</p>
+              <p>We can <strong>help you</strong> <em>make it stick</em>.</p>
+            </div>
+          </div>
+
+          <div class="m-card m-card-cta" style="--d:.15s">
+            <div class="m-card-eyebrow">Tool self-serve</div>
+            <h3>Test your own security with our AI prompts</h3>
+            <p class="m-card-cta-body">Paste these prompts into any AI agent and check your own setup yourself, no strings attached.</p>
+            <a class="m-btn-amber" href="/free-cybersecurity-ai-prompts/">Try the free prompts →</a>
+            <p class="m-card-cta-note">Every AI prompt has a real energy cost — about a 10W LED bulb running for two minutes. Run these thoughtfully — being frugal with AI is part of protecting our planet.</p>
+          </div>
+
+          <div class="m-row2" style="--d:.2s">
+            <a class="m-card-file" href="/docs/securelayer.co.pdf" target="_blank" rel="noopener">
+              <svg class="m-folder-icon" viewBox="0 0 64 50" fill="none">
+                <defs>
+                  <linearGradient id="folderGrad" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0" stop-color="#6dd0fa"/>
+                    <stop offset="1" stop-color="#0a84ff"/>
+                  </linearGradient>
+                </defs>
+                <path d="M2 10c0-2.2 1.8-4 4-4h16l5 5h31c2.2 0 4 1.8 4 4v29c0 2.2-1.8 4-4 4H6c-2.2 0-4-1.8-4-4V10z" fill="url(#folderGrad)"/>
+                <rect x="8" y="17" width="48" height="3.4" rx="1.7" fill="#fff" opacity=".85"/>
+              </svg>
+              <span>Make-Security-Pay-For-Itself.pdf</span>
+              <span class="m-card-file-bar">Download the file</span>
+            </a>
+            <a class="m-card-msg" href="https://signal.me/#eu/jOCElNN5Meq0MDrSKeetbOt0N7YXLFFiH37-UJO1vCdG_wY0cuVJdYbu7yFtZq62" target="_blank" rel="noopener">
+              <svg width="20" height="20" viewBox="0 0 16 16" fill="none"><path d="M1 6c4-3.5 10-3.5 14 0M3.4 8.6c3-2.3 6.2-2.3 9.2 0M5.8 11.1c1.7-1.2 2.7-1.2 4.4 0" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/><circle cx="8" cy="13.2" r="1" fill="currentColor"/></svg>
+              <div>
+                <div class="m-card-msg-text">Questions? Message us — safely and privately</div>
+                <span class="m-btn-dark">Open Signal</span>
+              </div>
+            </a>
+          </div>
+
+          <div class="m-row-icons" style="--d:.25s">
+            <div class="m-card-icons">
+              <div class="m-icon-row">
+                <span class="m-icon-chip"><img src="/images/dock-icons/tuta.png" alt=""></span>
+                <span class="m-icon-chip"><img src="/images/dock-icons/proton.png" alt=""></span>
+              </div>
+              <div class="m-card-icons-label">Email us, no bots reading this</div>
+            </div>
+            <div class="m-card-icons">
+              <div class="m-icon-row">
+                <span class="m-icon-chip"><img src="/images/dock-icons/brave.png" alt=""></span>
+                <span class="m-icon-chip"><img src="/images/dock-icons/firefox.png" alt=""></span>
+              </div>
+              <div class="m-card-icons-label">Check our security<br>and eco-impact</div>
+            </div>
+          </div>
+
+          <div class="m-card m-card-social" style="--d:.3s">
+            <h3>Check our social media</h3>
+            <div class="m-icon-row m-social-icon-row">
+              <a class="m-icon-chip" href="https://bsky.app/profile/securelayer.co" target="_blank" rel="noopener" aria-label="SecureLayer on Bluesky">
+                <svg viewBox="0 0 40 40">
+                  <circle cx="20" cy="20" r="20" fill="#0285ff"/>
+                  <path transform="translate(9,10) scale(.9)" fill="#fff" d="M12 10.8c-1.087-2.114-4.046-6.053-6.798-7.995C2.566.944 1.561 1.266.902 1.565.139 1.908 0 3.08 0 3.768c0 .69.378 5.65.624 6.479.815 2.736 3.713 3.66 6.383 3.364-3.912.58-7.387 2.005-2.83 7.078 5.013 5.19 6.87-1.113 7.823-4.308.953 3.195 2.81 9.498 7.733 4.308 4.267-4.308 1.172-6.498-2.74-7.078 2.67.297 5.568-.628 6.383-3.364.246-.828.624-5.79.624-6.478 0-.69-.139-1.861-.902-2.204-.659-.298-1.664-.62-4.3 1.24C16.046 4.748 13.087 8.687 12 10.8z"/>
+                </svg>
+              </a>
+              <a class="m-icon-chip" href="https://www.instagram.com/securelayer.co/" target="_blank" rel="noopener" aria-label="SecureLayer on Instagram">
+                <svg viewBox="0 0 40 40">
+                  <defs><radialGradient id="igGrad" cx=".3" cy="1.05" r="1.15"><stop offset="0" stop-color="#fdc468"/><stop offset=".33" stop-color="#e1306c"/><stop offset=".65" stop-color="#c73daa"/><stop offset="1" stop-color="#5851db"/></radialGradient></defs>
+                  <circle cx="20" cy="20" r="20" fill="url(#igGrad)"/>
+                  <rect x="11.5" y="11.5" width="17" height="17" rx="5" fill="none" stroke="#fff" stroke-width="2.1"/>
+                  <circle cx="20" cy="20" r="4.6" fill="none" stroke="#fff" stroke-width="2.1"/>
+                  <circle cx="27.5" cy="12.3" r="1.5" fill="#fff"/>
+                </svg>
+              </a>
+            </div>
+            <p class="m-card-social-note">Our fanbase grows every day — we're now dangerously close to double digits.</p>
+          </div>
+
+          <div class="m-card m-card-contact" style="--d:.35s">
+            <div class="m-contact-row">
+              <div class="m-contact-left">
+                <span class="m-contact-icon">🔒</span>
+                <div>
+                  <div class="m-contact-title">Found a security issue?</div>
+                  <div class="m-contact-sub">We reply fast, no bug bounty needed</div>
+                </div>
+              </div>
+              <a class="m-contact-cta" href="https://github.com/SecureLayer/tmp/security/advisories/new" target="_blank" rel="noopener">report</a>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="m-stand" id="mStand">
+        <div class="m-stand-bg"></div>
+        <div class="m-stand-scrim"></div>
+        <div class="m-stand-content">
+          <div class="m-stand-middle">
+            <div class="m-stand-hero">
+              <div class="m-stand-time" id="mStandTime">22.51</div>
+              <div class="m-stand-tagline">Choose cybersecurity, it's cheaper</div>
+            </div>
+
+            <div class="m-stand-stats">
+              <div class="m-stand-stat">
+                <div class="m-stand-stat-top"><svg width="15" height="15" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6.5" stroke="currentColor" stroke-width="1.4"/><path d="M5.3 8.2l1.8 1.8 3.6-4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg> 100%</div>
+                <div class="m-stand-stat-label">Expertise</div>
+                <div class="m-stand-stat-bar"><div class="m-stand-stat-bar-fill"></div></div>
+              </div>
+              <div class="m-stand-stat">
+                <div class="m-stand-stat-top"><svg width="15" height="15" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="2.6" fill="currentColor"/><circle cx="8" cy="8" r="6" stroke="currentColor" stroke-width="1.3" opacity=".5"/></svg> 100%</div>
+                <div class="m-stand-stat-label">Operational</div>
+                <div class="m-stand-stat-tags"><span>↑ DevOps</span><span>↑ IT</span></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="m-stand-bottom">
+            <button class="m-stand-padlock" id="mStandPadlock" aria-label="Unlock">
+              <svg width="22" height="22" viewBox="0 0 16 16" fill="none"><rect x="3" y="7" width="10" height="7" rx="1.5" stroke="#17140f" stroke-width="1.4"/><path d="M5 7V4.5a3 3 0 0 1 6 0V7" stroke="#17140f" stroke-width="1.4"/><circle cx="8" cy="10.3" r=".9" fill="#17140f"/></svg>
+            </button>
+            <div class="m-stand-hint">swipe up or tap to unlock</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
   </div>
 
 </Layout>
@@ -256,19 +415,191 @@ const logoMark = logoSource
   }
   .dock-tooltip.is-visible { opacity: 1; transform: translate(-50%, calc(-100% - 15px)) translateY(0); }
 
+  /* MOBILE SCENE · Phase B (2026-08-26) replaces the desktop scene entirely below 860px
+     with a dedicated lock/unlock + card-stack layout, rather than reflowing the desktop
+     widgets — see sl-tools/sl-backlog-v2.html "Mobile layout" card for the design rationale. */
+  .m-scene { display: none; }
+
   @media (max-width: 860px) {
-    .menu-left { gap: 12px; }
-    .menu-item { display: none; }
-    .widget { position: relative; max-width: none; margin: 12px auto; width: calc(100% - 32px); }
-    .widget-note { width: 265px; max-width: calc(100% - 32px); }
-    .pos-tl, .pos-tr, .pos-mr, .pos-bl { top: auto; left: auto; right: auto; bottom: auto; }
-    .widget-preview { display: none; }
-    .desktop { display: flex; flex-direction: column; padding: 24px 0; min-height: 0; }
-    .dock { position: relative; left: auto; bottom: auto; transform: none; width: 100%; max-width: 100%; border-radius: 0; background: rgba(23,20,15,.55); backdrop-filter: blur(10px); box-shadow: none; border: none; gap: 10px; padding: 7px 10px; justify-content: center; }
-    .dock-icon { width: 28px; height: 28px; padding: 4px; border-radius: 8px; }
-    .dock-icon:not(.dock-mobile-keep) { display: none; }
-    .dock-sep { display: none; }
+    .menu-bar, .desktop, .dock, .dock-tooltip { display: none; }
+    .m-scene { display: block; }
   }
+
+  /* pulled up under the sticky status bar (margin) then padded back down (padding) so the
+     blurred/photo background is continuous behind the bar too — no visible seam at the top */
+  .m-hp-body { background: #f0e9da; min-height: 100vh; position: relative; margin-top: -30px; padding-top: 30px; }
+
+  .m-stack-bg {
+    position: absolute; inset: -40px; z-index: 0;
+    background: url('/images/wallpaper-beach.webp') center 55% / cover no-repeat;
+    filter: blur(30px) saturate(1.15) brightness(.92);
+    transform: scale(1.08);
+  }
+  .m-stack-scrim { position: absolute; inset: 0; z-index: 0; background: rgba(20,18,14,.22); }
+
+  .m-stack { position: relative; z-index: 1; padding: 22px 16px 18px; display: flex; flex-direction: column; gap: 14px; }
+
+  /* real iOS "material" — frosted translucent glass over the wallpaper, not flat app colors.
+     one glass recipe (light + dark variant) reused everywhere, matching how iOS widgets/
+     Notification Center/Control Center actually render — not a per-card brand color. */
+  .m-card, .m-card-file, .m-card-msg, .m-card-icons {
+    border-radius: 20px;
+    background: rgba(255,255,255,.42); backdrop-filter: blur(28px) saturate(150%); -webkit-backdrop-filter: blur(28px) saturate(150%);
+    border: 1px solid rgba(255,255,255,.45);
+    box-shadow: 0 8px 26px rgba(0,0,0,.12);
+  }
+  /* fade-in state lives only on .m-card and the row wrappers (.m-row2/.m-row-icons) —
+     m-card-file/m-card-msg/m-card-icons inherit visibility from their row parent, not their own state */
+  .m-card { opacity: 0; transform: translateY(16px); transition: opacity .5s ease var(--d,0s), transform .5s ease var(--d,0s); }
+  .m-scene.is-unlocked .m-card { opacity: 1; transform: translateY(0); }
+
+  .m-card-cta { padding: 20px; }
+  .m-card-eyebrow { font-size: .62rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: rgba(23,20,15,.6); margin-bottom: 8px; }
+  .m-card-cta h3 { font-family: var(--font-head); font-size: 1.28rem; font-weight: 700; color: #17140f; margin: 0 0 10px; line-height: 1.25; }
+  .m-card-cta-body { font-size: .82rem; color: rgba(23,20,15,.72); line-height: 1.5; margin: 0 0 16px; }
+  .m-btn-amber { display: inline-block; background: #2e2a22; color: #f0e9da; font-family: var(--font-round); font-weight: 800; font-size: .82rem; padding: 11px 18px; border-radius: 100px; text-decoration: none; }
+  .m-card-cta-note { font-size: .72rem; color: rgba(23,20,15,.6); line-height: 1.4; margin: 14px 0 0; padding-top: 14px; border-top: 1px solid rgba(23,20,15,.12); }
+
+  /* collage card — 3 real desktop preview crops (SecDevOps / AppSec / IT Sec) + text, mirrors the reference layout */
+  .m-card-collage { display: flex; align-items: center; gap: 14px; padding: 12px; }
+  .m-collage-grid {
+    flex-shrink: 0; width: 112px; height: 112px; border-radius: 14px; overflow: hidden;
+    display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; gap: 2px;
+  }
+  .m-collage-img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .m-collage-wide { grid-column: 1 / span 2; }
+  .m-collage-text { flex: 1; display: flex; flex-direction: column; justify-content: center; min-width: 0; }
+  .m-collage-text h3 { font-family: var(--font-head); font-size: 1.05rem; font-weight: 700; color: #17140f; margin: 0 0 8px; line-height: 1.22; }
+  .m-collage-text .m-card-cta-body { font-size: .76rem; margin: 0 0 12px; }
+  .m-collage-text .m-btn-amber { display: inline-block; align-self: flex-start; font-size: .74rem; padding: 7px 12px; }
+
+  .m-card-note { padding: 22px 20px; }
+  .m-card-note p { font-family: var(--font-head); font-size: 1.15rem; font-weight: 400; color: #17140f; line-height: 1.35; margin: 0; }
+  .m-card-note p + p { margin-top: 12px; }
+  .m-card-note em { font-style: italic; font-weight: 400; }
+  .m-card-note strong { font-style: italic; font-weight: 400; }
+  .m-card-note-eyebrow { font-size: .6rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; color: rgba(23,20,15,.6); margin-bottom: 10px; }
+
+  /* PRO TIPS becomes a small square card sitting alone in its row — the rest of the row
+     stays empty (blurred background showing through), matching the reference's sticky-note sizing */
+  .m-row-note { display: flex; }
+  .m-card-note-square { width: 158px; height: 158px; padding: 16px; display: flex; flex-direction: column; justify-content: center; }
+  .m-card-note-square .m-card-note-eyebrow { margin-bottom: 6px; }
+  .m-card-note-square p { font-size: .8rem; line-height: 1.28; }
+  .m-card-note-square p + p { margin-top: 6px; }
+
+  .m-row2 { display: flex; gap: 12px; opacity: 0; transform: translateY(16px); transition: opacity .5s ease var(--d,0s), transform .5s ease var(--d,0s); }
+  .m-scene.is-unlocked .m-row2 { opacity: 1; transform: translateY(0); }
+  .m-card-file { flex: 1; padding: 20px 10px 0; display: flex; flex-direction: column; align-items: center; gap: 8px; text-align: center; text-decoration: none; overflow: hidden; }
+  .m-folder-icon { width: 60px; height: 46px; flex-shrink: 0; filter: drop-shadow(0 4px 8px rgba(0,0,0,.2)); }
+  .m-card-file span { font-size: .66rem; color: #17140f; font-weight: 700; line-height: 1.3; }
+  .m-card-file-bar {
+    display: block; width: calc(100% + 20px); margin: 12px -10px 0; padding: 11px 10px;
+    background: rgba(255,255,255,.55); border-top: 1px solid rgba(255,255,255,.5);
+    font-size: .68rem; color: #17140f; font-weight: 800; letter-spacing: .01em;
+  }
+
+  .m-card-msg { flex: 1; padding: 18px 14px; display: flex; flex-direction: column; justify-content: space-between; text-decoration: none; }
+  .m-card-msg svg { color: #17140f; }
+  .m-card-msg-text { color: #17140f; font-family: var(--font-round); font-weight: 800; font-size: .86rem; line-height: 1.25; margin: 10px 0 12px; }
+  .m-btn-dark { display: inline-block; background: #2e2a22; color: #f0e9da; font-family: var(--font-round); font-weight: 800; font-size: .72rem; padding: 8px 14px; border-radius: 100px; align-self: flex-start; }
+
+  /* dark glass variant — same iOS material language, dark tint (Control Center dark mode) */
+  .m-card-contact {
+    padding: 6px 18px; border-radius: 20px; opacity: 0; transform: translateY(16px);
+    transition: opacity .5s ease var(--d,0s), transform .5s ease var(--d,0s);
+    background: rgba(23,20,15,.5); backdrop-filter: blur(28px) saturate(150%); -webkit-backdrop-filter: blur(28px) saturate(150%);
+    border: 1px solid rgba(255,255,255,.12);
+  }
+  .m-scene.is-unlocked .m-card-contact { opacity: 1; transform: translateY(0); }
+  .m-contact-row { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 14px 0; border-bottom: 1px solid rgba(255,255,255,.1); }
+  .m-contact-row:last-child { border-bottom: none; }
+  .m-contact-left { display: flex; align-items: center; gap: 10px; }
+  .m-contact-icon { width: 16px; text-align: center; color: #e0a32e; }
+  .m-contact-title { color: #fff; font-size: .82rem; font-weight: 700; }
+  .m-contact-sub { color: rgba(255,255,255,.55); font-size: .66rem; margin-top: 1px; }
+  .m-contact-cta { color: #e0a32e; font-size: .7rem; font-weight: 700; text-decoration: none; }
+
+  .m-row-icons { display: flex; gap: 12px; opacity: 0; transform: translateY(16px); transition: opacity .5s ease var(--d,0s), transform .5s ease var(--d,0s); }
+  .m-scene.is-unlocked .m-row-icons { opacity: 1; transform: translateY(0); }
+  .m-card-icons { flex: 1; padding: 16px 14px; text-align: center; }
+  .m-icon-row { display: flex; justify-content: center; gap: 8px; margin-bottom: 10px; }
+  .m-icon-chip { width: 38px; height: 38px; border-radius: 10px; background: rgba(255,255,255,.7); box-shadow: 0 1px 3px rgba(0,0,0,.15); display: flex; align-items: center; justify-content: center; text-decoration: none; }
+  .m-icon-chip img { width: 70%; height: 70%; object-fit: contain; }
+  .m-card-icons-label { font-size: .62rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: rgba(23,20,15,.55); }
+
+  .m-card-social { padding: 18px 20px; }
+  .m-card-social h3 { font-family: var(--font-head); font-size: 1.1rem; font-weight: 700; color: #17140f; margin: 0 0 14px; }
+  .m-social-icon-row { justify-content: flex-start; gap: 10px; margin-bottom: 0; }
+  .m-card-social .m-icon-chip { width: 60px; height: 60px; padding: 0; background: none; box-shadow: none; }
+  .m-card-social .m-icon-chip svg { width: 100%; height: 100%; }
+  .m-card-social-note { font-size: .78rem; color: rgba(23,20,15,.65); line-height: 1.4; margin: 12px 0 0; }
+
+  /* STAND PAGE — lock screen, dismissed on swipe-up. position:fixed (not absolute like the
+     original phone-frame mockup) so it covers the real viewport regardless of scroll position. */
+  .m-stand {
+    position: fixed; inset: 0; z-index: 10; overflow: hidden; cursor: pointer;
+    transition: opacity .5s ease .32s, visibility .5s ease .32s;
+  }
+  .m-scene.is-unlocked .m-stand { opacity: 0; visibility: hidden; pointer-events: none; }
+
+  .m-stand-bg {
+    position: absolute; inset: 0;
+    background: url('/images/wallpaper-beach.webp') center 55% / cover no-repeat;
+    transition: filter .55s ease;
+  }
+  .m-scene.is-unlocked .m-stand-bg { filter: blur(22px) brightness(.88); transform: scale(1.08); }
+
+  .m-stand-scrim { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(23,20,15,.15), rgba(23,20,15,.35) 55%, rgba(23,20,15,.72)); }
+
+  .m-stand-content {
+    position: relative; z-index: 1; height: 100%; display: flex; flex-direction: column;
+    padding: 26px 20px 88px; color: #fff;
+    transition: opacity .4s ease, filter .4s ease, transform .4s ease;
+  }
+  .m-scene.is-unlocked .m-stand-content { opacity: 0; filter: blur(9px); transform: translateY(-10px); }
+
+  .m-stand-tagline { text-align: center; margin-top: 10px; color: rgba(255,255,255,.8); font-size: .78rem; font-weight: 600; }
+
+  /* vertically centers the clock + stats block in the remaining space, like the reference */
+  .m-stand-middle { flex: 1; display: flex; flex-direction: column; align-items: center; text-align: center; }
+  .m-stand-hero { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+
+  .m-stand-time { color: #fff; font-family: var(--font-round); font-weight: 400; font-size: 4.6rem; line-height: 1; margin-top: 6px; letter-spacing: -.01em; }
+
+  .m-stand-stats { display: flex; gap: 34px; margin-bottom: 41px; text-align: left; }
+  .m-stand-stat-top { display: flex; align-items: center; gap: 7px; color: #fff; font-family: var(--font-round); font-weight: 400; font-size: 1.3rem; }
+  .m-stand-stat-label { color: rgba(255,255,255,.85); font-size: .72rem; font-weight: 600; margin-top: 3px; }
+  .m-stand-stat-bar { width: 118px; height: 4px; border-radius: 100px; background: rgba(255,255,255,.22); margin-top: 10px; overflow: hidden; }
+  .m-stand-stat-bar-fill { width: 96%; height: 100%; background: #fff; border-radius: 100px; }
+  .m-stand-stat-tags { margin-top: 6px; line-height: 1; color: #fff; font-size: .64rem; font-weight: 700; letter-spacing: .03em; display: flex; align-items: center; gap: 10px; }
+
+  .m-stand-bottom { display: flex; flex-direction: column; align-items: center; gap: 10px; }
+  .m-stand-padlock {
+    width: 60px; height: 60px; border-radius: 50%; background: rgba(240,238,232,.92);
+    border: none; display: flex; align-items: center; justify-content: center; cursor: pointer;
+    box-shadow: 0 8px 20px rgba(0,0,0,.3); animation: m-hint-bounce 1.8s ease-in-out infinite;
+  }
+  .m-stand-hint { text-align: center; color: rgba(255,255,255,.75); font-size: .64rem; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; }
+
+  @keyframes m-hint-bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+
+  /* status bar — sits above everything (lock page, cards, scroll). no bg/blur/border of its
+     own — just text+icons floating over whatever's already behind it, not a separate bar */
+  .m-statusbar {
+    position: sticky; top: 0; z-index: 30; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 30px; padding: 0 16px;
+    color: #fff; font-family: var(--font-round);
+    text-shadow: 0 1px 4px rgba(0,0,0,.35);
+  }
+  .m-statusbar-brand { display: flex; align-items: center; gap: 5px; font-size: .72rem; font-weight: 800; }
+  .m-statusbar-icons { display: flex; align-items: center; gap: 6px; }
+  .m-statusbar-icons svg { display: block; }
+
+  /* while the lock screen is showing, the page underneath must not scroll */
+  html.m-locked, html.m-locked body { overflow: hidden; height: 100%; }
 </style>
 
 <script is:inline src="/scripts/index-widgets.js"></script>
+<script is:inline src="/scripts/mobile-scene.js"></script>

@@ -214,14 +214,6 @@ const freePrompts = (await getCollection('prompts', ({ data }) =>
     }
     .btn-contribute:hover { border-color: #5eead4; color: #5eead4; }
 
-    /* ── Mobile: drop the icon row, keep tab + address pill only ── */
-    @media (max-width: 640px) {
-      .browser-tab { max-width: 140px; }
-      .tab-add, .tab-chevron { display: none; }
-      .nav-icon, .nav-divider, .nav-brave, .nav-fox, .nav-menu, .vpn-badge, .private-badge { display: none; }
-      .address-pill { max-width: none; margin: 0; }
-    }
-
     /* ── Footer ── */
     .site-footer { border-top: 1px solid #1a3030; padding: 40px 24px; text-align: center; margin-top: 24px; }
     .site-footer p { color: #888; font-size: 13px; }
@@ -232,9 +224,104 @@ const freePrompts = (await getCollection('prompts', ({ data }) =>
     .footer-green-link:hover { opacity: 1; }
     .footer-green-link img { display: block; width: 100px; height: auto; margin: 0 auto; }
     .footer-copy { margin-top: 12px; font-size: 11px; }
+
+    /* ══════════ MOBILE SCENE · Phase B push (2026-08-26) ══════════
+       Below 860px, drops the Brave browser-chrome and the dark theme entirely for the
+       blurred-photo + iOS frosted-glass system shared with the other 3 mobile pages. */
+    .m-statusbar, .m-bg, .m-scrim, .m-hero, .m-eco-banner { display: none; }
+
+    @media (max-width: 860px) {
+      .browser-titlebar, .browser-navbar { display: none; }
+      .m-statusbar, .m-bg, .m-scrim, .m-hero, .m-eco-banner { display: block; }
+
+      body { background: #f0e9da; }
+      .browser-window, .browser-body, .page { background: transparent; }
+      .page-hero { display: none; }
+
+      .m-statusbar {
+        position: sticky; top: 0; z-index: 30;
+        display: flex; align-items: center; justify-content: space-between;
+        height: 30px; padding: 0 16px;
+        color: #fff; font-family: 'Helvetica Neue', Arial, sans-serif;
+        text-shadow: 0 1px 4px rgba(0,0,0,.35);
+      }
+      .m-statusbar-brand { font-size: .72rem; font-weight: 800; }
+      .m-statusbar-icons { display: flex; align-items: center; gap: 6px; }
+      .m-statusbar-icons svg { display: block; }
+
+      .m-bg {
+        position: fixed; inset: -40px; z-index: -2;
+        background: url('/images/wallpaper-beach.webp') center 55% / cover no-repeat;
+        filter: blur(30px) saturate(1.15) brightness(.92);
+        transform: scale(1.08);
+      }
+      .m-scrim { position: fixed; inset: 0; z-index: -1; background: rgba(20,18,14,.22); }
+
+      .m-hero { padding: 18px 24px 4px; }
+      .m-hero h1 { font-size: 1.4rem; font-weight: 700; color: #17140f; margin-bottom: 8px; }
+      .m-hero p { font-size: .78rem; color: rgba(23,20,15,.75); line-height: 1.5; }
+
+      .m-eco-banner {
+        margin: 0 24px 20px;
+        background: rgba(23,20,15,.5); backdrop-filter: blur(28px) saturate(150%); -webkit-backdrop-filter: blur(28px) saturate(150%);
+        border: 1px solid rgba(255,255,255,.12); border-radius: 16px; padding: 14px 16px;
+      }
+      .m-eco-banner p { color: #fff; font-size: .76rem; line-height: 1.45; }
+
+      .prompts-grid { grid-template-columns: 1fr; padding: 0 24px 40px; }
+      .card {
+        background: rgba(255,255,255,.42); backdrop-filter: blur(28px) saturate(150%); -webkit-backdrop-filter: blur(28px) saturate(150%);
+        border: 1px solid rgba(255,255,255,.45); box-shadow: 0 8px 26px rgba(0,0,0,.12);
+      }
+      .card-title { color: #17140f; }
+      .badge-tokens { color: rgba(23,20,15,.55); background: rgba(23,20,15,.06); border-color: rgba(23,20,15,.1); }
+      .badge-tier.free { color: #1a7a3d; background: rgba(74,222,128,.22); border-color: rgba(26,122,61,.3); }
+      .badge-tested { color: #1a7a3d; background: rgba(74,222,128,.22); border: 1px solid rgba(26,122,61,.3); font-size: .65rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; padding: 2px 8px; border-radius: 100px; }
+      .badge-tested svg { display: none; }
+      .badge-cat { color: #a8791f; background: rgba(224,163,46,.1); border-color: rgba(224,163,46,.25); }
+      .badge-expertise { color: #5b3fa8; background: rgba(167,139,250,.12); border-color: rgba(167,139,250,.25); }
+      .tag { color: rgba(23,20,15,.6); background: rgba(23,20,15,.06); border-color: rgba(23,20,15,.1); }
+
+      .btn-copy { background: rgba(224,163,46,.16); border-color: rgba(224,163,46,.35); color: #a8791f; }
+      .btn-copy:hover { background: rgba(224,163,46,.28); }
+      .prompt-details { border-top-color: rgba(23,20,15,.12); }
+      .prompt-details summary { color: rgba(23,20,15,.6); }
+      .prompt-details[open] summary { color: #17140f; }
+      .prompt-body { color: #d1d5db; background: #17140f; border-color: rgba(23,20,15,.2); }
+      .tested-note { color: rgba(23,20,15,.55); }
+
+      .contribute-banner {
+        background: rgba(255,255,255,.42); backdrop-filter: blur(28px) saturate(150%); -webkit-backdrop-filter: blur(28px) saturate(150%);
+        border-top: 1px solid rgba(255,255,255,.45);
+      }
+      .contribute-inner h3 { color: #17140f; }
+      .contribute-inner p { color: rgba(23,20,15,.65); }
+      .btn-contribute { background: rgba(255,255,255,.5); border-color: rgba(23,20,15,.15); color: #17140f; }
+      .btn-contribute:hover { border-color: #2e2a22; color: #2e2a22; }
+
+      .site-footer { border-top-color: rgba(23,20,15,.15); }
+      .site-footer p { color: rgba(23,20,15,.6); }
+      .footer-links a { color: rgba(23,20,15,.6); }
+      .footer-links a:hover { color: #17140f; }
+    }
   </style>
 </head>
 <body>
+<!-- MOBILE SCENE header · Phase B push (2026-08-26), replaces the Brave browser-chrome below 860px -->
+<div class="m-statusbar">
+  <div class="m-statusbar-brand">SecureLayer</div>
+  <div class="m-statusbar-icons">
+    <svg width="16" height="11" viewBox="0 0 16 11" fill="#fff"><rect x="0" y="7" width="3" height="4" rx=".5"/><rect x="4.5" y="5" width="3" height="6" rx=".5"/><rect x="9" y="3" width="3" height="8" rx=".5"/><rect x="13" y="0" width="3" height="11" rx=".5"/></svg>
+    <svg width="15" height="13" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.55a11 11 0 0 1 14.08 0"/><path d="M1.42 9a16 16 0 0 1 21.16 0"/><path d="M8.53 16.11a6 6 0 0 1 6.95 0"/><line x1="12" y1="20" x2="12.01" y2="20"/></svg>
+    <svg width="22" height="11" viewBox="0 0 24 12" fill="none"><rect x="1" y="1.5" width="19" height="9" rx="2.5" stroke="#fff" stroke-width="1.2"/><rect x="21.5" y="4.3" width="2" height="3.4" rx="1" fill="#fff"/><rect x="2.5" y="3" width="14" height="6" rx="1.2" fill="#fff"/></svg>
+  </div>
+</div>
+<div class="m-bg" aria-hidden="true"></div>
+<div class="m-scrim" aria-hidden="true"></div>
+<div class="m-hero">
+  <h1>Free Cybersecurity Prompts</h1>
+  <p>Tested by security engineers. Copy, paste into any AI assistant, fill in the placeholders, and run.</p>
+</div>
 <div class="browser-window">
   <div class="browser-titlebar">
     <div class="traffic-lights">
@@ -278,6 +365,10 @@ const freePrompts = (await getCollection('prompts', ({ data }) =>
         <span class="sep">·</span>
         <strong>Free</strong>
       </div>
+    </div>
+
+    <div class="m-eco-banner">
+      <p>Every AI prompt has a real energy cost — roughly the same as running a 10W LED bulb for two minutes. Run these thoughtfully — being frugal with AI is part of protecting our planet.</p>
     </div>
 
     <div class="prompts-grid" id="prompts-grid">
