@@ -7,7 +7,7 @@ SecureLayer audits popular open-source GitHub repositories across 9 security che
 ## Tools
 
 - [GitHub Security Assessments](https://securelayer.co/github-security-assessment): Pre-audited repos scored across 9 checks (SECURITY.md quality, Dependabot, branch protection, credential hygiene, CI/CD, active maintenance, license, code of conduct, contributing guidelines). Grades A+ to F. Penalties for known incidents (−10 pts) and open critical/high CVEs (−5 pts).
-- [Free AI Security Prompts](https://securelayer.co/free-cybersecurity-ai-prompts): 12 free prompt templates for security tasks — threat modelling, code review, dependency audit, incident response, and more.
+- [AI Prompts to improve Cybersecurity](https://securelayer.co/cybersecurity-ai-prompts): free, tested prompt templates for security tasks.
 
 ## Scoring methodology
 
