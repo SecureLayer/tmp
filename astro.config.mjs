@@ -65,6 +65,11 @@ export default defineConfig({
   site: 'https://securelayer.co',
   output: 'static',
   integrations: [sitemap()],
+  build: {
+    // Emit ALL CSS as external files (no inline <style>) so the CSP can drop
+    // 'unsafe-inline' from style-src — required for Observatory A+ under algorithm v5.
+    inlineStylesheets: 'never',
+  },
   vite: {
     plugins: [apiMock],
   },
