@@ -156,7 +156,7 @@ const logoMark = logoSource
           <div class="m-card m-card-collage" style="--d:.05s">
             <div class="m-collage-text">
               <div class="m-card-eyebrow">Expertise</div>
-              <h3>Security done right saves money — fewer headaches, lower risk, faster deployments.</h3>
+              <h3>Security done right saves money —<br />fewer headaches, lower risk, faster deployments.</h3>
               <a class="m-btn-amber" href="mailto:contact@securelayer.co">Let's discuss →</a>
             </div>
           </div>
@@ -168,14 +168,6 @@ const logoMark = logoSource
               <p>It's a <em>habit</em>,</p>
               <p>We can <strong>help you</strong> <em>make it stick</em>.</p>
             </div>
-          </div>
-
-          <div class="m-card m-card-cta" style="--d:.15s">
-            <div class="m-card-eyebrow">Tool self-serve</div>
-            <h3>Want to check if your application or website is secure? (And not leaking your data, or the data of your clients?)</h3>
-            <p class="m-card-cta-body">Paste these prompts into any AI agent and check your own setup yourself, no strings attached.</p>
-            <a class="m-btn-amber" href="/cybersecurity-ai-prompts/">Try these prompt to start →</a>
-            <p class="m-card-cta-note">Every AI prompt has a real energy cost — about a 10W LED bulb running for two minutes. Run these thoughtfully — being frugal with AI is part of protecting our planet.</p>
           </div>
 
           <div class="m-row2" style="--d:.2s">
@@ -259,6 +251,7 @@ const logoMark = logoSource
             <a href="/">Home</a>
             <a href="/security">Security</a>
             <a href="/sustainability">Environment</a>
+            <a href="/legal">Legal</a>
           </p>
         </div>
       </div>
@@ -273,13 +266,13 @@ const logoMark = logoSource
               <div class="m-stand-tagline">Choose cybersecurity, it's cheaper</div>
             </div>
 
+            <div class="m-stand-stat-tags"><span>↑ DevOps</span><span>↑ IT</span><span>↑ AppSec</span></div>
             <div class="m-stand-stats">
               <div class="m-stand-stat">
                 <div class="m-stand-stat-top"><svg width="15" height="15" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6.5" stroke="currentColor" stroke-width="1.4"/><path d="M5.3 8.2l1.8 1.8 3.6-4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg> 100%</div>
                 <div class="m-stand-stat-label">Expertise</div>
               </div>
-              <div class="m-stand-stat m-stand-stat-centered">
-                <div class="m-stand-stat-tags"><span>↑ DevOps</span><span>↑ IT</span><span>↑ AppSec</span></div>
+              <div class="m-stand-stat">
                 <div class="m-stand-stat-top"><svg width="15" height="15" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="2.6" fill="currentColor"/><circle cx="8" cy="8" r="6" stroke="currentColor" stroke-width="1.3" opacity=".5"/></svg> 100%</div>
                 <div class="m-stand-stat-label">Operational</div>
               </div>
@@ -459,17 +452,12 @@ const logoMark = logoSource
   .m-card { opacity: 0; transform: translateY(16px); transition: opacity .5s ease var(--d,0s), transform .5s ease var(--d,0s); }
   .m-scene.is-unlocked .m-card { opacity: 1; transform: translateY(0); }
 
-  .m-card-cta { padding: 20px; }
   .m-card-eyebrow { font-size: .62rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: rgba(23,20,15,.6); margin-bottom: 8px; }
-  .m-card-cta h3 { font-family: var(--font-head); font-size: 1.28rem; font-weight: 700; color: #17140f; margin: 0 0 10px; line-height: 1.25; }
-  .m-card-cta-body { font-size: .82rem; color: rgba(23,20,15,.72); line-height: 1.5; margin: 0 0 16px; }
   .m-btn-amber { display: inline-block; background: #2e2a22; color: #f0e9da; font-family: var(--font-round); font-weight: 800; font-size: .82rem; padding: 11px 18px; border-radius: 100px; text-decoration: none; }
-  .m-card-cta-note { font-size: .72rem; color: rgba(23,20,15,.6); line-height: 1.4; margin: 14px 0 0; padding-top: 14px; border-top: 1px solid rgba(23,20,15,.12); }
 
   .m-card-collage { display: flex; align-items: center; padding: 12px; }
   .m-collage-text { flex: 1; display: flex; flex-direction: column; justify-content: center; min-width: 0; }
   .m-collage-text h3 { font-family: var(--font-head); font-size: 1.05rem; font-weight: 700; color: #17140f; margin: 0 0 8px; line-height: 1.22; }
-  .m-collage-text .m-card-cta-body { font-size: .76rem; margin: 0 0 12px; }
   .m-collage-text .m-btn-amber { display: inline-block; align-self: flex-start; font-size: .74rem; padding: 7px 12px; }
 
   .m-card-note { padding: 22px 20px; }
@@ -522,7 +510,7 @@ const logoMark = logoSource
   .m-icon-row { display: flex; justify-content: flex-start; gap: 10px; }
   /* dock-style icons (Brave/Firefox app icons) — rounded square, white chip, matching the
      dock-icon convention used everywhere else on this site */
-  .m-icon-chip { width: 46px; height: 46px; border-radius: 12px; background: rgba(255,255,255,.7); box-shadow: 0 1px 3px rgba(0,0,0,.15); display: flex; align-items: center; justify-content: center; text-decoration: none; padding: 8px; }
+  .m-icon-chip { width: 52px; height: 52px; border-radius: 12px; background: rgba(255,255,255,.7); box-shadow: 0 1px 3px rgba(0,0,0,.15); display: flex; align-items: center; justify-content: center; text-decoration: none; padding: 9px; }
   .m-icon-chip img { width: 100%; height: 100%; object-fit: contain; }
 
   .m-card-icons-full { padding: 18px 20px; }
@@ -568,13 +556,10 @@ const logoMark = logoSource
 
   .m-stand-time { color: #fff; font-family: var(--font-round); font-weight: 400; font-size: 4.6rem; line-height: 1; margin-top: 6px; letter-spacing: -.01em; }
 
-  .m-stand-stats { display: flex; gap: 34px; margin-bottom: 41px; text-align: left; }
-  .m-stand-stat-top { display: flex; align-items: center; gap: 7px; color: #fff; font-family: var(--font-round); font-weight: 400; font-size: 1.3rem; }
+  .m-stand-stats { display: flex; gap: 34px; margin-bottom: 41px; text-align: center; }
+  .m-stand-stat-top { display: flex; align-items: center; justify-content: center; gap: 7px; color: #fff; font-family: var(--font-round); font-weight: 400; font-size: 1.3rem; }
   .m-stand-stat-label { color: rgba(255,255,255,.85); font-size: .72rem; font-weight: 600; margin-top: 3px; }
-  .m-stand-stat-tags { margin-bottom: 6px; line-height: 1; color: #fff; font-size: .64rem; font-weight: 700; letter-spacing: .03em; display: flex; align-items: center; gap: 8px; }
-  .m-stand-stat-centered { text-align: center; }
-  .m-stand-stat-centered .m-stand-stat-top,
-  .m-stand-stat-centered .m-stand-stat-tags { justify-content: center; }
+  .m-stand-stat-tags { margin-bottom: 12px; line-height: 1; color: #fff; font-size: .64rem; font-weight: 700; letter-spacing: .03em; display: flex; align-items: center; justify-content: center; gap: 8px; }
 
   .m-stand-bottom { display: flex; flex-direction: column; align-items: center; gap: 10px; }
   .m-stand-padlock {
