@@ -1,17 +1,18 @@
 ---
 import { getCollection } from 'astro:content';
 
+const FEATURED_IDS = ['ddos-protection-free', 'securityheaders-a'];
 const freePrompts = (await getCollection('prompts', ({ data }) =>
-  data.tier === 'free' && data.published !== false
-)).sort((a, b) => a.data.title.localeCompare(b.data.title));
+  data.tier === 'free' && data.published !== false && FEATURED_IDS.includes(data.id)
+)).sort((a, b) => FEATURED_IDS.indexOf(a.data.id) - FEATURED_IDS.indexOf(b.data.id));
 ---
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Free Cybersecurity Prompts — SecureLayer</title>
-  <meta name="description" content="Free tested cybersecurity AI prompts from SecureLayer. Copy and use in any AI assistant." />
+  <title>AI Prompts to improve Cybersecurity — SecureLayer</title>
+  <meta name="description" content="Free tested AI prompts to check and improve your application or website's security. Copy and use in any AI assistant." />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -169,29 +170,6 @@ const freePrompts = (await getCollection('prompts', ({ data }) =>
     }
     .btn-copy:hover { background: rgba(94,234,212,.18); }
 
-    /* ── Expand ── */
-    .prompt-details { border-top: 1px solid #1a3030; padding-top: 10px; }
-    .prompt-details summary {
-      font-size: .75rem; color: #888; cursor: pointer;
-      list-style: none; display: flex; align-items: center; gap: 5px;
-      user-select: none; transition: color .15s;
-    }
-    .prompt-details summary::-webkit-details-marker { display: none; }
-    .prompt-details summary::before {
-      content: '▶'; font-size: .55rem; transition: transform .15s; display: inline-block;
-    }
-    .prompt-details[open] summary::before { transform: rotate(90deg); }
-    .prompt-details summary:hover { color: #e0e0e0; }
-    .prompt-details[open] summary { color: #e0e0e0; margin-bottom: 12px; }
-
-    .prompt-body {
-      font-size: .75rem; line-height: 1.7;
-      color: #cbd5e1; background: #071010; padding: 14px;
-      border-radius: 8px; border: 1px solid #1a3030;
-      overflow-x: auto; white-space: pre-wrap; word-break: break-word;
-      margin-bottom: 8px;
-    }
-    .tested-note { font-size: .7rem; color: #888; }
 
     /* ── Contribute ── */
     .contribute-banner {
@@ -284,11 +262,6 @@ const freePrompts = (await getCollection('prompts', ({ data }) =>
 
       .btn-copy { background: rgba(224,163,46,.16); border-color: rgba(224,163,46,.35); color: #a8791f; }
       .btn-copy:hover { background: rgba(224,163,46,.28); }
-      .prompt-details { border-top-color: rgba(23,20,15,.12); }
-      .prompt-details summary { color: rgba(23,20,15,.6); }
-      .prompt-details[open] summary { color: #17140f; }
-      .prompt-body { color: #d1d5db; background: #17140f; border-color: rgba(23,20,15,.2); }
-      .tested-note { color: rgba(23,20,15,.55); }
 
       .contribute-banner {
         background: rgba(255,255,255,.42); backdrop-filter: blur(28px) saturate(150%); -webkit-backdrop-filter: blur(28px) saturate(150%);
@@ -319,7 +292,7 @@ const freePrompts = (await getCollection('prompts', ({ data }) =>
 <div class="m-bg" aria-hidden="true"></div>
 <div class="m-scrim" aria-hidden="true"></div>
 <div class="m-hero">
-  <h1>Free Cybersecurity Prompts</h1>
+  <h1>AI Prompts to improve Cybersecurity</h1>
   <p>Tested by security engineers. Copy, paste into any AI assistant, fill in the placeholders, and run.</p>
 </div>
 <div class="browser-window">
@@ -329,7 +302,7 @@ const freePrompts = (await getCollection('prompts', ({ data }) =>
     </div>
     <div class="browser-tab">
       <img class="tab-favicon" src="/favicon.svg" alt="" />
-      <span class="tab-title">Free Cybersecurity Prompts — SecureLayer</span>
+      <span class="tab-title">AI Prompts to improve Cybersecurity — SecureLayer</span>
       <span class="tab-close">&times;</span>
     </div>
     <span class="tab-add">+</span>
@@ -342,7 +315,7 @@ const freePrompts = (await getCollection('prompts', ({ data }) =>
     <span class="nav-icon nav-bookmark"><svg viewBox="0 0 24 24" fill="none"><path d="M6 3h12a1 1 0 0 1 1 1v17l-7-4-7 4V4a1 1 0 0 1 1-1Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg></span>
     <div class="address-pill">
       <svg viewBox="0 0 24 24" fill="none"><path d="M4 6h16M7 12h10M10 18h4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-      <span class="addr-text">securelayer.co<span class="addr-path">/free-cybersecurity-ai-prompts/</span></span>
+      <span class="addr-text">securelayer.co<span class="addr-path">/cybersecurity-ai-prompts/</span></span>
     </div>
     <span class="nav-divider"></span>
     <img class="nav-brave" src="/images/dock-icons/brave.png" alt="Brave" />
@@ -355,7 +328,7 @@ const freePrompts = (await getCollection('prompts', ({ data }) =>
         <span class="badge-dot"></span>
         Free · Tested · Ready to Use
       </div>
-      <h1>Free Cybersecurity Prompts</h1>
+      <h1>AI Prompts to improve Cybersecurity</h1>
       <p>
         Tested by security engineers. Copy, paste into any AI assistant,
         fill in the <code>[REPLACE]</code> placeholders, and run.
@@ -403,18 +376,14 @@ const freePrompts = (await getCollection('prompts', ({ data }) =>
           </div>
 
           <div class="card-actions">
-            <button class="btn-copy" data-prompt-id={prompt.data.id}>
+            <button class="btn-copy" data-prompt-id={prompt.data.id} type="button">
               <svg width="13" height="13" viewBox="0 0 16 16" fill="none">
                 <rect x="5" y="5" width="9" height="9" rx="1.5" stroke="currentColor" stroke-width="1.5"/>
                 <path d="M11 5V3.5A1.5 1.5 0 009.5 2H3.5A1.5 1.5 0 002 3.5v6A1.5 1.5 0 003.5 11H5" stroke="currentColor" stroke-width="1.5"/>
               </svg>
-              Copy
+              <span class="btn-copy-label">Copy</span>
             </button>
-            <details class="prompt-details">
-              <summary>View prompt</summary>
-              <pre class="prompt-body" id={`prompt-${prompt.data.id}`}>{prompt.body}</pre>
-              <p class="tested-note">Tested on: {prompt.data.tested_on?.join(' · ') ?? 'multiple AI models'}</p>
-            </details>
+            <pre class="prompt-source" id={`prompt-${prompt.data.id}`} hidden>{prompt.body}</pre>
           </div>
 
         </div>
@@ -451,5 +420,23 @@ const freePrompts = (await getCollection('prompts', ({ data }) =>
 
   </div>
 </div>
+<script is:inline>
+  document.querySelectorAll('.btn-copy').forEach(btn => {
+    btn.addEventListener('click', async () => {
+      const id = btn.dataset.promptId;
+      const src = document.getElementById(`prompt-${id}`);
+      if (!src) return;
+      try {
+        await navigator.clipboard.writeText(src.textContent.trim());
+        const label = btn.querySelector('.btn-copy-label');
+        const original = label.textContent;
+        label.textContent = 'Copied!';
+        setTimeout(() => { label.textContent = original; }, 1800);
+      } catch {
+        // clipboard API unavailable (e.g. insecure context) — no-op, button stays as "Copy"
+      }
+    });
+  });
+</script>
 </body>
 </html>
