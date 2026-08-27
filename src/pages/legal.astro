@@ -4,7 +4,7 @@ const files = ['publisher.txt','hosting.txt','activity.txt','cookies-data.txt','
 const sections = [
   { h: 'PUBLISHER', p: [
     `This website, <strong>securelayer.co</strong>, is published by an independent freelance operator (auto-entrepreneur, France).`,
-    `Publisher: <span class="placeholder">[YOUR FULL NAME]</span><br />Registration (SIRET): <span class="placeholder">[SIRET NUMBER]</span><br />Registered address: <span class="placeholder">[REGISTERED ADDRESS]</span><br />Contact: <a href="mailto:contact@securelayer.co">contact@securelayer.co</a>`,
+    `Publisher: <span class="placeholder">M.DELEPINE</span><br />Registration (SIRET): <span class="placeholder">977526896</span><br />Registered address: <span class="placeholder">133 bld Murat 75016</span><br />Contact: <a href="mailto:contact@securelayer.co">contact@securelayer.co</a>`,
   ]},
   { h: 'HOSTING', p: [
     `This site is hosted on <strong>Cloudflare Workers</strong>, a service of Cloudflare, Inc.`,
@@ -76,6 +76,14 @@ cmd(`<span class="user">securelayer@www</span> <span class="path">~</span> % <sp
       min-height: 100vh;
     }
 
+    .legal-bg {
+      position: fixed; inset: -40px; z-index: -2;
+      background: url('/images/terminal-bg.webp') center / cover no-repeat;
+      filter: blur(38px) saturate(1.1) brightness(.5);
+      transform: scale(1.08);
+    }
+    .legal-scrim { position: fixed; inset: 0; z-index: -1; background: rgba(15,10,25,.55); }
+
     /* every inline element below (a, strong, .heading, .user, .path, .cmdtext, .comment,
        .cursor, .placeholder) lives inside content injected via set:html — it never gets
        Astro's data-astro-cid scoping attribute, so all of these MUST use :global(),
@@ -133,6 +141,8 @@ cmd(`<span class="user">securelayer@www</span> <span class="path">~</span> % <sp
   </style>
 </head>
 <body>
+<div class="legal-bg" aria-hidden="true"></div>
+<div class="legal-scrim" aria-hidden="true"></div>
 <div class="term-window">
 
   <div class="term-titlebar">
