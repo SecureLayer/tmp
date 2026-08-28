@@ -113,7 +113,7 @@ const logoMark = logoSource
       </a>
 
       <!-- WIDGET · quick-look preview (revealed on menu-bar hover) -->
-      <div class="widget widget-preview pos-bl" id="preview-window">
+      <div class="widget widget-preview pos-tl" id="preview-window">
         <div class="preview-titlebar">
           <span class="preview-btn preview-close">&times;</span>
           <span class="preview-btn preview-expand">
@@ -439,6 +439,7 @@ const logoMark = logoSource
 
   .widget-preview {
     --preview-accent: var(--cyan);
+    z-index: 3;
     background: rgba(40,37,30,.6); backdrop-filter: blur(14px); border: 1px solid rgba(240,233,218,.14);
     padding: 0; opacity: 0; transform: translateY(6px) scale(.98); pointer-events: none;
     transition: opacity .18s ease, transform .18s ease; max-width: none;
