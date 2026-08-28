@@ -25,11 +25,9 @@ jobs:
         with:
           urls: |
             https://securelayer.co/
-            https://securelayer.co/blog
-            https://securelayer.co/free-cybersecurity-ai-prompts
-            https://securelayer.co/github-security-assessment
             https://securelayer.co/security
             https://securelayer.co/sustainability
+            https://securelayer.co/legal
           configPath: ./.lighthouserc.json
           runs: 3
           uploadArtifacts: true
