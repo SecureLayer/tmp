@@ -82,7 +82,7 @@ cmd(`<span class="user">securelayer@www</span> <span class="path">~</span> % <sp
       filter: blur(38px) saturate(1.1) brightness(.5);
       transform: scale(1.08);
     }
-    .legal-scrim { position: fixed; inset: 0; z-index: -1; background: rgba(15,10,25,.55); }
+    .legal-scrim { position: fixed; inset: 0; z-index: -1; background: rgba(15,10,25,.78); }
 
     /* every inline element below (a, strong, .heading, .user, .path, .cmdtext, .comment,
        .cursor, .placeholder) lives inside content injected via set:html — it never gets
@@ -91,7 +91,7 @@ cmd(`<span class="user">securelayer@www</span> <span class="path">~</span> % <sp
        set:html-injected homepage logo mark). Structural wrapper classes (.dline, .added,
        .cmd, .lc, .ln, .mark, .listing-row) are normal Astro template attributes, not
        injected, so they scope normally and don't need :global(). */
-    :global(a) { color: #5eead4; text-decoration: none; }
+    :global(a) { color: #5eead4; text-decoration: underline; }
     :global(a:hover) { text-decoration: underline; }
 
     .term-window { min-height: 100vh; display: flex; flex-direction: column; }
@@ -111,7 +111,7 @@ cmd(`<span class="user">securelayer@www</span> <span class="path">~</span> % <sp
     .diff-body { flex: 1; max-width: 900px; width: 100%; margin: 0 auto; padding: 12px 0 60px; overflow-x: auto; }
 
     .dline { display: grid; grid-template-columns: 44px 18px 1fr; column-gap: 10px; padding: 2px 20px; }
-    .dline .ln { color: #5b5570; text-align: right; user-select: none; }
+    .dline .ln { color: #9089ab; text-align: right; user-select: none; }
     .dline .mark { color: #2dd4bf; font-weight: 700; }
     .dline .lc { color: #c6c0d9; }
 
@@ -129,7 +129,7 @@ cmd(`<span class="user">securelayer@www</span> <span class="path">~</span> % <sp
 
     :global(strong) { color: #fff; font-weight: 700; }
     :global(.placeholder) { color: #f59e0b; background: rgba(245,158,11,.14); padding: 0 4px; border-radius: 2px; }
-    :global(.comment) { color: #6b6484; font-style: italic; }
+    :global(.comment) { color: #948da8; font-style: italic; }
     .listing-row .lc { color: #7dd3fc; }
 
     :global(.cursor) { display: inline-block; width: 7px; height: 14px; background: #34d399; vertical-align: middle; animation: blink 1s step-end infinite; }
