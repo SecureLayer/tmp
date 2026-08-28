@@ -37,3 +37,6 @@ jobs:
 
       - name: Build
         run: npm run build
+
+      - name: Test (internal link check)
+        run: npm test
