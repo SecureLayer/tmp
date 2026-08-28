@@ -179,11 +179,13 @@ const logoMark = logoSource
 
           <div class="m-card m-card-collage" style="--d:.05s">
             <div class="m-collage-text">
-              <div class="m-card-eyebrow-row">
-                <div class="m-card-eyebrow">Expertise</div>
-                <img class="m-card-eyebrow-icon" src="/images/dock-icons/cal.png" alt="Cal.com" />
+              <div class="m-notif-row">
+                <img class="m-notif-icon" src="/images/dock-icons/cal.png" alt="Cal.com" />
+                <div class="m-notif-text">
+                  <div class="m-notif-title">[APPSEC - IT - DEVOPS]</div>
+                  <div class="m-notif-body">Contact a security expert to check if our security is done right.</div>
+                </div>
               </div>
-              <h3>Security done right saves money —<br />fewer headaches, lower risk, faster deployments.</h3>
               <a class="m-btn-amber" href="https://cal.com/securelayer" target="_blank" rel="noopener">Let's discuss →</a>
             </div>
           </div>
@@ -212,6 +214,13 @@ const logoMark = logoSource
               <span>What-do-we-do.pdf</span>
               <span class="m-card-file-bar">Download the file</span>
             </a>
+            <a class="m-card-msg" href="https://signal.me/#eu/jOCElNN5Meq0MDrSKeetbOt0N7YXLFFiH37-UJO1vCdG_wY0cuVJdYbu7yFtZq62" target="_blank" rel="noopener">
+              <img class="m-card-msg-icon" src="/images/dock-icons/signal-ultramarine.png" alt="Signal" />
+              <div>
+                <div class="m-card-msg-text">Questions? Message us — safely and privately</div>
+                <span class="m-btn-dark">Open Signal</span>
+              </div>
+            </a>
           </div>
 
           <div class="m-card m-card-icons-full" style="--d:.25s">
@@ -220,6 +229,7 @@ const logoMark = logoSource
               <a class="m-icon-chip" href="/security" aria-label="Check our security"><img src="/images/dock-icons/brave.png" alt=""></a>
               <a class="m-icon-chip" href="/sustainability/" aria-label="Check our environmental impact"><img src="/images/dock-icons/firefox.png" alt=""></a>
             </div>
+            <p class="m-card-social-note">Before we secure yours, see ours — our own score is right there above.</p>
           </div>
 
           <div class="m-card m-card-social" style="--d:.3s">
@@ -244,13 +254,6 @@ const logoMark = logoSource
                   <rect x="11.5" y="11.5" width="17" height="17" rx="5" fill="none" stroke="#fff" stroke-width="2.1"/>
                   <circle cx="20" cy="20" r="4.6" fill="none" stroke="#fff" stroke-width="2.1"/>
                   <circle cx="27.5" cy="12.3" r="1.5" fill="#fff"/>
-                </svg>
-              </a>
-              <a class="m-icon-chip" href="https://signal.me/#eu/jOCElNN5Meq0MDrSKeetbOt0N7YXLFFiH37-UJO1vCdG_wY0cuVJdYbu7yFtZq62" target="_blank" rel="noopener" aria-label="Message us on Signal">
-                <svg viewBox="0 0 40 40">
-                  <circle cx="20" cy="20" r="20" fill="#3a76f0"/>
-                  <path transform="translate(11,13)" d="M1 6c4-3.5 10-3.5 14 0M3.4 8.6c3-2.3 6.2-2.3 9.2 0M5.8 11.1c1.7-1.2 2.7-1.2 4.4 0" stroke="#fff" stroke-width="1.7" stroke-linecap="round" fill="none"/>
-                  <circle cx="19" cy="21.6" r="1.3" fill="#fff"/>
                 </svg>
               </a>
             </div>
@@ -534,10 +537,11 @@ const logoMark = logoSource
   .m-card { opacity: 0; transform: translateY(16px); transition: opacity .5s ease var(--d,0s), transform .5s ease var(--d,0s); }
   .m-scene.is-unlocked .m-card { opacity: 1; transform: translateY(0); }
 
-  .m-card-eyebrow { font-size: .62rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: rgba(23,20,15,.6); margin-bottom: 8px; }
-  .m-card-eyebrow-row { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
-  .m-card-eyebrow-row .m-card-eyebrow { margin-bottom: 8px; }
-  .m-card-eyebrow-icon { width: 52px; height: 52px; border-radius: 12px; flex-shrink: 0; margin-bottom: 8px; }
+  .m-notif-row { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 14px; }
+  .m-notif-icon { width: 44px; height: 44px; border-radius: 12px; flex-shrink: 0; box-shadow: 0 2px 6px rgba(0,0,0,.15); }
+  .m-notif-text { flex: 1; min-width: 0; }
+  .m-notif-title { font-family: var(--font-head); font-weight: 700; font-size: .92rem; color: #17140f; line-height: 1.3; }
+  .m-notif-body { font-size: .82rem; color: rgba(23,20,15,.72); line-height: 1.4; margin-top: 4px; }
   .m-btn-amber { display: inline-block; background: #2e2a22; color: #f0e9da; font-family: var(--font-round); font-weight: 800; font-size: .82rem; padding: 11px 18px; border-radius: 100px; text-decoration: none; }
 
   .m-card-collage { display: flex; align-items: center; padding: 12px; }
@@ -572,7 +576,7 @@ const logoMark = logoSource
   }
 
   .m-card-msg { flex: 1; padding: 18px 14px; display: flex; flex-direction: column; justify-content: space-between; text-decoration: none; }
-  .m-card-msg svg { color: #17140f; }
+  .m-card-msg-icon { width: 22px; height: 22px; border-radius: 5px; }
   .m-card-msg-text { color: #17140f; font-family: var(--font-round); font-weight: 800; font-size: .86rem; line-height: 1.25; margin: 10px 0 12px; }
   .m-btn-dark { display: inline-block; background: #2e2a22; color: #f0e9da; font-family: var(--font-round); font-weight: 800; font-size: .72rem; padding: 8px 14px; border-radius: 100px; align-self: flex-start; }
 
@@ -598,8 +602,8 @@ const logoMark = logoSource
   .m-icon-chip { width: 52px; height: 52px; border-radius: 12px; background: rgba(255,255,255,.7); box-shadow: 0 1px 3px rgba(0,0,0,.15); display: flex; align-items: center; justify-content: center; text-decoration: none; padding: 9px; }
   .m-icon-chip img { width: 100%; height: 100%; object-fit: contain; }
 
-  .m-card-icons-full { padding: 18px 20px; }
-  .m-card-icons-full h3 { font-family: var(--font-head); font-size: 1.1rem; font-weight: 700; color: #17140f; margin: 0 0 14px; }
+  .m-card-icons-full { padding: 14px 16px; }
+  .m-card-icons-full h3 { font-family: var(--font-head); font-size: 1.02rem; font-weight: 700; color: #17140f; margin: 0 0 10px; }
 
   /* social badges (Bluesky/Instagram/GitHub) — circular, no chip background, since each
      SVG already draws its own full-bleed circle */
