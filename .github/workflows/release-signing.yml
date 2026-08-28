@@ -36,13 +36,14 @@ jobs:
         env:
           TAG: ${{ github.event.release.tag_name || inputs.tag }}
         run: |
-          tar -czf "securelayer-${TAG}.tar.gz" \
+          tar -czf "${RUNNER_TEMP}/securelayer-${TAG}.tar.gz" \
             --exclude='.git' --exclude='node_modules' --exclude='dist' .
 
       - name: Generate checksums manifest
         env:
           TAG: ${{ github.event.release.tag_name || inputs.tag }}
         run: |
+          cd "$RUNNER_TEMP"
           sha256sum "securelayer-${TAG}.tar.gz" > SHA256SUMS.txt
           cat SHA256SUMS.txt
 
@@ -51,8 +52,8 @@ jobs:
         uses: actions/attest-build-provenance@4d101475d8b20a2381f78447822ac1eab6504dd8 # v4.2.2
         with:
           subject-path: |
-            securelayer-*.tar.gz
-            SHA256SUMS.txt
+            ${{ runner.temp }}/securelayer-*.tar.gz
+            ${{ runner.temp }}/SHA256SUMS.txt
 
       - name: Upload release assets
         env:
@@ -60,6 +61,6 @@ jobs:
           TAG: ${{ github.event.release.tag_name || inputs.tag }}
         run: |
           gh release upload "$TAG" \
-            "securelayer-${TAG}.tar.gz" \
-            SHA256SUMS.txt \
+            "${RUNNER_TEMP}/securelayer-${TAG}.tar.gz" \
+            "${RUNNER_TEMP}/SHA256SUMS.txt" \
             --clobber
