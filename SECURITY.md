@@ -1,5 +1,7 @@
 # Security Policy
 
+See [SECURITY_ASSESSMENT.md](SECURITY_ASSESSMENT.md) for the project's threat assessment — the most likely and impactful security risks, and what mitigates each.
+
 ## Supported versions
 
 | Version | Supported |
