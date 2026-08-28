@@ -3,6 +3,11 @@ name: Release Signing
 on:
   release:
     types: [published]
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Release tag to sign (e.g. v2026.08.0)'
+        required: true
 
 permissions:
   contents: read
@@ -24,19 +29,19 @@ jobs:
       - name: Checkout release tag
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
-          ref: ${{ github.event.release.tag_name }}
+          ref: ${{ github.event.release.tag_name || inputs.tag }}
           persist-credentials: false
 
       - name: Create source archive
         env:
-          TAG: ${{ github.event.release.tag_name }}
+          TAG: ${{ github.event.release.tag_name || inputs.tag }}
         run: |
           tar -czf "securelayer-${TAG}.tar.gz" \
             --exclude='.git' --exclude='node_modules' --exclude='dist' .
 
       - name: Generate checksums manifest
         env:
-          TAG: ${{ github.event.release.tag_name }}
+          TAG: ${{ github.event.release.tag_name || inputs.tag }}
         run: |
           sha256sum "securelayer-${TAG}.tar.gz" > SHA256SUMS.txt
           cat SHA256SUMS.txt
@@ -52,7 +57,7 @@ jobs:
       - name: Upload release assets
         env:
           GH_TOKEN: ${{ github.token }}
-          TAG: ${{ github.event.release.tag_name }}
+          TAG: ${{ github.event.release.tag_name || inputs.tag }}
         run: |
           gh release upload "$TAG" \
             "securelayer-${TAG}.tar.gz" \
