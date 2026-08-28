@@ -9,8 +9,7 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro",
-    "validate-prompts": "node scripts/validate-prompts.mjs"
+    "astro": "astro"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.3",

@@ -92,10 +92,6 @@ const { title, description } = Astro.props;
   h2 { font-family: var(--font-head); font-size: clamp(1.5rem, 3.5vw, 2.2rem); font-weight: 700; color: var(--white); margin-bottom: 16px; }
   .section-sub { color: var(--muted); max-width: 560px; margin: 0 auto 60px; }
 
-  /* PROMPT CARD (used by free-prompts page) */
-  .prompt-card { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
-  .prompt-header { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; padding: 16px 20px; border-bottom: 1px solid var(--border); background: var(--bg3); }
-  .prompt-meta { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
   .badge-tier { font-size: .7rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; padding: 3px 10px; border-radius: 100px; }
   .badge-tier.free { background: rgba(34,197,94,.12); color: var(--green); border: 1px solid rgba(34,197,94,.2); }
   .badge-tested { display: inline-flex; align-items: center; gap: 4px; font-size: .72rem; color: var(--green); font-weight: 500; }
@@ -104,11 +100,7 @@ const { title, description } = Astro.props;
   .badge-expertise { font-size: .72rem; color: var(--purple); background: rgba(47,107,74,.08); border: 1px solid rgba(47,107,74,.15); padding: 2px 8px; border-radius: 6px; }
   .btn-copy { display: inline-flex; align-items: center; gap: 6px; background: var(--cyan-dim); border: 1px solid rgba(224,163,46,.3); color: var(--cyan); font-size: .8rem; font-weight: 500; padding: 7px 14px; border-radius: 8px; cursor: pointer; transition: background .2s; font-family: var(--font); white-space: nowrap; }
   .btn-copy:hover { background: rgba(224,163,46,.22); }
-  .prompt-title { font-family: var(--font-head); font-size: 1.05rem; color: var(--white); padding: 20px 20px 12px; }
-  .prompt-tags { display: flex; gap: 6px; flex-wrap: wrap; padding: 0 20px 16px; }
   .tag { font-size: .68rem; color: var(--muted); background: var(--bg3); border: 1px solid var(--border2); padding: 2px 8px; border-radius: 4px; }
-  .prompt-body { font-family: var(--font-mono); font-size: .8rem; line-height: 1.7; color: #cbd5e1; background: #0a0f1a; padding: 20px; overflow-x: auto; white-space: pre-wrap; word-break: break-word; border-top: 1px solid var(--border); }
-  .prompt-tested-note { font-size: .75rem; color: var(--muted); padding: 12px 20px; border-top: 1px solid var(--border); background: var(--bg3); }
 
   /* FOOTER */
   footer { border-top: 1px solid var(--border); padding: 48px 24px; text-align: center; }
@@ -127,6 +119,5 @@ const { title, description } = Astro.props;
 
   @media (max-width: 640px) {
     .nav-links a:not(.btn-nav) { display: none; }
-    .prompt-header { flex-direction: column; align-items: flex-start; }
   }
 </style>
