@@ -11,6 +11,12 @@ This is a static site built with [Astro](https://astro.build).
 
 ---
 
+## Architecture
+
+See [ARCHITECTURE.md](ARCHITECTURE.md) for a full description of the system's actors (visitor, maintainer, CI/CD, Dependabot, Cloudflare Workers/R2, Cal.com) and the actions available to each.
+
+---
+
 ## Local development
 
 Prerequisites: Node.js >= 22.12.0
