@@ -35,3 +35,14 @@ This project is a static informational landing page. The primary security concer
 ## Project access
 
 This project has a single maintainer with access to sensitive resources: the repository owner ([@SecureLayer](https://github.com/SecureLayer)), who holds sole repository admin rights, deployment credentials, and secrets. There are no other collaborators.
+
+## Roles and responsibilities
+
+This is a single-maintainer project — the repository owner holds every role:
+
+- **Development & review**: writes and merges all changes; external contributions (see [CONTRIBUTING.md](CONTRIBUTING.md)) are reviewed and merged by the same maintainer.
+- **Security response**: triages and responds to reports per the timelines above.
+- **Release management**: decides when to cut a release and maintains [CHANGELOG.md](CHANGELOG.md).
+- **Deployment**: holds the only deployment credentials and pushes production changes.
+
+There is currently no additional contributor or reviewer role — if that changes, this section will be updated accordingly.
