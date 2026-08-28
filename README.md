@@ -22,6 +22,14 @@ npm run preview    # preview the production build locally
 
 ---
 
+## Dependencies
+
+This project intentionally keeps its dependency surface minimal — two runtime dependencies (`astro`, `@astrojs/sitemap`) and two dev dependencies (`@astrojs/check`, `typescript`), all obtained from the public npm registry and pinned via `package-lock.json` (installed reproducibly in CI with `npm ci`).
+
+A new dependency is only added when it removes real, non-trivial custom code, and preference goes to actively maintained packages with no known open vulnerabilities. [Dependabot](.github/dependabot.yml) checks the npm ecosystem weekly and opens pull requests for available updates; GitHub's Dependabot security alerts additionally flag known vulnerabilities directly.
+
+---
+
 ## Versioning
 
 This project uses [Calendar Versioning](https://calver.org/) (`YYYY.MM.PATCH`). Releases are tagged in git and documented in [CHANGELOG.md](CHANGELOG.md).
