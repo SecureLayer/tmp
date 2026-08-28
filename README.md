@@ -7,6 +7,8 @@
 
 This repository hosts [securelayer.co](https://securelayer.co), an informational landing page presenting SecureLayer's freelance cybersecurity service catalogue (Application Security, SecDevOps, IT Security, AI Security, security advice) and links to social media. The site does not provide any interactive tool, download, or service directly — book a call at [cal.com/securelayer](https://cal.com/securelayer).
 
+This is a static site built with [Astro](https://astro.build).
+
 ---
 
 ## Local development
