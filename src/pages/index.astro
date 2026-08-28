@@ -18,6 +18,29 @@ const logoMark = logoSource
 
   <div class="os">
 
+    <!-- DESKTOP LOCK SCREEN · shown first on desktop viewports, mirrors the mobile
+         lock/stand screen's "click or submit to unlock" pattern, styled like a real
+         macOS lock screen (date/time, avatar, password field). -->
+    <div class="d-lock" id="dLock">
+      <div class="d-lock-bg" aria-hidden="true"></div>
+      <div class="d-lock-scrim" aria-hidden="true"></div>
+      <div class="d-lock-content">
+        <div class="d-lock-date" id="dLockDate">Friday, August 28</div>
+        <div class="d-lock-time" id="dLockTime">03.52</div>
+
+        <div class="d-lock-user">
+          <div class="d-lock-avatar" set:html={logoMark} />
+          <div class="d-lock-name">SecureLayer</div>
+          <form class="d-lock-pass" id="dLockForm">
+            <input type="password" class="d-lock-input" placeholder="Enter Password" autocomplete="off" />
+            <button type="submit" class="d-lock-arrow" aria-label="Unlock">
+              <svg width="13" height="13" viewBox="0 0 16 16" fill="none"><path d="M4 8h8M8 4l4 4-4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+
     <!-- MENU BAR -->
     <div class="menu-bar">
       <div class="menu-left">
@@ -300,6 +323,60 @@ const logoMark = logoSource
   :global(footer) { display: none; }
 
   .os { position: relative; min-height: 100vh; display: flex; flex-direction: column; }
+
+  /* DESKTOP LOCK SCREEN — desktop-only (mobile has its own separate .m-stand lock
+     flow); covers the whole .os scene until submitted, then fades to reveal it. */
+  .d-lock { display: none; }
+  @media (min-width: 861px) {
+    .d-lock {
+      display: flex; align-items: center; justify-content: center;
+      position: fixed; inset: 0; z-index: 100;
+      transition: opacity .6s ease, visibility .6s ease;
+    }
+    .d-lock.is-unlocked { opacity: 0; visibility: hidden; pointer-events: none; }
+  }
+
+  .d-lock-bg {
+    position: absolute; inset: 0; z-index: 0;
+    background: url('/images/wallpaper-beach.webp') center 55% / cover no-repeat;
+  }
+  .d-lock-scrim { position: absolute; inset: 0; z-index: 0; background: rgba(12,16,20,.28); }
+
+  .d-lock-content {
+    position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center;
+    color: #fff; text-align: center;
+  }
+  .d-lock-date { font-family: var(--font-round); font-weight: 600; font-size: 1.2rem; text-shadow: 0 1px 6px rgba(0,0,0,.35); }
+  .d-lock-time { font-family: var(--font-round); font-weight: 300; font-size: 7rem; line-height: 1.05; letter-spacing: -.01em; text-shadow: 0 2px 12px rgba(0,0,0,.35); margin-bottom: 46px; }
+
+  .d-lock-user { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+  .d-lock-avatar {
+    width: 84px; height: 84px; border-radius: 50%; padding: 20px;
+    background: rgba(255,255,255,.16); backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px);
+    border: 1px solid rgba(255,255,255,.3); box-shadow: 0 8px 24px rgba(0,0,0,.25);
+    color: #fff; display: flex; align-items: center; justify-content: center;
+  }
+  .d-lock-avatar :global(svg) { width: 100%; height: 100%; }
+  .d-lock-name { font-family: var(--font-round); font-weight: 700; font-size: 1rem; text-shadow: 0 1px 6px rgba(0,0,0,.35); margin-bottom: 6px; }
+
+  .d-lock-pass {
+    display: flex; align-items: center; gap: 8px;
+    background: rgba(255,255,255,.14); backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px);
+    border: 1px solid rgba(255,255,255,.3); border-radius: 100px;
+    padding: 4px 4px 4px 16px; width: 220px;
+  }
+  .d-lock-input {
+    flex: 1; min-width: 0; background: none; border: none; outline: none;
+    color: #fff; font-family: var(--font); font-size: .82rem;
+  }
+  .d-lock-input::placeholder { color: rgba(255,255,255,.7); }
+  .d-lock-arrow {
+    flex-shrink: 0; width: 26px; height: 26px; border-radius: 50%; border: none; cursor: pointer;
+    background: rgba(255,255,255,.85); color: #17140f;
+    display: flex; align-items: center; justify-content: center;
+    transition: background .15s;
+  }
+  .d-lock-arrow:hover { background: #fff; }
 
   /* MENU BAR */
   .menu-bar { display: flex; align-items: center; justify-content: space-between; padding: 0 16px; height: 27px; background: transparent; position: absolute; top: 0; left: 0; right: 0; z-index: 5; }
@@ -590,3 +667,4 @@ const logoMark = logoSource
 
 <script is:inline src="/scripts/index-widgets.js"></script>
 <script is:inline src="/scripts/mobile-scene.js"></script>
+<script is:inline src="/scripts/desktop-lock.js"></script>
