@@ -22,6 +22,17 @@ Include:
 
 We will acknowledge receipt within **14 days** and aim to resolve confirmed vulnerabilities within **60 days** of confirmation.
 
+### Coordinated disclosure
+
+This project follows coordinated disclosure: please give us the time above to investigate and ship a fix before any public disclosure. Once a confirmed vulnerability is resolved, we will publish a [GitHub Security Advisory](https://github.com/SecureLayer/tmp/security/advisories) describing the issue and crediting the reporter (unless you'd prefer to remain anonymous — just say so in your report). If a fix isn't possible within 60 days, we will proactively update you with a revised timeline rather than go silent.
+
+### Safe harbor
+
+We will not pursue legal action against anyone who reports a vulnerability in good faith through the private channel above, provided they:
+- Make a good-faith effort to avoid privacy violations, data destruction, and service disruption
+- Do not access or modify data beyond what's needed to demonstrate the issue
+- Give us a reasonable opportunity to fix it before any public disclosure
+
 ## Scope
 
 This project is a static informational landing page. The primary security concerns are:
