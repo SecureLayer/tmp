@@ -55,6 +55,17 @@ jobs:
             ${{ runner.temp }}/securelayer-*.tar.gz
             ${{ runner.temp }}/SHA256SUMS.txt
 
+      - name: Copy attestation as .intoto.jsonl
+        env:
+          TAG: ${{ github.event.release.tag_name || inputs.tag }}
+        run: |
+          # OpenSSF Scorecard's Signed-Releases check specifically looks for a
+          # release asset ending in .intoto.jsonl — it doesn't yet recognize
+          # attestations published via GitHub's newer Attestations API on their
+          # own. The bundle above IS a real, valid in-toto/Sigstore attestation;
+          # this just also names a copy the way Scorecard's check expects.
+          cp "${{ steps.attest.outputs.bundle-path }}" "${RUNNER_TEMP}/securelayer-${TAG}.intoto.jsonl"
+
       - name: Upload release assets
         env:
           GH_TOKEN: ${{ github.token }}
@@ -63,4 +74,5 @@ jobs:
           gh release upload "$TAG" \
             "${RUNNER_TEMP}/securelayer-${TAG}.tar.gz" \
             "${RUNNER_TEMP}/SHA256SUMS.txt" \
+            "${RUNNER_TEMP}/securelayer-${TAG}.intoto.jsonl" \
             --clobber
