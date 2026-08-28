@@ -134,9 +134,10 @@ const logoMark = logoSource
     <!-- DOCK · the real toolkit used for security work -->
     <div class="dock">
       <span class="dock-icon" title="Finder"><img src="/images/dock-icons/finder.png" alt="Finder" /></span>
-      <a class="dock-icon dock-mobile-keep" href="mailto:contact@securelayer.co" title="Tutanota" data-tooltip="contact@securelayer.co"><img src="/images/dock-icons/tuta.png" alt="Tutanota" /></a>
-      <a class="dock-icon dock-mobile-keep" href="mailto:contact@securelayer.co" title="Proton Mail" data-tooltip="contact@securelayer.co"><img src="/images/dock-icons/proton.png" alt="Proton Mail" /></a>
+      <span class="dock-icon" title="Tutanota"><img src="/images/dock-icons/tuta.png" alt="Tutanota" /></span>
+      <span class="dock-icon" title="Proton Mail"><img src="/images/dock-icons/proton.png" alt="Proton Mail" /></span>
       <a class="dock-icon dock-mobile-keep" href="https://signal.me/#eu/jOCElNN5Meq0MDrSKeetbOt0N7YXLFFiH37-UJO1vCdG_wY0cuVJdYbu7yFtZq62" target="_blank" rel="noopener" title="Signal" data-tooltip="Message us here — safely and privately"><img src="/images/dock-icons/signal.png" alt="Signal" /></a>
+      <a class="dock-icon dock-mobile-keep" href="https://cal.com/securelayer" target="_blank" rel="noopener" title="Cal.com" data-tooltip="Book a call with us"><img src="/images/dock-icons/cal.png" alt="Cal.com" /></a>
       <span class="dock-icon" title="Molly"><img src="/images/dock-icons/molly.png" alt="Molly" /></span>
       <span class="dock-icon" title="VS Code"><img src="/images/dock-icons/vscode.png" alt="VS Code" /></span>
       <span class="dock-icon" title="Jupyter"><img src="/images/dock-icons/jupyter.png" alt="Jupyter" /></span>
@@ -178,9 +179,12 @@ const logoMark = logoSource
 
           <div class="m-card m-card-collage" style="--d:.05s">
             <div class="m-collage-text">
-              <div class="m-card-eyebrow">Expertise</div>
+              <div class="m-card-eyebrow-row">
+                <div class="m-card-eyebrow">Expertise</div>
+                <img class="m-card-eyebrow-icon" src="/images/dock-icons/cal.png" alt="Cal.com" />
+              </div>
               <h3>Security done right saves money —<br />fewer headaches, lower risk, faster deployments.</h3>
-              <a class="m-btn-amber" href="mailto:contact@securelayer.co">Let's discuss →</a>
+              <a class="m-btn-amber" href="https://cal.com/securelayer" target="_blank" rel="noopener">Let's discuss →</a>
             </div>
           </div>
 
@@ -531,6 +535,9 @@ const logoMark = logoSource
   .m-scene.is-unlocked .m-card { opacity: 1; transform: translateY(0); }
 
   .m-card-eyebrow { font-size: .62rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: rgba(23,20,15,.6); margin-bottom: 8px; }
+  .m-card-eyebrow-row { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+  .m-card-eyebrow-row .m-card-eyebrow { margin-bottom: 8px; }
+  .m-card-eyebrow-icon { width: 20px; height: 20px; border-radius: 5px; flex-shrink: 0; margin-bottom: 8px; }
   .m-btn-amber { display: inline-block; background: #2e2a22; color: #f0e9da; font-family: var(--font-round); font-weight: 800; font-size: .82rem; padding: 11px 18px; border-radius: 100px; text-decoration: none; }
 
   .m-card-collage { display: flex; align-items: center; padding: 12px; }

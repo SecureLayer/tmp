@@ -1,19 +1,11 @@
 # SecureLayer
 
-> Free security intelligence for developers who install open-source software.
+> Freelance cybersecurity services — landing page and service catalogue.
 
-SecureLayer audits popular open-source GitHub repositories across 9 security checks before you install them. Scores are pre-computed weekly — no live API calls, no rate limits.
-
-## Tools
-
-- [GitHub Security Assessments](https://securelayer.co/github-security-assessment): Pre-audited repos scored across 9 checks (SECURITY.md quality, Dependabot, branch protection, credential hygiene, CI/CD, active maintenance, license, code of conduct, contributing guidelines). Grades A+ to F. Penalties for known incidents (−10 pts) and open critical/high CVEs (−5 pts).
-- [AI Prompts to improve Cybersecurity](https://securelayer.co/cybersecurity-ai-prompts): free, tested prompt templates for security tasks.
-
-## Scoring methodology
-
-9 binary checks weighted 1–15 pts each (total 100). OpenSSF Scorecard score adds up to 10 bonus pts. Known security incidents deduct 10 pts. Open CRITICAL or HIGH CVEs (OSV.dev) deduct 5 pts. Grade bands: A ≥85 · B ≥70 · C ≥55 · D ≥40 · F <40.
+SecureLayer is an independent freelance cybersecurity operator. This website is an informational landing page presenting the service catalogue (Application Security, SecDevOps, IT Security, AI Security, security advice) and links to social media. It does not provide any interactive tool, download, or service directly through the site.
 
 ## Contact
 
-- Security disclosures: contact@securelayer.co
+- Book a call: https://cal.com/securelayer
 - Website: https://securelayer.co
+- Social: Bluesky, Instagram, GitHub (see site footer/dock for links)
