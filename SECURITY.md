@@ -31,3 +31,7 @@ This project is a static informational landing page. The primary security concer
 
 - Social engineering
 - Issues in third-party infrastructure (GitHub, Cloudflare, Cal.com)
+
+## Project access
+
+This project has a single maintainer with access to sensitive resources: the repository owner ([@SecureLayer](https://github.com/SecureLayer)), who holds sole repository admin rights, deployment credentials, and secrets. There are no other collaborators.
