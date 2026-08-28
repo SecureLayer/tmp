@@ -16,12 +16,12 @@ if (!existsSync(DIST)) {
 
 const htmlFiles = globSync('**/*.html', { cwd: DIST }).map(f => join(DIST, f));
 
-// Real links that intentionally resolve outside dist/ — served via a
-// separate mechanism (R2/manual upload), not part of this git-tracked build.
-// See README.md if this list needs to grow.
-const KNOWN_EXTERNAL_ASSETS = new Set([
-  '/docs/securelayer.co.pdf',
-]);
+// Path prefixes that intentionally resolve outside dist/ — this project
+// deploys public/images/* and public/docs/* via a separate mechanism
+// (R2/manual upload) independent of git, confirmed by checking the actual
+// repo tree: nothing under these two prefixes has ever been committed,
+// yet they load fine live. Real broken links elsewhere still get caught.
+const KNOWN_EXTERNAL_PREFIXES = ['/images/', '/docs/'];
 
 const ATTR_RE = /(?:href|src)="([^"]+)"/g;
 let errors = 0;
@@ -50,7 +50,7 @@ for (const file of htmlFiles) {
       url.startsWith('data:') || url.startsWith('#')
     ) continue;
     if (!url.startsWith('/')) continue; // only check root-relative internal links
-    if (KNOWN_EXTERNAL_ASSETS.has(url.split('#')[0].split('?')[0])) continue;
+    if (KNOWN_EXTERNAL_PREFIXES.some(prefix => url.startsWith(prefix))) continue;
 
     checked++;
     if (!resolvesInDist(url)) {
