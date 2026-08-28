@@ -25,39 +25,42 @@ const VOTE_CANDIDATES = [
 /** Vite plugin — mocks /api/* in dev mode using local files */
 const apiMock = {
   name: 'sl-api-mock',
+  /** @param {import('vite').ViteDevServer} server */
   configureServer(server) {
-    server.middlewares.use((req, res, next) => {
+    /** @type {import('vite').Connect.NextHandleFunction} */
+    const handleApiMock = (req, res, next) => {
       const url = req.url?.split('?')[0];
 
       if (url === '/api/health') {
         res.setHeader('Content-Type', 'application/json');
-        return res.end(JSON.stringify({ status: 'ok', version: '0.3.0-dev' }));
+        return void res.end(JSON.stringify({ status: 'ok', version: '0.3.0-dev' }));
       }
 
       if (url === '/api/assessments' && req.method === 'GET') {
         try {
           const data = readFileSync(ASSESSMENTS_FILE);
           res.setHeader('Content-Type', 'application/json');
-          return res.end(data);
+          return void res.end(data);
         } catch {
           res.statusCode = 404;
           res.setHeader('Content-Type', 'application/json');
-          return res.end(JSON.stringify({ error: 'No assessments published yet.' }));
+          return void res.end(JSON.stringify({ error: 'No assessments published yet.' }));
         }
       }
 
       if (url === '/api/vote/candidates' && req.method === 'GET') {
         res.setHeader('Content-Type', 'application/json');
-        return res.end(JSON.stringify(VOTE_CANDIDATES));
+        return void res.end(JSON.stringify(VOTE_CANDIDATES));
       }
 
       if (url === '/api/vote' && req.method === 'POST') {
         res.setHeader('Content-Type', 'application/json');
-        return res.end(JSON.stringify({ votes: 1 }));
+        return void res.end(JSON.stringify({ votes: 1 }));
       }
 
       next();
-    });
+    };
+    server.middlewares.use(handleApiMock);
   },
 };
 
