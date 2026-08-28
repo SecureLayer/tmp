@@ -19,9 +19,8 @@ There is exactly one collaborator with admin access (see [SECURITY.md](SECURITY.
 
 **This is the single most impactful realistic threat for this project** — everything else in this assessment is lower-impact by comparison, because this one bypasses every other control at once.
 
-**Mitigations in place:** secret scanning + push protection reduce (but don't eliminate) the value of a stolen credential; a hardened Content-Security-Policy limits what injected content could actually execute even if a push succeeded.
-**Mitigation NOT verifiable remotely, and recommended:** hardware security key (WebAuthn/FIDO2) or TOTP 2FA on the GitHub account, if not already enabled. This is outside what any repo-level API check can confirm — worth the maintainer personally verifying.
-**Accepted residual risk:** branch protection with `enforce_admins: true` would not meaningfully mitigate this specific threat, since a compromised admin account IS the admin — the real control is account security, not repo settings.
+**Mitigations in place:** two-factor authentication is enabled on the maintainer's GitHub account (confirmed via account settings — passkey/security-key preferred method, authenticator app also configured), which substantially raises the bar for the specific credential-theft/phishing scenario this threat describes. Secret scanning + push protection reduce (but don't eliminate) the value of a stolen credential; a hardened Content-Security-Policy limits what injected content could actually execute even if a push succeeded.
+**Accepted residual risk:** branch protection with `enforce_admins: true` would not meaningfully mitigate this specific threat, since a compromised admin account IS the admin — the real control is account security (now confirmed in place), not repo settings. Session-token theft (as opposed to credential theft) can still bypass 2FA in principle; no additional control against this is currently in place beyond GitHub's own session security.
 
 ### 2. Supply-chain compromise via a dependency
 
