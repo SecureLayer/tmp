@@ -1,0 +1,60 @@
+name: Release Signing
+
+on:
+  release:
+    types: [published]
+
+permissions:
+  contents: read
+
+jobs:
+  sign:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      id-token: write
+      attestations: write
+
+    steps:
+      - name: Harden Runner
+        uses: step-security/harden-runner@05e31511f85b41b11d1cf0ef85d0992719546e2c # v2.21.0
+        with:
+          egress-policy: audit
+
+      - name: Checkout release tag
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ github.event.release.tag_name }}
+          persist-credentials: false
+
+      - name: Create source archive
+        env:
+          TAG: ${{ github.event.release.tag_name }}
+        run: |
+          tar -czf "securelayer-${TAG}.tar.gz" \
+            --exclude='.git' --exclude='node_modules' --exclude='dist' .
+
+      - name: Generate checksums manifest
+        env:
+          TAG: ${{ github.event.release.tag_name }}
+        run: |
+          sha256sum "securelayer-${TAG}.tar.gz" > SHA256SUMS.txt
+          cat SHA256SUMS.txt
+
+      - name: Attest build provenance
+        id: attest
+        uses: actions/attest-build-provenance@4d101475d8b20a2381f78447822ac1eab6504dd8 # v4.2.2
+        with:
+          subject-path: |
+            securelayer-*.tar.gz
+            SHA256SUMS.txt
+
+      - name: Upload release assets
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ github.event.release.tag_name }}
+        run: |
+          gh release upload "$TAG" \
+            "securelayer-${TAG}.tar.gz" \
+            SHA256SUMS.txt \
+            --clobber
