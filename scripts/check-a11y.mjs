@@ -1,6 +1,5 @@
 import { createServer } from "node:http";
-import { readFile, realpath, stat } from "node:fs/promises";
-import path from "node:path";
+import sirv from "sirv";
 import { chromium } from "playwright";
 import AxeBuilder from "@axe-core/playwright";
 
@@ -8,51 +7,8 @@ const DIST = new URL("../dist/", import.meta.url).pathname;
 const PORT = 4173;
 const PAGES = ["/", "/security/", "/sustainability/", "/legal/"];
 
-const MIME = {
-  ".html": "text/html",
-  ".css": "text/css",
-  ".js": "text/javascript",
-  ".svg": "image/svg+xml",
-  ".png": "image/png",
-  ".xml": "application/xml",
-  ".txt": "text/plain",
-};
-
-const DIST_ROOT = path.resolve(DIST);
-
 function startServer() {
-  const server = createServer(async (req, res) => {
-    const reqPath = decodeURIComponent(req.url.split("?")[0]);
-    const candidate = path.resolve(DIST_ROOT, "." + reqPath);
-    let filePath;
-    try {
-      filePath = await realpath(candidate);
-    } catch {
-      res.writeHead(404).end("Not found");
-      return;
-    }
-    if (filePath !== DIST_ROOT && !filePath.startsWith(DIST_ROOT + path.sep)) {
-      res.writeHead(403).end("Forbidden");
-      return;
-    }
-    try {
-      const s = await stat(filePath);
-      if (s.isDirectory()) filePath = path.join(filePath, "index.html");
-    } catch {
-      res.writeHead(404).end("Not found");
-      return;
-    }
-    try {
-      const body = await readFile(filePath);
-      const ext = path.extname(filePath);
-      res.writeHead(200, {
-        "Content-Type": MIME[ext] || "application/octet-stream",
-      });
-      res.end(body);
-    } catch {
-      res.writeHead(404).end("Not found");
-    }
-  });
+  const server = createServer(sirv(DIST, { single: false }));
   return new Promise((resolve) => server.listen(PORT, () => resolve(server)));
 }
 
