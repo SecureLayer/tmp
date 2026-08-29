@@ -1,5 +1,5 @@
 import { createServer } from "node:http";
-import { readFile, stat } from "node:fs/promises";
+import { readFile, realpath, stat } from "node:fs/promises";
 import path from "node:path";
 import { chromium } from "playwright";
 import AxeBuilder from "@axe-core/playwright";
@@ -23,7 +23,14 @@ const DIST_ROOT = path.resolve(DIST);
 function startServer() {
   const server = createServer(async (req, res) => {
     const reqPath = decodeURIComponent(req.url.split("?")[0]);
-    let filePath = path.resolve(DIST_ROOT, "." + reqPath);
+    const candidate = path.resolve(DIST_ROOT, "." + reqPath);
+    let filePath;
+    try {
+      filePath = await realpath(candidate);
+    } catch {
+      res.writeHead(404).end("Not found");
+      return;
+    }
     if (filePath !== DIST_ROOT && !filePath.startsWith(DIST_ROOT + path.sep)) {
       res.writeHead(403).end("Forbidden");
       return;
