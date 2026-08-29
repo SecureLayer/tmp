@@ -18,8 +18,10 @@ Versioning follows [Calendar Versioning](https://calver.org/) — `YYYY.MM.PATCH
 
 - Adopted Prettier as the project's formatting standard; reformatted the full codebase.
 - `tsconfig.json` moved to Astro's strictest TypeScript preset.
-- `/security`'s "Is our own supply chain secure?" section now shows real, live OpenSSF Scorecard (8.7/10) and Best Practices (Silver) data instead of a placeholder.
+- `/security`'s "Is our own supply chain secure?" section now shows real, live OpenSSF Scorecard (9.0/10) and Best Practices (Silver) data instead of a placeholder.
+- OpenSSF Scorecard aggregate score improved from 8.7/10 to 9.0/10; `/security` badge and CI check-item updated to match.
 - Achieved OpenSSF Best Practices Silver badge and Baseline Level 2.
+- Dropped the deprecated `X-XSS-Protection` response header at the Cloudflare edge — `/security` still grades A+ on securityheaders.com, now with no deprecation warning.
 
 ### Fixed
 
