@@ -24,6 +24,7 @@ A pull request will only be merged if it meets all of the following:
 - **No secrets or credentials** — GitHub push protection will block these, but don't rely on it as your only check.
 - **Accurate, working links and content** — anything user-facing must be verified, not assumed.
 - **Every commit must be signed off (DCO)** — see below.
+- **New functionality gets a test** — if a PR adds major new functionality (a new page, a new build step, a new script), add or extend an automated test covering it in `scripts/` and wire it into `npm test`. Content-only fixes (typos, copy changes) don't require one.
 
 PRs that don't meet these will be asked for changes before review, not merged as-is.
 
