@@ -18,10 +18,16 @@ const MIME = {
   ".txt": "text/plain",
 };
 
+const DIST_ROOT = path.resolve(DIST);
+
 function startServer() {
   const server = createServer(async (req, res) => {
-    let reqPath = decodeURIComponent(req.url.split("?")[0]);
-    let filePath = path.join(DIST, reqPath);
+    const reqPath = decodeURIComponent(req.url.split("?")[0]);
+    let filePath = path.resolve(DIST_ROOT, "." + reqPath);
+    if (filePath !== DIST_ROOT && !filePath.startsWith(DIST_ROOT + path.sep)) {
+      res.writeHead(403).end("Forbidden");
+      return;
+    }
     try {
       const s = await stat(filePath);
       if (s.isDirectory()) filePath = path.join(filePath, "index.html");
