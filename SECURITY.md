@@ -50,15 +50,13 @@ This project is a static informational landing page. The primary security concer
 
 ## Project access
 
-This project has a single maintainer with access to sensitive resources: the repository owner ([@SecureLayer](https://github.com/SecureLayer)), who holds sole repository admin rights, deployment credentials, and secrets. There are no other collaborators.
+The repository owner ([@SecureLayer](https://github.com/SecureLayer)) holds sole repository admin rights, deployment credentials, and secrets. A second collaborator has repository write access — able to push changes, review and merge pull requests, manage issues, and cut releases — as a backup maintainer for project continuity. Cloudflare account access, the domain registrar, and repository secrets remain solely with the repository owner.
 
 ## Roles and responsibilities
 
-This is a single-maintainer project — the repository owner holds every role:
+- **Development & review**: the repository owner writes and merges most changes; the backup maintainer can also review and merge pull requests. External contributions (see [CONTRIBUTING.md](CONTRIBUTING.md)) are reviewed by either.
+- **Security response**: the repository owner triages and responds to reports per the timelines above.
+- **Release management**: the repository owner decides when to cut a release and maintains [CHANGELOG.md](CHANGELOG.md); the backup maintainer can also cut a release if needed.
+- **Deployment**: the repository owner holds the only Cloudflare deployment credentials and is the only one who can change hosting/DNS configuration.
 
-- **Development & review**: writes and merges all changes; external contributions (see [CONTRIBUTING.md](CONTRIBUTING.md)) are reviewed and merged by the same maintainer.
-- **Security response**: triages and responds to reports per the timelines above.
-- **Release management**: decides when to cut a release and maintains [CHANGELOG.md](CHANGELOG.md).
-- **Deployment**: holds the only deployment credentials and pushes production changes.
-
-There is currently no additional contributor or reviewer role — if that changes, this section will be updated accordingly.
+This is not yet full project-continuity coverage — see [SECURITY_ASSESSMENT.md](SECURITY_ASSESSMENT.md) for the current gap (Cloudflare/domain access is not shared).

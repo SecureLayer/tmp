@@ -15,12 +15,12 @@ Ranked by realistic likelihood × impact for this specific system, not a generic
 
 ### 1. Maintainer GitHub account compromise (highest impact)
 
-There is exactly one collaborator with admin access (see [SECURITY.md](SECURITY.md#project-access)). Cloudflare Workers Builds deploys automatically on every push to `main` — there is no additional human approval gate between a push and production. If the maintainer's GitHub account were compromised (weak/reused password, phishing, session token theft), an attacker could push malicious content directly to `main` and it would be live within minutes.
+There are two collaborators on the repository: the maintainer with admin access, and a second collaborator with write access acting as a backup maintainer for continuity purposes (see [SECURITY.md](SECURITY.md#project-access)). Cloudflare Workers Builds deploys automatically on every push to `main` — there is no additional human approval gate outside GitHub's own branch protection between a merge and production.
 
-**This is the single most impactful realistic threat for this project** — everything else in this assessment is lower-impact by comparison, because this one bypasses every other control at once.
+**This is the single most impactful realistic threat for this project** — everything else in this assessment is lower-impact by comparison, because this one bypasses most other controls at once.
 
-**Mitigations in place:** two-factor authentication is enabled on the maintainer's GitHub account (confirmed via account settings — passkey/security-key preferred method, authenticator app also configured), which substantially raises the bar for the specific credential-theft/phishing scenario this threat describes. Secret scanning + push protection reduce (but don't eliminate) the value of a stolen credential; a hardened Content-Security-Policy limits what injected content could actually execute even if a push succeeded.
-**Accepted residual risk:** branch protection with `enforce_admins: true` would not meaningfully mitigate this specific threat, since a compromised admin account IS the admin — the real control is account security (now confirmed in place), not repo settings. Session-token theft (as opposed to credential theft) can still bypass 2FA in principle; no additional control against this is currently in place beyond GitHub's own session security.
+**Mitigations in place:** two-factor authentication is enabled on the maintainer's GitHub account (confirmed via account settings — passkey/security-key preferred method, authenticator app also configured), which substantially raises the bar for the specific credential-theft/phishing scenario this threat describes. Branch protection on `main` is now enabled with `enforce_admins: true` — no one, including the account holder, can push directly to `main`; every change must go through a pull request with a passing `build`, CodeQL, and Scorecard status check plus one approval. Secret scanning + push protection reduce (but don't eliminate) the value of a stolen credential; a hardened Content-Security-Policy limits what injected content could actually execute even if a push succeeded.
+**Accepted residual risk:** branch protection meaningfully raises the bar (a compromised account must now open a PR and pass real CI checks, not just push silently) but does not fully close this threat for the _account holder specifically_ — GitHub allows a PR author to approve their own PR by default, so a compromised maintainer account could still self-approve and merge. Full closure of that gap would require disallowing self-approval (e.g. via CODEOWNERS), not yet configured. Session-token theft (as opposed to credential theft) can still bypass 2FA in principle; no additional control against this is currently in place beyond GitHub's own session security.
 
 ### 2. Supply-chain compromise via a dependency
 
@@ -45,7 +45,13 @@ Per [SECURITY.md](SECURITY.md#out-of-scope): social engineering, and incidents o
 
 ## Known open gaps (tracked, not hidden)
 
-- DCO enforcement ([`dco.yml`](.github/workflows/dco.yml)) currently only covers pull requests, not the maintainer's own direct pushes to `main` — a structural limitation of a solo-maintainer workflow, not yet resolved.
-- Branch protection on `main` is not yet enabled at the time of writing.
+- DCO enforcement ([`dco.yml`](.github/workflows/dco.yml)) only runs on pull requests. Now that branch protection requires all changes (including the maintainer's own) to go through a PR, this check will actually run on every real change going forward — previously it had never fired at all, since every prior change was a direct push to `main`.
+- PR self-approval is not restricted — see the residual risk noted under Threat #1.
+- Cloudflare account access and the domain registrar remain solely with the repository owner; the second collaborator's access covers GitHub only (issues, PRs, releases), not deployment infrastructure or DNS.
+
+## Resolved since the previous revision
+
+- **Branch protection on `main`** is now enabled: pull request required (1 approval), `build`/CodeQL/Scorecard status checks required and must be up to date, `enforce_admins: true`, force-push and branch deletion both disabled.
+- **Bus factor raised to 2**: a second collaborator now has real repository write access, closing the single-point-of-failure gap for issue triage, PR review/merge, and releases.
 
 This assessment should be revisited at the next release, or sooner if the architecture changes materially (e.g. a new third-party integration, a contributor other than the sole maintainer, or a move away from static hosting).
