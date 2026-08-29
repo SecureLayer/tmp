@@ -61,7 +61,6 @@ function fmtStars(n) { return n >= 1000 ? (n / 1000).toFixed(1) + 'k' : String(n
 function renderCard(a) {
   const card = document.createElement('div');
   card.className = 'assess-card';
-  const redacted = a.grade === 'D' || a.grade === 'F';
 
   // ── Header: repo name + meta chips + expand toggle ──
   const header = document.createElement('div');
@@ -212,7 +211,7 @@ function renderCard(a) {
     return dot;
   };
   DISPLAY_CHECKS.filter(c =>  a.checks[c.id]).forEach(c => dots.appendChild(mkDot(true,  false, c.name + ': pass')));
-  DISPLAY_CHECKS.filter(c => !a.checks[c.id]).forEach(c => dots.appendChild(mkDot(false, false)));
+  DISPLAY_CHECKS.filter(c => !a.checks[c.id]).forEach(c => dots.appendChild(mkDot(false, false, c.name + ': fail')));
   CHECKS.filter(c => !displayIds.has(c.id))  .forEach(() => dots.appendChild(mkDot(false, true)));
 
   const scoreEl = document.createElement('div');
