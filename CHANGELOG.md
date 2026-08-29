@@ -4,6 +4,30 @@ All notable changes to this project are documented here.
 Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).  
 Versioning follows [Calendar Versioning](https://calver.org/) — `YYYY.MM.PATCH`.
 
+## [Unreleased]
+
+### Added
+
+- DCO and release-signing (Sigstore/SLSA provenance) CI workflows.
+- `ARCHITECTURE.md`, `SECURITY_ASSESSMENT.md`, `CODE_OF_CONDUCT.md`, `ROADMAP.md`.
+- Real accessibility regression test (`scripts/check-a11y.mjs`, axe-core + Playwright), wired into CI.
+- Second repository collaborator with write access, for project continuity (bus factor 2).
+- Branch protection on `main` — pull request + status checks required, no exceptions for admins.
+
+### Changed
+
+- Adopted Prettier as the project's formatting standard; reformatted the full codebase.
+- `tsconfig.json` moved to Astro's strictest TypeScript preset.
+- `/security`'s "Is our own supply chain secure?" section now shows real, live OpenSSF Scorecard (8.7/10) and Best Practices (Silver) data instead of a placeholder.
+- Achieved OpenSSF Best Practices Silver badge and Baseline Level 2.
+
+### Fixed
+
+- Real path-traversal finding (CodeQL `js/path-injection`) in the accessibility test's local dev server.
+- Real color-contrast violations (found by the new accessibility test) across `/security`, `/sustainability`, and the homepage.
+- Mobile visibility bug: per-card descriptions on `/security` were hidden entirely (`display: none`), not just small.
+- OpenSSF Scorecard public indexing — the project wasn't appearing on the public API/viewer despite the workflow succeeding; resolved by re-adding the workflow through GitHub's official guided setup flow instead of a hand-authored equivalent.
+
 ## [2026.08.0] — 2026-08-28
 
 ### Changed
