@@ -57,7 +57,7 @@ Open a GitHub issue for anything else (broken links, incorrect content, site bug
 
 ## Contributing
 
-Contributions are welcome — site fixes, content corrections, and CI/build improvements. See [CONTRIBUTING.md](CONTRIBUTING.md).
+Contributions are welcome — site fixes, content corrections, and CI/build improvements. See [CONTRIBUTING.md](CONTRIBUTING.md). Participation in this project is governed by the [Code of Conduct](CODE_OF_CONDUCT.md).
 
 ---
 
