@@ -16,7 +16,6 @@ jobs:
     permissions:
       security-events: write
       id-token: write
-      administration: read # lets the Branch-Protection check actually read branch protection settings
 
     steps:
       - name: Harden Runner
