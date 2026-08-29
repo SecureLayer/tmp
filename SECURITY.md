@@ -4,9 +4,9 @@ See [SECURITY_ASSESSMENT.md](SECURITY_ASSESSMENT.md) for the project's threat as
 
 ## Supported versions
 
-| Version | Supported |
-|---------|-----------|
-| latest (main branch) | ✅ |
+| Version              | Supported |
+| -------------------- | --------- |
+| latest (main branch) | ✅        |
 
 ## Reporting a vulnerability
 
@@ -15,6 +15,7 @@ See [SECURITY_ASSESSMENT.md](SECURITY_ASSESSMENT.md) for the project's threat as
 Please report privately via [GitHub Security Advisories](https://github.com/SecureLayer/tmp/security/advisories/new).
 
 Include:
+
 - Description of the vulnerability
 - Steps to reproduce
 - Affected component (site code, build pipeline, dependencies)
@@ -29,6 +30,7 @@ This project follows coordinated disclosure: please give us the time above to in
 ### Safe harbor
 
 We will not pursue legal action against anyone who reports a vulnerability in good faith through the private channel above, provided they:
+
 - Make a good-faith effort to avoid privacy violations, data destruction, and service disruption
 - Do not access or modify data beyond what's needed to demonstrate the issue
 - Give us a reasonable opportunity to fix it before any public disclosure
@@ -36,6 +38,7 @@ We will not pursue legal action against anyone who reports a vulnerability in go
 ## Scope
 
 This project is a static informational landing page. The primary security concerns are:
+
 - Supply chain issues in build dependencies
 - Deployment pipeline integrity
 - Content injection or defacement

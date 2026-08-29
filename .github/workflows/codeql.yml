@@ -6,7 +6,7 @@ on:
   pull_request:
     branches: [main]
   schedule:
-    - cron: '21 3 * * *'
+    - cron: "21 3 * * *"
 
 permissions:
   contents: read
@@ -23,7 +23,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        language: ['javascript-typescript']
+        language: ["javascript-typescript"]
 
     steps:
       - name: Harden Runner

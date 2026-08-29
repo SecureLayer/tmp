@@ -1,6 +1,6 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import logoSource from '../../public/logo.svg?raw';
+import Layout from "../layouts/Layout.astro";
+import logoSource from "../../public/logo.svg?raw";
 
 // Inlined (not <img>) so the glowing wallpaper mark can be recolored via
 // CSS `currentColor` — the source file hardcodes fill="#000000" and also
@@ -8,16 +8,14 @@ import logoSource from '../../public/logo.svg?raw';
 // as visual noise at large size, so both are stripped here.
 const logoMark = logoSource
   .replace('fill="#000000"', 'fill="currentColor"')
-  .replace(/<text[^>]*>.*?<\/text>/s, '');
+  .replace(/<text[^>]*>.*?<\/text>/s, "");
 ---
 
 <Layout
   title="SecureLayer — Security is a habit, not a project"
   description="SecureLayer — freelance cybersecurity services. Application security, SecDevOps, IT security, and AI security. Book a call to make checking your security a habit, not a once-a-year project."
 >
-
   <div class="os">
-
     <!-- DESKTOP LOCK SCREEN · shown first on desktop viewports, mirrors the mobile
          lock/stand screen's "click or submit to unlock" pattern, styled like a real
          macOS lock screen (date/time, avatar, password field). -->
@@ -32,9 +30,21 @@ const logoMark = logoSource
           <div class="d-lock-avatar" set:html={logoMark} />
           <div class="d-lock-name">SecureLayer</div>
           <form class="d-lock-pass" id="dLockForm">
-            <input type="password" class="d-lock-input" placeholder="Enter Password" autocomplete="off" />
+            <input
+              type="password"
+              class="d-lock-input"
+              placeholder="Enter Password"
+              autocomplete="off"
+            />
             <button type="submit" class="d-lock-arrow" aria-label="Unlock">
-              <svg width="13" height="13" viewBox="0 0 16 16" fill="none"><path d="M4 8h8M8 4l4 4-4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <svg width="13" height="13" viewBox="0 0 16 16" fill="none"
+                ><path
+                  d="M4 8h8M8 4l4 4-4 4"
+                  stroke="currentColor"
+                  stroke-width="1.7"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"></path></svg
+              >
             </button>
           </form>
         </div>
@@ -46,18 +56,68 @@ const logoMark = logoSource
       <div class="menu-left">
         <img src="/logo.svg" alt="" class="menu-logo" />
         <span class="menu-brand">SecureLayer</span>
-        <a href="#" class="menu-item" data-preview-file="secdevops-pipeline.png" data-preview-accent="#3a3428" data-preview-img="/images/previews/secdevops-pipeline.png">SecDevOps</a>
-        <a href="#" class="menu-item" data-preview-file="security-page.png" data-preview-accent="var(--cyan)" data-preview-img="/images/previews/security-page.png">AppSec</a>
-        <a href="#" class="menu-item" data-preview-file="itsec-overview.png" data-preview-accent="#7d7460" data-preview-img="/images/previews/itsec-overview.png">IT Sec</a>
+        <a
+          href="#"
+          class="menu-item"
+          data-preview-file="secdevops-pipeline.png"
+          data-preview-accent="#3a3428"
+          data-preview-img="/images/previews/secdevops-pipeline.png"
+          >SecDevOps</a
+        >
+        <a
+          href="#"
+          class="menu-item"
+          data-preview-file="security-page.png"
+          data-preview-accent="var(--cyan)"
+          data-preview-img="/images/previews/security-page.png">AppSec</a
+        >
+        <a
+          href="#"
+          class="menu-item"
+          data-preview-file="itsec-overview.png"
+          data-preview-accent="#7d7460"
+          data-preview-img="/images/previews/itsec-overview.png">IT Sec</a
+        >
       </div>
       <div class="menu-right">
         <span class="menu-battery-pct">88%</span>
-        <svg class="menu-icon" width="20" height="14" viewBox="0 0 22 14" fill="none">
-          <rect x="1" y="1.5" width="17" height="11" rx="2.5" stroke="currentColor" stroke-width="1.3"/>
-          <rect x="19" y="5" width="2" height="4" rx="1" fill="currentColor"/>
-          <path d="M11 2.3L6.6 7.8h3.1L8.2 12.2l4.9-5.5H10L11 2.3z" fill="currentColor"/>
+        <svg
+          class="menu-icon"
+          width="20"
+          height="14"
+          viewBox="0 0 22 14"
+          fill="none"
+        >
+          <rect
+            x="1"
+            y="1.5"
+            width="17"
+            height="11"
+            rx="2.5"
+            stroke="currentColor"
+            stroke-width="1.3"></rect>
+          <rect x="19" y="5" width="2" height="4" rx="1" fill="currentColor"
+          ></rect>
+          <path
+            d="M11 2.3L6.6 7.8h3.1L8.2 12.2l4.9-5.5H10L11 2.3z"
+            fill="currentColor"></path>
         </svg>
-        <svg class="menu-icon" width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M1 6c4-3.5 10-3.5 14 0M3.4 8.6c3-2.3 6.2-2.3 9.2 0M5.8 11.1c1.7-1.2 2.7-1.2 4.4 0" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/><circle cx="8" cy="13.2" r="1" fill="currentColor"/></svg>
+        <svg
+          class="menu-icon"
+          width="14"
+          height="14"
+          viewBox="0 0 16 16"
+          fill="none"
+          ><path
+            d="M1 6c4-3.5 10-3.5 14 0M3.4 8.6c3-2.3 6.2-2.3 9.2 0M5.8 11.1c1.7-1.2 2.7-1.2 4.4 0"
+            stroke="currentColor"
+            stroke-width="1.4"
+            stroke-linecap="round"></path><circle
+            cx="8"
+            cy="13.2"
+            r="1"
+            fill="currentColor"></circle></svg
+        >
         <span class="menu-clock" id="menu-clock"></span>
       </div>
     </div>
@@ -90,22 +150,50 @@ const logoMark = logoSource
           <span class="todo-title">Reminders</span>
           <span class="todo-count">5</span>
         </div>
-        <div class="todo-subrow"><span>0 Completed</span> · <a href="#">Clear</a><span class="todo-show">Show</span></div>
+        <div class="todo-subrow">
+          <span>0 Completed</span> · <a href="#">Clear</a><span
+            class="todo-show">Show</span
+          >
+        </div>
         <div class="todo-list">
-          <div class="widget-todo-item"><span class="todo-check"></span>Improve the Open SSF ScoreCard</div>
-          <div class="widget-todo-item"><span class="todo-check"></span>Check the Headers Security Grade</div>
-          <div class="widget-todo-item"><span class="todo-check"></span>Check the SSL/TLS Server Security Grade</div>
-          <div class="widget-todo-item"><span class="todo-check"></span>Merge some PRs related to cybersecurity</div>
-          <div class="widget-todo-item"><span class="todo-check"></span>Assess the security level of Canva</div>
+          <div class="widget-todo-item">
+            <span class="todo-check"></span>Improve the Open SSF ScoreCard
+          </div>
+          <div class="widget-todo-item">
+            <span class="todo-check"></span>Check the Headers Security Grade
+          </div>
+          <div class="widget-todo-item">
+            <span class="todo-check"></span>Check the SSL/TLS Server Security
+            Grade
+          </div>
+          <div class="widget-todo-item">
+            <span class="todo-check"></span>Merge some PRs related to
+            cybersecurity
+          </div>
+          <div class="widget-todo-item">
+            <span class="todo-check"></span>Assess the security level of Canva
+          </div>
         </div>
       </div>
 
       <!-- WIDGET · file -->
-      <a class="widget widget-file pos-mr" href="/docs/securelayer.co.pdf" target="_blank" rel="noopener">
+      <a
+        class="widget widget-file pos-mr"
+        href="/docs/securelayer.co.pdf"
+        target="_blank"
+        rel="noopener"
+      >
         <div class="pdf-page">
           <div class="pdf-thumb"></div>
           <div class="pdf-badge">
-            <svg width="11" height="11" viewBox="0 0 16 16" fill="none"><circle cx="7" cy="7" r="5" stroke="#fff" stroke-width="1.6"/><path d="M11 11l3.5 3.5" stroke="#fff" stroke-width="1.6" stroke-linecap="round"/></svg>
+            <svg width="11" height="11" viewBox="0 0 16 16" fill="none"
+              ><circle cx="7" cy="7" r="5" stroke="#fff" stroke-width="1.6"
+              ></circle><path
+                d="M11 11l3.5 3.5"
+                stroke="#fff"
+                stroke-width="1.6"
+                stroke-linecap="round"></path></svg
+            >
           </div>
           <div class="pdf-label">PDF</div>
         </div>
@@ -117,14 +205,29 @@ const logoMark = logoSource
         <div class="preview-titlebar">
           <span class="preview-btn preview-close">&times;</span>
           <span class="preview-btn preview-expand">
-            <svg width="10" height="10" viewBox="0 0 16 16" fill="none"><path d="M6 2H2v4M10 14h4v-4M2 2l5 5M14 14l-5-5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <svg width="10" height="10" viewBox="0 0 16 16" fill="none"
+              ><path
+                d="M6 2H2v4M10 14h4v-4M2 2l5 5M14 14l-5-5"
+                stroke="currentColor"
+                stroke-width="1.4"
+                stroke-linecap="round"
+                stroke-linejoin="round"></path></svg
+            >
           </span>
-          <span class="preview-filename" id="preview-filename">security-page.png</span>
+          <span class="preview-filename" id="preview-filename"
+            >security-page.png</span
+          >
         </div>
         <div class="preview-body" id="preview-body">
           <img class="preview-img" id="preview-img" alt="" />
           <div class="preview-placeholder" id="preview-placeholder">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none"><path d="M12 3l7 3v5c0 4.6-3 7.9-7 9-4-1.1-7-4.4-7-9V6l7-3z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg>
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none"
+              ><path
+                d="M12 3l7 3v5c0 4.6-3 7.9-7 9-4-1.1-7-4.4-7-9V6l7-3z"
+                stroke="currentColor"
+                stroke-width="1.4"
+                stroke-linejoin="round"></path></svg
+            >
             <span>Preview coming soon</span>
           </div>
         </div>
@@ -133,26 +236,93 @@ const logoMark = logoSource
 
     <!-- DOCK · the real toolkit used for security work -->
     <div class="dock">
-      <span class="dock-icon" title="Finder"><img src="/images/dock-icons/finder.png" alt="Finder" /></span>
-      <span class="dock-icon" title="Tutanota"><img src="/images/dock-icons/tuta.png" alt="Tutanota" /></span>
-      <span class="dock-icon" title="Proton Mail"><img src="/images/dock-icons/proton.png" alt="Proton Mail" /></span>
-      <a class="dock-icon dock-mobile-keep" href="https://signal.me/#eu/jOCElNN5Meq0MDrSKeetbOt0N7YXLFFiH37-UJO1vCdG_wY0cuVJdYbu7yFtZq62" target="_blank" rel="noopener" title="Signal" data-tooltip="Message us here — safely and privately"><img src="/images/dock-icons/signal.png" alt="Signal" /></a>
-      <a class="dock-icon dock-mobile-keep" href="https://cal.com/securelayer" target="_blank" rel="noopener" title="Cal.com" data-tooltip="Book a call with us"><img src="/images/dock-icons/cal.png" alt="Cal.com" /></a>
-      <span class="dock-icon" title="Molly"><img src="/images/dock-icons/molly.png" alt="Molly" /></span>
-      <span class="dock-icon" title="VS Code"><img src="/images/dock-icons/vscode.png" alt="VS Code" /></span>
-      <span class="dock-icon" title="Jupyter"><img src="/images/dock-icons/jupyter.png" alt="Jupyter" /></span>
-      <span class="dock-icon" title="1Password"><img src="/images/dock-icons/1password.png" alt="1Password" /></span>
-      <a class="dock-icon" href="https://securelayer.co/legal" title="iTerm2" data-tooltip="Find our legal mentions here"><img src="/images/dock-icons/iterm2.svg" alt="iTerm2" /></a>
-      <span class="dock-icon" title="NordVPN"><img src="/images/dock-icons/nordvpn.svg" alt="NordVPN" /></span>
-      <span class="dock-icon" title="OWASP ZAP"><img src="/images/dock-icons/zap.svg" alt="OWASP ZAP" /></span>
-      <span class="dock-icon" title="Multipass"><img src="/images/dock-icons/multipass.png" alt="Multipass" /></span>
-      <span class="dock-icon" title="Yubico Authenticator"><img src="/images/dock-icons/yubico.png" alt="Yubico Authenticator" /></span>
-      <span class="dock-icon" title="Obsidian"><img src="/images/dock-icons/obsidian.png" alt="Obsidian" /></span>
-      <span class="dock-icon" title="Bitwarden"><img src="/images/dock-icons/bitwarden.png" alt="Bitwarden" /></span>
-      <span class="dock-icon" title="OrbStack"><img src="/images/dock-icons/orbstack.png" alt="OrbStack" /></span>
-      <span class="dock-icon" title="Ollama"><img src="/images/dock-icons/ollama.png" alt="Ollama" /></span>
-      <a class="dock-icon dock-mobile-keep" href="https://securelayer.co/security" title="Brave" data-tooltip="How secure is this website?"><img src="/images/dock-icons/brave.png" alt="Brave" /></a>
-      <a class="dock-icon dock-mobile-keep" href="https://securelayer.co/sustainability/" title="Firefox" data-tooltip="What is the impact of this website on the environment?"><img src="/images/dock-icons/firefox.png" alt="Firefox" /></a>
+      <span class="dock-icon" title="Finder"
+        ><img src="/images/dock-icons/finder.png" alt="Finder" /></span
+      >
+      <span class="dock-icon" title="Tutanota"
+        ><img src="/images/dock-icons/tuta.png" alt="Tutanota" /></span
+      >
+      <span class="dock-icon" title="Proton Mail"
+        ><img src="/images/dock-icons/proton.png" alt="Proton Mail" /></span
+      >
+      <a
+        class="dock-icon dock-mobile-keep"
+        href="https://signal.me/#eu/jOCElNN5Meq0MDrSKeetbOt0N7YXLFFiH37-UJO1vCdG_wY0cuVJdYbu7yFtZq62"
+        target="_blank"
+        rel="noopener"
+        title="Signal"
+        data-tooltip="Message us here — safely and privately"
+        ><img src="/images/dock-icons/signal.png" alt="Signal" /></a
+      >
+      <a
+        class="dock-icon dock-mobile-keep"
+        href="https://cal.com/securelayer"
+        target="_blank"
+        rel="noopener"
+        title="Cal.com"
+        data-tooltip="Book a call with us"
+        ><img src="/images/dock-icons/cal.png" alt="Cal.com" /></a
+      >
+      <span class="dock-icon" title="Molly"
+        ><img src="/images/dock-icons/molly.png" alt="Molly" /></span
+      >
+      <span class="dock-icon" title="VS Code"
+        ><img src="/images/dock-icons/vscode.png" alt="VS Code" /></span
+      >
+      <span class="dock-icon" title="Jupyter"
+        ><img src="/images/dock-icons/jupyter.png" alt="Jupyter" /></span
+      >
+      <span class="dock-icon" title="1Password"
+        ><img src="/images/dock-icons/1password.png" alt="1Password" /></span
+      >
+      <a
+        class="dock-icon"
+        href="https://securelayer.co/legal"
+        title="iTerm2"
+        data-tooltip="Find our legal mentions here"
+        ><img src="/images/dock-icons/iterm2.svg" alt="iTerm2" /></a
+      >
+      <span class="dock-icon" title="NordVPN"
+        ><img src="/images/dock-icons/nordvpn.svg" alt="NordVPN" /></span
+      >
+      <span class="dock-icon" title="OWASP ZAP"
+        ><img src="/images/dock-icons/zap.svg" alt="OWASP ZAP" /></span
+      >
+      <span class="dock-icon" title="Multipass"
+        ><img src="/images/dock-icons/multipass.png" alt="Multipass" /></span
+      >
+      <span class="dock-icon" title="Yubico Authenticator"
+        ><img
+          src="/images/dock-icons/yubico.png"
+          alt="Yubico Authenticator"
+        /></span
+      >
+      <span class="dock-icon" title="Obsidian"
+        ><img src="/images/dock-icons/obsidian.png" alt="Obsidian" /></span
+      >
+      <span class="dock-icon" title="Bitwarden"
+        ><img src="/images/dock-icons/bitwarden.png" alt="Bitwarden" /></span
+      >
+      <span class="dock-icon" title="OrbStack"
+        ><img src="/images/dock-icons/orbstack.png" alt="OrbStack" /></span
+      >
+      <span class="dock-icon" title="Ollama"
+        ><img src="/images/dock-icons/ollama.png" alt="Ollama" /></span
+      >
+      <a
+        class="dock-icon dock-mobile-keep"
+        href="https://securelayer.co/security"
+        title="Brave"
+        data-tooltip="How secure is this website?"
+        ><img src="/images/dock-icons/brave.png" alt="Brave" /></a
+      >
+      <a
+        class="dock-icon dock-mobile-keep"
+        href="https://securelayer.co/sustainability/"
+        title="Firefox"
+        data-tooltip="What is the impact of this website on the environment?"
+        ><img src="/images/dock-icons/firefox.png" alt="Firefox" /></a
+      >
       <div class="dock-sep"></div>
       <div class="dock-icon dock-trash" title="Trash">
         <img src="/images/dock-icons/trash.png" alt="Trash" />
@@ -166,9 +336,55 @@ const logoMark = logoSource
       <div class="m-statusbar">
         <div class="m-statusbar-brand">SecureLayer</div>
         <div class="m-statusbar-icons">
-          <svg width="16" height="11" viewBox="0 0 16 11" fill="#fff"><rect x="0" y="7" width="3" height="4" rx=".5"/><rect x="4.5" y="5" width="3" height="6" rx=".5"/><rect x="9" y="3" width="3" height="8" rx=".5"/><rect x="13" y="0" width="3" height="11" rx=".5"/></svg>
-          <svg width="15" height="13" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.55a11 11 0 0 1 14.08 0"/><path d="M1.42 9a16 16 0 0 1 21.16 0"/><path d="M8.53 16.11a6 6 0 0 1 6.95 0"/><line x1="12" y1="20" x2="12.01" y2="20"/></svg>
-          <svg width="22" height="11" viewBox="0 0 24 12" fill="none"><rect x="1" y="1.5" width="19" height="9" rx="2.5" stroke="#fff" stroke-width="1.2"/><rect x="21.5" y="4.3" width="2" height="3.4" rx="1" fill="#fff"/><rect x="2.5" y="3" width="14" height="6" rx="1.2" fill="#fff"/></svg>
+          <svg width="16" height="11" viewBox="0 0 16 11" fill="#fff"
+            ><rect x="0" y="7" width="3" height="4" rx=".5"></rect><rect
+              x="4.5"
+              y="5"
+              width="3"
+              height="6"
+              rx=".5"></rect><rect x="9" y="3" width="3" height="8" rx=".5"
+            ></rect><rect x="13" y="0" width="3" height="11" rx=".5"
+            ></rect></svg
+          >
+          <svg
+            width="15"
+            height="13"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="#fff"
+            stroke-width="2.2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            ><path d="M5 12.55a11 11 0 0 1 14.08 0"></path><path
+              d="M1.42 9a16 16 0 0 1 21.16 0"></path><path
+              d="M8.53 16.11a6 6 0 0 1 6.95 0"></path><line
+              x1="12"
+              y1="20"
+              x2="12.01"
+              y2="20"></line></svg
+          >
+          <svg width="22" height="11" viewBox="0 0 24 12" fill="none"
+            ><rect
+              x="1"
+              y="1.5"
+              width="19"
+              height="9"
+              rx="2.5"
+              stroke="#fff"
+              stroke-width="1.2"></rect><rect
+              x="21.5"
+              y="4.3"
+              width="2"
+              height="3.4"
+              rx="1"
+              fill="#fff"></rect><rect
+              x="2.5"
+              y="3"
+              width="14"
+              height="6"
+              rx="1.2"
+              fill="#fff"></rect></svg
+          >
         </div>
       </div>
       <div class="m-hp-body">
@@ -176,17 +392,28 @@ const logoMark = logoSource
         <div class="m-stack-scrim"></div>
 
         <div class="m-stack">
-
           <div class="m-card m-card-collage" style="--d:.05s">
             <div class="m-collage-text">
               <div class="m-notif-row">
-                <img class="m-notif-icon" src="/images/dock-icons/cal.png" alt="Cal.com" />
+                <img
+                  class="m-notif-icon"
+                  src="/images/dock-icons/cal.png"
+                  alt="Cal.com"
+                />
                 <div class="m-notif-text">
                   <div class="m-notif-title">[APPSEC - IT - DEVOPS]</div>
-                  <div class="m-notif-body">Contact a security expert to check if your security is done right.</div>
+                  <div class="m-notif-body">
+                    Contact a security expert to check if your security is done
+                    right.
+                  </div>
                 </div>
               </div>
-              <a class="m-btn-amber" href="https://cal.com/securelayer" target="_blank" rel="noopener">Let's discuss →</a>
+              <a
+                class="m-btn-amber"
+                href="https://cal.com/securelayer"
+                target="_blank"
+                rel="noopener">Let's discuss →</a
+              >
             </div>
           </div>
 
@@ -200,24 +427,49 @@ const logoMark = logoSource
           </div>
 
           <div class="m-row2" style="--d:.2s">
-            <a class="m-card-file" href="/docs/securelayer.co.pdf" target="_blank" rel="noopener">
+            <a
+              class="m-card-file"
+              href="/docs/securelayer.co.pdf"
+              target="_blank"
+              rel="noopener"
+            >
               <svg class="m-folder-icon" viewBox="0 0 64 50" fill="none">
                 <defs>
                   <linearGradient id="folderGrad" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0" stop-color="#6dd0fa"/>
-                    <stop offset="1" stop-color="#0a84ff"/>
+                    <stop offset="0" stop-color="#6dd0fa"></stop>
+                    <stop offset="1" stop-color="#0a84ff"></stop>
                   </linearGradient>
                 </defs>
-                <path d="M2 10c0-2.2 1.8-4 4-4h16l5 5h31c2.2 0 4 1.8 4 4v29c0 2.2-1.8 4-4 4H6c-2.2 0-4-1.8-4-4V10z" fill="url(#folderGrad)"/>
-                <rect x="8" y="17" width="48" height="3.4" rx="1.7" fill="#fff" opacity=".85"/>
+                <path
+                  d="M2 10c0-2.2 1.8-4 4-4h16l5 5h31c2.2 0 4 1.8 4 4v29c0 2.2-1.8 4-4 4H6c-2.2 0-4-1.8-4-4V10z"
+                  fill="url(#folderGrad)"></path>
+                <rect
+                  x="8"
+                  y="17"
+                  width="48"
+                  height="3.4"
+                  rx="1.7"
+                  fill="#fff"
+                  opacity=".85"></rect>
               </svg>
               <span>What-do-we-do.pdf</span>
               <span class="m-card-file-bar">Download the file</span>
             </a>
-            <a class="m-card-msg" href="https://signal.me/#eu/jOCElNN5Meq0MDrSKeetbOt0N7YXLFFiH37-UJO1vCdG_wY0cuVJdYbu7yFtZq62" target="_blank" rel="noopener">
-              <img class="m-card-msg-icon" src="/images/dock-icons/signal-ultramarine.png" alt="Signal" />
+            <a
+              class="m-card-msg"
+              href="https://signal.me/#eu/jOCElNN5Meq0MDrSKeetbOt0N7YXLFFiH37-UJO1vCdG_wY0cuVJdYbu7yFtZq62"
+              target="_blank"
+              rel="noopener"
+            >
+              <img
+                class="m-card-msg-icon"
+                src="/images/dock-icons/signal-ultramarine.png"
+                alt="Signal"
+              />
               <div>
-                <div class="m-card-msg-text">Questions? Message us — safely and privately</div>
+                <div class="m-card-msg-text">
+                  Questions? Message us — safely and privately
+                </div>
                 <span class="m-btn-dark">Open Signal</span>
               </div>
             </a>
@@ -226,38 +478,104 @@ const logoMark = logoSource
           <div class="m-card m-card-icons-full" style="--d:.25s">
             <h3>Check our security &amp; eco-impact</h3>
             <div class="m-icon-row">
-              <a class="m-icon-chip" href="/security" aria-label="Check our security"><img src="/images/dock-icons/brave.png" alt=""></a>
-              <a class="m-icon-chip" href="/sustainability/" aria-label="Check our environmental impact"><img src="/images/dock-icons/firefox.png" alt=""></a>
+              <a
+                class="m-icon-chip"
+                href="/security"
+                aria-label="Check our security"
+                ><img src="/images/dock-icons/brave.png" alt="" /></a
+              >
+              <a
+                class="m-icon-chip"
+                href="/sustainability/"
+                aria-label="Check our environmental impact"
+                ><img src="/images/dock-icons/firefox.png" alt="" /></a
+              >
             </div>
-            <p class="m-card-social-note">Before we secure yours, see ours —<br />our own score is right there above.</p>
+            <p class="m-card-social-note">
+              Before we secure yours, see ours —<br />our own score is right
+              there above.
+            </p>
           </div>
 
           <div class="m-card m-card-social" style="--d:.3s">
             <h3>Check our social media</h3>
             <div class="m-icon-row m-social-icon-row">
-              <a class="m-icon-chip" href="https://github.com/SecureLayer" target="_blank" rel="noopener" aria-label="SecureLayer on GitHub">
+              <a
+                class="m-icon-chip"
+                href="https://github.com/SecureLayer"
+                target="_blank"
+                rel="noopener"
+                aria-label="SecureLayer on GitHub"
+              >
                 <svg viewBox="0 0 40 40">
-                  <circle cx="20" cy="20" r="20" fill="#17140f"/>
-                  <path transform="translate(12,12) scale(1)" fill="#fff" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/>
+                  <circle cx="20" cy="20" r="20" fill="#17140f"></circle>
+                  <path
+                    transform="translate(12,12) scale(1)"
+                    fill="#fff"
+                    d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"
+                  ></path>
                 </svg>
               </a>
-              <a class="m-icon-chip" href="https://bsky.app/profile/securelayer.co" target="_blank" rel="noopener" aria-label="SecureLayer on Bluesky">
+              <a
+                class="m-icon-chip"
+                href="https://bsky.app/profile/securelayer.co"
+                target="_blank"
+                rel="noopener"
+                aria-label="SecureLayer on Bluesky"
+              >
                 <svg viewBox="0 0 40 40">
-                  <circle cx="20" cy="20" r="20" fill="#0285ff"/>
-                  <path transform="translate(9,10) scale(.9)" fill="#fff" d="M12 10.8c-1.087-2.114-4.046-6.053-6.798-7.995C2.566.944 1.561 1.266.902 1.565.139 1.908 0 3.08 0 3.768c0 .69.378 5.65.624 6.479.815 2.736 3.713 3.66 6.383 3.364-3.912.58-7.387 2.005-2.83 7.078 5.013 5.19 6.87-1.113 7.823-4.308.953 3.195 2.81 9.498 7.733 4.308 4.267-4.308 1.172-6.498-2.74-7.078 2.67.297 5.568-.628 6.383-3.364.246-.828.624-5.79.624-6.478 0-.69-.139-1.861-.902-2.204-.659-.298-1.664-.62-4.3 1.24C16.046 4.748 13.087 8.687 12 10.8z"/>
+                  <circle cx="20" cy="20" r="20" fill="#0285ff"></circle>
+                  <path
+                    transform="translate(9,10) scale(.9)"
+                    fill="#fff"
+                    d="M12 10.8c-1.087-2.114-4.046-6.053-6.798-7.995C2.566.944 1.561 1.266.902 1.565.139 1.908 0 3.08 0 3.768c0 .69.378 5.65.624 6.479.815 2.736 3.713 3.66 6.383 3.364-3.912.58-7.387 2.005-2.83 7.078 5.013 5.19 6.87-1.113 7.823-4.308.953 3.195 2.81 9.498 7.733 4.308 4.267-4.308 1.172-6.498-2.74-7.078 2.67.297 5.568-.628 6.383-3.364.246-.828.624-5.79.624-6.478 0-.69-.139-1.861-.902-2.204-.659-.298-1.664-.62-4.3 1.24C16.046 4.748 13.087 8.687 12 10.8z"
+                  ></path>
                 </svg>
               </a>
-              <a class="m-icon-chip" href="https://www.instagram.com/securelayer.co/" target="_blank" rel="noopener" aria-label="SecureLayer on Instagram">
+              <a
+                class="m-icon-chip"
+                href="https://www.instagram.com/securelayer.co/"
+                target="_blank"
+                rel="noopener"
+                aria-label="SecureLayer on Instagram"
+              >
                 <svg viewBox="0 0 40 40">
-                  <defs><radialGradient id="igGrad" cx=".3" cy="1.05" r="1.15"><stop offset="0" stop-color="#fdc468"/><stop offset=".33" stop-color="#e1306c"/><stop offset=".65" stop-color="#c73daa"/><stop offset="1" stop-color="#5851db"/></radialGradient></defs>
-                  <circle cx="20" cy="20" r="20" fill="url(#igGrad)"/>
-                  <rect x="11.5" y="11.5" width="17" height="17" rx="5" fill="none" stroke="#fff" stroke-width="2.1"/>
-                  <circle cx="20" cy="20" r="4.6" fill="none" stroke="#fff" stroke-width="2.1"/>
-                  <circle cx="27.5" cy="12.3" r="1.5" fill="#fff"/>
+                  <defs
+                    ><radialGradient id="igGrad" cx=".3" cy="1.05" r="1.15"
+                      ><stop offset="0" stop-color="#fdc468"></stop><stop
+                        offset=".33"
+                        stop-color="#e1306c"></stop><stop
+                        offset=".65"
+                        stop-color="#c73daa"></stop><stop
+                        offset="1"
+                        stop-color="#5851db"></stop></radialGradient
+                    ></defs
+                  >
+                  <circle cx="20" cy="20" r="20" fill="url(#igGrad)"></circle>
+                  <rect
+                    x="11.5"
+                    y="11.5"
+                    width="17"
+                    height="17"
+                    rx="5"
+                    fill="none"
+                    stroke="#fff"
+                    stroke-width="2.1"></rect>
+                  <circle
+                    cx="20"
+                    cy="20"
+                    r="4.6"
+                    fill="none"
+                    stroke="#fff"
+                    stroke-width="2.1"></circle>
+                  <circle cx="27.5" cy="12.3" r="1.5" fill="#fff"></circle>
                 </svg>
               </a>
             </div>
-            <p class="m-card-social-note">Our fanbase grows every day —<br />we're now dangerously close to double digits.</p>
+            <p class="m-card-social-note">
+              Our fanbase grows every day —<br />we're now dangerously close to
+              double digits.
+            </p>
           </div>
 
           <div class="m-card m-card-contact" style="--d:.35s">
@@ -266,13 +584,19 @@ const logoMark = logoSource
                 <span class="m-contact-icon">🔒</span>
                 <div>
                   <div class="m-contact-title">Found a security issue?</div>
-                  <div class="m-contact-sub">We reply fast, no bug bounty needed</div>
+                  <div class="m-contact-sub">
+                    We reply fast, no bug bounty needed
+                  </div>
                 </div>
               </div>
-              <a class="m-contact-cta" href="https://github.com/SecureLayer/tmp/security/advisories/new" target="_blank" rel="noopener">report</a>
+              <a
+                class="m-contact-cta"
+                href="https://github.com/SecureLayer/tmp/security/advisories/new"
+                target="_blank"
+                rel="noopener">report</a
+              >
             </div>
           </div>
-
         </div>
 
         <div class="m-footer">
@@ -282,7 +606,11 @@ const logoMark = logoSource
             <a href="/security">Security</a>
             <a href="/sustainability">Environment</a>
             <a href="/legal">Legal</a>
-            <a href="https://github.com/SecureLayer/tmp" target="_blank" rel="noopener">Source</a>
+            <a
+              href="https://github.com/SecureLayer/tmp"
+              target="_blank"
+              rel="noopener">Source</a
+            >
           </p>
         </div>
       </div>
@@ -294,388 +622,1404 @@ const logoMark = logoSource
           <div class="m-stand-middle">
             <div class="m-stand-hero">
               <div class="m-stand-time" id="mStandTime">22.51</div>
-              <div class="m-stand-tagline">Choose cybersecurity, it's cheaper</div>
+              <div class="m-stand-tagline">
+                Choose cybersecurity, it's cheaper
+              </div>
             </div>
 
-            <div class="m-stand-stat-tags"><span>↑ DevOps</span><span>↑ IT</span><span>↑ AppSec</span></div>
+            <div class="m-stand-stat-tags">
+              <span>↑ DevOps</span><span>↑ IT</span><span>↑ AppSec</span>
+            </div>
             <div class="m-stand-stats">
               <div class="m-stand-stat">
-                <div class="m-stand-stat-top"><svg width="15" height="15" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6.5" stroke="currentColor" stroke-width="1.4"/><path d="M5.3 8.2l1.8 1.8 3.6-4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg> 100%</div>
+                <div class="m-stand-stat-top">
+                  <svg width="15" height="15" viewBox="0 0 16 16" fill="none"
+                    ><circle
+                      cx="8"
+                      cy="8"
+                      r="6.5"
+                      stroke="currentColor"
+                      stroke-width="1.4"></circle><path
+                      d="M5.3 8.2l1.8 1.8 3.6-4"
+                      stroke="currentColor"
+                      stroke-width="1.4"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"></path></svg
+                  > 100%
+                </div>
                 <div class="m-stand-stat-label">Expertise</div>
               </div>
               <div class="m-stand-stat">
-                <div class="m-stand-stat-top"><svg width="15" height="15" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="2.6" fill="currentColor"/><circle cx="8" cy="8" r="6" stroke="currentColor" stroke-width="1.3" opacity=".5"/></svg> 100%</div>
+                <div class="m-stand-stat-top">
+                  <svg width="15" height="15" viewBox="0 0 16 16" fill="none"
+                    ><circle cx="8" cy="8" r="2.6" fill="currentColor"
+                    ></circle><circle
+                      cx="8"
+                      cy="8"
+                      r="6"
+                      stroke="currentColor"
+                      stroke-width="1.3"
+                      opacity=".5"></circle></svg
+                  > 100%
+                </div>
                 <div class="m-stand-stat-label">Operational</div>
               </div>
             </div>
           </div>
 
           <div class="m-stand-bottom">
-            <button class="m-stand-padlock" id="mStandPadlock" aria-label="Unlock">
-              <svg width="22" height="22" viewBox="0 0 16 16" fill="none"><rect x="3" y="7" width="10" height="7" rx="1.5" stroke="#17140f" stroke-width="1.4"/><path d="M5 7V4.5a3 3 0 0 1 6 0V7" stroke="#17140f" stroke-width="1.4"/><circle cx="8" cy="10.3" r=".9" fill="#17140f"/></svg>
+            <button
+              class="m-stand-padlock"
+              id="mStandPadlock"
+              aria-label="Unlock"
+            >
+              <svg width="22" height="22" viewBox="0 0 16 16" fill="none"
+                ><rect
+                  x="3"
+                  y="7"
+                  width="10"
+                  height="7"
+                  rx="1.5"
+                  stroke="#17140f"
+                  stroke-width="1.4"></rect><path
+                  d="M5 7V4.5a3 3 0 0 1 6 0V7"
+                  stroke="#17140f"
+                  stroke-width="1.4"></path><circle
+                  cx="8"
+                  cy="10.3"
+                  r=".9"
+                  fill="#17140f"></circle></svg
+              >
             </button>
             <div class="m-stand-hint">tap to unlock</div>
           </div>
         </div>
       </div>
     </div>
-
   </div>
-
 </Layout>
 
 <style>
   /* the desktop's own menu bar replaces the standard site nav on this page,
      and a footer doesn't fit a full-viewport desktop scene */
-  :global(nav) { display: none; }
-  :global(footer) { display: none; }
+  :global(nav) {
+    display: none;
+  }
+  :global(footer) {
+    display: none;
+  }
 
-  .os { position: relative; min-height: 100vh; display: flex; flex-direction: column; }
+  .os {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
 
   /* DESKTOP LOCK SCREEN — desktop-only (mobile has its own separate .m-stand lock
      flow); covers the whole .os scene until submitted, then fades to reveal it. */
-  .d-lock { display: none; }
+  .d-lock {
+    display: none;
+  }
   @media (min-width: 861px) {
     .d-lock {
-      display: flex; align-items: center; justify-content: center;
-      position: fixed; inset: 0; z-index: 100;
-      transition: opacity .6s ease, visibility .6s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      transition:
+        opacity 0.6s ease,
+        visibility 0.6s ease;
     }
-    .d-lock.is-unlocked { opacity: 0; visibility: hidden; pointer-events: none; }
+    .d-lock.is-unlocked {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
   }
 
   .d-lock-bg {
-    position: absolute; inset: 0; z-index: 0;
-    background: url('/images/wallpaper-beach.webp') center 55% / cover no-repeat;
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    background: url("/images/wallpaper-beach.webp") center 55% / cover no-repeat;
   }
-  .d-lock-scrim { position: absolute; inset: 0; z-index: 0; background: rgba(12,16,20,.28); }
+  .d-lock-scrim {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    background: rgba(12, 16, 20, 0.28);
+  }
 
   .d-lock-content {
-    position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center;
-    color: #fff; text-align: center;
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: #fff;
+    text-align: center;
   }
-  .d-lock-date { font-family: var(--font-round); font-weight: 600; font-size: 1.2rem; text-shadow: 0 1px 6px rgba(0,0,0,.35); }
-  .d-lock-time { font-family: var(--font-round); font-weight: 300; font-size: 7rem; line-height: 1.05; letter-spacing: -.01em; text-shadow: 0 2px 12px rgba(0,0,0,.35); margin-bottom: 46px; }
+  .d-lock-date {
+    font-family: var(--font-round);
+    font-weight: 600;
+    font-size: 1.2rem;
+    text-shadow: 0 1px 6px rgba(0, 0, 0, 0.35);
+  }
+  .d-lock-time {
+    font-family: var(--font-round);
+    font-weight: 300;
+    font-size: 7rem;
+    line-height: 1.05;
+    letter-spacing: -0.01em;
+    text-shadow: 0 2px 12px rgba(0, 0, 0, 0.35);
+    margin-bottom: 46px;
+  }
 
-  .d-lock-user { display: flex; flex-direction: column; align-items: center; gap: 8px; }
-  .d-lock-avatar {
-    width: 84px; height: 84px; border-radius: 50%; padding: 20px;
-    background: rgba(255,255,255,.16); backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px);
-    border: 1px solid rgba(255,255,255,.3); box-shadow: 0 8px 24px rgba(0,0,0,.25);
-    color: #fff; display: flex; align-items: center; justify-content: center;
+  .d-lock-user {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
   }
-  .d-lock-avatar :global(svg) { width: 100%; height: 100%; }
-  .d-lock-name { font-family: var(--font-round); font-weight: 700; font-size: 1rem; text-shadow: 0 1px 6px rgba(0,0,0,.35); margin-bottom: 6px; }
+  .d-lock-avatar {
+    width: 84px;
+    height: 84px;
+    border-radius: 50%;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.16);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .d-lock-avatar :global(svg) {
+    width: 100%;
+    height: 100%;
+  }
+  .d-lock-name {
+    font-family: var(--font-round);
+    font-weight: 700;
+    font-size: 1rem;
+    text-shadow: 0 1px 6px rgba(0, 0, 0, 0.35);
+    margin-bottom: 6px;
+  }
 
   .d-lock-pass {
-    display: flex; align-items: center; gap: 8px;
-    background: rgba(255,255,255,.14); backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px);
-    border: 1px solid rgba(255,255,255,.3); border-radius: 100px;
-    padding: 4px 4px 4px 16px; width: 220px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255, 255, 255, 0.14);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 100px;
+    padding: 4px 4px 4px 16px;
+    width: 220px;
   }
   .d-lock-input {
-    flex: 1; min-width: 0; background: none; border: none; outline: none;
-    color: #fff; font-family: var(--font); font-size: .82rem;
+    flex: 1;
+    min-width: 0;
+    background: none;
+    border: none;
+    outline: none;
+    color: #fff;
+    font-family: var(--font);
+    font-size: 0.82rem;
   }
-  .d-lock-input::placeholder { color: rgba(255,255,255,.7); }
+  .d-lock-input::placeholder {
+    color: rgba(255, 255, 255, 0.7);
+  }
   .d-lock-arrow {
-    flex-shrink: 0; width: 26px; height: 26px; border-radius: 50%; border: none; cursor: pointer;
-    background: rgba(255,255,255,.85); color: #17140f;
-    display: flex; align-items: center; justify-content: center;
-    transition: background .15s;
+    flex-shrink: 0;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+    background: rgba(255, 255, 255, 0.85);
+    color: #17140f;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.15s;
   }
-  .d-lock-arrow:hover { background: #fff; }
+  .d-lock-arrow:hover {
+    background: #fff;
+  }
 
   /* MENU BAR */
-  .menu-bar { display: flex; align-items: center; justify-content: space-between; padding: 0 16px; height: 27px; background: transparent; position: absolute; top: 0; left: 0; right: 0; z-index: 5; }
-  .menu-left { display: flex; align-items: center; gap: 14px; overflow-x: auto; scrollbar-width: none; }
-  .menu-left::-webkit-scrollbar { display: none; }
-  .menu-logo { height: 15px; width: 15px; flex-shrink: 0; filter: brightness(0) invert(60%); opacity: .85; }
-  .menu-brand { font-family: var(--font-round); font-weight: 800; font-size: .74rem; color: #4a4a4a; margin-right: 2px; flex-shrink: 0; white-space: nowrap; }
-  .menu-item { font-size: .74rem; color: #4a4a4a; text-decoration: none; transition: color .15s; white-space: nowrap; flex-shrink: 0; }
-  .menu-item:hover { color: #c4c4c4; }
-  .menu-right { display: flex; align-items: center; gap: 12px; color: #4a4a4a; }
-  .menu-clock { font-size: .74rem; line-height: normal; font-variant-numeric: tabular-nums; color: #4a4a4a; }
-  .menu-battery-pct { font-size: .74rem; line-height: normal; font-variant-numeric: tabular-nums; color: #4a4a4a; }
+  .menu-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 16px;
+    height: 27px;
+    background: transparent;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 5;
+  }
+  .menu-left {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .menu-left::-webkit-scrollbar {
+    display: none;
+  }
+  .menu-logo {
+    height: 15px;
+    width: 15px;
+    flex-shrink: 0;
+    filter: brightness(0) invert(60%);
+    opacity: 0.85;
+  }
+  .menu-brand {
+    font-family: var(--font-round);
+    font-weight: 800;
+    font-size: 0.74rem;
+    color: #4a4a4a;
+    margin-right: 2px;
+    flex-shrink: 0;
+    white-space: nowrap;
+  }
+  .menu-item {
+    font-size: 0.74rem;
+    color: #4a4a4a;
+    text-decoration: none;
+    transition: color 0.15s;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .menu-item:hover {
+    color: #c4c4c4;
+  }
+  .menu-right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: #4a4a4a;
+  }
+  .menu-clock {
+    font-size: 0.74rem;
+    line-height: normal;
+    font-variant-numeric: tabular-nums;
+    color: #4a4a4a;
+  }
+  .menu-battery-pct {
+    font-size: 0.74rem;
+    line-height: normal;
+    font-variant-numeric: tabular-nums;
+    color: #4a4a4a;
+  }
 
   /* DESKTOP */
-  .desktop { position: relative; flex: 1; min-height: 640px; overflow: hidden; background: var(--bg); }
-  .wallpaper-photo { position: absolute; inset: 0; background: url('/images/wallpaper-beach.webp') center 55% / cover no-repeat; }
-  .wallpaper-scrim { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(23,20,15,.06), rgba(23,20,15,.22) 55%, rgba(23,20,15,.4)); }
+  .desktop {
+    position: relative;
+    flex: 1;
+    min-height: 640px;
+    overflow: hidden;
+    background: var(--bg);
+  }
+  .wallpaper-photo {
+    position: absolute;
+    inset: 0;
+    background: url("/images/wallpaper-beach.webp") center 55% / cover no-repeat;
+  }
+  .wallpaper-scrim {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      180deg,
+      rgba(23, 20, 15, 0.06),
+      rgba(23, 20, 15, 0.22) 55%,
+      rgba(23, 20, 15, 0.4)
+    );
+  }
 
-  .widget-watermark { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 120px; opacity: .1; color: #17140f; pointer-events: none; z-index: 0; }
-  .widget-watermark :global(svg) { width: 100%; height: auto; display: block; }
-  .todo-watermark { color: #17140f; opacity: .05; }
+  .widget-watermark {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 120px;
+    opacity: 0.1;
+    color: #17140f;
+    pointer-events: none;
+    z-index: 0;
+  }
+  .widget-watermark :global(svg) {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+  .todo-watermark {
+    color: #17140f;
+    opacity: 0.05;
+  }
 
   /* WIDGETS */
-  .widget { position: absolute; z-index: 2; overflow: hidden; background: var(--bg2); border: 1px solid var(--border); border-radius: 16px; padding: 18px 20px; box-shadow: 0 20px 40px -24px rgba(23,20,15,.3); max-width: 260px; }
-  .pos-tl { top: 28px; left: 40px; }
-  .pos-tr { top: 32px; right: 32px; }
-  .pos-mr { top: 230px; left: 50%; transform: translateX(30px); }
-  .pos-bl { top: 306px; left: 31px; }
+  .widget {
+    position: absolute;
+    z-index: 2;
+    overflow: hidden;
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 18px 20px;
+    box-shadow: 0 20px 40px -24px rgba(23, 20, 15, 0.3);
+    max-width: 260px;
+  }
+  .pos-tl {
+    top: 28px;
+    left: 40px;
+  }
+  .pos-tr {
+    top: 32px;
+    right: 32px;
+  }
+  .pos-mr {
+    top: 230px;
+    left: 50%;
+    transform: translateX(30px);
+  }
+  .pos-bl {
+    top: 306px;
+    left: 31px;
+  }
 
-  .widget-note { background: #eee6a8; border-color: #d9cd7a; width: 265px; height: 265px; max-width: 265px; padding: 22px 20px; border-radius: 3px; display: flex; flex-direction: column; justify-content: center; }
-  .widget-note p { font-family: var(--font-head); font-size: 1.4rem; font-weight: 400; color: #2b2410; line-height: 1.3; }
-  .widget-note p + p { margin-top: 16px; }
-  .widget-note em { font-style: italic; font-weight: 700; }
-  .widget-note strong { font-style: normal; font-weight: 700; }
+  .widget-note {
+    background: #eee6a8;
+    border-color: #d9cd7a;
+    width: 265px;
+    height: 265px;
+    max-width: 265px;
+    padding: 22px 20px;
+    border-radius: 3px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .widget-note p {
+    font-family: var(--font-head);
+    font-size: 1.4rem;
+    font-weight: 400;
+    color: #2b2410;
+    line-height: 1.3;
+  }
+  .widget-note p + p {
+    margin-top: 16px;
+  }
+  .widget-note em {
+    font-style: italic;
+    font-weight: 700;
+  }
+  .widget-note strong {
+    font-style: normal;
+    font-weight: 700;
+  }
 
-  .widget-todo { background: #fdfdfd; border-color: rgba(0,0,0,.08); padding: 16px 18px 18px; max-width: 320px; }
-  .todo-bar { display: flex; align-items: center; gap: 7px; margin-bottom: 14px; }
-  .todo-dot { width: 10px; height: 10px; border-radius: 50%; }
-  .todo-dot.dot-red { background: #ff5f57; }
-  .todo-dot.dot-yellow { background: #febc2e; }
-  .todo-dot.dot-green { background: #28c840; }
-  .todo-add { margin-left: auto; width: 20px; height: 20px; border-radius: 50%; border: 1px solid rgba(0,0,0,.15); color: rgba(0,0,0,.6); font-size: .8rem; display: flex; align-items: center; justify-content: center; }
-  .todo-titlerow { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 8px; }
-  .todo-title { font-family: var(--font-round); font-weight: 900; font-size: 1.3rem; color: #0a6cff; }
-  .todo-count { font-family: var(--font-round); font-weight: 800; font-size: 1.6rem; color: #0a6cff; }
-  .todo-subrow { font-size: .68rem; color: rgba(0,0,0,.4); padding-bottom: 10px; border-bottom: 1px solid rgba(0,0,0,.08); margin-bottom: 4px; }
-  .todo-subrow a { color: #0a6cff; text-decoration: none; }
-  .todo-show { float: right; color: #0a6cff; }
-  .todo-list { display: flex; flex-direction: column; }
-  .widget-todo-item { display: flex; align-items: center; gap: 10px; font-size: .74rem; color: rgba(0,0,0,.82); padding: 7px 0; }
-  .todo-check { width: 14px; height: 14px; border-radius: 50%; border: 1.3px solid rgba(0,0,0,.25); flex-shrink: 0; }
+  .widget-todo {
+    background: #fdfdfd;
+    border-color: rgba(0, 0, 0, 0.08);
+    padding: 16px 18px 18px;
+    max-width: 320px;
+  }
+  .todo-bar {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    margin-bottom: 14px;
+  }
+  .todo-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+  }
+  .todo-dot.dot-red {
+    background: #ff5f57;
+  }
+  .todo-dot.dot-yellow {
+    background: #febc2e;
+  }
+  .todo-dot.dot-green {
+    background: #28c840;
+  }
+  .todo-add {
+    margin-left: auto;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    color: rgba(0, 0, 0, 0.6);
+    font-size: 0.8rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .todo-titlerow {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: 8px;
+  }
+  .todo-title {
+    font-family: var(--font-round);
+    font-weight: 900;
+    font-size: 1.3rem;
+    color: #0a6cff;
+  }
+  .todo-count {
+    font-family: var(--font-round);
+    font-weight: 800;
+    font-size: 1.6rem;
+    color: #0a6cff;
+  }
+  .todo-subrow {
+    font-size: 0.68rem;
+    color: rgba(0, 0, 0, 0.4);
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+    margin-bottom: 4px;
+  }
+  .todo-subrow a {
+    color: #0a6cff;
+    text-decoration: none;
+  }
+  .todo-show {
+    float: right;
+    color: #0a6cff;
+  }
+  .todo-list {
+    display: flex;
+    flex-direction: column;
+  }
+  .widget-todo-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.74rem;
+    color: rgba(0, 0, 0, 0.82);
+    padding: 7px 0;
+  }
+  .todo-check {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    border: 1.3px solid rgba(0, 0, 0, 0.25);
+    flex-shrink: 0;
+  }
 
-  .widget-file { display: flex; flex-direction: column; align-items: center; gap: 6px; background: transparent; border: none; box-shadow: none; overflow: visible; text-align: center; text-decoration: none; cursor: pointer; }
-  .pdf-page { width: 62px; height: 76px; background: #fdfdfd; border-radius: 2px; position: relative; box-shadow: 0 4px 10px rgba(0,0,0,.22); }
-  .pdf-page::before { content: ""; position: absolute; top: 0; right: 0; width: 0; height: 0; border-style: solid; border-width: 0 14px 14px 0; border-color: transparent #dcdcdc transparent transparent; }
-  .pdf-thumb { position: absolute; top: 12px; left: 8px; right: 8px; height: 32px; border-radius: 2px; background: url('/images/wallpaper-beach.webp') center 60% / cover no-repeat; box-shadow: 0 0 0 1px rgba(0,0,0,.06); }
-  .pdf-badge { position: absolute; bottom: 16px; right: 6px; width: 20px; height: 20px; border-radius: 50%; background: linear-gradient(180deg, #c6c6c6, #8c8c8c); display: flex; align-items: center; justify-content: center; box-shadow: 0 1px 3px rgba(0,0,0,.35); }
-  .pdf-label { position: absolute; bottom: 4px; left: 0; right: 0; text-align: center; font-family: var(--font-round); font-size: .58rem; font-weight: 800; letter-spacing: .04em; color: #555; }
-  .widget-file span { font-size: .72rem; color: #fff; font-weight: 600; text-shadow: 0 1px 4px rgba(0,0,0,.4); }
+  .widget-file {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    overflow: visible;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+  }
+  .pdf-page {
+    width: 62px;
+    height: 76px;
+    background: #fdfdfd;
+    border-radius: 2px;
+    position: relative;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.22);
+  }
+  .pdf-page::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 0 14px 14px 0;
+    border-color: transparent #dcdcdc transparent transparent;
+  }
+  .pdf-thumb {
+    position: absolute;
+    top: 12px;
+    left: 8px;
+    right: 8px;
+    height: 32px;
+    border-radius: 2px;
+    background: url("/images/wallpaper-beach.webp") center 60% / cover no-repeat;
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.06);
+  }
+  .pdf-badge {
+    position: absolute;
+    bottom: 16px;
+    right: 6px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: linear-gradient(180deg, #c6c6c6, #8c8c8c);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.35);
+  }
+  .pdf-label {
+    position: absolute;
+    bottom: 4px;
+    left: 0;
+    right: 0;
+    text-align: center;
+    font-family: var(--font-round);
+    font-size: 0.58rem;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    color: #555;
+  }
+  .widget-file span {
+    font-size: 0.72rem;
+    color: #fff;
+    font-weight: 600;
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
+  }
 
   .widget-preview {
     --preview-accent: var(--cyan);
     z-index: 3;
-    background: rgba(40,37,30,.6); backdrop-filter: blur(14px); border: 1px solid rgba(240,233,218,.14);
-    padding: 0; opacity: 0; transform: translateY(6px) scale(.98); pointer-events: none;
-    transition: opacity .18s ease, transform .18s ease; max-width: none;
+    background: rgba(40, 37, 30, 0.6);
+    backdrop-filter: blur(14px);
+    border: 1px solid rgba(240, 233, 218, 0.14);
+    padding: 0;
+    opacity: 0;
+    transform: translateY(6px) scale(0.98);
+    pointer-events: none;
+    transition:
+      opacity 0.18s ease,
+      transform 0.18s ease;
+    max-width: none;
   }
-  .widget-preview.is-visible { opacity: 1; transform: translateY(0) scale(1); }
-  .preview-titlebar { display: flex; align-items: center; gap: 8px; padding: 10px 12px; }
-  .preview-btn { width: 16px; height: 16px; border-radius: 50%; background: rgba(240,233,218,.14); color: rgba(240,233,218,.75); display: flex; align-items: center; justify-content: center; font-size: .8rem; line-height: 1; flex-shrink: 0; }
-  .preview-filename { font-size: .7rem; color: rgba(240,233,218,.85); font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .preview-body { width: 293px; height: 297px; margin: 0 12px 12px; border-radius: 10px; background: linear-gradient(155deg, color-mix(in srgb, var(--preview-accent) 55%, transparent), rgba(0,0,0,.2)); border: 1px dashed rgba(240,233,218,.25); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; color: rgba(240,233,218,.75); overflow: hidden; }
-  .preview-body span { font-size: .68rem; font-weight: 600; }
-  .preview-img { display: none; width: 100%; height: 100%; object-fit: cover; object-position: top; }
-  .preview-body.has-image { border-style: solid; border-color: rgba(240,233,218,.18); background: #0e0e0e; }
-  .preview-body.has-image .preview-img { display: block; }
-  .preview-body.has-image .preview-placeholder { display: none; }
+  .widget-preview.is-visible {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  .preview-titlebar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 12px;
+  }
+  .preview-btn {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: rgba(240, 233, 218, 0.14);
+    color: rgba(240, 233, 218, 0.75);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+    line-height: 1;
+    flex-shrink: 0;
+  }
+  .preview-filename {
+    font-size: 0.7rem;
+    color: rgba(240, 233, 218, 0.85);
+    font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .preview-body {
+    width: 293px;
+    height: 297px;
+    margin: 0 12px 12px;
+    border-radius: 10px;
+    background: linear-gradient(
+      155deg,
+      color-mix(in srgb, var(--preview-accent) 55%, transparent),
+      rgba(0, 0, 0, 0.2)
+    );
+    border: 1px dashed rgba(240, 233, 218, 0.25);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    color: rgba(240, 233, 218, 0.75);
+    overflow: hidden;
+  }
+  .preview-body span {
+    font-size: 0.68rem;
+    font-weight: 600;
+  }
+  .preview-img {
+    display: none;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top;
+  }
+  .preview-body.has-image {
+    border-style: solid;
+    border-color: rgba(240, 233, 218, 0.18);
+    background: #0e0e0e;
+  }
+  .preview-body.has-image .preview-img {
+    display: block;
+  }
+  .preview-body.has-image .preview-placeholder {
+    display: none;
+  }
 
   /* DOCK */
   .dock {
-    position: absolute; left: 50%; bottom: 22px; transform: translateX(-50%); z-index: 6;
-    display: flex; align-items: center; gap: 9px; padding: 9px 12px;
-    background: rgba(255,255,255,.14); backdrop-filter: blur(20px) saturate(160%); -webkit-backdrop-filter: blur(20px) saturate(160%);
-    border: 1px solid rgba(255,255,255,.25); border-radius: 20px; box-shadow: 0 14px 34px rgba(0,0,0,.35);
-    max-width: calc(100vw - 32px); overflow-x: auto; scrollbar-width: none;
+    position: absolute;
+    left: 50%;
+    bottom: 22px;
+    transform: translateX(-50%);
+    z-index: 6;
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    padding: 9px 12px;
+    background: rgba(255, 255, 255, 0.14);
+    backdrop-filter: blur(20px) saturate(160%);
+    -webkit-backdrop-filter: blur(20px) saturate(160%);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 20px;
+    box-shadow: 0 14px 34px rgba(0, 0, 0, 0.35);
+    max-width: calc(100vw - 32px);
+    overflow-x: auto;
+    scrollbar-width: none;
   }
-  .dock::-webkit-scrollbar { display: none; }
+  .dock::-webkit-scrollbar {
+    display: none;
+  }
   .dock-icon {
-    width: 38px; height: 38px; box-sizing: border-box; padding: 6px; border-radius: 10px;
-    background: #fbfaf8; box-shadow: 0 1px 3px rgba(0,0,0,.25), inset 0 0 0 1px rgba(0,0,0,.04);
-    display: flex; align-items: center; justify-content: center; text-decoration: none; transition: transform .15s; flex-shrink: 0;
+    width: 38px;
+    height: 38px;
+    box-sizing: border-box;
+    padding: 6px;
+    border-radius: 10px;
+    background: #fbfaf8;
+    box-shadow:
+      0 1px 3px rgba(0, 0, 0, 0.25),
+      inset 0 0 0 1px rgba(0, 0, 0, 0.04);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    transition: transform 0.15s;
+    flex-shrink: 0;
   }
-  .dock-icon img { width: 100%; height: 100%; object-fit: contain; }
-  .dock-icon:hover { transform: translateY(-6px); }
-  .dock-sep { width: 1px; height: 28px; background: rgba(240,233,218,.2); margin: 0 4px; flex-shrink: 0; }
-  .dock-trash { background: transparent; box-shadow: none; padding: 0; }
+  .dock-icon img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+  .dock-icon:hover {
+    transform: translateY(-6px);
+  }
+  .dock-sep {
+    width: 1px;
+    height: 28px;
+    background: rgba(240, 233, 218, 0.2);
+    margin: 0 4px;
+    flex-shrink: 0;
+  }
+  .dock-trash {
+    background: transparent;
+    box-shadow: none;
+    padding: 0;
+  }
 
   .dock-tooltip {
-    position: fixed; z-index: 20; top: 0; left: 0; transform: translate(-50%, calc(-100% - 15px)) translateY(4px);
-    background: #fbfaf8; color: #2b2410; font-family: var(--font-round); font-weight: 700; font-size: .78rem;
-    padding: 7px 12px; border-radius: 8px; box-shadow: 0 8px 20px rgba(0,0,0,.35); white-space: nowrap;
-    opacity: 0; pointer-events: none; transition: opacity .15s ease, transform .15s ease;
+    position: fixed;
+    z-index: 20;
+    top: 0;
+    left: 0;
+    transform: translate(-50%, calc(-100% - 15px)) translateY(4px);
+    background: #fbfaf8;
+    color: #2b2410;
+    font-family: var(--font-round);
+    font-weight: 700;
+    font-size: 0.78rem;
+    padding: 7px 12px;
+    border-radius: 8px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition:
+      opacity 0.15s ease,
+      transform 0.15s ease;
   }
   .dock-tooltip::after {
-    content: ""; position: absolute; top: 100%; left: 50%; transform: translateX(-50%);
-    border: 6px solid transparent; border-top-color: #fbfaf8;
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 6px solid transparent;
+    border-top-color: #fbfaf8;
   }
-  .dock-tooltip.is-visible { opacity: 1; transform: translate(-50%, calc(-100% - 15px)) translateY(0); }
+  .dock-tooltip.is-visible {
+    opacity: 1;
+    transform: translate(-50%, calc(-100% - 15px)) translateY(0);
+  }
 
   /* MOBILE SCENE · Phase B (2026-08-26) replaces the desktop scene entirely below 860px
      with a dedicated lock/unlock + card-stack layout, rather than reflowing the desktop
      widgets — see sl-tools/sl-backlog-v2.html "Mobile layout" card for the design rationale. */
-  .m-scene { display: none; }
+  .m-scene {
+    display: none;
+  }
 
   @media (max-width: 860px) {
-    .menu-bar, .desktop, .dock, .dock-tooltip { display: none; }
-    .m-scene { display: block; }
+    .menu-bar,
+    .desktop,
+    .dock,
+    .dock-tooltip {
+      display: none;
+    }
+    .m-scene {
+      display: block;
+    }
   }
 
   /* pulled up under the sticky status bar (margin) then padded back down (padding) so the
      blurred/photo background is continuous behind the bar too — no visible seam at the top */
-  .m-hp-body { background: #f0e9da; min-height: 100vh; position: relative; margin-top: -30px; padding-top: 30px; overflow: hidden; }
+  .m-hp-body {
+    background: #f0e9da;
+    min-height: 100vh;
+    position: relative;
+    margin-top: -30px;
+    padding-top: 30px;
+    overflow: hidden;
+  }
 
   .m-stack-bg {
-    position: absolute; inset: -40px; z-index: 0;
-    background: url('/images/wallpaper-beach.webp') center 55% / cover no-repeat;
-    filter: blur(30px) saturate(1.15) brightness(.92);
+    position: absolute;
+    inset: -40px;
+    z-index: 0;
+    background: url("/images/wallpaper-beach.webp") center 55% / cover no-repeat;
+    filter: blur(30px) saturate(1.15) brightness(0.92);
     transform: scale(1.08);
   }
-  .m-stack-scrim { position: absolute; inset: 0; z-index: 0; background: rgba(20,18,14,.22); }
+  .m-stack-scrim {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    background: rgba(20, 18, 14, 0.22);
+  }
 
-  .m-stack { position: relative; z-index: 1; padding: 22px 16px 18px; display: flex; flex-direction: column; gap: 14px; }
+  .m-stack {
+    position: relative;
+    z-index: 1;
+    padding: 22px 16px 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
 
-  .m-footer { position: relative; z-index: 1; padding: 24px 16px 32px; text-align: center; border-top: 1px solid rgba(23,20,15,.15); }
-  .m-footer p { color: rgba(23,20,15,.6); font-size: 12px; }
-  .m-footer-links { margin-top: 12px; display: flex; justify-content: center; gap: 18px; }
-  .m-footer-links a { font-size: 11px; color: rgba(23,20,15,.6); text-decoration: none; }
-  .m-footer-links a:hover { color: #17140f; }
+  .m-footer {
+    position: relative;
+    z-index: 1;
+    padding: 24px 16px 32px;
+    text-align: center;
+    border-top: 1px solid rgba(23, 20, 15, 0.15);
+  }
+  .m-footer p {
+    color: rgba(23, 20, 15, 0.6);
+    font-size: 12px;
+  }
+  .m-footer-links {
+    margin-top: 12px;
+    display: flex;
+    justify-content: center;
+    gap: 18px;
+  }
+  .m-footer-links a {
+    font-size: 11px;
+    color: rgba(23, 20, 15, 0.6);
+    text-decoration: none;
+  }
+  .m-footer-links a:hover {
+    color: #17140f;
+  }
 
   /* real iOS "material" — frosted translucent glass over the wallpaper, not flat app colors.
      one glass recipe (light + dark variant) reused everywhere, matching how iOS widgets/
      Notification Center/Control Center actually render — not a per-card brand color. */
-  .m-card, .m-card-file, .m-card-msg {
+  .m-card,
+  .m-card-file,
+  .m-card-msg {
     border-radius: 20px;
-    background: rgba(255,255,255,.42); backdrop-filter: blur(28px) saturate(150%); -webkit-backdrop-filter: blur(28px) saturate(150%);
-    border: 1px solid rgba(255,255,255,.45);
-    box-shadow: 0 8px 26px rgba(0,0,0,.12);
+    background: rgba(255, 255, 255, 0.42);
+    backdrop-filter: blur(28px) saturate(150%);
+    -webkit-backdrop-filter: blur(28px) saturate(150%);
+    border: 1px solid rgba(255, 255, 255, 0.45);
+    box-shadow: 0 8px 26px rgba(0, 0, 0, 0.12);
   }
   /* fade-in state lives only on .m-card and the row wrapper (.m-row2) —
      m-card-file/m-card-msg inherit visibility from their row parent, not their own state */
-  .m-card { opacity: 0; transform: translateY(16px); transition: opacity .5s ease var(--d,0s), transform .5s ease var(--d,0s); }
-  .m-scene.is-unlocked .m-card { opacity: 1; transform: translateY(0); }
+  .m-card {
+    opacity: 0;
+    transform: translateY(16px);
+    transition:
+      opacity 0.5s ease var(--d, 0s),
+      transform 0.5s ease var(--d, 0s);
+  }
+  .m-scene.is-unlocked .m-card {
+    opacity: 1;
+    transform: translateY(0);
+  }
 
-  .m-notif-row { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 14px; }
-  .m-notif-icon { width: 22px; height: 22px; border-radius: 5px; flex-shrink: 0; box-shadow: 0 2px 6px rgba(0,0,0,.15); }
-  .m-notif-text { flex: 1; min-width: 0; }
-  .m-notif-title { font-family: var(--font-head); font-weight: 700; font-size: .92rem; color: #17140f; line-height: 1.3; }
-  .m-notif-body { font-size: .82rem; color: rgba(23,20,15,.72); line-height: 1.4; margin-top: 4px; }
-  .m-btn-amber { display: inline-block; background: #2e2a22; color: #f0e9da; font-family: var(--font-round); font-weight: 800; font-size: .82rem; padding: 11px 18px; border-radius: 100px; text-decoration: none; }
+  .m-notif-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 14px;
+  }
+  .m-notif-icon {
+    width: 22px;
+    height: 22px;
+    border-radius: 5px;
+    flex-shrink: 0;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  }
+  .m-notif-text {
+    flex: 1;
+    min-width: 0;
+  }
+  .m-notif-title {
+    font-family: var(--font-head);
+    font-weight: 700;
+    font-size: 0.92rem;
+    color: #17140f;
+    line-height: 1.3;
+  }
+  .m-notif-body {
+    font-size: 0.82rem;
+    color: rgba(23, 20, 15, 0.72);
+    line-height: 1.4;
+    margin-top: 4px;
+  }
+  .m-btn-amber {
+    display: inline-block;
+    background: #2e2a22;
+    color: #f0e9da;
+    font-family: var(--font-round);
+    font-weight: 800;
+    font-size: 0.82rem;
+    padding: 11px 18px;
+    border-radius: 100px;
+    text-decoration: none;
+  }
 
-  .m-card-collage { display: flex; align-items: center; padding: 12px; }
-  .m-collage-text { flex: 1; display: flex; flex-direction: column; justify-content: center; min-width: 0; }
-  .m-collage-text h3 { font-family: var(--font-head); font-size: 1.05rem; font-weight: 700; color: #17140f; margin: 0 0 8px; line-height: 1.22; }
-  .m-collage-text .m-btn-amber { display: inline-block; align-self: flex-start; font-size: .74rem; padding: 7px 12px; }
+  .m-card-collage {
+    display: flex;
+    align-items: center;
+    padding: 12px;
+  }
+  .m-collage-text {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-width: 0;
+  }
+  .m-collage-text h3 {
+    font-family: var(--font-head);
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: #17140f;
+    margin: 0 0 8px;
+    line-height: 1.22;
+  }
+  .m-collage-text .m-btn-amber {
+    display: inline-block;
+    align-self: flex-start;
+    font-size: 0.74rem;
+    padding: 7px 12px;
+  }
 
-  .m-card-note { padding: 22px 20px; }
-  .m-card-note p { font-family: var(--font-head); font-size: 1.15rem; font-weight: 400; color: #17140f; line-height: 1.35; margin: 0; }
-  .m-card-note p + p { margin-top: 12px; }
-  .m-card-note em { font-style: italic; font-weight: 400; }
-  .m-card-note strong { font-style: italic; font-weight: 400; }
-  .m-card-note-eyebrow { font-size: .6rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; color: rgba(23,20,15,.6); margin-bottom: 10px; }
+  .m-card-note {
+    padding: 22px 20px;
+  }
+  .m-card-note p {
+    font-family: var(--font-head);
+    font-size: 1.15rem;
+    font-weight: 400;
+    color: #17140f;
+    line-height: 1.35;
+    margin: 0;
+  }
+  .m-card-note p + p {
+    margin-top: 12px;
+  }
+  .m-card-note em {
+    font-style: italic;
+    font-weight: 400;
+  }
+  .m-card-note strong {
+    font-style: italic;
+    font-weight: 400;
+  }
+  .m-card-note-eyebrow {
+    font-size: 0.6rem;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(23, 20, 15, 0.6);
+    margin-bottom: 10px;
+  }
 
   /* PRO TIPS becomes a small square card sitting alone in its row — the rest of the row
      stays empty (blurred background showing through), matching the reference's sticky-note sizing */
-  .m-row-note { display: flex; }
-  .m-card-note-square { width: 158px; height: 158px; padding: 16px; display: flex; flex-direction: column; justify-content: center; }
-  .m-card-note-square .m-card-note-eyebrow { margin-bottom: 6px; }
-  .m-card-note-square p { font-size: .8rem; line-height: 1.28; }
-  .m-card-note-square p + p { margin-top: 6px; }
-
-  .m-row2 { display: flex; gap: 12px; opacity: 0; transform: translateY(16px); transition: opacity .5s ease var(--d,0s), transform .5s ease var(--d,0s); }
-  .m-scene.is-unlocked .m-row2 { opacity: 1; transform: translateY(0); }
-  .m-card-file { flex: 1; padding: 20px 10px 0; display: flex; flex-direction: column; align-items: center; gap: 8px; text-align: center; text-decoration: none; overflow: hidden; }
-  .m-folder-icon { width: 60px; height: 46px; flex-shrink: 0; filter: drop-shadow(0 4px 8px rgba(0,0,0,.2)); }
-  .m-card-file span { font-size: .66rem; color: #17140f; font-weight: 700; line-height: 1.3; }
-  .m-card-file-bar {
-    display: block; width: calc(100% + 20px); margin: 12px -10px 0; padding: 11px 10px;
-    background: rgba(255,255,255,.55); border-top: 1px solid rgba(255,255,255,.5);
-    font-size: .68rem; color: #17140f; font-weight: 800; letter-spacing: .01em;
+  .m-row-note {
+    display: flex;
+  }
+  .m-card-note-square {
+    width: 158px;
+    height: 158px;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .m-card-note-square .m-card-note-eyebrow {
+    margin-bottom: 6px;
+  }
+  .m-card-note-square p {
+    font-size: 0.8rem;
+    line-height: 1.28;
+  }
+  .m-card-note-square p + p {
+    margin-top: 6px;
   }
 
-  .m-card-msg { flex: 1; padding: 18px 14px; display: flex; flex-direction: column; justify-content: space-between; text-decoration: none; }
-  .m-card-msg-icon { width: 22px; height: 22px; border-radius: 5px; }
-  .m-card-msg-text { color: #17140f; font-family: var(--font-round); font-weight: 800; font-size: .86rem; line-height: 1.25; margin: 10px 0 12px; }
-  .m-btn-dark { display: inline-block; background: #2e2a22; color: #f0e9da; font-family: var(--font-round); font-weight: 800; font-size: .72rem; padding: 8px 14px; border-radius: 100px; align-self: flex-start; }
+  .m-row2 {
+    display: flex;
+    gap: 12px;
+    opacity: 0;
+    transform: translateY(16px);
+    transition:
+      opacity 0.5s ease var(--d, 0s),
+      transform 0.5s ease var(--d, 0s);
+  }
+  .m-scene.is-unlocked .m-row2 {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .m-card-file {
+    flex: 1;
+    padding: 20px 10px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    text-align: center;
+    text-decoration: none;
+    overflow: hidden;
+  }
+  .m-folder-icon {
+    width: 60px;
+    height: 46px;
+    flex-shrink: 0;
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
+  }
+  .m-card-file span {
+    font-size: 0.66rem;
+    color: #17140f;
+    font-weight: 700;
+    line-height: 1.3;
+  }
+  .m-card-file-bar {
+    display: block;
+    width: calc(100% + 20px);
+    margin: 12px -10px 0;
+    padding: 11px 10px;
+    background: rgba(255, 255, 255, 0.55);
+    border-top: 1px solid rgba(255, 255, 255, 0.5);
+    font-size: 0.68rem;
+    color: #17140f;
+    font-weight: 800;
+    letter-spacing: 0.01em;
+  }
+
+  .m-card-msg {
+    flex: 1;
+    padding: 18px 14px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    text-decoration: none;
+  }
+  .m-card-msg-icon {
+    width: 22px;
+    height: 22px;
+    border-radius: 5px;
+  }
+  .m-card-msg-text {
+    color: #17140f;
+    font-family: var(--font-round);
+    font-weight: 800;
+    font-size: 0.86rem;
+    line-height: 1.25;
+    margin: 10px 0 12px;
+  }
+  .m-btn-dark {
+    display: inline-block;
+    background: #2e2a22;
+    color: #f0e9da;
+    font-family: var(--font-round);
+    font-weight: 800;
+    font-size: 0.72rem;
+    padding: 8px 14px;
+    border-radius: 100px;
+    align-self: flex-start;
+  }
 
   /* dark glass variant — same iOS material language, dark tint (Control Center dark mode) */
   .m-card-contact {
-    padding: 6px 18px; border-radius: 20px; opacity: 0; transform: translateY(16px);
-    transition: opacity .5s ease var(--d,0s), transform .5s ease var(--d,0s);
-    background: rgba(23,20,15,.5); backdrop-filter: blur(28px) saturate(150%); -webkit-backdrop-filter: blur(28px) saturate(150%);
-    border: 1px solid rgba(255,255,255,.12);
+    padding: 6px 18px;
+    border-radius: 20px;
+    opacity: 0;
+    transform: translateY(16px);
+    transition:
+      opacity 0.5s ease var(--d, 0s),
+      transform 0.5s ease var(--d, 0s);
+    background: rgba(23, 20, 15, 0.5);
+    backdrop-filter: blur(28px) saturate(150%);
+    -webkit-backdrop-filter: blur(28px) saturate(150%);
+    border: 1px solid rgba(255, 255, 255, 0.12);
   }
-  .m-scene.is-unlocked .m-card-contact { opacity: 1; transform: translateY(0); }
-  .m-contact-row { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 14px 0; border-bottom: 1px solid rgba(255,255,255,.1); }
-  .m-contact-row:last-child { border-bottom: none; }
-  .m-contact-left { display: flex; align-items: center; gap: 10px; }
-  .m-contact-icon { width: 16px; text-align: center; color: #e0a32e; }
-  .m-contact-title { color: #fff; font-size: .82rem; font-weight: 700; }
-  .m-contact-sub { color: rgba(255,255,255,.55); font-size: .66rem; margin-top: 1px; }
-  .m-contact-cta { color: #e0a32e; font-size: .7rem; font-weight: 700; text-decoration: none; }
+  .m-scene.is-unlocked .m-card-contact {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .m-contact-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 14px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  .m-contact-row:last-child {
+    border-bottom: none;
+  }
+  .m-contact-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .m-contact-icon {
+    width: 16px;
+    text-align: center;
+    color: #e0a32e;
+  }
+  .m-contact-title {
+    color: #fff;
+    font-size: 0.82rem;
+    font-weight: 700;
+  }
+  .m-contact-sub {
+    color: rgba(255, 255, 255, 0.55);
+    font-size: 0.66rem;
+    margin-top: 1px;
+  }
+  .m-contact-cta {
+    color: #e0a32e;
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-decoration: none;
+  }
 
-  .m-icon-row { display: flex; justify-content: flex-start; gap: 10px; }
+  .m-icon-row {
+    display: flex;
+    justify-content: flex-start;
+    gap: 10px;
+  }
   /* dock-style icons (Brave/Firefox app icons) — rounded square, white chip, matching the
      dock-icon convention used everywhere else on this site */
-  .m-icon-chip { width: 52px; height: 52px; border-radius: 12px; background: rgba(255,255,255,.7); box-shadow: 0 1px 3px rgba(0,0,0,.15); display: flex; align-items: center; justify-content: center; text-decoration: none; padding: 9px; }
-  .m-icon-chip img { width: 100%; height: 100%; object-fit: contain; }
+  .m-icon-chip {
+    width: 52px;
+    height: 52px;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.7);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    padding: 9px;
+  }
+  .m-icon-chip img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
 
-  .m-card-icons-full { padding: 14px 16px; }
-  .m-card-icons-full h3 { font-family: var(--font-head); font-size: 1.02rem; font-weight: 700; color: #17140f; margin: 0 0 10px; }
+  .m-card-icons-full {
+    padding: 14px 16px;
+  }
+  .m-card-icons-full h3 {
+    font-family: var(--font-head);
+    font-size: 1.02rem;
+    font-weight: 700;
+    color: #17140f;
+    margin: 0 0 10px;
+  }
 
   /* social badges (Bluesky/Instagram/GitHub) — circular, no chip background, since each
      SVG already draws its own full-bleed circle */
-  .m-card-social { padding: 18px 20px; }
-  .m-card-social h3 { font-family: var(--font-head); font-size: 1.1rem; font-weight: 700; color: #17140f; margin: 0 0 14px; }
-  .m-card-social .m-icon-chip { width: 52px; height: 52px; padding: 0; background: none; box-shadow: none; border-radius: 50%; }
-  .m-card-social .m-icon-chip svg { width: 100%; height: 100%; }
-  .m-card-social-note { font-size: .78rem; color: rgba(23,20,15,.65); line-height: 1.4; margin: 12px 0 0; }
+  .m-card-social {
+    padding: 18px 20px;
+  }
+  .m-card-social h3 {
+    font-family: var(--font-head);
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #17140f;
+    margin: 0 0 14px;
+  }
+  .m-card-social .m-icon-chip {
+    width: 52px;
+    height: 52px;
+    padding: 0;
+    background: none;
+    box-shadow: none;
+    border-radius: 50%;
+  }
+  .m-card-social .m-icon-chip svg {
+    width: 100%;
+    height: 100%;
+  }
+  .m-card-social-note {
+    font-size: 0.78rem;
+    color: rgba(23, 20, 15, 0.65);
+    line-height: 1.4;
+    margin: 12px 0 0;
+  }
 
   /* STAND PAGE — lock screen, dismissed on swipe-up. position:fixed (not absolute like the
      original phone-frame mockup) so it covers the real viewport regardless of scroll position. */
   .m-stand {
-    position: fixed; inset: 0; z-index: 10; overflow: hidden; cursor: pointer;
-    transition: opacity .5s ease .32s, visibility .5s ease .32s;
+    position: fixed;
+    inset: 0;
+    z-index: 10;
+    overflow: hidden;
+    cursor: pointer;
+    transition:
+      opacity 0.5s ease 0.32s,
+      visibility 0.5s ease 0.32s;
   }
-  .m-scene.is-unlocked .m-stand { opacity: 0; visibility: hidden; pointer-events: none; }
+  .m-scene.is-unlocked .m-stand {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+  }
 
   .m-stand-bg {
-    position: absolute; inset: 0;
-    background: url('/images/wallpaper-beach.webp') center 55% / cover no-repeat;
-    transition: filter .55s ease;
+    position: absolute;
+    inset: 0;
+    background: url("/images/wallpaper-beach.webp") center 55% / cover no-repeat;
+    transition: filter 0.55s ease;
   }
-  .m-scene.is-unlocked .m-stand-bg { filter: blur(22px) brightness(.88); transform: scale(1.08); }
+  .m-scene.is-unlocked .m-stand-bg {
+    filter: blur(22px) brightness(0.88);
+    transform: scale(1.08);
+  }
 
-  .m-stand-scrim { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(23,20,15,.15), rgba(23,20,15,.35) 55%, rgba(23,20,15,.72)); }
+  .m-stand-scrim {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      180deg,
+      rgba(23, 20, 15, 0.15),
+      rgba(23, 20, 15, 0.35) 55%,
+      rgba(23, 20, 15, 0.72)
+    );
+  }
 
   .m-stand-content {
-    position: relative; z-index: 1; height: 100%; display: flex; flex-direction: column;
-    padding: 26px 20px 88px; color: #fff;
-    transition: opacity .4s ease, filter .4s ease, transform .4s ease;
+    position: relative;
+    z-index: 1;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 26px 20px 88px;
+    color: #fff;
+    transition:
+      opacity 0.4s ease,
+      filter 0.4s ease,
+      transform 0.4s ease;
   }
-  .m-scene.is-unlocked .m-stand-content { opacity: 0; filter: blur(9px); transform: translateY(-10px); }
+  .m-scene.is-unlocked .m-stand-content {
+    opacity: 0;
+    filter: blur(9px);
+    transform: translateY(-10px);
+  }
 
-  .m-stand-tagline { text-align: center; margin-top: 10px; color: rgba(255,255,255,.8); font-size: .78rem; font-weight: 600; }
+  .m-stand-tagline {
+    text-align: center;
+    margin-top: 10px;
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 0.78rem;
+    font-weight: 600;
+  }
 
   /* vertically centers the clock + stats block in the remaining space, like the reference */
-  .m-stand-middle { flex: 1; display: flex; flex-direction: column; align-items: center; text-align: center; }
-  .m-stand-hero { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; }
-
-  .m-stand-time { color: #fff; font-family: var(--font-round); font-weight: 400; font-size: 4.6rem; line-height: 1; margin-top: 6px; letter-spacing: -.01em; }
-
-  .m-stand-stats { display: flex; gap: 34px; margin-bottom: 41px; text-align: center; }
-  .m-stand-stat-top { display: flex; align-items: center; justify-content: center; gap: 7px; color: #fff; font-family: var(--font-round); font-weight: 400; font-size: 1.3rem; }
-  .m-stand-stat-label { color: rgba(255,255,255,.85); font-size: .72rem; font-weight: 600; margin-top: 3px; }
-  .m-stand-stat-tags { margin-bottom: 12px; line-height: 1; color: #fff; font-size: .64rem; font-weight: 700; letter-spacing: .03em; display: flex; align-items: center; justify-content: center; gap: 8px; }
-
-  .m-stand-bottom { display: flex; flex-direction: column; align-items: center; gap: 10px; }
-  .m-stand-padlock {
-    width: 60px; height: 60px; border-radius: 50%; background: rgba(240,238,232,.92);
-    border: none; display: flex; align-items: center; justify-content: center; cursor: pointer;
-    box-shadow: 0 8px 20px rgba(0,0,0,.3); animation: m-hint-bounce 1.8s ease-in-out infinite;
+  .m-stand-middle {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
   }
-  .m-stand-hint { text-align: center; color: rgba(255,255,255,.75); font-size: .64rem; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; }
+  .m-stand-hero {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
 
-  @keyframes m-hint-bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+  .m-stand-time {
+    color: #fff;
+    font-family: var(--font-round);
+    font-weight: 400;
+    font-size: 4.6rem;
+    line-height: 1;
+    margin-top: 6px;
+    letter-spacing: -0.01em;
+  }
+
+  .m-stand-stats {
+    display: flex;
+    gap: 34px;
+    margin-bottom: 41px;
+    text-align: center;
+  }
+  .m-stand-stat-top {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    color: #fff;
+    font-family: var(--font-round);
+    font-weight: 400;
+    font-size: 1.3rem;
+  }
+  .m-stand-stat-label {
+    color: rgba(255, 255, 255, 0.85);
+    font-size: 0.72rem;
+    font-weight: 600;
+    margin-top: 3px;
+  }
+  .m-stand-stat-tags {
+    margin-bottom: 12px;
+    line-height: 1;
+    color: #fff;
+    font-size: 0.64rem;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+
+  .m-stand-bottom {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+  .m-stand-padlock {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: rgba(240, 238, 232, 0.92);
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+    animation: m-hint-bounce 1.8s ease-in-out infinite;
+  }
+  .m-stand-hint {
+    text-align: center;
+    color: rgba(255, 255, 255, 0.75);
+    font-size: 0.64rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  @keyframes m-hint-bounce {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-6px);
+    }
+  }
 
   /* status bar — sits above everything (lock page, cards, scroll). no bg/blur/border of its
      own — just text+icons floating over whatever's already behind it, not a separate bar */
   .m-statusbar {
-    position: sticky; top: 0; z-index: 30; flex-shrink: 0;
-    display: flex; align-items: center; justify-content: space-between;
-    height: 30px; padding: 0 16px;
-    color: #fff; font-family: var(--font-round);
-    text-shadow: 0 1px 4px rgba(0,0,0,.35);
+    position: sticky;
+    top: 0;
+    z-index: 30;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 30px;
+    padding: 0 16px;
+    color: #fff;
+    font-family: var(--font-round);
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.35);
   }
-  .m-statusbar-brand { display: flex; align-items: center; gap: 5px; font-size: .72rem; font-weight: 800; }
-  .m-statusbar-icons { display: flex; align-items: center; gap: 6px; }
-  .m-statusbar-icons svg { display: block; }
+  .m-statusbar-brand {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 0.72rem;
+    font-weight: 800;
+  }
+  .m-statusbar-icons {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .m-statusbar-icons svg {
+    display: block;
+  }
 
   /* while the lock screen is showing, the page underneath must not scroll */
-  html.m-locked, html.m-locked body { overflow: hidden; height: 100%; }
+  html.m-locked,
+  html.m-locked body {
+    overflow: hidden;
+    height: 100%;
+  }
 </style>
 
 <script is:inline src="/scripts/index-widgets.js"></script>

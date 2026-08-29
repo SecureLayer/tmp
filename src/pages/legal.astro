@@ -1,165 +1,331 @@
 ---
-const files = ['publisher.txt','hosting.txt','activity.txt','cookies-data.txt','external-links.txt','disclaimer.txt','intellectual-property.txt','governing-law.txt'];
+const files = [
+  "publisher.txt",
+  "hosting.txt",
+  "activity.txt",
+  "cookies-data.txt",
+  "external-links.txt",
+  "disclaimer.txt",
+  "intellectual-property.txt",
+  "governing-law.txt",
+];
 
 const sections = [
-  { h: 'PUBLISHER', p: [
-    `This website, <strong>securelayer.co</strong>, is published by an independent freelance operator (auto-entrepreneur, France).`,
-    `Publisher: <span class="placeholder">M.DELEPINE</span><br />Registration (SIRET): <span class="placeholder">977526896</span><br />Registered address: <span class="placeholder">133 bld Murat 75016</span><br />Contact: book a call at <a href="https://cal.com/securelayer" target="_blank" rel="noopener noreferrer">cal.com/securelayer</a>`,
-  ]},
-  { h: 'HOSTING', p: [
-    `This site is hosted on <strong>Cloudflare Workers</strong>, a service of Cloudflare, Inc.`,
-    `101 Townsend Street, San Francisco, CA 94107, United States<br /><a href="https://www.cloudflare.com" target="_blank" rel="noopener noreferrer">cloudflare.com</a>`,
-  ]},
-  { h: 'ACTIVITY', p: [
-    `This website is an informational landing page presenting SecureLayer's freelance cybersecurity service catalogue, with links to social media profiles. No tool, download, or service is provided directly through this website.`,
-    `Freelance cybersecurity consulting (audits, hardening, and related services) is scoped and agreed directly with the client, outside of this website, and is not governed by these legal mentions.`,
-    `Terms of sale (CGV) are provided directly to the client and agreed before any paid engagement or transaction is confirmed.`,
-  ]},
-  { h: 'COOKIES &amp; DATA', p: [
-    `This site sets <strong>no cookies</strong> and runs <strong>no analytics or tracking scripts</strong>.`,
-    `Fonts are loaded from <strong>Google Fonts</strong> (fonts.googleapis.com / fonts.gstatic.com) — this is a third-party request, and Google may log the requesting IP address as part of serving the font files. No other third-party script runs on this site.`,
-    `This site no longer processes contact via email. Booking a call is handled by <strong>Cal.com</strong> (name, email, and timezone you provide are processed directly by Cal.com to schedule the call). Contact via Signal is handled directly and privately. No message or booking content is stored on this site's own infrastructure.`,
-    `Under GDPR, this site does not itself collect, store, or process any personal data beyond what's described above.`,
-  ]},
-  { h: 'EXTERNAL LINKS', p: [
-    `This site links to third-party services used to independently verify its own security and sustainability posture (Mozilla Observatory, SSL Labs, Security Headers, Blacklight, Google Safe Browsing, OpenSSF Scorecard, Website Carbon, Digital Beacon, Green Web Foundation) and to social/contact platforms (Bluesky, Instagram, GitHub, Signal, Cal.com). These links are provided for transparency and convenience. This site has no control over and accepts no responsibility for the content or privacy practices of any third-party destination.`,
-  ]},
-  { h: 'DISCLAIMER', p: [
-    `This website is provided for informational purposes only — it presents SecureLayer's service catalogue and social/contact links, and does not itself deliver any security tool, audit, or service.`,
-    `Use of this site is at your own risk. SecureLayer cannot be held liable for decisions made based on this site's content.`,
-  ]},
-  { h: 'INTELLECTUAL PROPERTY', p: [
-    `The code, design, and written content of this site are the property of SecureLayer, unless otherwise credited. Third-party names, logos, and trademarks referenced on this site (GitHub, Cloudflare, Mozilla, Google, Brave, Firefox, Signal, and others) belong to their respective owners and are used for identification and reporting purposes only — no affiliation or endorsement is implied.`,
-  ]},
-  { h: 'GOVERNING LAW', p: [
-    `These legal mentions are governed by French law. In the event of a dispute, French courts shall have sole jurisdiction.`,
-  ]},
+  {
+    h: "PUBLISHER",
+    p: [
+      `This website, <strong>securelayer.co</strong>, is published by an independent freelance operator (auto-entrepreneur, France).`,
+      `Publisher: <span class="placeholder">M.DELEPINE</span><br />Registration (SIRET): <span class="placeholder">977526896</span><br />Registered address: <span class="placeholder">133 bld Murat 75016</span><br />Contact: book a call at <a href="https://cal.com/securelayer" target="_blank" rel="noopener noreferrer">cal.com/securelayer</a>`,
+    ],
+  },
+  {
+    h: "HOSTING",
+    p: [
+      `This site is hosted on <strong>Cloudflare Workers</strong>, a service of Cloudflare, Inc.`,
+      `101 Townsend Street, San Francisco, CA 94107, United States<br /><a href="https://www.cloudflare.com" target="_blank" rel="noopener noreferrer">cloudflare.com</a>`,
+    ],
+  },
+  {
+    h: "ACTIVITY",
+    p: [
+      `This website is an informational landing page presenting SecureLayer's freelance cybersecurity service catalogue, with links to social media profiles. No tool, download, or service is provided directly through this website.`,
+      `Freelance cybersecurity consulting (audits, hardening, and related services) is scoped and agreed directly with the client, outside of this website, and is not governed by these legal mentions.`,
+      `Terms of sale (CGV) are provided directly to the client and agreed before any paid engagement or transaction is confirmed.`,
+    ],
+  },
+  {
+    h: "COOKIES &amp; DATA",
+    p: [
+      `This site sets <strong>no cookies</strong> and runs <strong>no analytics or tracking scripts</strong>.`,
+      `Fonts are loaded from <strong>Google Fonts</strong> (fonts.googleapis.com / fonts.gstatic.com) — this is a third-party request, and Google may log the requesting IP address as part of serving the font files. No other third-party script runs on this site.`,
+      `This site no longer processes contact via email. Booking a call is handled by <strong>Cal.com</strong> (name, email, and timezone you provide are processed directly by Cal.com to schedule the call). Contact via Signal is handled directly and privately. No message or booking content is stored on this site's own infrastructure.`,
+      `Under GDPR, this site does not itself collect, store, or process any personal data beyond what's described above.`,
+    ],
+  },
+  {
+    h: "EXTERNAL LINKS",
+    p: [
+      `This site links to third-party services used to independently verify its own security and sustainability posture (Mozilla Observatory, SSL Labs, Security Headers, Blacklight, Google Safe Browsing, OpenSSF Scorecard, Website Carbon, Digital Beacon, Green Web Foundation) and to social/contact platforms (Bluesky, Instagram, GitHub, Signal, Cal.com). These links are provided for transparency and convenience. This site has no control over and accepts no responsibility for the content or privacy practices of any third-party destination.`,
+    ],
+  },
+  {
+    h: "DISCLAIMER",
+    p: [
+      `This website is provided for informational purposes only — it presents SecureLayer's service catalogue and social/contact links, and does not itself deliver any security tool, audit, or service.`,
+      `Use of this site is at your own risk. SecureLayer cannot be held liable for decisions made based on this site's content.`,
+    ],
+  },
+  {
+    h: "INTELLECTUAL PROPERTY",
+    p: [
+      `The code, design, and written content of this site are the property of SecureLayer, unless otherwise credited. Third-party names, logos, and trademarks referenced on this site (GitHub, Cloudflare, Mozilla, Google, Brave, Firefox, Signal, and others) belong to their respective owners and are used for identification and reporting purposes only — no affiliation or endorsement is implied.`,
+    ],
+  },
+  {
+    h: "GOVERNING LAW",
+    p: [
+      `These legal mentions are governed by French law. In the event of a dispute, French courts shall have sole jurisdiction.`,
+    ],
+  },
 ];
 
 // build the numbered "diff" rows once, server-side, so the whole page is static HTML —
 // no client JS required to see the content (unlike an earlier draft of this page)
 type Row = { html: string; added?: boolean; cls?: string };
 const rows: Row[] = [];
-const cmd = (html: string) => rows.push({ html, cls: 'cmd' });
-const blank = () => rows.push({ html: '' });
+const cmd = (html: string) => rows.push({ html, cls: "cmd" });
+const blank = () => rows.push({ html: "" });
 
-cmd(`<span class="user">securelayer@www</span> <span class="path">~</span> % <span class="cmdtext">ls legal/</span>`);
+cmd(
+  `<span class="user">securelayer@www</span> <span class="path">~</span> % <span class="cmdtext">ls legal/</span>`,
+);
 blank();
-files.forEach(f => rows.push({ html: f, cls: 'listing-row' }));
+files.forEach((f) => rows.push({ html: f, cls: "listing-row" }));
 blank();
-cmd(`<span class="user">securelayer@www</span> <span class="path">~</span> % <span class="cmdtext">cat legal/*.txt</span>`);
+cmd(
+  `<span class="user">securelayer@www</span> <span class="path">~</span> % <span class="cmdtext">cat legal/*.txt</span>`,
+);
 blank();
-sections.forEach(s => {
+sections.forEach((s) => {
   rows.push({ html: `<span class="heading">${s.h}</span>`, added: true });
-  s.p.forEach(p => rows.push({ html: p, added: true }));
+  s.p.forEach((p) => rows.push({ html: p, added: true }));
   blank();
 });
-cmd(`<span class="user">securelayer@www</span> <span class="path">~</span> % <span class="cmdtext">cd</span> <a href="/">~</a> <span class="comment">// back home</span>`);
-cmd(`<span class="user">securelayer@www</span> <span class="path">~</span> % <span class="cursor"></span>`);
+cmd(
+  `<span class="user">securelayer@www</span> <span class="path">~</span> % <span class="cmdtext">cd</span> <a href="/">~</a> <span class="comment">// back home</span>`,
+);
+cmd(
+  `<span class="user">securelayer@www</span> <span class="path">~</span> % <span class="cursor"></span>`,
+);
 ---
-<!DOCTYPE html>
+
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Legal mentions — securelayer.co</title>
-  <meta name="description" content="Legal mentions for securelayer.co — publisher, hosting, data handling, and terms." />
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Legal mentions — securelayer.co</title>
+    <meta
+      name="description"
+      content="Legal mentions for securelayer.co — publisher, hosting, data handling, and terms."
+    />
+    <style>
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
 
-    body {
-      background: #1c1330;
-      color: #d8d8d8;
-      font-family: 'JetBrains Mono', 'Courier New', monospace;
-      font-size: 13px;
-      line-height: 1.7;
-      min-height: 100vh;
-    }
+      body {
+        background: #1c1330;
+        color: #d8d8d8;
+        font-family: "JetBrains Mono", "Courier New", monospace;
+        font-size: 13px;
+        line-height: 1.7;
+        min-height: 100vh;
+      }
 
-    .legal-bg {
-      position: fixed; inset: -40px; z-index: -2;
-      background: url('/images/terminal-bg.webp') center / cover no-repeat;
-      filter: blur(38px) saturate(1.1) brightness(.5);
-      transform: scale(1.08);
-    }
-    .legal-scrim { position: fixed; inset: 0; z-index: -1; background: rgba(15,10,25,.78); }
+      .legal-bg {
+        position: fixed;
+        inset: -40px;
+        z-index: -2;
+        background: url("/images/terminal-bg.webp") center / cover no-repeat;
+        filter: blur(38px) saturate(1.1) brightness(0.5);
+        transform: scale(1.08);
+      }
+      .legal-scrim {
+        position: fixed;
+        inset: 0;
+        z-index: -1;
+        background: rgba(15, 10, 25, 0.78);
+      }
 
-    /* every inline element below (a, strong, .heading, .user, .path, .cmdtext, .comment,
+      /* every inline element below (a, strong, .heading, .user, .path, .cmdtext, .comment,
        .cursor, .placeholder) lives inside content injected via set:html — it never gets
        Astro's data-astro-cid scoping attribute, so all of these MUST use :global(),
        or the rule silently never matches (same bug hit before on this project's
        set:html-injected homepage logo mark). Structural wrapper classes (.dline, .added,
        .cmd, .lc, .ln, .mark, .listing-row) are normal Astro template attributes, not
        injected, so they scope normally and don't need :global(). */
-    :global(a) { color: #5eead4; text-decoration: underline; }
-    :global(a:hover) { text-decoration: underline; }
+      :global(a) {
+        color: #5eead4;
+        text-decoration: underline;
+      }
+      :global(a:hover) {
+        text-decoration: underline;
+      }
 
-    .term-window { min-height: 100vh; display: flex; flex-direction: column; }
+      .term-window {
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+      }
 
-    .term-titlebar {
-      display: flex; align-items: center; justify-content: center; position: relative;
-      background: #2b2440; padding: 9px 16px; border-bottom: 1px solid #150f24;
-    }
-    .traffic-lights { display: flex; gap: 8px; position: absolute; left: 16px; }
-    .tl { width: 12px; height: 12px; border-radius: 50%; }
-    .tl.red { background: #ff5f57; }
-    .tl.yellow { background: #febc2e; }
-    .tl.green { background: #28c840; }
-    .term-title { font-size: 12.5px; color: #9d93b8; }
+      .term-titlebar {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        background: #2b2440;
+        padding: 9px 16px;
+        border-bottom: 1px solid #150f24;
+      }
+      .traffic-lights {
+        display: flex;
+        gap: 8px;
+        position: absolute;
+        left: 16px;
+      }
+      .tl {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+      }
+      .tl.red {
+        background: #ff5f57;
+      }
+      .tl.yellow {
+        background: #febc2e;
+      }
+      .tl.green {
+        background: #28c840;
+      }
+      .term-title {
+        font-size: 12.5px;
+        color: #9d93b8;
+      }
 
-    /* ── diff-viewer body: numbered gutter + "added" highlight rows ── */
-    .diff-body { flex: 1; max-width: 900px; width: 100%; margin: 0 auto; padding: 12px 0 60px; overflow-x: auto; }
+      /* ── diff-viewer body: numbered gutter + "added" highlight rows ── */
+      .diff-body {
+        flex: 1;
+        max-width: 900px;
+        width: 100%;
+        margin: 0 auto;
+        padding: 12px 0 60px;
+        overflow-x: auto;
+      }
 
-    .dline { display: grid; grid-template-columns: 44px 18px 1fr; column-gap: 10px; padding: 2px 20px; }
-    .dline .ln { color: #9089ab; text-align: right; user-select: none; }
-    .dline .mark { color: #2dd4bf; font-weight: 700; }
-    .dline .lc { color: #c6c0d9; }
+      .dline {
+        display: grid;
+        grid-template-columns: 44px 18px 1fr;
+        column-gap: 10px;
+        padding: 2px 20px;
+      }
+      .dline .ln {
+        color: #9089ab;
+        text-align: right;
+        user-select: none;
+      }
+      .dline .mark {
+        color: #2dd4bf;
+        font-weight: 700;
+      }
+      .dline .lc {
+        color: #c6c0d9;
+      }
 
-    .dline.added { background: rgba(13,148,136,.22); }
-    .dline.added .ln { color: #5eead4; }
-    .dline.added .lc { color: #e8fdfa; }
+      .dline.added {
+        background: rgba(13, 148, 136, 0.22);
+      }
+      .dline.added .ln {
+        color: #5eead4;
+      }
+      .dline.added .lc {
+        color: #e8fdfa;
+      }
 
-    .dline.cmd :global(.user) { color: #34d399; font-weight: 700; }
-    .dline.cmd :global(.path) { color: #7dd3fc; }
-    .dline.cmd :global(.cmdtext) { color: #f0f0f0; }
+      .dline.cmd :global(.user) {
+        color: #34d399;
+        font-weight: 700;
+      }
+      .dline.cmd :global(.path) {
+        color: #7dd3fc;
+      }
+      .dline.cmd :global(.cmdtext) {
+        color: #f0f0f0;
+      }
 
-    :global(.heading) { color: #2dd4bf; font-weight: 700; }
-    :global(.heading::before) { content: "# "; opacity: .6; }
-    .added :global(.heading) { color: #99f6e4; }
+      :global(.heading) {
+        color: #2dd4bf;
+        font-weight: 700;
+      }
+      :global(.heading::before) {
+        content: "# ";
+        opacity: 0.6;
+      }
+      .added :global(.heading) {
+        color: #99f6e4;
+      }
 
-    :global(strong) { color: #fff; font-weight: 700; }
-    :global(.placeholder) { color: #f59e0b; background: rgba(245,158,11,.14); padding: 0 4px; border-radius: 2px; }
-    :global(.comment) { color: #948da8; font-style: italic; }
-    .listing-row .lc { color: #7dd3fc; }
+      :global(strong) {
+        color: #fff;
+        font-weight: 700;
+      }
+      :global(.placeholder) {
+        color: #f59e0b;
+        background: rgba(245, 158, 11, 0.14);
+        padding: 0 4px;
+        border-radius: 2px;
+      }
+      :global(.comment) {
+        color: #948da8;
+        font-style: italic;
+      }
+      .listing-row .lc {
+        color: #7dd3fc;
+      }
 
-    :global(.cursor) { display: inline-block; width: 7px; height: 14px; background: #34d399; vertical-align: middle; animation: blink 1s step-end infinite; }
-    @keyframes blink { 50% { opacity: 0; } }
+      :global(.cursor) {
+        display: inline-block;
+        width: 7px;
+        height: 14px;
+        background: #34d399;
+        vertical-align: middle;
+        animation: blink 1s step-end infinite;
+      }
+      @keyframes blink {
+        50% {
+          opacity: 0;
+        }
+      }
 
-    @media (max-width: 560px) {
-      .dline { grid-template-columns: 28px 14px 1fr; column-gap: 6px; padding: 2px 12px; font-size: 12px; }
-    }
-  </style>
-</head>
-<body>
-<div class="legal-bg" aria-hidden="true"></div>
-<div class="legal-scrim" aria-hidden="true"></div>
-<div class="term-window">
-
-  <div class="term-titlebar">
-    <div class="traffic-lights"><span class="tl red"></span><span class="tl yellow"></span><span class="tl green"></span></div>
-    <span class="term-title">securelayer — legal.diff</span>
-  </div>
-
-  <div class="diff-body">
-    {rows.map((r, i) => (
-      <div class={`dline${r.added ? ' added' : ''}${r.cls ? ' ' + r.cls : ''}`}>
-        <span class="ln">{r.html ? i + 1 : ''}</span>
-        <span class="mark">{r.added ? '+' : ''}</span>
-        <span class="lc" set:html={r.html} />
+      @media (max-width: 560px) {
+        .dline {
+          grid-template-columns: 28px 14px 1fr;
+          column-gap: 6px;
+          padding: 2px 12px;
+          font-size: 12px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="legal-bg" aria-hidden="true"></div>
+    <div class="legal-scrim" aria-hidden="true"></div>
+    <div class="term-window">
+      <div class="term-titlebar">
+        <div class="traffic-lights">
+          <span class="tl red"></span><span class="tl yellow"></span><span
+            class="tl green"></span>
+        </div>
+        <span class="term-title">securelayer — legal.diff</span>
       </div>
-    ))}
-  </div>
 
-</div>
-</body>
+      <div class="diff-body">
+        {
+          rows.map((r, i) => (
+            <div
+              class={`dline${r.added ? " added" : ""}${r.cls ? " " + r.cls : ""}`}
+            >
+              <span class="ln">{r.html ? i + 1 : ""}</span>
+              <span class="mark">{r.added ? "+" : ""}</span>
+              <span class="lc" set:html={r.html} />
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </body>
 </html>

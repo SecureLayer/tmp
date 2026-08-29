@@ -1,571 +1,1185 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Security — securelayer.co</title>
-  <meta name="description" content="How securelayer.co secures itself — HTTP headers, SSL/TLS configuration, privacy scans, and independent third-party verification, all checked live." />
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Security — securelayer.co</title>
+    <meta
+      name="description"
+      content="How securelayer.co secures itself — HTTP headers, SSL/TLS configuration, privacy scans, and independent third-party verification, all checked live."
+    />
+    <style>
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
 
-    body {
-      background: #0a0f0f;
-      color: #e0e0e0;
-      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-      font-size: 14px;
-      line-height: 1.6;
-      min-height: 100vh;
-    }
+      body {
+        background: #0a0f0f;
+        color: #e0e0e0;
+        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+        font-size: 14px;
+        line-height: 1.6;
+        min-height: 100vh;
+      }
 
-    .page { max-width: 1240px; margin: 0 auto; padding: 40px 24px 80px; }
+      .page {
+        max-width: 1240px;
+        margin: 0 auto;
+        padding: 40px 24px 80px;
+      }
 
-    a { color: inherit; text-decoration: none; }
-    a:hover { text-decoration: underline; }
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+      a:hover {
+        text-decoration: underline;
+      }
 
-    .category-block { margin-bottom: 40px; }
-    /* superseded everywhere by .m-cat-question/.m-cat-desc below (2026-08-26) — the plain-
+      .category-block {
+        margin-bottom: 40px;
+      }
+      /* superseded everywhere by .m-cat-question/.m-cat-desc below (2026-08-26) — the plain-
        language question format reads better than this one-liner on both mobile and desktop */
-    .category-line { display: none; }
-    .category-line strong { color: #e0e0e0; font-weight: 700; }
-    .category-block .scores-grid { margin-bottom: 0; }
+      .category-line {
+        display: none;
+      }
+      .category-line strong {
+        color: #e0e0e0;
+        font-weight: 700;
+      }
+      .category-block .scores-grid {
+        margin-bottom: 0;
+      }
 
-    /* plain-language category question/desc — carried to desktop 2026-08-26, previously
+      /* plain-language category question/desc — carried to desktop 2026-08-26, previously
        mobile-only. Colors here are the dark-theme base; the mobile media query further
        down overrides to dark-text-on-light for the blurred-photo background. */
-    .m-cat-question { font-size: .95rem; font-weight: 700; color: #e0e0e0; margin-bottom: 6px; line-height: 1.3; }
-    .m-cat-desc { font-size: .8rem; color: #999; line-height: 1.5; margin-bottom: 16px; }
-    .category-pending .score-card { opacity: .5; }
+      .m-cat-question {
+        font-size: 0.95rem;
+        font-weight: 700;
+        color: #e0e0e0;
+        margin-bottom: 6px;
+        line-height: 1.3;
+      }
+      .m-cat-desc {
+        font-size: 0.8rem;
+        color: #999;
+        line-height: 1.5;
+        margin-bottom: 16px;
+      }
+      .category-pending .score-card {
+        opacity: 0.5;
+      }
 
-    .scores-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 16px;
-      margin-bottom: 48px;
-    }
+      .scores-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 16px;
+        margin-bottom: 48px;
+      }
 
-    .score-card {
-      background: #0d1a1a;
-      border: 1px solid #1a3030;
-      border-radius: 8px;
-      padding: 24px;
-      color: inherit;
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-    }
+      .score-card {
+        background: #0d1a1a;
+        border: 1px solid #1a3030;
+        border-radius: 8px;
+        padding: 24px;
+        color: inherit;
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+      }
 
-    .card-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-    }
+      .card-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+      }
 
-    .service-name {
-      font-size: 13px;
-      font-weight: 700;
-      color: #aaa;
-      letter-spacing: 0.3px;
-    }
+      .service-name {
+        font-size: 13px;
+        font-weight: 700;
+        color: #aaa;
+        letter-spacing: 0.3px;
+      }
 
-    .grade-badge {
-      font-size: 22px;
-      font-weight: 800;
-      padding: 4px 12px;
-      border-radius: 6px;
-      line-height: 1.4;
-      flex-shrink: 0;
-    }
-    .grade-Aplus  { color: #4ade80; background: #0d2a0d; border: 1px solid #166534; }
-    .grade-A      { color: #a3e635; background: #1a2a08; border: 1px solid #365314; }
-    .grade-safe   { color: #5eead4; background: #0d2a2a; border: 1px solid #0d9488; font-size: 13px; }
-    .grade-pending { color: #a78bfa; background: #1a0d2a; border: 1px solid #6d28d9; font-size: 12px; }
-    .grade-silver { color: #cbd5e1; background: #1a1e26; border: 1px solid #64748b; font-size: 13px; }
+      .grade-badge {
+        font-size: 22px;
+        font-weight: 800;
+        padding: 4px 12px;
+        border-radius: 6px;
+        line-height: 1.4;
+        flex-shrink: 0;
+      }
+      .grade-Aplus {
+        color: #4ade80;
+        background: #0d2a0d;
+        border: 1px solid #166534;
+      }
+      .grade-A {
+        color: #a3e635;
+        background: #1a2a08;
+        border: 1px solid #365314;
+      }
+      .grade-safe {
+        color: #5eead4;
+        background: #0d2a2a;
+        border: 1px solid #0d9488;
+        font-size: 13px;
+      }
+      .grade-pending {
+        color: #a78bfa;
+        background: #1a0d2a;
+        border: 1px solid #6d28d9;
+        font-size: 12px;
+      }
+      .grade-silver {
+        color: #cbd5e1;
+        background: #1a1e26;
+        border: 1px solid #64748b;
+        font-size: 13px;
+      }
 
-    .card-desc {
-      font-size: 12px;
-      color: #555;
-      line-height: 1.5;
-    }
+      .card-desc {
+        font-size: 12px;
+        color: #555;
+        line-height: 1.5;
+      }
 
-    .card-link {
-      font-size: 12px;
-      color: #0d9488;
-      letter-spacing: 0.3px;
-    }
+      .card-link {
+        font-size: 12px;
+        color: #0d9488;
+        letter-spacing: 0.3px;
+      }
 
-    .section-title {
-      font-size: 13px;
-      font-weight: 700;
-      color: #888;
-      letter-spacing: 0.8px;
-      text-transform: uppercase;
-      margin-bottom: 16px;
-    }
+      .section-title {
+        font-size: 13px;
+        font-weight: 700;
+        color: #888;
+        letter-spacing: 0.8px;
+        text-transform: uppercase;
+        margin-bottom: 16px;
+      }
 
-    .contact-box {
-      background: #0d1a1a;
-      border: 1px solid #1a3030;
-      border-radius: 8px;
-      padding: 20px 24px;
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
-      margin-bottom: 48px;
-    }
-    .contact-box p { font-size: 13px; color: #aaa; }
-    .contact-box-top { display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap; }
-    .contact-box-scope { border-top: 1px solid #1a3030; padding-top: 18px; }
-    .contact-box-scope h2 {
-      font-size: 13px; font-weight: 700; color: #888;
-      letter-spacing: 0.8px; text-transform: uppercase; margin-bottom: 12px;
-    }
-    .contact-box-scope h2 + p { margin-bottom: 10px; }
-    .contact-box-scope .sec-list { margin-bottom: 18px; }
-    .contact-box-scope .sec-list:last-child { margin-bottom: 0; }
-    .contact-btn {
-      display: inline-block;
-      background: #0d2a2a;
-      border: 1px solid #0d9488;
-      border-radius: 5px;
-      color: #5eead4;
-      font-size: 13px;
-      font-weight: 600;
-      padding: 8px 20px;
-      text-decoration: none;
-      white-space: nowrap;
-      transition: background 0.15s;
-      flex-shrink: 0;
-    }
-    .contact-btn:hover { background: #0d3535; }
+      .contact-box {
+        background: #0d1a1a;
+        border: 1px solid #1a3030;
+        border-radius: 8px;
+        padding: 20px 24px;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        margin-bottom: 48px;
+      }
+      .contact-box p {
+        font-size: 13px;
+        color: #aaa;
+      }
+      .contact-box-top {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 24px;
+        flex-wrap: wrap;
+      }
+      .contact-box-scope {
+        border-top: 1px solid #1a3030;
+        padding-top: 18px;
+      }
+      .contact-box-scope h2 {
+        font-size: 13px;
+        font-weight: 700;
+        color: #888;
+        letter-spacing: 0.8px;
+        text-transform: uppercase;
+        margin-bottom: 12px;
+      }
+      .contact-box-scope h2 + p {
+        margin-bottom: 10px;
+      }
+      .contact-box-scope .sec-list {
+        margin-bottom: 18px;
+      }
+      .contact-box-scope .sec-list:last-child {
+        margin-bottom: 0;
+      }
+      .contact-btn {
+        display: inline-block;
+        background: #0d2a2a;
+        border: 1px solid #0d9488;
+        border-radius: 5px;
+        color: #5eead4;
+        font-size: 13px;
+        font-weight: 600;
+        padding: 8px 20px;
+        text-decoration: none;
+        white-space: nowrap;
+        transition: background 0.15s;
+        flex-shrink: 0;
+      }
+      .contact-btn:hover {
+        background: #0d3535;
+      }
 
-    .pipeline-card {
-      background: #0d1a1a;
-      border: 1px solid #1a3030;
-      border-radius: 8px;
-      padding: 24px;
-      margin-bottom: 48px;
-    }
+      .pipeline-card {
+        background: #0d1a1a;
+        border: 1px solid #1a3030;
+        border-radius: 8px;
+        padding: 24px;
+        margin-bottom: 48px;
+      }
 
-    .pipeline-checks {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 16px;
-    }
+      .pipeline-checks {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 16px;
+      }
 
-    .check-item {
-      display: flex;
-      align-items: flex-start;
-      gap: 10px;
-    }
+      .check-item {
+        display: flex;
+        align-items: flex-start;
+        gap: 10px;
+      }
 
-    .check-icon {
-      color: #4ade80;
-      font-size: 14px;
-      font-weight: 800;
-      flex-shrink: 0;
-      margin-top: 2px;
-    }
-    .check-icon.pending { color: #a78bfa; }
+      .check-icon {
+        color: #4ade80;
+        font-size: 14px;
+        font-weight: 800;
+        flex-shrink: 0;
+        margin-top: 2px;
+      }
+      .check-icon.pending {
+        color: #a78bfa;
+      }
 
-    .check-label strong {
-      color: #e0e0e0;
-      font-size: 12px;
-      font-weight: 700;
-      display: block;
-      margin-bottom: 3px;
-    }
+      .check-label strong {
+        color: #e0e0e0;
+        font-size: 12px;
+        font-weight: 700;
+        display: block;
+        margin-bottom: 3px;
+      }
 
-    .check-label .check-desc {
-      font-size: 12px;
-      color: #555;
-      line-height: 1.5;
-    }
+      .check-label .check-desc {
+        font-size: 12px;
+        color: #555;
+        line-height: 1.5;
+      }
 
-    .policy-section { margin-bottom: 40px; }
-    .policy-section h2 {
-      font-size: 13px;
-      font-weight: 700;
-      color: #888;
-      letter-spacing: 0.8px;
-      text-transform: uppercase;
-      margin-bottom: 16px;
-    }
-    .policy-section p { color: #999; font-size: 13px; line-height: 1.7; margin-bottom: 12px; }
+      .policy-section {
+        margin-bottom: 40px;
+      }
+      .policy-section h2 {
+        font-size: 13px;
+        font-weight: 700;
+        color: #888;
+        letter-spacing: 0.8px;
+        text-transform: uppercase;
+        margin-bottom: 16px;
+      }
+      .policy-section p {
+        color: #999;
+        font-size: 13px;
+        line-height: 1.7;
+        margin-bottom: 12px;
+      }
 
-    .timeline-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-    .timeline-card { background: #0d1a1a; border: 1px solid #1a3030; border-radius: 8px; padding: 20px; }
-    .tl-days { font-size: 1.75rem; font-weight: 800; color: #5eead4; line-height: 1; margin-bottom: 4px; }
-    .tl-label { font-size: .75rem; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: #e0e0e0; margin-bottom: 8px; }
-    .tl-desc { font-size: .8rem; color: #666; line-height: 1.5; }
+      .timeline-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+      }
+      .timeline-card {
+        background: #0d1a1a;
+        border: 1px solid #1a3030;
+        border-radius: 8px;
+        padding: 20px;
+      }
+      .tl-days {
+        font-size: 1.75rem;
+        font-weight: 800;
+        color: #5eead4;
+        line-height: 1;
+        margin-bottom: 4px;
+      }
+      .tl-label {
+        font-size: 0.75rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        color: #e0e0e0;
+        margin-bottom: 8px;
+      }
+      .tl-desc {
+        font-size: 0.8rem;
+        color: #666;
+        line-height: 1.5;
+      }
 
-    .sec-list { list-style: none; display: flex; flex-direction: column; gap: 6px; }
-    .sec-list li { font-size: 13px; color: #999; padding-left: 18px; position: relative; }
-    .sec-list li::before { content: '—'; position: absolute; left: 0; color: #0d9488; }
-    .sec-list.muted li::before { color: #333; }
+      .sec-list {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+      }
+      .sec-list li {
+        font-size: 13px;
+        color: #999;
+        padding-left: 18px;
+        position: relative;
+      }
+      .sec-list li::before {
+        content: "—";
+        position: absolute;
+        left: 0;
+        color: #0d9488;
+      }
+      .sec-list.muted li::before {
+        color: #333;
+      }
 
-    @media (max-width: 480px) {
-      .timeline-grid { grid-template-columns: 1fr; }
-    }
+      @media (max-width: 480px) {
+        .timeline-grid {
+          grid-template-columns: 1fr;
+        }
+      }
 
-    /* ── Browser chrome (Brave) ── */
-    .browser-window { min-height: 100vh; display: flex; flex-direction: column; }
+      /* ── Browser chrome (Brave) ── */
+      .browser-window {
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+      }
 
-    .browser-titlebar {
-      display: flex; align-items: center; gap: 14px;
-      background: #170f20; padding: 10px 16px 0;
-      border-bottom: 1px solid #2a2038;
-    }
-    .traffic-lights { display: flex; gap: 8px; padding-bottom: 10px; flex-shrink: 0; }
-    .tl { width: 12px; height: 12px; border-radius: 50%; }
-    .tl.red { background: #ff5f57; }
-    .tl.yellow { background: #febc2e; }
-    .tl.green { background: #28c840; }
+      .browser-titlebar {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        background: #170f20;
+        padding: 10px 16px 0;
+        border-bottom: 1px solid #2a2038;
+      }
+      .traffic-lights {
+        display: flex;
+        gap: 8px;
+        padding-bottom: 10px;
+        flex-shrink: 0;
+      }
+      .tl {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+      }
+      .tl.red {
+        background: #ff5f57;
+      }
+      .tl.yellow {
+        background: #febc2e;
+      }
+      .tl.green {
+        background: #28c840;
+      }
 
-    .browser-tab {
-      display: flex; align-items: center; gap: 8px;
-      background: #241a30; border-radius: 8px 8px 0 0;
-      padding: 8px 12px; max-width: 260px;
-    }
-    .tab-favicon { width: 15px; height: 15px; flex-shrink: 0; }
-    .tab-title { font-size: 12.5px; color: #e4dcf0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .tab-close { margin-left: auto; color: #7a6f8c; font-size: 15px; line-height: 1; flex-shrink: 0; }
-    .tab-add { color: #7a6f8c; font-size: 18px; padding: 0 10px 10px; line-height: 1; align-self: center; }
-    .tab-chevron { color: #7a6f8c; font-size: 12px; margin-left: auto; padding-bottom: 10px; align-self: center; }
+      .browser-tab {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        background: #241a30;
+        border-radius: 8px 8px 0 0;
+        padding: 8px 12px;
+        max-width: 260px;
+      }
+      .tab-favicon {
+        width: 15px;
+        height: 15px;
+        flex-shrink: 0;
+      }
+      .tab-title {
+        font-size: 12.5px;
+        color: #e4dcf0;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      .tab-close {
+        margin-left: auto;
+        color: #7a6f8c;
+        font-size: 15px;
+        line-height: 1;
+        flex-shrink: 0;
+      }
+      .tab-add {
+        color: #7a6f8c;
+        font-size: 18px;
+        padding: 0 10px 10px;
+        line-height: 1;
+        align-self: center;
+      }
+      .tab-chevron {
+        color: #7a6f8c;
+        font-size: 12px;
+        margin-left: auto;
+        padding-bottom: 10px;
+        align-self: center;
+      }
 
-    .browser-navbar {
-      display: flex; align-items: center; gap: 14px;
-      background: #1d1428; padding: 10px 16px;
-      border-bottom: 1px solid #2a2038;
-    }
-    .nav-icon { color: #8a7fa0; flex-shrink: 0; display: flex; align-items: center; }
-    .nav-icon svg { width: 17px; height: 17px; }
-    .nav-icon.disabled { color: #453b56; }
-    .address-pill {
-      flex: 1; display: flex; align-items: center; gap: 8px;
-      background: #2a2038; border-radius: 7px; padding: 7px 14px;
-      max-width: 640px; margin: 0 auto;
-    }
-    .address-pill svg { width: 14px; height: 14px; color: #8a7fa0; flex-shrink: 0; }
-    .addr-text { font-size: 13px; color: #e4dcf0; }
-    .addr-path { color: #8a7fa0; }
-    .nav-divider { width: 1px; height: 20px; background: #362a48; flex-shrink: 0; }
-    .nav-brave { width: 20px; height: 20px; flex-shrink: 0; }
-    .nav-menu svg { width: 18px; height: 18px; }
+      .browser-navbar {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        background: #1d1428;
+        padding: 10px 16px;
+        border-bottom: 1px solid #2a2038;
+      }
+      .nav-icon {
+        color: #8a7fa0;
+        flex-shrink: 0;
+        display: flex;
+        align-items: center;
+      }
+      .nav-icon svg {
+        width: 17px;
+        height: 17px;
+      }
+      .nav-icon.disabled {
+        color: #453b56;
+      }
+      .address-pill {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        background: #2a2038;
+        border-radius: 7px;
+        padding: 7px 14px;
+        max-width: 640px;
+        margin: 0 auto;
+      }
+      .address-pill svg {
+        width: 14px;
+        height: 14px;
+        color: #8a7fa0;
+        flex-shrink: 0;
+      }
+      .addr-text {
+        font-size: 13px;
+        color: #e4dcf0;
+      }
+      .addr-path {
+        color: #8a7fa0;
+      }
+      .nav-divider {
+        width: 1px;
+        height: 20px;
+        background: #362a48;
+        flex-shrink: 0;
+      }
+      .nav-brave {
+        width: 20px;
+        height: 20px;
+        flex-shrink: 0;
+      }
+      .nav-menu svg {
+        width: 18px;
+        height: 18px;
+      }
 
-    .browser-body { flex: 1; }
+      .browser-body {
+        flex: 1;
+      }
 
-    /* ── Footer ── */
-    .site-footer { border-top: 1px solid #1a3030; padding: 40px 24px; text-align: center; margin-top: 24px; }
-    .site-footer p { color: #888; font-size: 13px; }
-    .footer-links { margin-top: 14px; display: flex; justify-content: center; gap: 20px; }
-    .footer-links a { font-size: 12px; color: #888; text-decoration: none; }
-    .footer-links a:hover { color: #5eead4; }
-    .footer-green-link { display: inline-block; margin-top: 18px; opacity: .85; transition: opacity .2s; }
-    .footer-green-link:hover { opacity: 1; }
-    .footer-green-link img { display: block; width: 100px; height: auto; margin: 0 auto; }
-    .footer-copy { margin-top: 12px; font-size: 12px; }
+      /* ── Footer ── */
+      .site-footer {
+        border-top: 1px solid #1a3030;
+        padding: 40px 24px;
+        text-align: center;
+        margin-top: 24px;
+      }
+      .site-footer p {
+        color: #888;
+        font-size: 13px;
+      }
+      .footer-links {
+        margin-top: 14px;
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+      }
+      .footer-links a {
+        font-size: 12px;
+        color: #888;
+        text-decoration: none;
+      }
+      .footer-links a:hover {
+        color: #5eead4;
+      }
+      .footer-green-link {
+        display: inline-block;
+        margin-top: 18px;
+        opacity: 0.85;
+        transition: opacity 0.2s;
+      }
+      .footer-green-link:hover {
+        opacity: 1;
+      }
+      .footer-green-link img {
+        display: block;
+        width: 100px;
+        height: auto;
+        margin: 0 auto;
+      }
+      .footer-copy {
+        margin-top: 12px;
+        font-size: 12px;
+      }
 
-    /* ══════════ MOBILE SCENE · Phase B push (2026-08-26) ══════════
+      /* ══════════ MOBILE SCENE · Phase B push (2026-08-26) ══════════
        Below 860px, drops the Brave browser-chrome and the dark theme entirely for the
        blurred-photo + iOS frosted-glass system shared with the homepage — same rationale
        as the mockup: "drop the all dark/green theme" (see sl-tools/sl-backlog-v2.html). */
-    .m-statusbar, .m-bg, .m-scrim, .m-hero { display: none; }
-
-    @media (max-width: 860px) {
-      .browser-titlebar, .browser-navbar { display: none; }
-      .m-statusbar, .m-bg, .m-scrim, .m-hero { display: block; }
-
-      body { background: #f0e9da; }
-      .browser-window, .browser-body, .page { background: transparent; }
-      .page { padding-top: 8px; }
-
-      .m-statusbar {
-        position: sticky; top: 0; z-index: 30;
-        display: flex; align-items: center; justify-content: space-between;
-        height: 30px; padding: 0 16px;
-        color: #fff; font-family: 'Helvetica Neue', Arial, sans-serif;
-        text-shadow: 0 1px 4px rgba(0,0,0,.35);
+      .m-statusbar,
+      .m-bg,
+      .m-scrim,
+      .m-hero {
+        display: none;
       }
-      .m-statusbar-brand { font-size: .72rem; font-weight: 800; }
-      .m-statusbar-icons { display: flex; align-items: center; gap: 6px; }
-      .m-statusbar-icons svg { display: block; }
 
-      .m-bg {
-        position: fixed; inset: -40px; z-index: -2;
-        background: url('/images/wallpaper-beach.webp') center 55% / cover no-repeat;
-        filter: blur(30px) saturate(1.15) brightness(.92);
-        transform: scale(1.08);
+      @media (max-width: 860px) {
+        .browser-titlebar,
+        .browser-navbar {
+          display: none;
+        }
+        .m-statusbar,
+        .m-bg,
+        .m-scrim,
+        .m-hero {
+          display: block;
+        }
+
+        body {
+          background: #f0e9da;
+        }
+        .browser-window,
+        .browser-body,
+        .page {
+          background: transparent;
+        }
+        .page {
+          padding-top: 8px;
+        }
+
+        .m-statusbar {
+          position: sticky;
+          top: 0;
+          z-index: 30;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          height: 30px;
+          padding: 0 16px;
+          color: #fff;
+          font-family: "Helvetica Neue", Arial, sans-serif;
+          text-shadow: 0 1px 4px rgba(0, 0, 0, 0.35);
+        }
+        .m-statusbar-brand {
+          font-size: 0.72rem;
+          font-weight: 800;
+        }
+        .m-statusbar-icons {
+          display: flex;
+          align-items: center;
+          gap: 6px;
+        }
+        .m-statusbar-icons svg {
+          display: block;
+        }
+
+        .m-bg {
+          position: fixed;
+          inset: -40px;
+          z-index: -2;
+          background: url("/images/wallpaper-beach.webp") center 55% / cover
+            no-repeat;
+          filter: blur(30px) saturate(1.15) brightness(0.92);
+          transform: scale(1.08);
+        }
+        .m-scrim {
+          position: fixed;
+          inset: 0;
+          z-index: -1;
+          background: rgba(20, 18, 14, 0.22);
+        }
+
+        .m-hero {
+          padding: 18px 24px 4px;
+        }
+        .m-hero h1 {
+          font-size: 1.4rem;
+          font-weight: 700;
+          color: #17140f;
+          margin-bottom: 8px;
+        }
+        .m-hero p {
+          font-size: 0.78rem;
+          color: rgba(23, 20, 15, 0.75);
+          line-height: 1.5;
+        }
+
+        /* mobile-specific color override of the (now desktop-visible-too) question/desc pair */
+        .m-cat-question {
+          font-size: 0.95rem;
+          font-weight: 700;
+          color: #17140f;
+          margin-bottom: 6px;
+          line-height: 1.3;
+        }
+        .m-cat-desc {
+          font-size: 0.7rem;
+          color: rgba(23, 20, 15, 0.7);
+          line-height: 1.45;
+          margin-bottom: 10px;
+        }
+
+        .score-card {
+          background: rgba(255, 255, 255, 0.42);
+          backdrop-filter: blur(28px) saturate(150%);
+          -webkit-backdrop-filter: blur(28px) saturate(150%);
+          border: 1px solid rgba(255, 255, 255, 0.45);
+          box-shadow: 0 8px 26px rgba(0, 0, 0, 0.12);
+        }
+        .service-name {
+          color: #17140f;
+        }
+        .card-desc {
+          display: none;
+        }
+        .card-link {
+          color: #a8791f;
+        }
+        .grade-Aplus,
+        .grade-A {
+          color: #1a7a3d;
+          background: rgba(74, 222, 128, 0.22);
+          border: 1px solid rgba(26, 122, 61, 0.3);
+        }
+        .grade-safe {
+          color: #0d6d63;
+          background: rgba(94, 234, 212, 0.25);
+          border: 1px solid rgba(13, 109, 99, 0.3);
+        }
+        .grade-pending {
+          color: #5b3fa8;
+          background: rgba(167, 139, 250, 0.22);
+          border: 1px solid rgba(91, 63, 168, 0.3);
+        }
+
+        .section-title {
+          color: rgba(23, 20, 15, 0.55);
+        }
+        .pipeline-card,
+        .contact-box,
+        .timeline-card {
+          background: rgba(255, 255, 255, 0.42);
+          backdrop-filter: blur(28px) saturate(150%);
+          -webkit-backdrop-filter: blur(28px) saturate(150%);
+          border: 1px solid rgba(255, 255, 255, 0.45);
+          box-shadow: 0 8px 26px rgba(0, 0, 0, 0.12);
+        }
+        .check-label strong,
+        .contact-box-scope h2,
+        .tl-label {
+          color: #17140f;
+        }
+        .tl-days {
+          color: #1a7a3d;
+        }
+        .check-label .check-desc,
+        .contact-box p,
+        .tl-desc,
+        .sec-list li {
+          color: rgba(23, 20, 15, 0.65);
+        }
+        .contact-box-scope {
+          border-top-color: rgba(23, 20, 15, 0.12);
+        }
+        .contact-btn {
+          background: #2e2a22;
+          border-color: #2e2a22;
+          color: #f0e9da;
+        }
+        .contact-btn:hover {
+          background: #17140f;
+        }
+
+        .site-footer {
+          border-top-color: rgba(23, 20, 15, 0.15);
+        }
+        .site-footer p {
+          color: rgba(23, 20, 15, 0.6);
+        }
+        .footer-links a {
+          color: rgba(23, 20, 15, 0.6);
+        }
+        .footer-links a:hover {
+          color: #17140f;
+        }
       }
-      .m-scrim { position: fixed; inset: 0; z-index: -1; background: rgba(20,18,14,.22); }
-
-      .m-hero { padding: 18px 24px 4px; }
-      .m-hero h1 { font-size: 1.4rem; font-weight: 700; color: #17140f; margin-bottom: 8px; }
-      .m-hero p { font-size: .78rem; color: rgba(23,20,15,.75); line-height: 1.5; }
-
-      /* mobile-specific color override of the (now desktop-visible-too) question/desc pair */
-      .m-cat-question { font-size: .95rem; font-weight: 700; color: #17140f; margin-bottom: 6px; line-height: 1.3; }
-      .m-cat-desc { font-size: .7rem; color: rgba(23,20,15,.7); line-height: 1.45; margin-bottom: 10px; }
-
-      .score-card {
-        background: rgba(255,255,255,.42); backdrop-filter: blur(28px) saturate(150%); -webkit-backdrop-filter: blur(28px) saturate(150%);
-        border: 1px solid rgba(255,255,255,.45); box-shadow: 0 8px 26px rgba(0,0,0,.12);
-      }
-      .service-name { color: #17140f; }
-      .card-desc { display: none; }
-      .card-link { color: #a8791f; }
-      .grade-Aplus, .grade-A { color: #1a7a3d; background: rgba(74,222,128,.22); border: 1px solid rgba(26,122,61,.3); }
-      .grade-safe { color: #0d6d63; background: rgba(94,234,212,.25); border: 1px solid rgba(13,109,99,.3); }
-      .grade-pending { color: #5b3fa8; background: rgba(167,139,250,.22); border: 1px solid rgba(91,63,168,.3); }
-
-      .section-title { color: rgba(23,20,15,.55); }
-      .pipeline-card, .contact-box, .timeline-card {
-        background: rgba(255,255,255,.42); backdrop-filter: blur(28px) saturate(150%); -webkit-backdrop-filter: blur(28px) saturate(150%);
-        border: 1px solid rgba(255,255,255,.45); box-shadow: 0 8px 26px rgba(0,0,0,.12);
-      }
-      .check-label strong, .contact-box-scope h2, .tl-label { color: #17140f; }
-      .tl-days { color: #1a7a3d; }
-      .check-label .check-desc, .contact-box p, .tl-desc, .sec-list li { color: rgba(23,20,15,.65); }
-      .contact-box-scope { border-top-color: rgba(23,20,15,.12); }
-      .contact-btn { background: #2e2a22; border-color: #2e2a22; color: #f0e9da; }
-      .contact-btn:hover { background: #17140f; }
-
-      .site-footer { border-top-color: rgba(23,20,15,.15); }
-      .site-footer p { color: rgba(23,20,15,.6); }
-      .footer-links a { color: rgba(23,20,15,.6); }
-      .footer-links a:hover { color: #17140f; }
-    }
-  </style>
-</head>
-<body>
-<!-- MOBILE SCENE header · Phase B push (2026-08-26), replaces the Brave browser-chrome below 860px -->
-<div class="m-statusbar">
-  <div class="m-statusbar-brand">SecureLayer</div>
-  <div class="m-statusbar-icons">
-    <svg width="16" height="11" viewBox="0 0 16 11" fill="#fff"><rect x="0" y="7" width="3" height="4" rx=".5"/><rect x="4.5" y="5" width="3" height="6" rx=".5"/><rect x="9" y="3" width="3" height="8" rx=".5"/><rect x="13" y="0" width="3" height="11" rx=".5"/></svg>
-    <svg width="15" height="13" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.55a11 11 0 0 1 14.08 0"/><path d="M1.42 9a16 16 0 0 1 21.16 0"/><path d="M8.53 16.11a6 6 0 0 1 6.95 0"/><line x1="12" y1="20" x2="12.01" y2="20"/></svg>
-    <svg width="22" height="11" viewBox="0 0 24 12" fill="none"><rect x="1" y="1.5" width="19" height="9" rx="2.5" stroke="#fff" stroke-width="1.2"/><rect x="21.5" y="4.3" width="2" height="3.4" rx="1" fill="#fff"/><rect x="2.5" y="3" width="14" height="6" rx="1.2" fill="#fff"/></svg>
-  </div>
-</div>
-<div class="m-bg" aria-hidden="true"></div>
-<div class="m-scrim" aria-hidden="true"></div>
-<div class="m-hero">
-  <h1>Secure by design</h1>
-  <p>We publish real, independent security scans of this site instead of just claiming to be secure. Here's what they found.</p>
-</div>
-<div class="browser-window">
-  <div class="browser-titlebar">
-    <div class="traffic-lights">
-      <span class="tl red"></span><span class="tl yellow"></span><span class="tl green"></span>
+    </style>
+  </head>
+  <body>
+    <!-- MOBILE SCENE header · Phase B push (2026-08-26), replaces the Brave browser-chrome below 860px -->
+    <div class="m-statusbar">
+      <div class="m-statusbar-brand">SecureLayer</div>
+      <div class="m-statusbar-icons">
+        <svg width="16" height="11" viewBox="0 0 16 11" fill="#fff"
+          ><rect x="0" y="7" width="3" height="4" rx=".5"></rect><rect
+            x="4.5"
+            y="5"
+            width="3"
+            height="6"
+            rx=".5"></rect><rect x="9" y="3" width="3" height="8" rx=".5"
+          ></rect><rect x="13" y="0" width="3" height="11" rx=".5"></rect></svg
+        >
+        <svg
+          width="15"
+          height="13"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="#fff"
+          stroke-width="2.2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          ><path d="M5 12.55a11 11 0 0 1 14.08 0"></path><path
+            d="M1.42 9a16 16 0 0 1 21.16 0"></path><path
+            d="M8.53 16.11a6 6 0 0 1 6.95 0"></path><line
+            x1="12"
+            y1="20"
+            x2="12.01"
+            y2="20"></line></svg
+        >
+        <svg width="22" height="11" viewBox="0 0 24 12" fill="none"
+          ><rect
+            x="1"
+            y="1.5"
+            width="19"
+            height="9"
+            rx="2.5"
+            stroke="#fff"
+            stroke-width="1.2"></rect><rect
+            x="21.5"
+            y="4.3"
+            width="2"
+            height="3.4"
+            rx="1"
+            fill="#fff"></rect><rect
+            x="2.5"
+            y="3"
+            width="14"
+            height="6"
+            rx="1.2"
+            fill="#fff"></rect></svg
+        >
+      </div>
     </div>
-    <div class="browser-tab">
-      <img class="tab-favicon" src="/favicon.svg" alt="" />
-      <span class="tab-title">Security — securelayer.co</span>
-      <span class="tab-close">&times;</span>
+    <div class="m-bg" aria-hidden="true"></div>
+    <div class="m-scrim" aria-hidden="true"></div>
+    <div class="m-hero">
+      <h1>Secure by design</h1>
+      <p>
+        We publish real, independent security scans of this site instead of just
+        claiming to be secure. Here's what they found.
+      </p>
     </div>
-    <span class="tab-add">+</span>
-    <span class="tab-chevron">&#9660;</span>
-  </div>
-  <div class="browser-navbar">
-    <span class="nav-icon nav-back"><svg viewBox="0 0 24 24" fill="none"><path d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-    <span class="nav-icon nav-forward disabled"><svg viewBox="0 0 24 24" fill="none"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-    <span class="nav-icon nav-reload"><svg viewBox="0 0 24 24" fill="none"><path d="M4 12a8 8 0 0 1 14-5.3M20 12a8 8 0 0 1-14 5.3M4 4v5h5M20 20v-5h-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-    <span class="nav-icon nav-bookmark"><svg viewBox="0 0 24 24" fill="none"><path d="M6 3h12a1 1 0 0 1 1 1v17l-7-4-7 4V4a1 1 0 0 1 1-1Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg></span>
-    <div class="address-pill">
-      <svg viewBox="0 0 24 24" fill="none"><path d="M4 6h16M7 12h10M10 18h4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-      <span class="addr-text">securelayer.co<span class="addr-path">/security/</span></span>
-    </div>
-    <span class="nav-divider"></span>
-    <img class="nav-brave" src="/images/dock-icons/brave.png" alt="Brave" />
-    <span class="nav-menu"><svg viewBox="0 0 24 24" fill="none"><path d="M4 6h16M4 12h16M4 18h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>
-  </div>
-  <div class="browser-body">
-<div class="page">
-
-  <div class="category-block">
-    <p class="m-cat-question">How your connection to us is protected?</p>
-    <p class="m-cat-desc">We run independent, public scans checking whether traffic to this site is encrypted correctly, uses strong security headers, and can't be intercepted or downgraded.</p>
-    <p class="category-line"><strong>Network &amp; Transport Security</strong> — your connection here can't be intercepted or read.</p>
-    <div class="scores-grid">
-
-      <div class="score-card">
-        <div class="card-header">
-          <span class="service-name">HTTP Headers<br>Security Grade</span>
-          <span class="grade-badge grade-Aplus">A+</span>
+    <div class="browser-window">
+      <div class="browser-titlebar">
+        <div class="traffic-lights">
+          <span class="tl red"></span><span class="tl yellow"></span><span
+            class="tl green"></span>
         </div>
-        <p class="card-desc">Tests HTTP headers, CSP, cookies, and HTTPS configuration against Mozilla's security guidelines.</p>
-        <a class="card-link" href="https://developer.mozilla.org/en-US/observatory/analyze?host=securelayer.co" target="_blank" rel="noopener noreferrer">View full report ↗</a>
-      </div>
-
-      <div class="score-card">
-        <div class="card-header">
-          <span class="service-name">SSL/TLS Server<br>Security Grade</span>
-          <span class="grade-badge grade-Aplus">A+</span>
+        <div class="browser-tab">
+          <img class="tab-favicon" src="/favicon.svg" alt="" />
+          <span class="tab-title">Security — securelayer.co</span>
+          <span class="tab-close">&times;</span>
         </div>
-        <p class="card-desc">Qualys SSL Labs deep analysis of TLS configuration, certificate chain, and cipher suites.</p>
-        <a class="card-link" href="https://www.ssllabs.com/ssltest/analyze.html?d=securelayer.co" target="_blank" rel="noopener noreferrer">View full report ↗</a>
+        <span class="tab-add">+</span>
+        <span class="tab-chevron">&#9660;</span>
       </div>
-
-      <div class="score-card">
-        <div class="card-header">
-          <span class="service-name">Security Headers<br>Grade</span>
-          <span class="grade-badge grade-Aplus">A+</span>
+      <div class="browser-navbar">
+        <span class="nav-icon nav-back"
+          ><svg viewBox="0 0 24 24" fill="none"
+            ><path
+              d="M15 6l-6 6 6 6"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"></path></svg
+          ></span
+        >
+        <span class="nav-icon nav-forward disabled"
+          ><svg viewBox="0 0 24 24" fill="none"
+            ><path
+              d="M9 6l6 6-6 6"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"></path></svg
+          ></span
+        >
+        <span class="nav-icon nav-reload"
+          ><svg viewBox="0 0 24 24" fill="none"
+            ><path
+              d="M4 12a8 8 0 0 1 14-5.3M20 12a8 8 0 0 1-14 5.3M4 4v5h5M20 20v-5h-5"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"></path></svg
+          ></span
+        >
+        <span class="nav-icon nav-bookmark"
+          ><svg viewBox="0 0 24 24" fill="none"
+            ><path
+              d="M6 3h12a1 1 0 0 1 1 1v17l-7-4-7 4V4a1 1 0 0 1 1-1Z"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linejoin="round"></path></svg
+          ></span
+        >
+        <div class="address-pill">
+          <svg viewBox="0 0 24 24" fill="none"
+            ><path
+              d="M4 6h16M7 12h10M10 18h4"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"></path></svg
+          >
+          <span class="addr-text"
+            >securelayer.co<span class="addr-path">/security/</span></span
+          >
         </div>
-        <p class="card-desc">Scans and grades HTTP response headers for completeness and security best practices.</p>
-        <a class="card-link" href="https://securityheaders.com/?q=https%3A%2F%2Fsecurelayer.co" target="_blank" rel="noopener noreferrer">View full report ↗</a>
+        <span class="nav-divider"></span>
+        <img class="nav-brave" src="/images/dock-icons/brave.png" alt="Brave" />
+        <span class="nav-menu"
+          ><svg viewBox="0 0 24 24" fill="none"
+            ><path
+              d="M4 6h16M4 12h16M4 18h16"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"></path></svg
+          ></span
+        >
       </div>
+      <div class="browser-body">
+        <div class="page">
+          <div class="category-block">
+            <p class="m-cat-question">
+              How your connection to us is protected?
+            </p>
+            <p class="m-cat-desc">
+              We run independent, public scans checking whether traffic to this
+              site is encrypted correctly, uses strong security headers, and
+              can't be intercepted or downgraded.
+            </p>
+            <p class="category-line">
+              <strong>Network &amp; Transport Security</strong> — your connection
+              here can't be intercepted or read.
+            </p>
+            <div class="scores-grid">
+              <div class="score-card">
+                <div class="card-header">
+                  <span class="service-name"
+                    >HTTP Headers<br />Security Grade</span
+                  >
+                  <span class="grade-badge grade-Aplus">A+</span>
+                </div>
+                <p class="card-desc">
+                  Tests HTTP headers, CSP, cookies, and HTTPS configuration
+                  against Mozilla's security guidelines.
+                </p>
+                <a
+                  class="card-link"
+                  href="https://developer.mozilla.org/en-US/observatory/analyze?host=securelayer.co"
+                  target="_blank"
+                  rel="noopener noreferrer">View full report ↗</a
+                >
+              </div>
 
-    </div>
-  </div>
+              <div class="score-card">
+                <div class="card-header">
+                  <span class="service-name"
+                    >SSL/TLS Server<br />Security Grade</span
+                  >
+                  <span class="grade-badge grade-Aplus">A+</span>
+                </div>
+                <p class="card-desc">
+                  Qualys SSL Labs deep analysis of TLS configuration,
+                  certificate chain, and cipher suites.
+                </p>
+                <a
+                  class="card-link"
+                  href="https://www.ssllabs.com/ssltest/analyze.html?d=securelayer.co"
+                  target="_blank"
+                  rel="noopener noreferrer">View full report ↗</a
+                >
+              </div>
 
-  <div class="category-block">
-    <p class="m-cat-question">How we handle your data, and whether we're flagged anywhere?</p>
-    <p class="m-cat-desc">These checks confirm we don't run hidden trackers or third-party cookies, and that no security authority has flagged this site as unsafe, phishing, or malware.</p>
-    <p class="category-line"><strong>Privacy &amp; Reputation</strong> — nothing here tracks you or has been flagged as unsafe.</p>
-    <div class="scores-grid">
+              <div class="score-card">
+                <div class="card-header">
+                  <span class="service-name">Security Headers<br />Grade</span>
+                  <span class="grade-badge grade-Aplus">A+</span>
+                </div>
+                <p class="card-desc">
+                  Scans and grades HTTP response headers for completeness and
+                  security best practices.
+                </p>
+                <a
+                  class="card-link"
+                  href="https://securityheaders.com/?q=https%3A%2F%2Fsecurelayer.co"
+                  target="_blank"
+                  rel="noopener noreferrer">View full report ↗</a
+                >
+              </div>
+            </div>
+          </div>
 
-      <div class="score-card">
-        <div class="card-header">
-          <span class="service-name">Blacklight<br>Privacy Checker</span>
-          <span class="grade-badge grade-safe">Safe</span>
+          <div class="category-block">
+            <p class="m-cat-question">
+              How we handle your data, and whether we're flagged anywhere?
+            </p>
+            <p class="m-cat-desc">
+              These checks confirm we don't run hidden trackers or third-party
+              cookies, and that no security authority has flagged this site as
+              unsafe, phishing, or malware.
+            </p>
+            <p class="category-line">
+              <strong>Privacy &amp; Reputation</strong> — nothing here tracks you
+              or has been flagged as unsafe.
+            </p>
+            <div class="scores-grid">
+              <div class="score-card">
+                <div class="card-header">
+                  <span class="service-name"
+                    >Blacklight<br />Privacy Checker</span
+                  >
+                  <span class="grade-badge grade-safe">Safe</span>
+                </div>
+                <p class="card-desc">
+                  Checks for ad trackers, third-party cookies, fingerprinting,
+                  session recording, keylogging, and social pixels.
+                </p>
+                <a
+                  class="card-link"
+                  href="https://themarkup.org/blacklight?url=securelayer.co"
+                  target="_blank"
+                  rel="noopener noreferrer">View full report ↗</a
+                >
+              </div>
+
+              <div class="score-card">
+                <div class="card-header">
+                  <span class="service-name">Google<br />Safe Browsing</span>
+                  <span class="grade-badge grade-safe">Safe</span>
+                </div>
+                <p class="card-desc">
+                  Checks for malware, phishing, or unwanted software flagged on
+                  this site.
+                </p>
+                <a
+                  class="card-link"
+                  href="https://transparencyreport.google.com/safe-browsing/search?url=securelayer.co"
+                  target="_blank"
+                  rel="noopener noreferrer">View full report ↗</a
+                >
+              </div>
+            </div>
+          </div>
+
+          <div class="category-block category-pending">
+            <p class="m-cat-question">Is our own supply chain secure?</p>
+            <p class="m-cat-desc">
+              Honestly, we're still working on this part. This check verifies
+              how the code behind this site itself is built and maintained —
+              dependency pinning, branch protection, CI hygiene.
+            </p>
+            <p class="category-line">
+              <strong>Supply Chain</strong> — how the code behind this site is built
+              and maintained.
+            </p>
+            <div class="scores-grid">
+              <div class="score-card">
+                <div class="card-header">
+                  <span class="service-name">OpenSSF Scorecard</span>
+                  <span class="grade-badge grade-pending">Pending</span>
+                </div>
+                <p class="card-desc">
+                  Automated supply-chain security analysis of the site's source
+                  repository.
+                </p>
+                <a
+                  class="card-link"
+                  href="https://scorecard.dev/viewer/?uri=github.com/SecureLayer/tmp"
+                  target="_blank"
+                  rel="noopener noreferrer">View scorecard ↗</a
+                >
+              </div>
+
+              <div class="score-card">
+                <div class="card-header">
+                  <span class="service-name">OpenSSF<br />Best Practices</span>
+                  <span class="grade-badge grade-pending">13%</span>
+                </div>
+                <p class="card-desc">
+                  CII Best Practices badge — certifies open-source security and
+                  quality standards.
+                </p>
+                <a
+                  class="card-link"
+                  href="https://www.bestpractices.dev/en/projects/11681"
+                  target="_blank"
+                  rel="noopener noreferrer">View progress ↗</a
+                >
+              </div>
+            </div>
+          </div>
+
+          <p class="section-title">Platform Integrity</p>
+          <div class="pipeline-card">
+            <div class="pipeline-checks">
+              <div class="check-item">
+                <span class="check-icon">✓</span>
+                <span class="check-label">
+                  <strong>Cloudflare edge security</strong>
+                  <span class="check-desc"
+                    >Bot Fight Mode and WAF custom rules active in front of the
+                    origin.</span
+                  >
+                </span>
+              </div>
+
+              <div class="check-item">
+                <span class="check-icon">✓</span>
+                <span class="check-label">
+                  <strong>Dependabot</strong>
+                  <span class="check-desc"
+                    >Automated dependency PRs, verified active — npm packages
+                    kept current on a weekly schedule.</span
+                  >
+                </span>
+              </div>
+
+              <div class="check-item">
+                <span class="check-icon">✓</span>
+                <span class="check-label">
+                  <strong>Security response headers</strong>
+                  <span class="check-desc"
+                    >CSP, HSTS (1yr + subdomains), X-Frame-Options: DENY,
+                    X-Content-Type-Options: nosniff, Referrer-Policy:
+                    no-referrer.</span
+                  >
+                </span>
+              </div>
+
+              <div class="check-item">
+                <span class="check-icon pending">◐</span>
+                <span class="check-label">
+                  <strong>OpenSSF Scorecard CI</strong>
+                  <span class="check-desc"
+                    >Scorecard workflow added — publishes automatically to the
+                    code-scanning dashboard on next push to main.</span
+                  >
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <p class="section-title">Report a vulnerability</p>
+          <div class="contact-box">
+            <div class="contact-box-top">
+              <p>
+                Found a security issue? Please report it responsibly before
+                disclosing it publicly.
+              </p>
+              <a
+                class="contact-btn"
+                href="https://github.com/SecureLayer/tmp/security/advisories/new"
+                target="_blank"
+                rel="noopener noreferrer">Report on GitHub ↗</a
+              >
+            </div>
+            <div class="contact-box-scope">
+              <h2>Scope</h2>
+              <p>
+                SecureLayer is a static informational landing page. The primary
+                security concerns are:
+              </p>
+              <ul class="sec-list">
+                <li>Supply chain issues in build dependencies</li>
+                <li>Deployment pipeline integrity</li>
+                <li>Content injection or defacement</li>
+              </ul>
+              <h2>Out of scope</h2>
+              <ul class="sec-list muted">
+                <li>Social engineering</li>
+                <li>
+                  Issues in third-party infrastructure (GitHub, Cloudflare,
+                  Cal.com)
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="policy-section">
+            <h2>Response timeline</h2>
+            <div class="timeline-grid">
+              <div class="timeline-card">
+                <div class="tl-days">14 days</div>
+                <div class="tl-label">Acknowledgement</div>
+                <div class="tl-desc">
+                  We confirm receipt of your report and begin investigation.
+                </div>
+              </div>
+              <div class="timeline-card">
+                <div class="tl-days">60 days</div>
+                <div class="tl-label">Resolution</div>
+                <div class="tl-desc">
+                  Target for resolving confirmed vulnerabilities from date of
+                  confirmation.
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <footer class="site-footer">
+            <p>Choose cybersecurity, it's cheaper.</p>
+            <p class="footer-links">
+              <a href="/">Home</a>
+              <a href="/security">Security</a>
+              <a href="/sustainability">Environment</a>
+              <a href="/legal">Legal</a>
+              <a
+                href="https://github.com/SecureLayer/tmp"
+                target="_blank"
+                rel="noopener">Source</a
+              >
+            </p>
+            <a href="/sustainability" class="footer-green-link">
+              <img
+                src="/gwf-badge.png"
+                alt="This website runs on green hosting - verified by thegreenwebfoundation.org"
+                width="200"
+                height="95"
+              />
+            </a>
+            <p class="footer-copy">
+              &copy; 2026 SecureLayer. All rights reserved.
+            </p>
+          </footer>
         </div>
-        <p class="card-desc">Checks for ad trackers, third-party cookies, fingerprinting, session recording, keylogging, and social pixels.</p>
-        <a class="card-link" href="https://themarkup.org/blacklight?url=securelayer.co" target="_blank" rel="noopener noreferrer">View full report ↗</a>
-      </div>
-
-      <div class="score-card">
-        <div class="card-header">
-          <span class="service-name">Google<br>Safe Browsing</span>
-          <span class="grade-badge grade-safe">Safe</span>
-        </div>
-        <p class="card-desc">Checks for malware, phishing, or unwanted software flagged on this site.</p>
-        <a class="card-link" href="https://transparencyreport.google.com/safe-browsing/search?url=securelayer.co" target="_blank" rel="noopener noreferrer">View full report ↗</a>
-      </div>
-
-    </div>
-  </div>
-
-  <div class="category-block category-pending">
-    <p class="m-cat-question">Is our own supply chain secure?</p>
-    <p class="m-cat-desc">Honestly, we're still working on this part. This check verifies how the code behind this site itself is built and maintained — dependency pinning, branch protection, CI hygiene.</p>
-    <p class="category-line"><strong>Supply Chain</strong> — how the code behind this site is built and maintained.</p>
-    <div class="scores-grid">
-
-      <div class="score-card">
-        <div class="card-header">
-          <span class="service-name">OpenSSF Scorecard</span>
-          <span class="grade-badge grade-pending">Pending</span>
-        </div>
-        <p class="card-desc">Automated supply-chain security analysis of the site's source repository.</p>
-        <a class="card-link" href="https://scorecard.dev/viewer/?uri=github.com/SecureLayer/tmp" target="_blank" rel="noopener noreferrer">View scorecard ↗</a>
-      </div>
-
-      <div class="score-card">
-        <div class="card-header">
-          <span class="service-name">OpenSSF<br>Best Practices</span>
-          <span class="grade-badge grade-pending">13%</span>
-        </div>
-        <p class="card-desc">CII Best Practices badge — certifies open-source security and quality standards.</p>
-        <a class="card-link" href="https://www.bestpractices.dev/en/projects/11681" target="_blank" rel="noopener noreferrer">View progress ↗</a>
-      </div>
-
-    </div>
-  </div>
-
-  <p class="section-title">Platform Integrity</p>
-  <div class="pipeline-card">
-    <div class="pipeline-checks">
-
-      <div class="check-item">
-        <span class="check-icon">✓</span>
-        <span class="check-label">
-          <strong>Cloudflare edge security</strong>
-          <span class="check-desc">Bot Fight Mode and WAF custom rules active in front of the origin.</span>
-        </span>
-      </div>
-
-      <div class="check-item">
-        <span class="check-icon">✓</span>
-        <span class="check-label">
-          <strong>Dependabot</strong>
-          <span class="check-desc">Automated dependency PRs, verified active — npm packages kept current on a weekly schedule.</span>
-        </span>
-      </div>
-
-      <div class="check-item">
-        <span class="check-icon">✓</span>
-        <span class="check-label">
-          <strong>Security response headers</strong>
-          <span class="check-desc">CSP, HSTS (1yr + subdomains), X-Frame-Options: DENY, X-Content-Type-Options: nosniff, Referrer-Policy: no-referrer.</span>
-        </span>
-      </div>
-
-      <div class="check-item">
-        <span class="check-icon pending">◐</span>
-        <span class="check-label">
-          <strong>OpenSSF Scorecard CI</strong>
-          <span class="check-desc">Scorecard workflow added — publishes automatically to the code-scanning dashboard on next push to main.</span>
-        </span>
-      </div>
-
-    </div>
-  </div>
-
-  <p class="section-title">Report a vulnerability</p>
-  <div class="contact-box">
-    <div class="contact-box-top">
-      <p>Found a security issue? Please report it responsibly before disclosing it publicly.</p>
-      <a class="contact-btn" href="https://github.com/SecureLayer/tmp/security/advisories/new" target="_blank" rel="noopener noreferrer">Report on GitHub ↗</a>
-    </div>
-    <div class="contact-box-scope">
-      <h2>Scope</h2>
-      <p>SecureLayer is a static informational landing page. The primary security concerns are:</p>
-      <ul class="sec-list">
-        <li>Supply chain issues in build dependencies</li>
-        <li>Deployment pipeline integrity</li>
-        <li>Content injection or defacement</li>
-      </ul>
-      <h2>Out of scope</h2>
-      <ul class="sec-list muted">
-        <li>Social engineering</li>
-        <li>Issues in third-party infrastructure (GitHub, Cloudflare, Cal.com)</li>
-      </ul>
-    </div>
-  </div>
-
-  <div class="policy-section">
-    <h2>Response timeline</h2>
-    <div class="timeline-grid">
-      <div class="timeline-card">
-        <div class="tl-days">14 days</div>
-        <div class="tl-label">Acknowledgement</div>
-        <div class="tl-desc">We confirm receipt of your report and begin investigation.</div>
-      </div>
-      <div class="timeline-card">
-        <div class="tl-days">60 days</div>
-        <div class="tl-label">Resolution</div>
-        <div class="tl-desc">Target for resolving confirmed vulnerabilities from date of confirmation.</div>
       </div>
     </div>
-  </div>
-
-  <footer class="site-footer">
-    <p>Choose cybersecurity, it's cheaper.</p>
-    <p class="footer-links">
-      <a href="/">Home</a>
-      <a href="/security">Security</a>
-      <a href="/sustainability">Environment</a>
-      <a href="/legal">Legal</a>
-      <a href="https://github.com/SecureLayer/tmp" target="_blank" rel="noopener">Source</a>
-    </p>
-    <a href="/sustainability" class="footer-green-link">
-      <img src="/gwf-badge.png" alt="This website runs on green hosting - verified by thegreenwebfoundation.org" width="200" height="95" />
-    </a>
-    <p class="footer-copy">&copy; 2026 SecureLayer. All rights reserved.</p>
-  </footer>
-
-</div>
-  </div>
-</div>
-</body>
+  </body>
 </html>
