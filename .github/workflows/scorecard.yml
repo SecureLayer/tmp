@@ -47,6 +47,14 @@ jobs:
           results_file: results.sarif
           results_format: sarif
 
+          # Fine-grained PAT (Administration: read) so the Branch-Protection
+          # check can read main's protection rules — the default GITHUB_TOKEN
+          # cannot (githubv4 "Resource not accessible by integration"). Falls
+          # back to github.token if the secret is absent, so the workflow keeps
+          # working either way. Token expires yearly; GitHub emails a reminder.
+          # https://github.com/ossf/scorecard-action/blob/main/docs/authentication/fine-grained-auth-token.md
+          repo_token: ${{ secrets.SCORECARD_TOKEN || github.token }}
+
           # Public repositories:
           #   - Publish results to OpenSSF REST API for easy access by consumers
           #   - Allows the repository to include the Scorecard badge.
