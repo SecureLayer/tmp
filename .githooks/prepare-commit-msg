@@ -1,0 +1,20 @@
+#!/bin/sh
+# Auto-append a DCO Signed-off-by trailer to every commit (including merges),
+# using your configured git identity. Idempotent — won't add a duplicate if
+# one is already present. Enable once per clone:
+#
+#     git config core.hooksPath .githooks
+#
+# See CONTRIBUTING.md (Developer Certificate of Origin).
+
+NAME=$(git config user.name)
+EMAIL=$(git config user.email)
+
+if [ -z "$NAME" ] || [ -z "$EMAIL" ]; then
+  echo "prepare-commit-msg: git user.name / user.email not set — cannot add Signed-off-by" >&2
+  exit 0
+fi
+
+git interpret-trailers --if-exists doNothing \
+  --trailer "Signed-off-by: $NAME <$EMAIL>" \
+  --in-place "$1"
