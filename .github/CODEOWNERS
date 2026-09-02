@@ -1,0 +1,8 @@
+# Code owners for SecureLayer.
+#
+# Every pull request to `main` requires an approving review from one of the
+# maintainers listed below, enforced by branch protection on `main`
+# (OpenSSF Scorecard Branch-Protection / OSPS access-control controls).
+# See CONTRIBUTING.md.
+
+*       @SecureLayer @mangroroot
