@@ -733,8 +733,6 @@ const logoMark = logoSource
             <a href="/security">Security</a>
             <a href="/sustainability">Environment</a>
             <a href="/legal">Legal</a>
-            <a href="/ai-security">AI Security</a>
-            <a href="/ai-agent">Agent Breaker</a>
             <a
               href="https://github.com/SecureLayer/landing"
               target="_blank"
@@ -1567,7 +1565,8 @@ const logoMark = logoSource
     position: absolute;
     inset: -40px;
     z-index: 0;
-    background: url("/images/wallpaper-beach.webp") center 55% / cover no-repeat;
+    background: url("/images/wallpaper-beach-blur.webp") center 55% / cover
+      no-repeat;
     filter: blur(30px) saturate(1.15) brightness(0.92);
     transform: scale(1.08);
   }
@@ -2186,6 +2185,6 @@ const logoMark = logoSource
   }
 </style>
 
-<script is:inline src="/scripts/index-widgets.js"></script>
-<script is:inline src="/scripts/mobile-scene.js"></script>
-<script is:inline src="/scripts/desktop-lock.js"></script>
+<script is:inline defer src="/scripts/index-widgets.js"></script>
+<script is:inline defer src="/scripts/mobile-scene.js"></script>
+<script is:inline defer src="/scripts/desktop-lock.js"></script>
