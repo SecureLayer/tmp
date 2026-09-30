@@ -22,7 +22,7 @@ const logoMark = logoSource
     <div class="d-lock" id="dLock">
       <div class="d-lock-bg" aria-hidden="true"></div>
       <div class="d-lock-scrim" aria-hidden="true"></div>
-      <div class="d-lock-content">
+      <div class="d-lock-content" role="region" aria-label="Welcome screen">
         <div class="d-lock-date" id="dLockDate">
           Friday, August 28
         </div>
@@ -38,6 +38,7 @@ const logoMark = logoSource
               type="password"
               class="d-lock-input"
               placeholder="Enter Password"
+              aria-label="Password (any value continues)"
               autocomplete="off"
             />
             <button type="submit" class="d-lock-arrow" aria-label="Unlock">
@@ -57,7 +58,7 @@ const logoMark = logoSource
     </div>
 
     <!-- MENU BAR -->
-    <div class="menu-bar">
+    <div class="menu-bar" aria-hidden="true">
       <div class="menu-left">
         <img src="/logo.svg" alt="" class="menu-logo" />
         <span class="menu-brand">SecureLayer</span>
@@ -140,12 +141,12 @@ const logoMark = logoSource
     </div>
 
     <!-- DESKTOP -->
-    <div class="desktop">
+    <div class="desktop" role="main">
       <div class="wallpaper-photo" aria-hidden="true"></div>
       <div class="wallpaper-scrim" aria-hidden="true"></div>
 
       <!-- WIDGET · project note (macOS Stickies style) -->
-      <div class="widget widget-note pos-tl">
+      <div class="widget widget-note pos-tl" aria-hidden="true">
         <div class="widget-watermark" set:html={logoMark} />
         <div class="note-body">
           <p>
@@ -163,7 +164,7 @@ const logoMark = logoSource
       </div>
 
       <!-- WIDGET · checklist -->
-      <div class="widget widget-todo pos-tr">
+      <div class="widget widget-todo pos-tr" aria-hidden="true">
         <div class="widget-watermark todo-watermark" set:html={logoMark} />
         <div class="todo-bar">
           <span class="todo-dot dot-red"></span>
@@ -318,7 +319,7 @@ const logoMark = logoSource
     </div>
 
     <!-- DOCK · the real toolkit used for security work -->
-    <div class="dock">
+    <div class="dock" role="region" aria-label="App dock">
       <span class="dock-icon" title="Finder">
         <img src="/images/dock-icons/finder.png" alt="Finder" />
       </span>
