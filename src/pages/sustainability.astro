@@ -637,7 +637,7 @@
       </p>
     </div>
     <div class="browser-window">
-      <div class="browser-titlebar">
+      <div class="browser-titlebar" aria-hidden="true">
         <div class="traffic-lights">
           <span class="tl red"></span>
           <span class="tl yellow"></span>
@@ -661,7 +661,7 @@
           Private browsing
         </span>
       </div>
-      <div class="browser-navbar">
+      <div class="browser-navbar" aria-hidden="true">
         <span class="nav-icon nav-sidebar">
           <svg viewBox="0 0 24 24" fill="none">
             <rect
@@ -795,183 +795,185 @@
       </div>
       <div class="browser-body">
         <div class="page">
-          <div class="page-hero">
-            <div class="hero-badge">
-              <span class="badge-dot"></span>
-              Green Hosting · Low Carbon · Verified
-            </div>
-            <h1>Green by design</h1>
-            <p>
-              This is a static site served by a Green CDN — no origin server, no
-              database, minimal compute per visitor. Here's what the independent
-              and public scans report.
-            </p>
-          </div>
-
-          <div class="scores-grid">
-            <p class="m-card-desc">
-              Visiting this site produces 0.044g of CO₂ — lighter than a single
-              grain of rice — and just 0.003g on a return visit.
-            </p>
-            <div class="score-card">
-              <div class="card-header">
-                <span class="service-name">
-                  Digital Beacon
-                  <br />
-                  Carbon Report
-                </span>
-                <span class="grade-badge grade-Aplus">A+</span>
+          <main>
+            <div class="page-hero">
+              <div class="hero-badge">
+                <span class="badge-dot"></span>
+                Green Hosting · Low Carbon · Verified
               </div>
-              <p class="card-desc">
+              <h1>Green by design</h1>
+              <p>
+                This is a static site served by a Green CDN — no origin server,
+                no database, minimal compute per visitor. Here's what the
+                independent and public scans report.
+              </p>
+            </div>
+
+            <div class="scores-grid">
+              <p class="m-card-desc">
                 Visiting this site produces 0.044g of CO₂ — lighter than a
                 single grain of rice — and just 0.003g on a return visit.
               </p>
-              <a
-                class="card-link"
-                href="https://digitalbeacon.co/report/securelayer-co"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                View full report ↗
-              </a>
-            </div>
-
-            <p class="m-card-desc">
-              This website ranks in the top 3% globally for cleanliness —
-              cleaner than 97% of all pages tested.
-            </p>
-            <div class="score-card">
-              <div class="card-header">
-                <span class="service-name">
-                  Website Carbon
-                  <br />
-                  Calculator
-                </span>
-                <span class="grade-badge grade-Aplus">A+</span>
+              <div class="score-card">
+                <div class="card-header">
+                  <span class="service-name">
+                    Digital Beacon
+                    <br />
+                    Carbon Report
+                  </span>
+                  <span class="grade-badge grade-Aplus">A+</span>
+                </div>
+                <p class="card-desc">
+                  Visiting this site produces 0.044g of CO₂ — lighter than a
+                  single grain of rice — and just 0.003g on a return visit.
+                </p>
+                <a
+                  class="card-link"
+                  href="https://digitalbeacon.co/report/securelayer-co"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  View full report ↗
+                </a>
               </div>
-              <p class="card-desc">
+
+              <p class="m-card-desc">
                 This website ranks in the top 3% globally for cleanliness —
                 cleaner than 97% of all pages tested.
               </p>
-              <a
-                class="card-link"
-                href="https://www.websitecarbon.com/website/securelayer-co/"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                View full report ↗
-              </a>
-            </div>
-
-            <p class="m-card-desc">
-              Served via Cloudflare's CDN — renewable-energy certified, with
-              zero origin compute per visit.
-            </p>
-            <div class="score-card">
-              <div class="card-header">
-                <span class="service-name">
-                  Green Web
-                  <br />
-                  Foundation
-                </span>
-                <span class="grade-badge grade-safe">Verified</span>
+              <div class="score-card">
+                <div class="card-header">
+                  <span class="service-name">
+                    Website Carbon
+                    <br />
+                    Calculator
+                  </span>
+                  <span class="grade-badge grade-Aplus">A+</span>
+                </div>
+                <p class="card-desc">
+                  This website ranks in the top 3% globally for cleanliness —
+                  cleaner than 97% of all pages tested.
+                </p>
+                <a
+                  class="card-link"
+                  href="https://www.websitecarbon.com/website/securelayer-co/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  View full report ↗
+                </a>
               </div>
-              <p class="card-desc">
+
+              <p class="m-card-desc">
                 Served via Cloudflare's CDN — renewable-energy certified, with
                 zero origin compute per visit.
               </p>
-              <a
-                class="card-link"
-                href="https://www.thegreenwebfoundation.org/green-web-check/?url=securelayer.co"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                View full report ↗
-              </a>
-            </div>
-
-            <p class="m-card-desc">
-              Scores 90 out of 100 for performance, UX, and green hosting —
-              better than 85% of all pages Ecograder has crawled, with 100/100
-              for green hosting.
-            </p>
-            <div class="score-card">
-              <div class="card-header">
-                <span class="service-name">
-                  Ecograder
-                  <br />
-                  Score
-                </span>
-                <span class="grade-badge grade-Aplus">90</span>
+              <div class="score-card">
+                <div class="card-header">
+                  <span class="service-name">
+                    Green Web
+                    <br />
+                    Foundation
+                  </span>
+                  <span class="grade-badge grade-safe">Verified</span>
+                </div>
+                <p class="card-desc">
+                  Served via Cloudflare's CDN — renewable-energy certified, with
+                  zero origin compute per visit.
+                </p>
+                <a
+                  class="card-link"
+                  href="https://www.thegreenwebfoundation.org/green-web-check/?url=securelayer.co"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  View full report ↗
+                </a>
               </div>
-              <p class="card-desc">
+
+              <p class="m-card-desc">
                 Scores 90 out of 100 for performance, UX, and green hosting —
                 better than 85% of all pages Ecograder has crawled, with 100/100
                 for green hosting.
               </p>
-              <a
-                class="card-link"
-                href="https://legacy.ecograder.com/report/BGYT1g6z12LNEKuDJEPLY7LH"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                View full report ↗
-              </a>
-            </div>
-          </div>
-
-          <p class="section-title">Why it's low</p>
-          <div class="pipeline-card">
-            <div class="pipeline-checks">
-              <div class="check-item">
-                <span class="check-icon">✓</span>
-                <span class="check-label">
-                  <strong>Static architecture</strong>
-                  <span class="check-desc">
-                    The entire site is pre-built HTML/CSS/JS. No server runs
-                    when you visit — pages are served cold from Cloudflare's
-                    global edge network.
+              <div class="score-card">
+                <div class="card-header">
+                  <span class="service-name">
+                    Ecograder
+                    <br />
+                    Score
                   </span>
-                </span>
-              </div>
-
-              <div class="check-item">
-                <span class="check-icon">✓</span>
-                <span class="check-label">
-                  <strong>Pre-computed data</strong>
-                  <span class="check-desc">
-                    Security assessments are computed once weekly by a local
-                    scanner and stored in R2. Your browser fetches a single JSON
-                    file — no live GitHub API calls, no chained requests.
-                  </span>
-                </span>
-              </div>
-
-              <div class="check-item">
-                <span class="check-icon">✓</span>
-                <span class="check-label">
-                  <strong>No tracking, no analytics</strong>
-                  <span class="check-desc">
-                    Zero tracking pixels, no analytics scripts, no third-party
-                    calls beyond Google Fonts. Less data transferred means less
-                    energy consumed per visit.
-                  </span>
-                </span>
-              </div>
-
-              <div class="check-item">
-                <span class="check-icon">✓</span>
-                <span class="check-label">
-                  <strong>Green CDN</strong>
-                  <span class="check-desc">
-                    Cloudflare is Green Web Foundation certified — the
-                    infrastructure that delivers every page runs on renewable
-                    energy.
-                  </span>
-                </span>
+                  <span class="grade-badge grade-Aplus">90</span>
+                </div>
+                <p class="card-desc">
+                  Scores 90 out of 100 for performance, UX, and green hosting —
+                  better than 85% of all pages Ecograder has crawled, with
+                  100/100 for green hosting.
+                </p>
+                <a
+                  class="card-link"
+                  href="https://legacy.ecograder.com/report/BGYT1g6z12LNEKuDJEPLY7LH"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  View full report ↗
+                </a>
               </div>
             </div>
-          </div>
+
+            <p class="section-title">Why it's low</p>
+            <div class="pipeline-card">
+              <div class="pipeline-checks">
+                <div class="check-item">
+                  <span class="check-icon">✓</span>
+                  <span class="check-label">
+                    <strong>Static architecture</strong>
+                    <span class="check-desc">
+                      The entire site is pre-built HTML/CSS/JS. No server runs
+                      when you visit — pages are served cold from Cloudflare's
+                      global edge network.
+                    </span>
+                  </span>
+                </div>
+
+                <div class="check-item">
+                  <span class="check-icon">✓</span>
+                  <span class="check-label">
+                    <strong>Pre-computed data</strong>
+                    <span class="check-desc">
+                      Security assessments are computed once weekly by a local
+                      scanner and stored in R2. Your browser fetches a single
+                      JSON file — no live GitHub API calls, no chained requests.
+                    </span>
+                  </span>
+                </div>
+
+                <div class="check-item">
+                  <span class="check-icon">✓</span>
+                  <span class="check-label">
+                    <strong>No tracking, no analytics</strong>
+                    <span class="check-desc">
+                      Zero tracking pixels, no analytics scripts, no third-party
+                      calls beyond Google Fonts. Less data transferred means
+                      less energy consumed per visit.
+                    </span>
+                  </span>
+                </div>
+
+                <div class="check-item">
+                  <span class="check-icon">✓</span>
+                  <span class="check-label">
+                    <strong>Green CDN</strong>
+                    <span class="check-desc">
+                      Cloudflare is Green Web Foundation certified — the
+                      infrastructure that delivers every page runs on renewable
+                      energy.
+                    </span>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </main>
 
           <footer class="site-footer">
             <p>Choose cybersecurity, it's cheaper.</p>
