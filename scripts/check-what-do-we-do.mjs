@@ -366,6 +366,88 @@ try {
     await context.close();
   }
 
+  // --- homepage: one shortcut to this page, desktop and mobile ----------
+  {
+    const home = async (options) => {
+      const context = await browser.newContext(options);
+      const page = await context.newPage();
+      page.on("pageerror", (e) => pageErrors.push(e.message));
+      await page.goto(`http://localhost:${PORT}/`, {
+        waitUntil: "networkidle",
+      });
+      return { context, page };
+    };
+
+    const d = await home({ viewport: { width: 1440, height: 900 } });
+    await d.page.locator(".d-lock-input").focus();
+    await d.page.keyboard.press("Enter");
+    await d.page.waitForTimeout(2200);
+    const icon = d.page.locator("a.widget-file");
+    assert((await icon.count()) === 1, "desktop: exactly one file shortcut");
+    assert(
+      (await icon.first().getAttribute("href")) === "/what-do-we-do/",
+      "desktop: the shortcut points to /what-do-we-do/",
+    );
+    assert(
+      (await icon.first().getAttribute("target")) === null,
+      "desktop: the shortcut opens in the same tab",
+    );
+    assert(
+      (await icon.first().locator("span").textContent())?.trim() ===
+        "What we do",
+      'desktop: the shortcut is labelled "What we do"',
+    );
+    assert(await icon.first().isVisible(), "desktop: the shortcut is visible");
+    assert(
+      (await d.page.locator('a[href$=".pdf"]').count()) === 0,
+      "desktop: nothing on the homepage links to a PDF",
+    );
+    // the cleanup of the old PDF icons must not take other widgets' CSS with it
+    assert(
+      (await d.page.evaluate(
+        () => getComputedStyle(document.querySelector(".widget-note")).width,
+      )) === "265px",
+      "desktop: the sticky note keeps its styling",
+    );
+    assert(
+      (await d.page.evaluate(
+        () =>
+          getComputedStyle(document.querySelector(".widget-todo-item")).display,
+      )) === "flex",
+      "desktop: the Reminders list keeps its styling",
+    );
+    await d.context.close();
+
+    const m = await home({
+      viewport: { width: 390, height: 844 },
+      hasTouch: true,
+      isMobile: true,
+    });
+    await m.page.locator("#mStand").click();
+    await m.page.waitForTimeout(1800);
+    const card = m.page.locator("a.m-card-file");
+    assert((await card.count()) === 1, "mobile: exactly one file card");
+    assert(
+      (await card.first().getAttribute("href")) === "/what-do-we-do/",
+      "mobile: the card points to /what-do-we-do/",
+    );
+    assert(
+      (await card.first().getAttribute("target")) === null,
+      "mobile: the card opens in the same tab",
+    );
+    assert(
+      (await card.first().locator(".m-card-file-bar").textContent())?.trim() ===
+        "See what we do",
+      'mobile: the card bar reads "See what we do"',
+    );
+    assert(await card.first().isVisible(), "mobile: the card is visible");
+    assert(
+      (await m.page.locator('a[href$=".pdf"]').count()) === 0,
+      "mobile: nothing on the homepage links to a PDF",
+    );
+    await m.context.close();
+  }
+
   // --- broken markup falls back to the stacked page ----------------------
   {
     const context = await browser.newContext();

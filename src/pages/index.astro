@@ -220,66 +220,29 @@ const logoMark = logoSource
         </div>
       </div>
 
-      <!-- WIDGET · file -->
-      <a
-        class="widget widget-file pos-mr"
-        href="/docs/securelayer.co.pdf"
-        target="_blank"
-        rel="noopener"
-      >
-        <div class="pdf-page">
-          <div class="pdf-thumb"></div>
-          <div class="pdf-badge">
+      <!-- WIDGET · shortcut to /what-do-we-do (macOS alias-style file icon) -->
+      <a class="widget widget-file pos-mr" href="/what-do-we-do/">
+        <div class="file-page">
+          <div class="file-thumb"></div>
+          <div class="alias-arrow" aria-hidden="true">
             <svg width="11" height="11" viewBox="0 0 16 16" fill="none">
-              <circle
-                cx="7"
-                cy="7"
-                r="5"
-                stroke="#fff"
-                stroke-width="1.6"
-              ></circle>
               <path
-                d="M11 11l3.5 3.5"
-                stroke="#fff"
-                stroke-width="1.6"
+                d="M3.5 13c0-3.6 2-5.8 6-5.8H12.5"
+                stroke="#17140f"
+                stroke-width="1.8"
                 stroke-linecap="round"
+              ></path>
+              <path
+                d="M10 4l3 3.2-3 3.2"
+                stroke="#17140f"
+                stroke-width="1.8"
+                stroke-linecap="round"
+                stroke-linejoin="round"
               ></path>
             </svg>
           </div>
-          <div class="pdf-label">PDF</div>
         </div>
-        <span>What-do-we-do.pdf</span>
-      </a>
-
-      <!-- WIDGET · file (value one-pager) -->
-      <a
-        class="widget widget-file pos-fr"
-        href="/docs/securelayer-before-you-say-you-are-secure.pdf"
-        target="_blank"
-        rel="noopener"
-      >
-        <div class="pdf-page">
-          <div class="pdf-thumb"></div>
-          <div class="pdf-badge">
-            <svg width="11" height="11" viewBox="0 0 16 16" fill="none">
-              <circle
-                cx="7"
-                cy="7"
-                r="5"
-                stroke="#fff"
-                stroke-width="1.6"
-              ></circle>
-              <path
-                d="M11 11l3.5 3.5"
-                stroke="#fff"
-                stroke-width="1.6"
-                stroke-linecap="round"
-              ></path>
-            </svg>
-          </div>
-          <div class="pdf-label">PDF</div>
-        </div>
-        <span>Before-you-say-you-are-secure.pdf</span>
+        <span>What we do</span>
       </a>
 
       <!-- WIDGET · quick-look preview (revealed on menu-bar hover) -->
@@ -538,12 +501,7 @@ const logoMark = logoSource
           </div>
 
           <div class="m-row2" style="--d:.2s">
-            <a
-              class="m-card-file"
-              href="/docs/securelayer.co.pdf"
-              target="_blank"
-              rel="noopener"
-            >
+            <a class="m-card-file" href="/what-do-we-do/">
               <svg class="m-folder-icon" viewBox="0 0 64 50" fill="none">
                 <defs>
                   <linearGradient id="folderGrad" x1="0" y1="0" x2="0" y2="1">
@@ -565,38 +523,8 @@ const logoMark = logoSource
                   opacity=".85"
                 ></rect>
               </svg>
-              <span>What-do-we-do.pdf</span>
-              <span class="m-card-file-bar">Download the file</span>
-            </a>
-            <a
-              class="m-card-file"
-              href="/docs/securelayer-before-you-say-you-are-secure.pdf"
-              target="_blank"
-              rel="noopener"
-            >
-              <svg class="m-folder-icon" viewBox="0 0 64 50" fill="none">
-                <defs>
-                  <linearGradient id="folderGrad2" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0" stop-color="#6dd0fa"></stop>
-                    <stop offset="1" stop-color="#0a84ff"></stop>
-                  </linearGradient>
-                </defs>
-                <path
-                  d="M2 10c0-2.2 1.8-4 4-4h16l5 5h31c2.2 0 4 1.8 4 4v29c0 2.2-1.8 4-4 4H6c-2.2 0-4-1.8-4-4V10z"
-                  fill="url(#folderGrad2)"
-                ></path>
-                <rect
-                  x="8"
-                  y="17"
-                  width="48"
-                  height="3.4"
-                  rx="1.7"
-                  fill="#fff"
-                  opacity=".85"
-                ></rect>
-              </svg>
-              <span>Before-you-say-you-are-secure.pdf</span>
-              <span class="m-card-file-bar">Download the file</span>
+              <span>What we do</span>
+              <span class="m-card-file-bar">See what we do</span>
             </a>
           </div>
 
@@ -1138,18 +1066,6 @@ const logoMark = logoSource
     top: 306px;
     left: 31px;
   }
-  .pos-fr {
-    top: 80px;
-    left: 50%;
-    transform: translateX(110px);
-  }
-  /* long filename — wrap to a few lines like a real macOS icon so the
-     widget stays narrow and clears the Reminders card */
-  .pos-fr span {
-    max-width: 108px;
-    white-space: normal;
-    line-height: 1.25;
-  }
 
   .widget-note {
     background: #eee6a8;
@@ -1286,7 +1202,7 @@ const logoMark = logoSource
     text-decoration: none;
     cursor: pointer;
   }
-  .pdf-page {
+  .file-page {
     width: 62px;
     height: 76px;
     background: #fdfdfd;
@@ -1294,7 +1210,7 @@ const logoMark = logoSource
     position: relative;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.22);
   }
-  .pdf-page::before {
+  .file-page::before {
     content: "";
     position: absolute;
     top: 0;
@@ -1305,7 +1221,7 @@ const logoMark = logoSource
     border-width: 0 14px 14px 0;
     border-color: transparent #dcdcdc transparent transparent;
   }
-  .pdf-thumb {
+  .file-thumb {
     position: absolute;
     top: 12px;
     left: 8px;
@@ -1315,30 +1231,18 @@ const logoMark = logoSource
     background: url("/images/wallpaper-beach.webp") center 60% / cover no-repeat;
     box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.06);
   }
-  .pdf-badge {
+  .alias-arrow {
     position: absolute;
-    bottom: 16px;
-    right: 6px;
-    width: 20px;
-    height: 20px;
+    bottom: 5px;
+    left: 5px;
+    width: 18px;
+    height: 18px;
     border-radius: 50%;
-    background: linear-gradient(180deg, #c6c6c6, #8c8c8c);
+    background: #fff;
     display: flex;
     align-items: center;
     justify-content: center;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.35);
-  }
-  .pdf-label {
-    position: absolute;
-    bottom: 4px;
-    left: 0;
-    right: 0;
-    text-align: center;
-    font-family: var(--font-round);
-    font-size: 0.58rem;
-    font-weight: 800;
-    letter-spacing: 0.04em;
-    color: #555;
   }
   .widget-file span {
     font-size: 0.72rem;
