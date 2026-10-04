@@ -1,0 +1,466 @@
+---
+import data from "../data/what-do-we-do.json";
+import logoSource from "../../public/logo.svg?raw";
+
+// Same treatment as the homepage mark: recolourable via currentColor, and the
+// tiny accessibility <text> label stripped so it doesn't read as noise.
+const logoMark = logoSource
+  .replace('fill="#000000"', 'fill="currentColor"')
+  .replace(/<text[^>]*>.*?<\/text>/s, "");
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>What we do — securelayer.co</title>
+    <meta
+      name="description"
+      content="Operational cybersecurity from 10+ years of experience across public and private organisations. Pick who you are and see how we help: investors, founders, security teams, AI builders, incident response, compliance."
+    />
+    <link rel="canonical" href="https://securelayer.co/what-do-we-do" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Fraunces:ital,opsz,wght@1,9..144,600&family=Nunito:wght@700;900&display=swap"
+      rel="stylesheet"
+    />
+    <script is:inline src="/scripts/what-do-we-do.js"></script>
+    <style is:global>
+      :root {
+        --wdwd-ink: #141210;
+        --wdwd-green: #2d6a4f;
+        --wdwd-label: #6b5d49;
+        --wdwd-line: #e6e1d8;
+      }
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        background: #f6f4ef;
+        color: var(--wdwd-ink);
+        font-family: "Inter", system-ui, sans-serif;
+        line-height: 1.5;
+        min-height: 100vh;
+      }
+      a:focus-visible,
+      button:focus-visible {
+        outline: 3px solid var(--wdwd-green);
+        outline-offset: 2px;
+      }
+      /* headings take focus only so screen readers follow the slide change;
+         they are not interactive, so they get no focus box */
+      .wdwd h2:focus,
+      .wdwd h3:focus {
+        outline: none;
+      }
+
+      .wdwd {
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 16px;
+      }
+      .wdwd-stage {
+        background: #fff;
+        border: 1px solid var(--wdwd-line);
+        position: relative;
+        overflow: hidden;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+      }
+      .wdwd-sr {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+        clip: rect(0 0 0 0);
+        white-space: nowrap;
+      }
+      .wdwd-k {
+        font-size: 12px;
+        letter-spacing: 0.14em;
+        color: var(--wdwd-label);
+        font-weight: 700;
+        text-transform: uppercase;
+      }
+      .wdwd-h {
+        font-family: "Nunito", system-ui, sans-serif;
+        font-weight: 900;
+        letter-spacing: -0.02em;
+        line-height: 1.08;
+      }
+      .wdwd-acc {
+        font-family: "Fraunces", Georgia, serif;
+        font-style: italic;
+        font-weight: 600;
+        color: var(--wdwd-green);
+      }
+
+      /* stacked layout: this is what a visitor without JavaScript sees */
+      .wdwd-chooser,
+      .wdwd-path {
+        padding: 48px 8%;
+      }
+      .wdwd-chooser {
+        text-align: center;
+      }
+      .wdwd-chooser .wdwd-h {
+        font-size: clamp(28px, 4.6vw, 56px);
+        margin-top: 10px;
+      }
+      .wdwd-logo {
+        width: 64px;
+        height: 64px;
+        margin: 0 auto 18px;
+        color: var(--wdwd-ink);
+      }
+      .wdwd-logo svg {
+        width: 100%;
+        height: 100%;
+        display: block;
+      }
+      .wdwd-doors {
+        list-style: none;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 12px;
+        margin-top: 22px;
+        text-align: left;
+      }
+      .wdwd-door {
+        display: block;
+        height: 100%;
+        min-height: 78px;
+        padding: 16px;
+        border: 1px solid var(--wdwd-ink);
+        border-radius: 6px;
+        background: #fff;
+        color: var(--wdwd-ink);
+        text-decoration: none;
+        font-weight: 600;
+        font-size: clamp(13px, 1.4vw, 16px);
+      }
+      .wdwd-door small {
+        display: block;
+        margin-bottom: 4px;
+        color: var(--wdwd-label);
+        font-weight: 700;
+        font-size: 11px;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+      }
+      .wdwd-door:hover,
+      .wdwd-door:focus-visible {
+        background: var(--wdwd-ink);
+        color: #fff;
+      }
+      .wdwd-door:hover small,
+      .wdwd-door:focus-visible small {
+        color: #d8cfbf;
+      }
+
+      .wdwd-path {
+        border-top: 1px solid var(--wdwd-line);
+      }
+      .wdwd-path-head {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        gap: 16px;
+        margin-bottom: 24px;
+      }
+      .wdwd-path-head h2 {
+        font-family: "Nunito", system-ui, sans-serif;
+        font-weight: 900;
+        font-size: clamp(20px, 2.4vw, 28px);
+      }
+      .wdwd-again {
+        font-size: 13px;
+        color: var(--wdwd-label);
+      }
+      .wdwd-slide {
+        margin-bottom: 28px;
+      }
+      .wdwd-slide .wdwd-h {
+        font-size: clamp(26px, 4.4vw, 52px);
+        margin: 10px 0 16px;
+      }
+      .wdwd-body {
+        font-size: clamp(15px, 1.7vw, 20px);
+        max-width: 44ch;
+        color: #3a352f;
+      }
+      .wdwd-proof {
+        margin-top: 18px;
+        max-width: 52ch;
+        font-size: 15px;
+      }
+      .wdwd-seen {
+        margin-top: 10px;
+      }
+      .wdwd-seen ul {
+        list-style: none;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+        margin-top: 6px;
+      }
+      .wdwd-seen li {
+        border: 1px solid var(--wdwd-line);
+        border-radius: 99px;
+        padding: 3px 10px;
+        font-size: 13px;
+        color: #3a352f;
+      }
+      .wdwd-note {
+        margin-top: 18px;
+        max-width: 52ch;
+        font-size: 13px;
+        color: var(--wdwd-label);
+      }
+      .wdwd-btn {
+        display: inline-block;
+        margin-top: 22px;
+        padding: 12px 18px;
+        border: 1px solid var(--wdwd-green);
+        border-radius: 6px;
+        background: var(--wdwd-green);
+        color: #fff;
+        font-weight: 600;
+        text-decoration: none;
+      }
+      .wdwd-btn:hover {
+        background: #1f4d38;
+        border-color: #1f4d38;
+      }
+
+      /* deck layout: only when the script has enhanced the page */
+      .wdwd-js .wdwd-stage {
+        display: grid;
+        min-height: clamp(480px, 56vw, 640px);
+        padding-bottom: 56px;
+      }
+      .wdwd-js .wdwd-chooser,
+      .wdwd-js .wdwd-path {
+        grid-area: 1 / 1;
+        align-self: center;
+        border-top: 0;
+        opacity: 0;
+        visibility: hidden;
+        transition:
+          opacity 0.45s,
+          visibility 0s 0.45s;
+      }
+      .wdwd-js .wdwd-chooser {
+        transform: translateX(40px);
+        transition:
+          opacity 0.45s,
+          transform 0.45s,
+          visibility 0s 0.45s;
+      }
+      .wdwd-js .wdwd-path {
+        display: grid;
+      }
+      .wdwd-js .wdwd-path-head {
+        grid-area: 1 / 1;
+        height: 0;
+        margin: 0;
+      }
+      .wdwd-js .wdwd-path-head > :not(.wdwd-again) {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+        clip: rect(0 0 0 0);
+        white-space: nowrap;
+      }
+      .wdwd-js .wdwd-again {
+        position: absolute;
+        top: 14px;
+        right: 16px;
+      }
+      .wdwd-js .wdwd-slide {
+        grid-area: 1 / 1;
+        margin: 0;
+        opacity: 0;
+        visibility: hidden;
+        transform: translateX(40px);
+        transition:
+          opacity 0.45s,
+          transform 0.45s,
+          visibility 0s 0.45s;
+      }
+      .wdwd-js .wdwd-chooser.is-active,
+      .wdwd-js .wdwd-path.is-active,
+      .wdwd-js .wdwd-slide.is-active {
+        opacity: 1;
+        visibility: visible;
+        transform: none;
+        transition:
+          opacity 0.45s,
+          transform 0.45s,
+          visibility 0s;
+      }
+      .wdwd-nav {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 14px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 14px;
+      }
+      .wdwd-nav button {
+        border: 0;
+        background: none;
+        font-size: 22px;
+        padding: 4px 12px;
+        color: var(--wdwd-ink);
+        cursor: pointer;
+      }
+      .wdwd-nav button:disabled {
+        opacity: 0.3;
+        cursor: default;
+      }
+      .wdwd-dots {
+        display: flex;
+        gap: 8px;
+      }
+      .wdwd-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: #cfc6b6;
+      }
+      .wdwd-dot.is-on {
+        background: var(--wdwd-green);
+      }
+
+      .wdwd-foot {
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 8px 16px 32px;
+        text-align: center;
+        font-size: 13px;
+      }
+      .wdwd-foot a {
+        margin: 0 10px;
+        color: var(--wdwd-label);
+      }
+
+      @media (max-width: 700px) {
+        .wdwd-doors {
+          grid-template-columns: 1fr 1fr;
+        }
+        .wdwd-chooser,
+        .wdwd-path {
+          padding: 40px 6%;
+        }
+        .wdwd-js .wdwd-stage {
+          min-height: 560px;
+        }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .wdwd-js .wdwd-chooser,
+        .wdwd-js .wdwd-path,
+        .wdwd-js .wdwd-slide {
+          transition: none !important;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="wdwd" id="wdwd">
+      <h1 class="wdwd-sr">What we do — SecureLayer</h1>
+      <div class="wdwd-stage" id="wdwd-stage">
+        <section
+          class="wdwd-chooser"
+          id="wdwd-chooser"
+          aria-labelledby="wdwd-chooser-title"
+        >
+          <div class="wdwd-logo" aria-hidden="true" set:html={logoMark} />
+          <p class="wdwd-k">SecureLayer · What we do</p>
+          <h2 class="wdwd-h" id="wdwd-chooser-title" tabindex="-1">
+            What do you need <span class="wdwd-acc">from cyber?</span>
+          </h2>
+          <ul class="wdwd-doors">
+            {data.doors.map((door) => (
+              <li>
+                <a class="wdwd-door" href={`#${door.id}`}>
+                  <small>{door.tag}</small>
+                  {door.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </section>
+        {data.doors.map((door) => (
+          <section
+            class="wdwd-path"
+            id={door.id}
+            aria-labelledby={`${door.id}-title`}
+          >
+            <header class="wdwd-path-head">
+              <p class="wdwd-k">{door.tag}</p>
+              <h2 id={`${door.id}-title`}>{door.label}</h2>
+              <a class="wdwd-again" href="#wdwd-chooser">
+                Change my answer
+              </a>
+            </header>
+            {door.slides.map((slide, i) => (
+              <article class="wdwd-slide" data-index={i}>
+                <p class="wdwd-k">{slide.kicker}</p>
+                <h3 class="wdwd-h" tabindex="-1">
+                  {slide.heading}
+                </h3>
+                <p class="wdwd-body">{slide.body}</p>
+                {i === 1 && (
+                  <Fragment>
+                    <p class="wdwd-proof">
+                      <strong>{data.proofLine}</strong>
+                    </p>
+                    <div class="wdwd-seen">
+                      <span class="wdwd-k">Seen before</span>
+                      <ul>
+                        {data.seenBefore.map((item) => (
+                          <li>{item}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  </Fragment>
+                )}
+                {i === door.slides.length - 1 && (
+                  <Fragment>
+                    {"note" in door && <p class="wdwd-note">{door.note}</p>}
+                    <p>
+                      <a
+                        class="wdwd-btn wdwd-cta"
+                        href="https://cal.com/securelayer"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        Book a call — cal.com/securelayer
+                      </a>
+                    </p>
+                  </Fragment>
+                )}
+              </article>
+            ))}
+          </section>
+        ))}
+      </div>
+    </main>
+    <footer class="wdwd-foot">
+      <nav aria-label="Site">
+        <a href="/">Home</a>
+        <a href="/legal/">Legal</a>
+        <a href="/privacy/">Privacy</a>
+      </nav>
+    </footer>
+  </body>
+</html>

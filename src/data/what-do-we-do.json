@@ -1,0 +1,148 @@
+{
+  "proofLine": "10+ years as a security expert, worked across public and private organisations.",
+  "seenBefore": [
+    "Ransomware",
+    "Data leaks",
+    "Account takeover",
+    "Payment fraud",
+    "Exposed services",
+    "Supplier compromise",
+    "Insider incidents",
+    "Mass-exploited vulnerabilities"
+  ],
+  "doors": [
+    {
+      "id": "helpinvestors",
+      "label": "I'm about to invest or acquire in a company",
+      "tag": "Investor · Acquirer",
+      "note": "Technical opinion, not financial advice. We do not assess a deal and then sell fixes to the same target.",
+      "slides": [
+        {
+          "kicker": "WHAT YOU SEE",
+          "heading": "A balance sheet can't show a cyber loss until it happens.",
+          "body": "Ransomware, a data leak, a fraudulent transfer: each one lands on the buyer after closing."
+        },
+        {
+          "kicker": "WHAT WE DO",
+          "heading": "An independent read, before you sign.",
+          "body": "We look at how the company would detect, contain and recover from an incident, not just which policies exist."
+        },
+        {
+          "kicker": "WHAT IT CHANGES",
+          "heading": "A lower bill, or a different price.",
+          "body": "You get red flags ranked by what they could cost, and which ones are fixable and which are deal-breakers."
+        }
+      ]
+    },
+    {
+      "id": "raisecompanyvalue",
+      "label": "I run a company",
+      "tag": "CEO · Founder",
+      "slides": [
+        {
+          "kicker": "WHAT YOU SEE",
+          "heading": "The first time someone asks you to prove it.",
+          "body": "A customer, an insurer, an investor. Most small companies are not ready for that question."
+        },
+        {
+          "kicker": "WHAT WE DO",
+          "heading": "We find it before they do.",
+          "body": "A practical review of what attackers and due-diligence teams would find, then a short fix list in priority order."
+        },
+        {
+          "kicker": "WHAT IT CHANGES",
+          "heading": "Raise the value, not just the defences.",
+          "body": "Clean answers in the data room, better insurance terms, bigger customers."
+        }
+      ]
+    },
+    {
+      "id": "helpsecurityteams",
+      "label": "I lead an IT or Cybersecurity team",
+      "tag": "Security · IT lead",
+      "slides": [
+        {
+          "kicker": "WHAT YOU SEE",
+          "heading": "Too many alerts, too few hands.",
+          "body": "Good teams still lose time to noise and to the gaps between tools."
+        },
+        {
+          "kicker": "WHAT WE DO",
+          "heading": "Operational help, alongside your team.",
+          "body": "Hardening, detection and response playbooks, and exercises, drawn from real incident work."
+        },
+        {
+          "kicker": "WHAT IT CHANGES",
+          "heading": "Calmer nights.",
+          "body": "Clear owners, tested runbooks, and fewer surprises."
+        }
+      ]
+    },
+    {
+      "id": "secureaiagents",
+      "label": "I build with AI or agents",
+      "tag": "AI · Agents",
+      "slides": [
+        {
+          "kicker": "WHAT YOU SEE",
+          "heading": "An agent can be talked into almost anything.",
+          "body": "Any page, document or tool output it reads is a place for someone else's instructions."
+        },
+        {
+          "kicker": "WHAT WE DO",
+          "heading": "Map where it can be hijacked.",
+          "body": "Every input path, every permission, and what an attacker gains at each one."
+        },
+        {
+          "kicker": "WHAT IT CHANGES",
+          "heading": "Recovery, not just alerts.",
+          "body": "A defined pause and reset path before the bad day."
+        }
+      ]
+    },
+    {
+      "id": "helpafterincident",
+      "label": "I've just been compromised",
+      "tag": "Incident now",
+      "slides": [
+        {
+          "kicker": "FIRST",
+          "heading": "Stop. Don't wipe anything.",
+          "body": "Isolate the affected machines from the network, keep them powered, and write down what you saw and when."
+        },
+        {
+          "kicker": "WHAT WE DO",
+          "heading": "We've done this many times.",
+          "body": "Containment, evidence, and who to notify."
+        },
+        {
+          "kicker": "WHAT IT CHANGES",
+          "heading": "A plan for the next hour.",
+          "body": "Book a call now and we'll triage together."
+        }
+      ]
+    },
+    {
+      "id": "checkcompliance",
+      "label": "Where do I stand? NIS2 · DORA · CRA",
+      "tag": "Compliance",
+      "slides": [
+        {
+          "kicker": "WHAT YOU SEE",
+          "heading": "New rules turn gaps into liabilities.",
+          "body": "NIS2, DORA and the Cyber Resilience Act add duties, deadlines and penalties."
+        },
+        {
+          "kicker": "WHAT WE DO",
+          "heading": "A plain-language gap check.",
+          "body": "What applies to you, what you already meet, and what to do first."
+        },
+        {
+          "kicker": "WHAT IT CHANGES",
+          "heading": "No surprise audits.",
+          "body": "A short, ordered plan you can act on."
+        }
+      ]
+    }
+  ]
+}

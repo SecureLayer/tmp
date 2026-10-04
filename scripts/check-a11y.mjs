@@ -12,6 +12,7 @@ const PAGES = [
   "/legal/",
   "/ai-agent/",
   "/ai-security/",
+  "/what-do-we-do/",
 ];
 
 function startServer() {
