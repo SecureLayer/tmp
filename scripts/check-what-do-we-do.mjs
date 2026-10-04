@@ -436,9 +436,12 @@ try {
       "mobile: the card opens in the same tab",
     );
     assert(
-      (await card.first().locator(".m-card-file-bar").textContent())?.trim() ===
-        "See what we do",
-      'mobile: the card bar reads "See what we do"',
+      (await m.page.locator(".m-card-file-bar").count()) === 0,
+      "mobile: the card has no bar under the label",
+    );
+    assert(
+      (await card.first().textContent())?.trim() === "What we do",
+      'mobile: the card only says "What we do"',
     );
     assert(await card.first().isVisible(), "mobile: the card is visible");
     assert(
@@ -446,6 +449,31 @@ try {
       "mobile: nothing on the homepage links to a PDF",
     );
     await m.context.close();
+
+    // same column and width as the Signal card, and the same 158px height as
+    // the note square beside it, on any phone (the Signal card itself grows
+    // taller on narrow phones when its text wraps)
+    for (const width of [360, 390, 430]) {
+      const phone = await home({
+        viewport: { width, height: 844 },
+        hasTouch: true,
+        isMobile: true,
+      });
+      await phone.page.locator("#mStand").click();
+      await phone.page.waitForTimeout(1800);
+      const sig = await phone.page.locator(".m-card-msg").boundingBox();
+      const square = await phone.page
+        .locator(".m-card-note-square")
+        .boundingBox();
+      const file = await phone.page.locator("a.m-card-file").boundingBox();
+      assert(
+        Math.abs(sig.width - file.width) <= 1 &&
+          Math.abs(sig.x - file.x) <= 1 &&
+          Math.abs(square.height - file.height) <= 1,
+        `${width}px: the card matches the Signal card's column and width, and the square's height (${Math.round(file.width)}x${Math.round(file.height)} vs ${Math.round(sig.width)} wide, ${Math.round(square.height)} tall)`,
+      );
+      await phone.context.close();
+    }
   }
 
   // --- broken markup falls back to the stacked page ----------------------
