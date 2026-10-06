@@ -15,6 +15,11 @@
       "id": "helpinvestors",
       "label": "I'm about to invest or acquire in a company",
       "tag": "Investor · Acquirer",
+      "proposals": [
+        "An independent cyber red-flag review",
+        "Could they survive a ransomware week?",
+        "What is fixable, what's a deal-breaker"
+      ],
       "note": "Technical opinion, not financial advice. We do not assess a deal and then sell fixes to the same target.",
       "slides": [
         {
@@ -38,6 +43,11 @@
       "id": "raisecompanyvalue",
       "label": "I run a company",
       "tag": "CEO · Founder",
+      "proposals": [
+        "To prove our security to a customer or an insurer",
+        "Be ready before a raise or an exit",
+        "A short, prioritised fix list"
+      ],
       "slides": [
         {
           "kicker": "WHAT YOU SEE",
@@ -60,6 +70,11 @@
       "id": "helpsecurityteams",
       "label": "I lead an IT or Cybersecurity team",
       "tag": "Security · IT lead",
+      "proposals": [
+        "To improve our processes",
+        "Response playbooks and exercises",
+        "A second pair of experienced eyes"
+      ],
       "slides": [
         {
           "kicker": "WHAT YOU SEE",
@@ -82,6 +97,11 @@
       "id": "secureaiagents",
       "label": "I build with AI or agents",
       "tag": "AI · Agents",
+      "proposals": [
+        "Where can our agents be hijacked?",
+        "Limit what it can do when fooled",
+        "A pause-and-reset path"
+      ],
       "slides": [
         {
           "kicker": "WHAT YOU SEE",
@@ -104,6 +124,11 @@
       "id": "helpafterincident",
       "label": "I've just been compromised",
       "tag": "Incident now",
+      "proposals": [
+        "A plan for the next hours",
+        "Help on who to notify, and when",
+        "How to contain, keep evidence"
+      ],
       "slides": [
         {
           "kicker": "FIRST",
@@ -126,6 +151,11 @@
       "id": "checkcompliance",
       "label": "Where do I stand? NIS2 · DORA · CRA",
       "tag": "Compliance",
+      "proposals": [
+        "Does it apply to my company?",
+        "What is already ok, what's missing",
+        "What to do first"
+      ],
       "slides": [
         {
           "kicker": "WHAT YOU SEE",
