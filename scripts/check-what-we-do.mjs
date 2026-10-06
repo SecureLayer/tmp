@@ -1,18 +1,15 @@
 import { createServer } from "node:http";
-import { readFileSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import sirv from "sirv";
 import { chromium } from "playwright";
 import AxeBuilder from "@axe-core/playwright";
 
 const DIST = new URL("../dist/", import.meta.url).pathname;
 const DATA = JSON.parse(
-  readFileSync(
-    new URL("../src/data/what-do-we-do.json", import.meta.url),
-    "utf8",
-  ),
+  readFileSync(new URL("../src/data/what-we-do.json", import.meta.url), "utf8"),
 );
 const PORT = 4175;
-const PAGE_URL = `http://localhost:${PORT}/what-do-we-do/`;
+const PAGE_URL = `http://localhost:${PORT}/what-we-do/`;
 const HASHES = [
   "helpinvestors",
   "raisecompanyvalue",
@@ -108,6 +105,28 @@ try {
     "door ids are lowercase letters only",
   );
 
+  assert(
+    DATA.doors.every(
+      (d) =>
+        Array.isArray(d.proposals) &&
+        d.proposals.length === 3 &&
+        d.proposals.every((x) => typeof x === "string" && x.trim().length > 0),
+    ),
+    "every door has exactly three non-empty proposals",
+  );
+
+  // --- redirects: the old URL must permanently point at the new one --------
+  {
+    const redirects = existsSync(new URL("../dist/_redirects", import.meta.url))
+      ? readFileSync(new URL("../dist/_redirects", import.meta.url), "utf8")
+      : "";
+    assert(
+      /^\/what-do-we-do\s+\/what-we-do\s+301\s*$/m.test(redirects) &&
+        /^\/what-do-we-do\/\s+\/what-we-do\/\s+301\s*$/m.test(redirects),
+      "dist/_redirects sends /what-do-we-do and /what-do-we-do/ to /what-we-do with a 301",
+    );
+  }
+
   // --- no JavaScript: everything stacked and readable --------------------
   {
     const { context, page } = await open({ javaScriptEnabled: false });
@@ -174,6 +193,56 @@ try {
       `hash "${hash}": deck is enhanced`,
     );
     await context.close();
+  }
+
+  // --- each box answers the question with its three proposals -----------
+  {
+    const { context, page } = await open({});
+    for (const door of DATA.doors) {
+      const link = page.locator(`a.wdwd-door[href="#${door.id}"]`);
+      const items = await link.locator("li").allTextContents();
+      assert(
+        JSON.stringify(items.map((t) => t.trim())) ===
+          JSON.stringify(door.proposals),
+        `#${door.id}: the box lists its three proposals in order`,
+      );
+      assert(
+        (await page
+          .getByRole("link", { name: door.label, exact: true })
+          .count()) === 1,
+        `#${door.id}: the link's accessible name is just its label`,
+      );
+      const described = await link.evaluate((el) => {
+        const node = document.getElementById(
+          el.getAttribute("aria-describedby") ?? "",
+        );
+        return node ? node.textContent : "";
+      });
+      assert(
+        door.proposals.every((x) => described.includes(x)),
+        `#${door.id}: the proposals are the link's description for screen readers`,
+      );
+    }
+    await context.close();
+  }
+
+  // --- the longer boxes fit on any phone, with JavaScript on and off -----
+  for (const width of [360, 390, 430]) {
+    for (const js of [true, false]) {
+      const { context, page } = await open({
+        viewport: { width, height: 844 },
+        javaScriptEnabled: js,
+      });
+      const clipped = await page.$$eval(
+        "a.wdwd-door",
+        (as) => as.filter((a) => a.scrollWidth > a.clientWidth + 1).length,
+      );
+      assert(
+        (await overflowX(page)) <= 0 && clipped === 0,
+        `${width}px${js ? "" : " (no JS)"}: chooser boxes fit, nothing overflows or is clipped`,
+      );
+      await context.close();
+    }
   }
 
   // --- every deep link opens its path at slide 0 -------------------------
@@ -385,8 +454,8 @@ try {
     const icon = d.page.locator("a.widget-file");
     assert((await icon.count()) === 1, "desktop: exactly one file shortcut");
     assert(
-      (await icon.first().getAttribute("href")) === "/what-do-we-do/",
-      "desktop: the shortcut points to /what-do-we-do/",
+      (await icon.first().getAttribute("href")) === "/what-we-do/",
+      "desktop: the shortcut points to /what-we-do/",
     );
     assert(
       (await icon.first().getAttribute("target")) === null,
@@ -428,8 +497,8 @@ try {
     const card = m.page.locator("a.m-card-file");
     assert((await card.count()) === 1, "mobile: exactly one file card");
     assert(
-      (await card.first().getAttribute("href")) === "/what-do-we-do/",
-      "mobile: the card points to /what-do-we-do/",
+      (await card.first().getAttribute("href")) === "/what-we-do/",
+      "mobile: the card points to /what-we-do/",
     );
     assert(
       (await card.first().getAttribute("target")) === null,
@@ -538,7 +607,7 @@ try {
     // axe cannot run with JavaScript disabled, so block only the deck script
     const c = await browser.newContext();
     const cp = await c.newPage();
-    await cp.route("**/scripts/what-do-we-do.js", (r) => r.abort());
+    await cp.route("**/scripts/what-we-do.js", (r) => r.abort());
     await cp.goto(PAGE_URL, { waitUntil: "networkidle" });
     await axeFail(cp, "stacked view (deck script blocked)");
     await c.close();
@@ -556,5 +625,5 @@ try {
 if (failed) {
   process.exit(1);
 } else {
-  console.log("What-do-we-do page check: all checks passed");
+  console.log("What-we-do page check: all checks passed");
 }

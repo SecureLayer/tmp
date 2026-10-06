@@ -1,5 +1,5 @@
 ---
-import data from "../data/what-do-we-do.json";
+import data from "../data/what-we-do.json";
 import logoSource from "../../public/logo.svg?raw";
 
 // Same treatment as the homepage mark: recolourable via currentColor, and the
@@ -19,14 +19,14 @@ const logoMark = logoSource
       name="description"
       content="Operational cybersecurity from 10+ years of experience across public and private organisations. Pick who you are and see how we help: investors, founders, security teams, AI builders, incident response, compliance."
     />
-    <link rel="canonical" href="https://securelayer.co/what-do-we-do" />
+    <link rel="canonical" href="https://securelayer.co/what-we-do" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Fraunces:ital,opsz,wght@1,9..144,600&family=Nunito:wght@700;900&display=swap"
       rel="stylesheet"
     />
-    <script is:inline src="/scripts/what-do-we-do.js"></script>
+    <script is:inline src="/scripts/what-we-do.js"></script>
     <style is:global>
       :root {
         --wdwd-ink: #141210;
@@ -152,6 +152,32 @@ const logoMark = logoSource
         font-size: 11px;
         letter-spacing: 0.1em;
         text-transform: uppercase;
+      }
+      .wdwd-door-label {
+        display: block;
+      }
+      .wdwd-props {
+        list-style: none;
+        display: grid;
+        gap: 4px;
+        margin-top: 10px;
+        font-weight: 400;
+        font-size: 12px;
+        line-height: 1.35;
+        color: var(--wdwd-label);
+      }
+      .wdwd-props li {
+        position: relative;
+        padding-left: 12px;
+      }
+      .wdwd-props li::before {
+        content: "›";
+        position: absolute;
+        left: 0;
+      }
+      .wdwd-door:hover .wdwd-props,
+      .wdwd-door:focus-visible .wdwd-props {
+        color: #d8cfbf;
       }
       .wdwd-door:hover,
       .wdwd-door:focus-visible {
@@ -365,6 +391,11 @@ const logoMark = logoSource
           min-height: 560px;
         }
       }
+      @media (max-width: 480px) {
+        .wdwd-doors {
+          grid-template-columns: 1fr;
+        }
+      }
       @media (prefers-reduced-motion: reduce) {
         .wdwd-js .wdwd-chooser,
         .wdwd-js .wdwd-path,
@@ -391,9 +422,21 @@ const logoMark = logoSource
           <ul class="wdwd-doors">
             {data.doors.map((door) => (
               <li>
-                <a class="wdwd-door" href={`#${door.id}`}>
+                <a
+                  class="wdwd-door"
+                  href={`#${door.id}`}
+                  aria-labelledby={`${door.id}-label`}
+                  aria-describedby={`${door.id}-props`}
+                >
                   <small>{door.tag}</small>
-                  {door.label}
+                  <span class="wdwd-door-label" id={`${door.id}-label`}>
+                    {door.label}
+                  </span>
+                  <ul class="wdwd-props" id={`${door.id}-props`}>
+                    {door.proposals.map((proposal) => (
+                      <li>{proposal}</li>
+                    ))}
+                  </ul>
                 </a>
               </li>
             ))}

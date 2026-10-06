@@ -13,7 +13,7 @@ Versioning follows [Calendar Versioning](https://calver.org/) — `YYYY.MM.PATCH
 - Real accessibility regression test (`scripts/check-a11y.mjs`, axe-core + Playwright), wired into CI.
 - Second repository collaborator with write access, for project continuity (bus factor 2).
 - Branch protection on `main` — pull request + status checks required, no exceptions for admins.
-- `/what-do-we-do` page: an accessible slide-deck overview of the services, with six audience paths and deep links (`#helpinvestors`, `#raisecompanyvalue`, `#helpsecurityteams`, `#secureaiagents`, `#helpafterincident`, `#checkcompliance`). Readable without JavaScript.
+- `/what-we-do` page: an accessible slide-deck overview of the services, with six audience paths and deep links (`#helpinvestors`, `#raisecompanyvalue`, `#helpsecurityteams`, `#secureaiagents`, `#helpafterincident`, `#checkcompliance`). Readable without JavaScript.
 
 ### Changed
 
