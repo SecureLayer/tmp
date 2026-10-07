@@ -220,26 +220,13 @@ const logoMark = logoSource
         max-width: 44ch;
         color: #3a352f;
       }
-      .wdwd-proof {
-        margin-top: 18px;
+      .wdwd-extra {
+        margin-top: 16px;
         max-width: 52ch;
+      }
+      .wdwd-extra p:last-child {
+        margin-top: 2px;
         font-size: 15px;
-      }
-      .wdwd-seen {
-        margin-top: 10px;
-      }
-      .wdwd-seen ul {
-        list-style: none;
-        display: flex;
-        flex-wrap: wrap;
-        gap: 6px;
-        margin-top: 6px;
-      }
-      .wdwd-seen li {
-        border: 1px solid var(--wdwd-line);
-        border-radius: 99px;
-        padding: 3px 10px;
-        font-size: 13px;
         color: #3a352f;
       }
       .wdwd-note {
@@ -331,6 +318,15 @@ const logoMark = logoSource
           transform 0.45s,
           visibility 0s;
       }
+      /* only the open section sets the card's height: the chooser is the tallest
+         section on phones and must not stretch every path to its size */
+      .wdwd-js .wdwd-chooser:not(.is-active),
+      .wdwd-js .wdwd-path:not(.is-active) {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+      }
       .wdwd-nav {
         position: absolute;
         left: 0;
@@ -387,8 +383,41 @@ const logoMark = logoSource
         .wdwd-path {
           padding: 40px 6%;
         }
+        /* phones: the card fills the visible screen (100svh minus the page
+           margins and the footer links) so a slide never needs scrolling, and
+           the type grows with the screen to use that space */
         .wdwd-js .wdwd-stage {
-          min-height: 560px;
+          min-height: calc(100vh - 98px);
+          min-height: calc(100svh - 98px);
+        }
+        /* short slides sit in the middle of the card instead of hugging the top */
+        .wdwd-js .wdwd-slide {
+          align-self: center;
+        }
+        .wdwd-slide .wdwd-h {
+          font-size: clamp(24px, 8.8vw, 40px);
+          font-size: clamp(24px, min(8.8vw, 4.6svh), 40px);
+        }
+        .wdwd-body {
+          font-size: clamp(16px, 5vw, 22px);
+          font-size: clamp(16px, min(5vw, 2.7svh), 22px);
+        }
+        .wdwd-extra p:last-child {
+          font-size: clamp(15px, 4.7vw, 19px);
+          font-size: clamp(15px, min(4.7vw, 2.5svh), 19px);
+        }
+        .wdwd-k {
+          font-size: 13px;
+        }
+        .wdwd-note {
+          font-size: 14px;
+        }
+        .wdwd-again {
+          font-size: 14px;
+        }
+        .wdwd-btn {
+          padding: 14px 20px;
+          font-size: 16px;
         }
       }
       @media (max-width: 480px) {
@@ -461,19 +490,16 @@ const logoMark = logoSource
                 <h3 class="wdwd-h" tabindex="-1">
                   {slide.heading}
                 </h3>
-                <p class="wdwd-body">{slide.body}</p>
-                {i === 1 && (
+                {"body" in slide && <p class="wdwd-body">{slide.body}</p>}
+                {i === 1 && "example" in slide && (
                   <Fragment>
-                    <p class="wdwd-proof">
-                      <strong>{data.proofLine}</strong>
-                    </p>
-                    <div class="wdwd-seen">
-                      <span class="wdwd-k">Seen before</span>
-                      <ul>
-                        {data.seenBefore.map((item) => (
-                          <li>{item}</li>
-                        ))}
-                      </ul>
+                    <div class="wdwd-extra">
+                      <p class="wdwd-k">Example of concrete work</p>
+                      <p>{slide.example}</p>
+                    </div>
+                    <div class="wdwd-extra">
+                      <p class="wdwd-k">Why us</p>
+                      <p>{data.whyUs}</p>
                     </div>
                   </Fragment>
                 )}

@@ -115,16 +115,151 @@ try {
     "every door has exactly three non-empty proposals",
   );
 
-  // --- redirects: the old URL must permanently point at the new one --------
+  // --- the old URL is deliberately NOT redirected (owner decision 2026-10-07)
   {
-    const redirects = existsSync(new URL("../dist/_redirects", import.meta.url))
-      ? readFileSync(new URL("../dist/_redirects", import.meta.url), "utf8")
-      : "";
+    const file = new URL("../dist/_redirects", import.meta.url);
+    const redirects = existsSync(file) ? readFileSync(file, "utf8") : "";
     assert(
-      /^\/what-do-we-do\s+\/what-we-do\s+301\s*$/m.test(redirects) &&
-        /^\/what-do-we-do\/\s+\/what-we-do\/\s+301\s*$/m.test(redirects),
-      "dist/_redirects sends /what-do-we-do and /what-do-we-do/ to /what-we-do with a 301",
+      !/what-do-we-do/.test(redirects),
+      "no redirect for the old /what-do-we-do URL ships",
     );
+    assert(
+      !existsSync(new URL("../dist/what-do-we-do/", import.meta.url)),
+      "no page is built at the old /what-do-we-do path",
+    );
+  }
+
+  // --- first-slide label: owner wording, not "WHAT YOU SEE" ----------------
+  {
+    const kickers = DATA.doors.map((d) => d.slides[0].kicker);
+    assert(
+      !kickers.includes("WHAT YOU SEE"),
+      'no first slide is labelled "WHAT YOU SEE" any more',
+    );
+    assert(
+      DATA.doors.every(
+        (d) =>
+          d.slides[0].kicker ===
+          (d.id === "helpafterincident" ? "FIRST" : "WHAT YOU NEED TO ADDRESS"),
+      ),
+      'first slides read "WHAT YOU NEED TO ADDRESS" (the incident path keeps "FIRST")',
+    );
+  }
+
+  // --- first-slide headings answer the question (owner wording, 2026-10-07) -
+  {
+    const OLD = [
+      "A balance sheet can't show a cyber loss until it happens.",
+      "The first time someone asks you to prove your cybersecurity level.",
+      "Too many alerts, too few hands.",
+      "An agent can be talked into almost anything.",
+      "Stop. Don't wipe anything.",
+      "New rules turn gaps into liabilities.",
+    ];
+    const headings = DATA.doors.map((d) => d.slides[0].heading);
+    assert(
+      OLD.every((h) => !headings.includes(h)),
+      "the six old first-slide headings are gone",
+    );
+    assert(
+      DATA.doors.find((d) => d.id === "helpinvestors").slides[0].heading ===
+        "Identify risks and prevent cyber loss before it happens.",
+      "the investor path uses the owner's heading verbatim",
+    );
+    assert(
+      DATA.doors.every((d) => d.slides.every((sl) => /[.]$/.test(sl.heading))),
+      "every slide heading ends with a full stop (house style, slides 1-3)",
+    );
+  }
+
+  // --- first slide: concrete-work example + "why us"; third slide label -----
+  assert(
+    typeof DATA.whyUs === "string" &&
+      DATA.whyUs ===
+        "Our team has 10+ years as experts, with experience across public and private organisations.",
+    "data has the owner's 'why us' sentence",
+  );
+  assert(
+    DATA.doors.every(
+      (d) =>
+        typeof d.slides[1].example === "string" &&
+        d.slides[1].example.trim().length > 0 &&
+        d.slides[1].body === undefined &&
+        d.slides[0].example === undefined &&
+        d.slides[2].example === undefined,
+    ),
+    'every path has its "example of concrete work" on the second slide only (it replaces that slide\'s body)',
+  );
+  assert(
+    DATA.proofLine === undefined && DATA.seenBefore === undefined,
+    'the "10+ years as a security expert" line and the "Seen before" row are gone from the data',
+  );
+  assert(
+    DATA.doors.find((d) => d.id === "helpsecurityteams").slides[1].example ===
+      "We improve detection and response playbooks, based on real incident work.",
+    "the security-team example is the owner's sentence verbatim",
+  );
+  assert(
+    DATA.doors.every((d) => d.slides[2].kicker === "WHAT IT CHANGES FOR YOU"),
+    'every third slide is labelled "WHAT IT CHANGES FOR YOU"',
+  );
+
+  // --- investor path wording (owner, 2026-10-07) ---------------------------
+  {
+    const investors = DATA.doors.find((d) => d.id === "helpinvestors");
+    assert(
+      investors.slides[0].body ===
+        "A data leak, a critical vulnerability not fixed: each one lands on the buyer after closing.",
+      "investor first slide body uses the owner's wording",
+    );
+    assert(
+      investors.slides[1].example ===
+        "We test how the company responds to an incident, not just which policies exist.",
+      "investor second slide example uses the owner's wording",
+    );
+    assert(
+      !/ransomware|fraudulent transfer/i.test(investors.slides[0].body),
+      "the old risk list (ransomware, fraudulent transfer) is gone from the investor body",
+    );
+  }
+
+  // --- owner wording round of 2026-10-07 (exact strings) --------------------
+  {
+    const door = (id) => DATA.doors.find((d) => d.id === id);
+    const want = [
+      [
+        door("raisecompanyvalue").slides[1].example,
+        "We perform a practical review of what attackers and due-diligence teams would find, then we provide a short fix list in priority order.",
+        "founders: second slide example",
+      ],
+      [
+        door("helpsecurityteams").slides[2].body,
+        "Clear owners, tested runbooks and fewer surprises.",
+        "security teams: third slide body",
+      ],
+      [
+        door("secureaiagents").slides[1].example,
+        "Test input path, permissions to understand what an attacker can gain.",
+        "AI agents: second slide example",
+      ],
+      [
+        door("helpafterincident").slides[0].body,
+        "Act quickly and efficiently.",
+        "incident: first slide body",
+      ],
+      [
+        door("helpafterincident").slides[1].example,
+        "Isolate the affected machines from the network, keep them powered and write down what you saw and when.",
+        "incident: second slide example",
+      ],
+      [
+        door("checkcompliance").slides[1].example,
+        "We identify what applies to your business, what is already done and what to do first.",
+        "compliance: second slide example",
+      ],
+    ];
+    for (const [got, exp, label] of want)
+      assert(got === exp, `${label} uses the owner's wording`);
   }
 
   // --- no JavaScript: everything stacked and readable --------------------
@@ -150,9 +285,11 @@ try {
       (await page.locator("a.wdwd-door").count()) === 6,
       "no-JS: six chooser links",
     );
+    const bodyText = await page.evaluate(() => document.body.innerText);
     assert(
-      (await page.getByText(DATA.proofLine).count()) === 6,
-      "no-JS: proof line appears once per path",
+      !/10\+ years as a security expert/i.test(bodyText) &&
+        !/seen before/i.test(bodyText),
+      'the page no longer shows the "security expert" line or "Seen before"',
     );
     assert(
       (await page.evaluate(() =>
@@ -243,6 +380,221 @@ try {
       );
       await context.close();
     }
+  }
+
+  // --- with a path open, the card is as tall as that path, not as the chooser
+  //     (the hidden chooser is the tallest section on phones)
+  for (const width of [360, 390, 430]) {
+    const { context, page } = await open(
+      { viewport: { width, height: 844 }, hasTouch: true, isMobile: true },
+      "#helpinvestors",
+    );
+    await page.waitForTimeout(700);
+    const m = await page.evaluate(() => ({
+      stage: document.getElementById("wdwd-stage").getBoundingClientRect()
+        .height,
+      nextBottom: document.querySelector(".wdwd-next").getBoundingClientRect()
+        .bottom,
+      vh: window.innerHeight,
+    }));
+    assert(
+      m.stage <= 760 && m.nextBottom <= m.vh,
+      `${width}px: with a path open the card stays compact and the arrows are on screen (card ${Math.round(m.stage)}px, arrows end at ${Math.round(m.nextBottom)}px of ${m.vh}px)`,
+    );
+    await context.close();
+  }
+
+  // --- navigating must never scroll the card sideways (text stays inside its
+  //     padding): scrolling the new heading into view runs while the slide is
+  //     still sliding in from the right
+  for (const width of [360, 390, 430, 1280]) {
+    const { context, page } = await open({
+      viewport: { width, height: width > 700 ? 760 : 780 },
+      hasTouch: width < 700,
+      isMobile: width < 700,
+    });
+    await page.locator('a.wdwd-door[href="#raisecompanyvalue"]').click();
+    await page.waitForTimeout(900);
+    await page.keyboard.press("ArrowRight");
+    await page.waitForTimeout(900);
+    const m = await page.evaluate(() => {
+      const stage = document.getElementById("wdwd-stage");
+      const h = document
+        .querySelector(".wdwd-path.is-active .wdwd-slide.is-active h3")
+        .getBoundingClientRect();
+      return {
+        scrollLeft: stage.scrollLeft,
+        inset: h.left - stage.getBoundingClientRect().left,
+      };
+    });
+    assert(
+      m.scrollLeft === 0 && m.inset >= 15,
+      `${width}px: after a door click and Next the card is not scrolled sideways (scrollLeft ${m.scrollLeft}, text ${Math.round(m.inset)}px from the card edge)`,
+    );
+    await context.close();
+  }
+
+  // --- the new blocks are on screen, second slide only ----------------------
+  {
+    const { context, page } = await open({ javaScriptEnabled: false });
+    for (const door of DATA.doors) {
+      const second = page.locator(`#${door.id} .wdwd-slide[data-index="1"]`);
+      const blocks = await second
+        .locator(".wdwd-extra")
+        .evaluateAll((els) => els.map((e) => e.innerText));
+      // the labels are upper-cased by CSS, so compare case-insensitively
+      const flat = blocks.map((t) =>
+        t.replace(/\s+/g, " ").trim().toLowerCase(),
+      );
+      assert(
+        flat.length === 2 &&
+          flat[0] ===
+            `Example of concrete work ${door.slides[1].example}`.toLowerCase() &&
+          flat[1] === `Why us ${DATA.whyUs}`.toLowerCase(),
+        `#${door.id}: second slide shows "Example of concrete work" then "Why us" with the data text`,
+      );
+      assert(
+        (await page
+          .locator(`#${door.id} .wdwd-slide:not([data-index="1"]) .wdwd-extra`)
+          .count()) === 0,
+        `#${door.id}: the two blocks appear on the second slide only`,
+      );
+      assert(
+        (await second.locator(".wdwd-body").count()) === 0,
+        `#${door.id}: the second slide has no separate body line (the example replaces it)`,
+      );
+      assert(
+        (
+          await page
+            .locator(`#${door.id} .wdwd-slide[data-index="2"] .wdwd-k`)
+            .first()
+            .textContent()
+        ).trim() === "WHAT IT CHANGES FOR YOU",
+        `#${door.id}: third slide label reads "WHAT IT CHANGES FOR YOU"`,
+      );
+    }
+    await context.close();
+  }
+
+  // --- first slides stay inside the card on every phone, all six paths -----
+  for (const width of [360, 390, 430]) {
+    for (const door of DATA.doors) {
+      const { context, page } = await open(
+        { viewport: { width, height: 844 }, hasTouch: true, isMobile: true },
+        `#${door.id}`,
+      );
+      await page.waitForTimeout(500);
+      const m = await page.evaluate(() => ({
+        over: document.documentElement.scrollWidth - window.innerWidth,
+        stage: document.getElementById("wdwd-stage").getBoundingClientRect()
+          .height,
+        nextBottom: document.querySelector(".wdwd-next").getBoundingClientRect()
+          .bottom,
+        vh: window.innerHeight,
+      }));
+      assert(
+        m.over <= 0 && m.stage <= 800 && m.nextBottom <= m.vh,
+        `${width}px #${door.id}: first slide fits (card ${Math.round(m.stage)}px, arrows end ${Math.round(m.nextBottom)}/${m.vh}px)`,
+      );
+      await context.close();
+    }
+  }
+
+  // --- second slides stay inside the card on every phone, all six paths -----
+  for (const width of [360, 390, 430]) {
+    for (const door of DATA.doors) {
+      const { context, page } = await open(
+        { viewport: { width, height: 844 }, hasTouch: true, isMobile: true },
+        `#${door.id}`,
+      );
+      await page.keyboard.press("ArrowRight");
+      await page.waitForTimeout(900);
+      const m = await page.evaluate(() => ({
+        over: document.documentElement.scrollWidth - window.innerWidth,
+        stage: document.getElementById("wdwd-stage").getBoundingClientRect()
+          .height,
+        nextBottom: document.querySelector(".wdwd-next").getBoundingClientRect()
+          .bottom,
+        vh: window.innerHeight,
+      }));
+      assert(
+        m.over <= 0 && m.stage <= 800 && m.nextBottom <= m.vh,
+        `${width}px #${door.id}: second slide fits (card ${Math.round(m.stage)}px, arrows end ${Math.round(m.nextBottom)}/${m.vh}px)`,
+      );
+      await context.close();
+    }
+  }
+
+  // --- phones: readable text, and every slide fits one screen (no scrolling) -
+  //     sizes are the visible page area of real phones (browser bars removed)
+  for (const [width, height] of [
+    [360, 640],
+    [360, 732],
+    [390, 780],
+    [412, 820],
+    [430, 860],
+  ]) {
+    const { context, page } = await open({
+      viewport: { width, height },
+      deviceScaleFactor: 2,
+      hasTouch: true,
+      isMobile: true,
+    });
+    const problems = [];
+    let worst = { heading: 999, body: 999 };
+    for (const door of DATA.doors) {
+      await page.goto(`${PAGE_URL}#${door.id}`, { waitUntil: "networkidle" });
+      await page.reload({ waitUntil: "networkidle" });
+      for (let slide = 0; slide < 3; slide++) {
+        if (slide > 0) await page.keyboard.press("ArrowRight");
+        await page.waitForTimeout(650);
+        const m = await page.evaluate(() => {
+          const sl = document.querySelector(
+            ".wdwd-path.is-active .wdwd-slide.is-active",
+          );
+          const fs = (sel) => {
+            const e = sl.querySelector(sel);
+            return e ? parseFloat(getComputedStyle(e).fontSize) : null;
+          };
+          return {
+            scrollH: document.documentElement.scrollHeight,
+            vh: window.innerHeight,
+            over: document.documentElement.scrollWidth - window.innerWidth,
+            nextBottom: document
+              .querySelector(".wdwd-next")
+              .getBoundingClientRect().bottom,
+            heading: fs("h3"),
+            body: fs(".wdwd-body") ?? fs(".wdwd-extra p:last-child"),
+            kicker: fs(".wdwd-k"),
+            clipped: [...sl.querySelectorAll("h3, p")].some(
+              (e) =>
+                e.getBoundingClientRect().bottom >
+                document.getElementById("wdwd-stage").getBoundingClientRect()
+                  .bottom,
+            ),
+          };
+        });
+        const tag = `${door.id}#${slide + 1}`;
+        if (m.scrollH > m.vh + 1)
+          problems.push(`${tag} needs scrolling (${m.scrollH}>${m.vh})`);
+        if (m.over > 0) problems.push(`${tag} overflows sideways`);
+        if (m.nextBottom > m.vh) problems.push(`${tag} arrows off screen`);
+        if (m.clipped) problems.push(`${tag} text clipped by the card`);
+        worst.heading = Math.min(worst.heading, m.heading);
+        worst.body = Math.min(worst.body, m.body);
+        if (width === 360 && height >= 700) {
+          if (m.heading < 28)
+            problems.push(`${tag} heading ${m.heading}px < 28px`);
+          if (m.body < 16) problems.push(`${tag} body ${m.body}px < 16px`);
+          if (m.kicker < 12) problems.push(`${tag} label ${m.kicker}px < 12px`);
+        }
+      }
+    }
+    assert(
+      problems.length === 0,
+      `${width}x${height}: all 18 slides fit one screen with readable text (smallest heading ${worst.heading}px, body ${worst.body}px)${problems.length ? " — " + problems.slice(0, 4).join("; ") : ""}`,
+    );
+    await context.close();
   }
 
   // --- every deep link opens its path at slide 0 -------------------------
@@ -593,6 +945,11 @@ try {
       "chooser state exposes exactly one h1",
     );
     await a.context.close();
+    const f = await open({}, "#helpinvestors");
+    await f.page.keyboard.press("ArrowRight");
+    await f.page.waitForTimeout(900);
+    await axeFail(f.page, "investor second slide (with the new blocks)");
+    await f.context.close();
     const b = await open({}, "#helpinvestors");
     await b.page.keyboard.press("ArrowRight");
     await b.page.keyboard.press("ArrowRight");
