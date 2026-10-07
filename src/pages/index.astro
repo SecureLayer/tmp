@@ -440,52 +440,10 @@ const logoMark = logoSource
         <div class="m-stack-scrim"></div>
 
         <div class="m-stack">
-          <div class="m-card m-card-collage" style="--d:.05s">
-            <div class="m-collage-text">
-              <div class="m-notif-row">
-                <img
-                  class="m-notif-icon"
-                  src="/images/dock-icons/cal.png"
-                  alt="Cal.com"
-                />
-                <div class="m-notif-text">
-                  <div class="m-notif-title">[APPSEC - IT - DEVOPS]</div>
-                  <div class="m-notif-body">
-                    Contact a security expert to check if your security is done
-                    right.
-                  </div>
-                </div>
-              </div>
-              <a
-                class="m-btn-amber"
-                href="https://cal.com/securelayer"
-                target="_blank"
-                rel="noopener"
-              >
-                Let's discuss →
-              </a>
-            </div>
-          </div>
-
-          <div class="m-row-note" style="--d:.1s">
-            <a
-              class="m-card-msg"
-              href="https://signal.me/#eu/jOCElNN5Meq0MDrSKeetbOt0N7YXLFFiH37-UJO1vCdG_wY0cuVJdYbu7yFtZq62"
-              target="_blank"
-              rel="noopener"
-            >
-              <img
-                class="m-card-msg-icon"
-                src="/images/dock-icons/signal-ultramarine.png"
-                alt="Signal"
-              />
-              <div>
-                <div class="m-card-msg-text">
-                  Questions? Message us — safely and privately
-                </div>
-                <span class="m-btn-dark">Open Signal</span>
-              </div>
-            </a>
+          <div
+            class="m-row-note m-detached-m-card-note-square"
+            style="--d:.05s"
+          >
             <div class="m-card-note m-card-note-square">
               <div class="m-card-note-eyebrow">PRO TIPS</div>
               <p>
@@ -502,6 +460,11 @@ const logoMark = logoSource
 
           <div class="m-row2" style="--d:.2s">
             <a class="m-card-file" href="/what-we-do/">
+              <h3>What we do</h3>
+              <p class="m-card-file-text">
+                What do you need from cyber? - As a investor, a ceo, an ai
+                specialist?
+              </p>
               <svg class="m-folder-icon" viewBox="0 0 64 50" fill="none">
                 <defs>
                   <linearGradient id="folderGrad" x1="0" y1="0" x2="0" y2="1">
@@ -523,20 +486,66 @@ const logoMark = logoSource
                   opacity=".85"
                 ></rect>
               </svg>
-              <span>What we do</span>
+            </a>
+            <a class="m-card-sec" href="/security">
+              <h3>Check our security</h3>
+              <p class="m-card-file-text">
+                Before we secure yours, see ours — our own security scores are
+                right there
+              </p>
+              <span class="m-icon-chip">
+                <img src="/images/dock-icons/brave.png" alt="" />
+              </span>
             </a>
           </div>
 
+          <div class="m-row-note m-detached-m-card-msg" style="--d:.1s">
+            <a
+              class="m-card-msg"
+              href="https://signal.me/#eu/jOCElNN5Meq0MDrSKeetbOt0N7YXLFFiH37-UJO1vCdG_wY0cuVJdYbu7yFtZq62"
+              target="_blank"
+              rel="noopener"
+            >
+              <img
+                class="m-card-msg-icon"
+                src="/images/dock-icons/signal-ultramarine.png"
+                alt="Signal"
+              />
+              <div class="m-card-msg-body">
+                <div class="m-card-msg-text">
+                  A quick question? — Message us safely and privately
+                </div>
+                <span class="m-btn-dark">Open Signal</span>
+              </div>
+            </a>
+          </div>
+
+          <a
+            class="m-card m-card-collage"
+            style="--d:.05s"
+            href="https://cal.com/securelayer"
+            target="_blank"
+            rel="noopener"
+          >
+            <img
+              class="m-card-msg-icon"
+              src="/images/dock-icons/cal.png"
+              alt="Cal.com"
+            />
+            <div class="m-card-msg-body">
+              <div class="m-card-msg-text">
+                Need to discuss about a specific topic? — Book a call
+              </div>
+              <span class="m-btn-dark">Let's discuss →</span>
+            </div>
+          </a>
+
           <div class="m-card m-card-icons-full" style="--d:.25s">
-            <h3>Check our security &amp; eco-impact</h3>
+            <h3>Check our impact</h3>
+            <p class="m-card-social-note">
+              We are engaged to a more sustainable tech. Check&nbsp;how
+            </p>
             <div class="m-icon-row">
-              <a
-                class="m-icon-chip"
-                href="/security"
-                aria-label="Check our security"
-              >
-                <img src="/images/dock-icons/brave.png" alt="" />
-              </a>
               <a
                 class="m-icon-chip"
                 href="/sustainability/"
@@ -545,10 +554,6 @@ const logoMark = logoSource
                 <img src="/images/dock-icons/firefox.png" alt="" />
               </a>
             </div>
-            <p class="m-card-social-note">
-              Before we secure yours, see ours —<br />
-              our own score is right there above.
-            </p>
           </div>
 
           <div class="m-card m-card-social" style="--d:.3s">
@@ -1486,8 +1491,18 @@ const logoMark = logoSource
     z-index: 1;
     padding: 22px 16px 18px;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    flex-wrap: wrap;
     gap: 14px;
+  }
+  .m-stack > * {
+    width: 100%;
+    min-width: 0;
+  }
+  /* two-up: Signal card + collage share a line (50% minus half the 14px gap each) */
+  .m-stack > .m-detached-m-card-msg,
+  .m-stack > .m-card-collage {
+    width: calc(50% - 7px);
   }
 
   .m-footer {
@@ -1521,6 +1536,7 @@ const logoMark = logoSource
      Notification Center/Control Center actually render — not a per-card brand color. */
   .m-card,
   .m-card-file,
+  .m-card-sec,
   .m-card-msg {
     border-radius: 20px;
     background: rgba(255, 255, 255, 0.42);
@@ -1543,73 +1559,14 @@ const logoMark = logoSource
     transform: translateY(0);
   }
 
-  .m-notif-row {
-    display: flex;
-    align-items: flex-start;
-    gap: 12px;
-    margin-bottom: 14px;
-  }
-  .m-notif-icon {
-    width: 22px;
-    height: 22px;
-    border-radius: 5px;
-    flex-shrink: 0;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
-  }
-  .m-notif-text {
-    flex: 1;
-    min-width: 0;
-  }
-  .m-notif-title {
-    font-family: var(--font-head);
-    font-weight: 700;
-    font-size: 0.92rem;
-    color: #17140f;
-    line-height: 1.3;
-  }
-  .m-notif-body {
-    font-size: 0.82rem;
-    color: rgba(23, 20, 15, 0.72);
-    line-height: 1.4;
-    margin-top: 4px;
-  }
-  .m-btn-amber {
-    display: inline-block;
-    background: #2e2a22;
-    color: #f0e9da;
-    font-family: var(--font-round);
-    font-weight: 800;
-    font-size: 0.82rem;
-    padding: 11px 18px;
-    border-radius: 100px;
-    text-decoration: none;
-  }
-
+  /* Cal card mirrors the Signal card: icon on top, text under it, button at the bottom,
+     so both icons share a line and both buttons share a line */
   .m-card-collage {
-    display: flex;
-    align-items: center;
-    padding: 12px;
-  }
-  .m-collage-text {
-    flex: 1;
+    padding: 18px 14px;
+    box-sizing: border-box;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    min-width: 0;
-  }
-  .m-collage-text h3 {
-    font-family: var(--font-head);
-    font-size: 1.05rem;
-    font-weight: 700;
-    color: #17140f;
-    margin: 0 0 8px;
-    line-height: 1.22;
-  }
-  .m-collage-text .m-btn-amber {
-    display: inline-block;
-    align-self: flex-start;
-    font-size: 12px;
-    padding: 7px 12px;
+    text-decoration: none;
   }
 
   .m-card-note {
@@ -1658,14 +1615,17 @@ const logoMark = logoSource
     opacity: 1;
     transform: translateY(0);
   }
+  /* full-width on its own line now (no longer a 158px square beside the Signal card):
+     each sentence stays on one line */
   .m-card-note-square {
-    width: 158px;
-    height: 158px;
-    flex-shrink: 0;
+    flex: 1;
     padding: 16px;
     display: flex;
     flex-direction: column;
     justify-content: center;
+  }
+  .m-card-note-square p {
+    white-space: nowrap;
   }
   .m-card-note-square .m-card-note-eyebrow {
     margin-bottom: 6px;
@@ -1691,34 +1651,63 @@ const logoMark = logoSource
     opacity: 1;
     transform: translateY(0);
   }
-  /* same column and width as the Signal card above it: the Signal row is
-     flex:1 beside a 158px note square + 12px gap, so cap this card at the
-     row width minus 170px; height matches that square */
+  /* What we do + security tiles: same size, same layout (title, text, icon at the bottom) */
   .m-card-file {
     flex: 1;
-    max-width: calc(100% - 170px);
-    height: 158px;
-    padding: 20px 10px;
+    min-width: 0;
+    box-sizing: border-box;
+    min-height: 158px;
+    padding: 18px 16px;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    text-align: center;
+    justify-content: space-between;
     text-decoration: none;
     overflow: hidden;
+  }
+  .m-card-file h3 {
+    font-family: var(--font-head);
+    font-size: 1.02rem;
+    font-weight: 700;
+    color: #17140f;
+    margin: 0;
+    line-height: 1.22;
+  }
+  .m-card-file-text {
+    font-size: 0.8rem;
+    color: rgba(23, 20, 15, 0.72);
+    line-height: 1.3;
+    margin: 4px 0 12px;
+  }
+  .m-card-sec .m-icon-chip {
+    margin-top: auto;
   }
   .m-folder-icon {
     width: 60px;
     height: 46px;
     flex-shrink: 0;
+    margin-top: auto;
     filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
   }
-  .m-card-file span {
-    font-size: 0.8rem;
-    color: #17140f;
+
+  /* security tile sits beside the What we do folder, same size (half the row each) */
+  .m-card-sec {
+    flex: 1;
+    min-width: 0;
+    box-sizing: border-box;
+    min-height: 158px;
+    padding: 18px 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    text-decoration: none;
+  }
+  .m-card-sec h3 {
+    font-family: var(--font-head);
+    font-size: 1.02rem;
     font-weight: 700;
-    line-height: 1.3;
+    color: #17140f;
+    margin: 0;
+    line-height: 1.22;
   }
 
   .m-card-msg {
@@ -1734,7 +1723,14 @@ const logoMark = logoSource
     height: 22px;
     border-radius: 5px;
   }
+  .m-card-msg-body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+  }
   .m-card-msg-text {
+    flex: 1;
     color: #17140f;
     font-family: var(--font-round);
     font-weight: 800;
@@ -1869,6 +1865,9 @@ const logoMark = logoSource
   .m-card-social .m-icon-chip svg {
     width: 100%;
     height: 100%;
+  }
+  .m-card-icons-full .m-card-social-note {
+    margin: 0 0 12px;
   }
   .m-card-social-note {
     font-size: 0.78rem;

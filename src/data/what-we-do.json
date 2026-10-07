@@ -86,7 +86,7 @@
     {
       "id": "secureaiagents",
       "label": "I build with AI or agents",
-      "tag": "AI · Agents",
+      "tag": "AI specialist · Builder",
       "proposals": [
         "Where can our agents be hijacked?",
         "Limit what it can do when fooled",
@@ -113,7 +113,8 @@
     {
       "id": "helpafterincident",
       "label": "I've just been compromised",
-      "tag": "Incident now",
+      "tag": "Respond to an incident",
+      "tone": "blue",
       "proposals": [
         "A plan for the next hours",
         "Help on who to notify, and when",
@@ -139,8 +140,9 @@
     },
     {
       "id": "checkcompliance",
-      "label": "Where do I stand? NIS2 · DORA · CRA",
-      "tag": "Compliance",
+      "label": "I need to know where I stand on SOC2, CRA, NIS2",
+      "tag": "Meet cybersecurity standards",
+      "tone": "blue",
       "proposals": [
         "Does it apply to my company?",
         "What is already ok, what's missing",

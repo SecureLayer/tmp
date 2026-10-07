@@ -772,13 +772,19 @@ try {
     await context.close();
   }
 
-  // --- the page links out to home, legal and privacy ---------------------
+  // --- the page links out to home, security, environment, legal, source --
   for (const [label, js] of [
     ["deck", true],
     ["stacked", false],
   ]) {
     const { context, page } = await open({ javaScriptEnabled: js });
-    for (const href of ["/", "/legal/", "/privacy/"]) {
+    for (const href of [
+      "/",
+      "/security/",
+      "/sustainability/",
+      "/legal/",
+      "https://github.com/SecureLayer/landing",
+    ]) {
       assert(
         await page.locator(`footer a[href="${href}"]`).isVisible(),
         `${label} view: footer links to ${href}`,
@@ -861,8 +867,11 @@ try {
       "mobile: the card has no bar under the label",
     );
     assert(
-      (await card.first().textContent())?.trim() === "What we do",
-      'mobile: the card only says "What we do"',
+      (await card.first().locator("h3").textContent())?.trim() ===
+        "What we do" &&
+        (await card.first().locator("p").textContent())?.trim() ===
+          "What do you need from cyber? - As a investor, a ceo, an ai specialist?",
+      'mobile: the card says "What we do" and asks what you need from cyber',
     );
     assert(await card.first().isVisible(), "mobile: the card is visible");
     assert(
@@ -871,9 +880,8 @@ try {
     );
     await m.context.close();
 
-    // same column and width as the Signal card, and the same 158px height as
-    // the note square beside it, on any phone (the Signal card itself grows
-    // taller on narrow phones when its text wraps)
+    // the card and the security tile share one row as equal halves (12px gap),
+    // the same height (at least 158px, they grow with their text), on any phone
     for (const width of [360, 390, 430]) {
       const phone = await home({
         viewport: { width, height: 844 },
@@ -882,16 +890,17 @@ try {
       });
       await phone.page.locator("#mStand").click();
       await phone.page.waitForTimeout(1800);
-      const sig = await phone.page.locator(".m-card-msg").boundingBox();
-      const square = await phone.page
-        .locator(".m-card-note-square")
-        .boundingBox();
+      const row = await phone.page.locator(".m-row2").boundingBox();
+      const sec = await phone.page.locator("a.m-card-sec").boundingBox();
       const file = await phone.page.locator("a.m-card-file").boundingBox();
       assert(
-        Math.abs(sig.width - file.width) <= 1 &&
-          Math.abs(sig.x - file.x) <= 1 &&
-          Math.abs(square.height - file.height) <= 1,
-        `${width}px: the card matches the Signal card's column and width, and the square's height (${Math.round(file.width)}x${Math.round(file.height)} vs ${Math.round(sig.width)} wide, ${Math.round(square.height)} tall)`,
+        Math.abs(file.x - row.x) <= 1 &&
+          Math.abs(file.x + file.width + 12 - sec.x) <= 1 &&
+          Math.abs(file.width - sec.width) <= 1 &&
+          Math.abs(sec.x + sec.width - (row.x + row.width)) <= 1 &&
+          Math.abs(sec.height - file.height) <= 1 &&
+          file.height >= 157,
+        `${width}px: the card and the security tile are equal halves of one row, same height (at least 158px) (${Math.round(file.width)}x${Math.round(file.height)} + ${Math.round(sec.width)}x${Math.round(sec.height)} in ${Math.round(row.width)})`,
       );
       await phone.context.close();
     }
