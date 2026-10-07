@@ -101,9 +101,14 @@
         var heading = active ? active.querySelector("h2, h3") : null;
         if (moveFocus && heading) {
           heading.focus({ preventScroll: true });
-          // on short or zoomed screens the stage is taller than the viewport,
-          // so bring the new heading into view (no-op when already visible)
-          heading.scrollIntoView({ block: "nearest", inline: "nearest" });
+          // on short or zoomed screens the stage is taller than the viewport, so
+          // bring the new heading into view. Vertical only: scrollIntoView would
+          // also scroll the stage sideways while the slide is still sliding in
+          // from the right, leaving the text flush against the card edge.
+          var box = heading.getBoundingClientRect();
+          if (box.top < 0) window.scrollBy(0, box.top - 16);
+          else if (box.bottom > window.innerHeight)
+            window.scrollBy(0, box.bottom - window.innerHeight + 16);
         }
         live.textContent = path
           ? "Slide " +
