@@ -57,6 +57,29 @@
         margin-bottom: 0;
       }
 
+      /* desktop: the top block is centred like the /sustainability hero. Below 860px the
+         mobile hero (.m-hero) shows the title, so this h1 goes back to screen-reader-only. */
+      .sec-h1 {
+        font-size: clamp(1.4rem, 3.4vw, 2rem);
+        font-weight: 700;
+        color: #fff;
+        text-align: center;
+        margin: 8px 0 10px;
+      }
+      .category-intro {
+        margin-bottom: 40px;
+      }
+      .category-intro > .m-cat-question,
+      .category-intro > .m-cat-desc {
+        text-align: center;
+      }
+      .category-intro > .m-cat-desc {
+        max-width: 640px;
+        margin: 0 auto 28px;
+        font-size: 0.875rem;
+        line-height: 1.6;
+      }
+
       /* plain-language category question/desc — carried to desktop 2026-08-26, previously
        mobile-only. Colors here are the dark-theme base; the mobile media query further
        down overrides to dark-text-on-light for the blurred-photo background. */
@@ -561,6 +584,27 @@
         .browser-navbar {
           display: none;
         }
+        .sec-h1 {
+          position: absolute;
+          width: 1px;
+          height: 1px;
+          padding: 0;
+          margin: -1px;
+          overflow: hidden;
+          clip: rect(0, 0, 0, 0);
+          white-space: nowrap;
+          border: 0;
+        }
+        .category-intro > .m-cat-question,
+        .category-intro > .m-cat-desc {
+          text-align: left;
+        }
+        .category-intro > .m-cat-desc {
+          max-width: none;
+          margin: 0 0 10px;
+          font-size: 12px;
+          line-height: 1.45;
+        }
         .m-statusbar,
         .m-bg,
         .m-scrim,
@@ -908,10 +952,8 @@
       <div class="browser-body">
         <div class="page">
           <main>
-            <h1 style="position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0;">
-              Secure by design
-            </h1>
-            <div class="category-block">
+            <h1 class="sec-h1">Secure by design</h1>
+            <div class="category-block category-intro">
               <p class="m-cat-question">
                 How your connection to us is protected?
               </p>
@@ -997,9 +1039,7 @@
             </div>
 
             <div class="category-block">
-              <p class="m-cat-question">
-                How we handle your data, and whether we're flagged anywhere?
-              </p>
+              <p class="m-cat-question">How we handle your data?</p>
               <p class="m-cat-desc">
                 These checks confirm we don't run hidden trackers or third-party
                 cookies, and that no security authority has flagged this site as
@@ -1114,7 +1154,7 @@
               </div>
             </div>
 
-            <p class="section-title">Platform Integrity</p>
+            <p class="section-title">How we handle our Platform Integrity</p>
             <div class="pipeline-card">
               <div class="pipeline-checks">
                 <div class="check-item">
@@ -1164,12 +1204,13 @@
               </div>
             </div>
 
-            <p class="section-title">Report a vulnerability</p>
+            <p class="section-title">
+              Found a security issue / a vulnerability?
+            </p>
             <div class="contact-box">
               <div class="contact-box-top">
                 <p>
-                  Found a security issue? Please report it responsibly before
-                  disclosing it publicly.
+                  Please report it responsibly before disclosing it publicly.
                 </p>
                 <a
                   class="contact-btn"
@@ -1231,6 +1272,7 @@
               <a href="/security">Security</a>
               <a href="/sustainability">Environment</a>
               <a href="/legal">Legal</a>
+              <a href="/privacy">Privacy</a>
               <a
                 href="https://github.com/SecureLayer/landing"
                 target="_blank"
