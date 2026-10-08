@@ -1019,6 +1019,160 @@ try {
     await c.close();
   }
 
+  // --- homepage on phones: lock screen, boxes and the Pro Tips one-liner -----
+  {
+    const TIPS = JSON.parse(
+      readFileSync(
+        new URL("../src/data/pro-tips.json", import.meta.url),
+        "utf8",
+      ),
+    );
+    const plain = (t) => t.replace(/\*/g, "");
+    const phone = async (options = {}) => {
+      const context = await browser.newContext({
+        viewport: { width: 360, height: 780 },
+        deviceScaleFactor: 2,
+        hasTouch: true,
+        isMobile: true,
+        ...options,
+      });
+      const page = await context.newPage();
+      page.on("pageerror", (e) => pageErrors.push(e.message));
+      await page.goto(`http://localhost:${PORT}/`, {
+        waitUntil: "networkidle",
+      });
+      return { context, page };
+    };
+
+    const lock = await phone();
+    assert(
+      (await lock.page.locator(".m-stand-stat-tags").count()) === 0 &&
+        !/AppSec/.test(await lock.page.locator("#mStand").innerText()),
+      'phone lock screen: the "DevOps / IT / AppSec" line is gone',
+    );
+    await lock.page.locator("#mStand").click();
+    await lock.page.waitForTimeout(1800);
+    const titles = await lock.page.locator(".m-card h3").allInnerTexts();
+    assert(
+      titles.includes("Check our environmental impact") &&
+        !titles.includes("Check our impact"),
+      'phone: the impact box is titled "Check our environmental impact"',
+    );
+    const social = await lock.page.evaluate(() => {
+      const card = document.querySelector(".m-card-social");
+      const note = card.querySelector(".m-card-social-note");
+      const icons = card.querySelector(".m-icon-row");
+      return {
+        noteBeforeIcons: !!(
+          note &&
+          icons &&
+          note.compareDocumentPosition(icons) & Node.DOCUMENT_POSITION_FOLLOWING
+        ),
+        gap: Math.round(
+          icons.getBoundingClientRect().top -
+            note.getBoundingClientRect().bottom,
+        ),
+      };
+    });
+    assert(
+      social.noteBeforeIcons && social.gap >= 8,
+      `phone: the social media box shows its text before the icons (gap ${social.gap}px)`,
+    );
+
+    // tips: one at a time, from src/data/pro-tips.json, each on a single line
+    const tipState = () =>
+      lock.page.evaluate(() => {
+        const tips = [...document.querySelectorAll(".m-tip")];
+        const room = document.querySelector(".m-tips").clientWidth;
+        return {
+          rotating: document
+            .getElementById("mProTips")
+            .classList.contains("is-rotating"),
+          texts: tips.map((t) => t.textContent.trim()),
+          on: tips
+            .filter((t) => t.classList.contains("is-on"))
+            .map((t) => t.textContent.trim()),
+          oneLine: tips.every((t) => t.scrollWidth <= room + 1),
+          bigger: parseFloat(getComputedStyle(tips[0]).fontSize) >= 17,
+        };
+      });
+    const t0 = await tipState();
+    assert(
+      JSON.stringify(t0.texts) === JSON.stringify(TIPS.tips.map(plain)),
+      `phone: the tips shown are the ones in pro-tips.json (${t0.texts.length})`,
+    );
+    assert(
+      t0.rotating && t0.on.length === 1 && t0.oneLine && t0.bigger,
+      "phone: one tip at a time, each on one line, in a bigger size",
+    );
+    const seen = new Set(t0.on);
+    for (let i = 0; i < TIPS.tips.length * 2; i++) {
+      await lock.page.waitForTimeout(TIPS.seconds * 1000 + 100);
+      (await tipState()).on.forEach((t) => seen.add(t));
+    }
+    assert(
+      seen.size === TIPS.tips.length,
+      `phone: the tips rotate through all ${TIPS.tips.length} of them (${seen.size} seen)`,
+    );
+    await lock.context.close();
+
+    const calm = await phone({ reducedMotion: "reduce" });
+    await calm.page.locator("#mStand").click();
+    await calm.page.waitForTimeout(1800);
+    const still = await calm.page.evaluate(() => ({
+      rotating: document
+        .getElementById("mProTips")
+        .classList.contains("is-rotating"),
+      visible: [...document.querySelectorAll(".m-tip")].every(
+        (t) => getComputedStyle(t).opacity === "1",
+      ),
+    }));
+    assert(
+      !still.rotating && still.visible,
+      "phone, reduced motion: the tips stay still, all visible",
+    );
+    await calm.context.close();
+
+    const noJs = await phone({ javaScriptEnabled: false });
+    assert(
+      (await noJs.page.locator(".m-tip").count()) === TIPS.tips.length,
+      "phone, no JavaScript: all the tips are in the page",
+    );
+    await noJs.context.close();
+  }
+
+  // --- /security: the three questions look like the section titles ----------
+  {
+    const context = await browser.newContext({
+      viewport: { width: 1280, height: 800 },
+    });
+    const page = await context.newPage();
+    await page.goto(`http://localhost:${PORT}/security/`, {
+      waitUntil: "networkidle",
+    });
+    const look = await page.evaluate(() => {
+      const css = (e) => {
+        const c = getComputedStyle(e);
+        return [
+          c.fontSize,
+          c.fontWeight,
+          c.letterSpacing,
+          c.textTransform,
+        ].join(" / ");
+      };
+      return {
+        title: css(document.querySelector(".section-title")),
+        questions: [...document.querySelectorAll(".m-cat-question")].map(css),
+      };
+    });
+    assert(
+      look.questions.length === 3 &&
+        look.questions.every((q) => q === look.title),
+      `/security: the 3 questions use the section-title font (${look.title})`,
+    );
+    await context.close();
+  }
+
   assert(
     pageErrors.length === 0,
     `no uncaught page errors (${pageErrors.join("; ")})`,

@@ -1,0 +1,9 @@
+{
+  "_help": "Pro Tips shown one at a time on the phone homepage. Add, remove or reorder strings in \"tips\". Wrap words in *stars* to italicise them. \"seconds\" = how long each tip stays on screen.",
+  "seconds": 3.5,
+  "tips": [
+    "*Security* is not a project,",
+    "It's a *habit*,",
+    "We can *help you* *make it stick*."
+  ]
+}

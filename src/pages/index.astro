@@ -1,6 +1,16 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import logoSource from "../../public/logo.svg?raw";
+import proTips from "../data/pro-tips.json";
+
+// Pro Tips come from src/data/pro-tips.json; *word* becomes italic. Escape first so the
+// file can never inject markup.
+const tipHtml = (text: string) =>
+  text
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/\*([^*]+)\*/g, "<em>$1</em>");
 
 // Inlined (not <img>) so the glowing wallpaper mark can be recolored via
 // CSS `currentColor` — the source file hardcodes fill="#000000" and also
@@ -444,17 +454,17 @@ const logoMark = logoSource
             class="m-row-note m-detached-m-card-note-square"
             style="--d:.05s"
           >
-            <div class="m-card-note m-card-note-square">
+            <div
+              class="m-card-note m-card-note-square"
+              id="mProTips"
+              data-seconds={proTips.seconds}
+            >
               <div class="m-card-note-eyebrow">PRO TIPS</div>
-              <p>
-                <em>Security</em> is not a project,
-              </p>
-              <p>
-                It's a <em>habit</em>,
-              </p>
-              <p>
-                We can <strong>help you</strong> <em>make it stick</em>.
-              </p>
+              <div class="m-tips">
+                {proTips.tips.map((tip) => (
+                  <p class="m-tip" set:html={tipHtml(tip)} />
+                ))}
+              </div>
             </div>
           </div>
 
@@ -541,7 +551,7 @@ const logoMark = logoSource
           </a>
 
           <div class="m-card m-card-icons-full" style="--d:.25s">
-            <h3>Check our impact</h3>
+            <h3>Check our environmental impact</h3>
             <p class="m-card-social-note">
               We are engaged to a more sustainable tech. Check&nbsp;how
             </p>
@@ -558,6 +568,10 @@ const logoMark = logoSource
 
           <div class="m-card m-card-social" style="--d:.3s">
             <h3>Check our social media</h3>
+            <p class="m-card-social-note m-card-social-note-top">
+              Our fanbase grows every day —<br />
+              we're now dangerously close to double digits.
+            </p>
             <div class="m-icon-row m-social-icon-row">
               <a
                 class="m-icon-chip"
@@ -630,10 +644,6 @@ const logoMark = logoSource
                 </svg>
               </a>
             </div>
-            <p class="m-card-social-note">
-              Our fanbase grows every day —<br />
-              we're now dangerously close to double digits.
-            </p>
           </div>
 
           <div class="m-card m-card-contact" style="--d:.35s">
@@ -691,11 +701,6 @@ const logoMark = logoSource
               </div>
             </div>
 
-            <div class="m-stand-stat-tags">
-              <span>↑ DevOps</span>
-              <span>↑ IT</span>
-              <span>↑ AppSec</span>
-            </div>
             <div class="m-stand-stats">
               <div class="m-stand-stat">
                 <div class="m-stand-stat-top">
@@ -1637,6 +1642,37 @@ const logoMark = logoSource
   .m-card-note-square p + p {
     margin-top: 6px;
   }
+  /* rotating one-liner: script adds .is-rotating; without it the tips stay stacked */
+  .m-card-note-square .m-tips {
+    position: relative;
+  }
+  .m-card-note-square .is-rotating .m-tips,
+  .m-card-note-square.is-rotating .m-tips {
+    height: 1.5em;
+    font-size: clamp(1.05rem, 6.2vw, 1.5rem);
+  }
+  .m-card-note-square.is-rotating .m-tip {
+    position: absolute;
+    left: 0;
+    top: 0;
+    margin: 0;
+    font-size: 1em;
+    line-height: 1.5;
+    white-space: nowrap;
+    opacity: 0;
+    transform: translateY(8px);
+    transition:
+      opacity 0.3s ease,
+      transform 0.3s ease;
+  }
+  /* the old tip is gone (0.3s) before the new one fades in, so two never overlap */
+  .m-card-note-square.is-rotating .m-tip.is-on {
+    opacity: 1;
+    transform: none;
+    transition:
+      opacity 0.5s ease 0.3s,
+      transform 0.5s ease 0.3s;
+  }
 
   .m-row2 {
     display: flex;
@@ -1866,6 +1902,9 @@ const logoMark = logoSource
     width: 100%;
     height: 100%;
   }
+  .m-card-social .m-card-social-note-top {
+    margin: 0 0 14px;
+  }
   .m-card-icons-full .m-card-social-note {
     margin: 0 0 12px;
   }
@@ -1991,18 +2030,6 @@ const logoMark = logoSource
     font-weight: 600;
     margin-top: 3px;
   }
-  .m-stand-stat-tags {
-    margin-bottom: 12px;
-    line-height: 1;
-    color: #fff;
-    font-size: 12px;
-    font-weight: 700;
-    letter-spacing: 0.03em;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-  }
 
   .m-stand-bottom {
     display: flex;
@@ -2084,4 +2111,5 @@ const logoMark = logoSource
 
 <script is:inline defer src="/scripts/index-widgets.js"></script>
 <script is:inline defer src="/scripts/mobile-scene.js"></script>
+<script is:inline defer src="/scripts/pro-tips.js"></script>
 <script is:inline defer src="/scripts/desktop-lock.js"></script>
