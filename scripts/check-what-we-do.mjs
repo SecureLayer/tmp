@@ -452,6 +452,25 @@ try {
       m.scrollLeft === 0 && m.inset >= 15,
       `${width}px: after a door click and Next the card is not scrolled sideways (scrollLeft ${m.scrollLeft}, text ${Math.round(m.inset)}px from the card edge)`,
     );
+    // "Change my answer" is an anchor jump to the chooser, which is still sliding in
+    // from the right: it used to scroll the card ~17px sideways (chooser off-centre)
+    await page.locator(".wdwd-path.is-active .wdwd-again").click();
+    await page.waitForTimeout(900);
+    const back = await page.evaluate(() => {
+      const stage = document.getElementById("wdwd-stage");
+      const chooser = document.getElementById("wdwd-chooser");
+      return {
+        scrollLeft: stage.scrollLeft,
+        offset: Math.round(
+          chooser.getBoundingClientRect().left -
+            stage.getBoundingClientRect().left,
+        ),
+      };
+    });
+    assert(
+      back.scrollLeft === 0 && back.offset === 0,
+      `${width}px: back on the chooser via "Change my answer" it is centred, not scrolled sideways (scrollLeft ${back.scrollLeft}, offset ${back.offset}px)`,
+    );
     await context.close();
   }
 
