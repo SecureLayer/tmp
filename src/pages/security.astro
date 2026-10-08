@@ -83,11 +83,14 @@
       /* plain-language category question/desc — carried to desktop 2026-08-26, previously
        mobile-only. Colors here are the dark-theme base; the mobile media query further
        down overrides to dark-text-on-light for the blurred-photo background. */
+      /* same look as .section-title ("How we handle our Platform Integrity") */
       .m-cat-question {
-        font-size: 0.95rem;
+        font-size: 13px;
         font-weight: 700;
-        color: #e0e0e0;
-        margin-bottom: 6px;
+        color: #888;
+        letter-spacing: 0.8px;
+        text-transform: uppercase;
+        margin-bottom: 8px;
         line-height: 1.3;
       }
       .m-cat-desc {
@@ -683,10 +686,12 @@
 
         /* mobile-specific color override of the (now desktop-visible-too) question/desc pair */
         .m-cat-question {
-          font-size: 0.95rem;
+          font-size: 13px;
           font-weight: 700;
-          color: #17140f;
-          margin-bottom: 6px;
+          color: rgba(23, 20, 15, 0.55);
+          letter-spacing: 0.8px;
+          text-transform: uppercase;
+          margin-bottom: 8px;
           line-height: 1.3;
         }
         .m-cat-desc {
@@ -958,9 +963,9 @@
                 How your connection to us is protected?
               </p>
               <p class="m-cat-desc">
-                We run independent, public scans checking whether traffic to
-                this site is encrypted correctly, uses strong security headers,
-                and can't be intercepted or downgraded.
+                These scans verifies if the traffic to this site is encrypted
+                correctly, uses strong security headers and can't be intercepted
+                or downgraded.
               </p>
               <p class="category-line">
                 <strong>Network &amp; Transport Security</strong> — your
@@ -1101,7 +1106,7 @@
             <div class="category-block">
               <p class="m-cat-question">Is our own supply chain secure?</p>
               <p class="m-cat-desc">
-                This check verifies how the code behind this site itself is
+                These checks verifies how the code behind this site itself is
                 built and maintained — dependency pinning, branch protection, CI
                 hygiene.
               </p>
