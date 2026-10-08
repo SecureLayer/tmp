@@ -306,13 +306,29 @@ try {
       { javaScriptEnabled: false },
       "#helpafterincident",
     );
-    const inView = await page.evaluate(() => {
-      const r = document
-        .getElementById("helpafterincident")
-        .getBoundingClientRect();
-      return r.top >= -2 && r.top < window.innerHeight;
-    });
-    assert(inView, "no-JS: deep link scrolls to its path section");
+    const measure = () =>
+      page.evaluate(() => {
+        const r = document
+          .getElementById("helpafterincident")
+          .getBoundingClientRect();
+        return {
+          top: Math.round(r.top),
+          scrollY: Math.round(window.scrollY),
+          docHeight: document.documentElement.scrollHeight,
+          innerHeight: window.innerHeight,
+          viewport: `${window.innerWidth}x${window.innerHeight}`,
+        };
+      });
+    const first = await measure();
+    // diagnostics only (does not change the result): did the section move after
+    // the first measurement, e.g. a late font swap shifting the content above it?
+    await page.waitForTimeout(1500);
+    const later = await measure();
+    const inView = first.top >= -2 && first.top < first.innerHeight;
+    assert(
+      inView,
+      `no-JS: deep link scrolls to its path section (top ${first.top}, scrollY ${first.scrollY}, page ${first.docHeight}px, viewport ${first.viewport}; 1.5s later: top ${later.top}, scrollY ${later.scrollY}, page ${later.docHeight}px)`,
+    );
     await context.close();
   }
 
