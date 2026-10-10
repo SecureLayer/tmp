@@ -906,13 +906,17 @@ try {
       (await m.page.locator(".m-card-file-bar").count()) === 0,
       "mobile: the card has no bar under the label",
     );
-    assert(
-      (await card.first().locator("h3").textContent())?.trim() ===
-        "What we do" &&
-        (await card.first().locator("p").textContent())?.trim() ===
-          "What do you need from cyber? - As a investor, a ceo, an ai specialist?",
-      'mobile: the card says "What we do" and asks what you need from cyber',
-    );
+    {
+      const title = (await card.first().locator("h3").textContent())?.trim();
+      const text = (await card.first().locator("p").innerText())
+        .replace(/\s+/g, " ")
+        .trim();
+      assert(
+        title === "What do you need from cyber?" &&
+          text === "A review, a recommendation, a solution, a plan...?",
+        'mobile: the card asks "What do you need from cyber?" and lists review, recommendation, solution, plan',
+      );
+    }
     assert(await card.first().isVisible(), "mobile: the card is visible");
     assert(
       (await m.page.locator('a[href$=".pdf"]').count()) === 0,
@@ -920,8 +924,8 @@ try {
     );
     await m.context.close();
 
-    // the card and the security tile share one row as equal halves (12px gap),
-    // the same height (at least 158px, they grow with their text), on any phone
+    // the four tiles sit in two rows of equal halves (12px gap), all the same height
+    // (212px, set by the text of the tallest tile), on any phone
     for (const width of [360, 390, 430]) {
       const phone = await home({
         viewport: { width, height: 844 },
@@ -930,20 +934,74 @@ try {
       });
       await phone.page.locator("#mStand").click();
       await phone.page.waitForTimeout(1800);
-      const row = await phone.page.locator(".m-row2").boundingBox();
-      const sec = await phone.page.locator("a.m-card-sec").boundingBox();
-      const file = await phone.page.locator("a.m-card-file").boundingBox();
       assert(
-        Math.abs(file.x - row.x) <= 1 &&
-          Math.abs(file.x + file.width + 12 - sec.x) <= 1 &&
-          Math.abs(file.width - sec.width) <= 1 &&
-          Math.abs(sec.x + sec.width - (row.x + row.width)) <= 1 &&
-          Math.abs(sec.height - file.height) <= 1 &&
-          file.height >= 157,
-        `${width}px: the card and the security tile are equal halves of one row, same height (at least 158px) (${Math.round(file.width)}x${Math.round(file.height)} + ${Math.round(sec.width)}x${Math.round(sec.height)} in ${Math.round(row.width)})`,
+        (await phone.page.locator(".m-row2").count()) === 2,
+        `${width}px: two rows of tiles`,
       );
+      for (const r of [0, 1]) {
+        const row = await phone.page.locator(".m-row2").nth(r).boundingBox();
+        const left = await phone.page
+          .locator(".m-row2")
+          .nth(r)
+          .locator("> a")
+          .nth(0)
+          .boundingBox();
+        const right = await phone.page
+          .locator(".m-row2")
+          .nth(r)
+          .locator("> a")
+          .nth(1)
+          .boundingBox();
+        assert(
+          Math.abs(left.x - row.x) <= 1 &&
+            Math.abs(left.x + left.width + 12 - right.x) <= 1 &&
+            Math.abs(left.width - right.width) <= 1 &&
+            Math.abs(right.x + right.width - (row.x + row.width)) <= 1 &&
+            Math.abs(left.height - right.height) <= 1 &&
+            left.height >= 211,
+          `${width}px: row ${r + 1} is two equal halves of the same height (at least 212px) (${Math.round(left.width)}x${Math.round(left.height)} + ${Math.round(right.width)}x${Math.round(right.height)} in ${Math.round(row.width)})`,
+        );
+      }
       await phone.context.close();
     }
+  }
+
+  // --- /why-us/: one path, four slides, opens straight on the first --------
+  {
+    const context = await browser.newContext({
+      viewport: { width: 390, height: 844 },
+    });
+    const page = await context.newPage();
+    page.on("pageerror", (e) => pageErrors.push(e.message));
+    await page.goto(`http://localhost:${PORT}/why-us/`, {
+      waitUntil: "networkidle",
+    });
+    assert(
+      (await page.locator(".wdwd-slide.is-active h3").textContent())?.trim() ===
+        "Don't believe us. Check us.",
+      "why-us: opens on the first slide",
+    );
+    assert(
+      await page.locator(".wdwd-prev").isDisabled(),
+      "why-us: the back arrow is disabled on the first slide",
+    );
+    assert(
+      (await page.locator(".wdwd-dot").count()) === 4,
+      "why-us: four dots for four slides",
+    );
+    for (let i = 0; i < 3; i++) await page.locator(".wdwd-next").click();
+    await page.waitForTimeout(700);
+    assert(
+      await page.locator(".wdwd-next").isDisabled(),
+      "why-us: the next arrow is disabled on the last slide",
+    );
+    assert(
+      (await page
+        .locator(".wdwd-slide.is-active .wdwd-cta")
+        .getAttribute("href")) === "https://cal.com/securelayer",
+      "why-us: the last slide books a call",
+    );
+    await context.close();
   }
 
   // --- broken markup falls back to the stacked page ----------------------
@@ -1052,12 +1110,37 @@ try {
     );
     await lock.page.locator("#mStand").click();
     await lock.page.waitForTimeout(1800);
-    const titles = await lock.page.locator(".m-card h3").allInnerTexts();
+    const titles = await lock.page
+      .locator(".m-card h3, .m-card-sec h3")
+      .allInnerTexts();
     assert(
       titles.includes("Check our environmental impact") &&
         !titles.includes("Check our impact"),
       'phone: the impact box is titled "Check our environmental impact"',
     );
+    const eco = lock.page.locator("a.m-card-eco");
+    assert(
+      (await eco.count()) === 1 &&
+        (await eco.getAttribute("href")) === "/sustainability/" &&
+        (await eco.locator(".m-emoji-chip").innerText()).includes("♻") &&
+        /Green by design:\s*static, no tracking/.test(
+          (await eco.locator("p").innerText()).replace(/\s+/g, " "),
+        ),
+      "phone: the environmental tile is dark green with a recycling chip, its line and a link to /sustainability/",
+    );
+    {
+      const secTile = lock.page.locator('a.m-card-sec[href="/security"]');
+      const whyTile = lock.page.locator('a.m-card-sec[href="/why-us/"]');
+      assert(
+        (await secTile.locator("p").innerText()).trim() ===
+          "Before we secure yours, see ours" &&
+          (await whyTile.locator("h3").innerText()).trim() === "Why us?" &&
+          (await whyTile.locator("p").innerText())
+            .replace(/\s+/g, " ")
+            .trim() === "Don't believe us, check us",
+        'phone: the security tile keeps only "Before we secure yours, see ours" and the Why us tile says "Don\'t believe us, check us"',
+      );
+    }
     const social = await lock.page.evaluate(() => {
       const card = document.querySelector(".m-card-social");
       const note = card.querySelector(".m-card-social-note");

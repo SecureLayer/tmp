@@ -13,6 +13,7 @@ const PAGES = [
   "/ai-agent/",
   "/ai-security/",
   "/what-we-do/",
+  "/why-us/",
 ];
 
 function startServer() {
