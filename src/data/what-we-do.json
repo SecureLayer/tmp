@@ -1,12 +1,11 @@
 {
-  "whyUs": "Our team has 10+ years as experts, with experience across public and private organisations.",
   "doors": [
     {
       "id": "helpinvestors",
       "label": "I'm about to invest or acquire in a company",
       "tag": "Investor · Acquirer",
       "proposals": [
-        "An independent cyber red-flag review",
+        "An independent cybersecurity red-flag review",
         "Could they survive a ransomware week?",
         "What is fixable, what's a deal-breaker"
       ],
@@ -14,7 +13,7 @@
       "slides": [
         {
           "kicker": "WHAT YOU NEED TO ADDRESS",
-          "heading": "Identify risks and prevent cyber loss before it happens.",
+          "heading": "Identify risks and prevent cybersecurity-related losses before they happen.",
           "body": "A data leak, a critical vulnerability not fixed: each one lands on the buyer after closing."
         },
         {
@@ -151,7 +150,7 @@
       "slides": [
         {
           "kicker": "WHAT YOU NEED TO ADDRESS",
-          "heading": "Know which cyber regulations apply and where you stand.",
+          "heading": "Know which cybersecurity regulations apply and where you stand.",
           "body": "NIS2, DORA and the Cyber Resilience Act add duties, deadlines and penalties."
         },
         {

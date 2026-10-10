@@ -609,6 +609,21 @@ import data from "../data/why-us.json";
         color: var(--wdwd-label);
         text-shadow: var(--wdwd-shadow);
       }
+      /* seven links: wrap cleanly (centred, no sideways overflow) instead of running past the edge */
+      .wdwd-foot nav {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        row-gap: 2px;
+      }
+      @media (max-width: 860px) {
+        .wdwd-foot {
+          padding-bottom: 12px;
+        }
+        .wdwd-foot a {
+          margin: 0 8px;
+        }
+      }
 
       /* ≤860px: like /security and the homepage, the browser frame is dropped for the
          blurred wallpaper + a phone status bar */
@@ -1012,6 +1027,7 @@ import data from "../data/why-us.json";
             <a href="/security/">Security</a>
             <a href="/sustainability/">Environment</a>
             <a href="/legal/">Legal</a>
+            <a href="/privacy/">Privacy</a>
             <a
               href="https://github.com/SecureLayer/landing"
               target="_blank"
