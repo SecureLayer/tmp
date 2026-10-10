@@ -611,6 +611,21 @@ const logoMark = logoSource
         color: var(--wdwd-label);
         text-shadow: var(--wdwd-shadow);
       }
+      /* seven links: wrap cleanly (centred, no sideways overflow) instead of running past the edge */
+      .wdwd-foot nav {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        row-gap: 2px;
+      }
+      @media (max-width: 860px) {
+        .wdwd-foot {
+          padding-bottom: 12px;
+        }
+        .wdwd-foot a {
+          margin: 0 8px;
+        }
+      }
 
       /* ≤860px: like /security and the homepage, the browser frame is dropped for the
          blurred wallpaper + a phone status bar */
@@ -965,7 +980,8 @@ const logoMark = logoSource
               <div class="wdwd-logo" aria-hidden="true" set:html={logoMark} />
               <p class="wdwd-k">SecureLayer · What we do</p>
               <h2 class="wdwd-h" id="wdwd-chooser-title" tabindex="-1">
-                What do you need <span class="wdwd-acc">from cyber?</span>
+                What do you need{" "}
+                <span class="wdwd-acc">from cybersecurity?</span>
               </h2>
               <ul class="wdwd-doors">
                 {data.doors.map((door) => (
@@ -1018,10 +1034,6 @@ const logoMark = logoSource
                           <p class="wdwd-k">Example of concrete work</p>
                           <p>{slide.example}</p>
                         </div>
-                        <div class="wdwd-extra">
-                          <p class="wdwd-k">Why us</p>
-                          <p>{data.whyUs}</p>
-                        </div>
                       </Fragment>
                     )}
                     {i === door.slides.length - 1 && (
@@ -1048,9 +1060,11 @@ const logoMark = logoSource
         <footer class="wdwd-foot">
           <nav aria-label="Site">
             <a href="/">Home</a>
+            <a href="/why-us/">Why us</a>
             <a href="/security/">Security</a>
             <a href="/sustainability/">Environment</a>
             <a href="/legal/">Legal</a>
+            <a href="/privacy/">Privacy</a>
             <a
               href="https://github.com/SecureLayer/landing"
               target="_blank"

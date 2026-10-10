@@ -4,6 +4,11 @@
 
 SecureLayer is an independent freelance cybersecurity operator. This website is an informational landing page presenting the service catalogue (Application Security, SecDevOps, IT Security, AI Security, security advice) and links to social media. It does not provide any interactive tool, download, or service directly through the site.
 
+## Pages
+
+- Why us: https://securelayer.co/why-us/
+- What we do: https://securelayer.co/what-we-do/
+
 ## Contact
 
 - Book a call: https://cal.com/securelayer

@@ -163,7 +163,7 @@ try {
     );
     assert(
       DATA.doors.find((d) => d.id === "helpinvestors").slides[0].heading ===
-        "Identify risks and prevent cyber loss before it happens.",
+        "Identify risks and prevent cybersecurity-related losses before they happen.",
       "the investor path uses the owner's heading verbatim",
     );
     assert(
@@ -172,12 +172,10 @@ try {
     );
   }
 
-  // --- first slide: concrete-work example + "why us"; third slide label -----
+  // --- second slide: concrete-work example; the "why us" block moved to /why-us/ ---
   assert(
-    typeof DATA.whyUs === "string" &&
-      DATA.whyUs ===
-        "Our team has 10+ years as experts, with experience across public and private organisations.",
-    "data has the owner's 'why us' sentence",
+    DATA.whyUs === undefined,
+    "the 'why us' sentence is no longer in this page's data (it has its own page)",
   );
   assert(
     DATA.doors.every(
@@ -487,17 +485,16 @@ try {
         t.replace(/\s+/g, " ").trim().toLowerCase(),
       );
       assert(
-        flat.length === 2 &&
+        flat.length === 1 &&
           flat[0] ===
-            `Example of concrete work ${door.slides[1].example}`.toLowerCase() &&
-          flat[1] === `Why us ${DATA.whyUs}`.toLowerCase(),
-        `#${door.id}: second slide shows "Example of concrete work" then "Why us" with the data text`,
+            `Example of concrete work ${door.slides[1].example}`.toLowerCase(),
+        `#${door.id}: second slide shows only "Example of concrete work" with the data text`,
       );
       assert(
         (await page
           .locator(`#${door.id} .wdwd-slide:not([data-index="1"]) .wdwd-extra`)
           .count()) === 0,
-        `#${door.id}: the two blocks appear on the second slide only`,
+        `#${door.id}: the example block appears on the second slide only`,
       );
       assert(
         (await second.locator(".wdwd-body").count()) === 0,
@@ -812,7 +809,7 @@ try {
     await context.close();
   }
 
-  // --- the page links out to home, security, environment, legal, source --
+  // --- the page links out to home, why us, security, environment, legal, privacy, source --
   for (const [label, js] of [
     ["deck", true],
     ["stacked", false],
@@ -820,9 +817,11 @@ try {
     const { context, page } = await open({ javaScriptEnabled: js });
     for (const href of [
       "/",
+      "/why-us/",
       "/security/",
       "/sustainability/",
       "/legal/",
+      "/privacy/",
       "https://github.com/SecureLayer/landing",
     ]) {
       assert(
@@ -912,9 +911,9 @@ try {
         .replace(/\s+/g, " ")
         .trim();
       assert(
-        title === "What do you need from cyber?" &&
+        title === "What do you need from cybersecurity?" &&
           text === "A review, a recommendation, a solution, a plan...?",
-        'mobile: the card asks "What do you need from cyber?" and lists review, recommendation, solution, plan',
+        'mobile: the card asks "What do you need from cybersecurity?" and lists review, recommendation, solution, plan',
       );
     }
     assert(await card.first().isVisible(), "mobile: the card is visible");
