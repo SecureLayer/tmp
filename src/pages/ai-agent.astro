@@ -35,37 +35,34 @@
       }
 
       .page {
-        max-width: 700px;
+        max-width: 880px;
         margin: 0 auto;
         padding: 48px 24px 24px;
       }
 
-      .ab-hero {
-        text-align: center;
-      }
-      .ab-hero h1 {
-        font-size: 1.8rem;
-        line-height: 1.3;
-        margin-bottom: 16px;
-      }
-      .ab-hero p {
-        color: #aab;
-        margin-bottom: 8px;
-      }
-      .ab-hero code {
-        font-family: monospace;
-        color: #5eead4;
-      }
+      /* ── Agent Breaker game (ids and classes are used by /scripts/ai-agent.js) ── */
       .ab-spots {
+        display: inline-block;
+        margin-top: 12px;
+        padding: 4px 14px;
+        font-size: 13px;
         font-weight: 700;
         color: #5eead4;
-        margin-top: 16px;
+        background: #0d2a2a;
+        border: 1px solid #0d9488;
+        border-radius: 6px;
       }
-
-      .ab-game {
-        max-width: 700px;
-        margin: 0 auto;
-        padding: 24px 24px 48px;
+      .ab-spots:empty {
+        display: none;
+      }
+      .ab-game label {
+        display: block;
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 0.8px;
+        text-transform: uppercase;
+        color: #5eead4;
+        margin-bottom: 10px;
       }
       #ab-ticket {
         width: 100%;
@@ -125,8 +122,294 @@
       .ab-result.lose {
         background: rgba(255, 255, 255, 0.04);
       }
+      @media (max-width: 860px) {
+        .ab-spots {
+          color: #0d6d63;
+          background: rgba(94, 234, 212, 0.25);
+          border-color: rgba(13, 109, 99, 0.3);
+        }
+        .ab-game label {
+          color: rgba(23, 20, 15, 0.55);
+        }
+        #ab-ticket {
+          color: #17140f;
+          background: rgba(255, 255, 255, 0.6);
+          border-color: rgba(23, 20, 15, 0.15);
+        }
+        #ab-ticket:focus {
+          outline-color: #0d6d63;
+        }
+        .ab-privacy,
+        .ab-count {
+          color: rgba(23, 20, 15, 0.6);
+        }
+        #ab-submit {
+          color: #f0e9da;
+          background: #2e2a22;
+        }
+        .ab-result {
+          border-color: rgba(23, 20, 15, 0.15);
+          color: #17140f;
+        }
+        .ab-result.win {
+          background: rgba(94, 234, 212, 0.3);
+          border-color: #0d6d63;
+        }
+        .ab-result.lose {
+          background: rgba(255, 255, 255, 0.5);
+        }
+      }
 
-      /* ── Footer (matches security.astro / sustainability.astro / legal.astro) ── */
+      /* ── Hero (title + intro), then cards in the /security style ── */
+      .ai-hero {
+        text-align: center;
+        margin-bottom: 40px;
+      }
+      .ai-hero h1 {
+        font-size: 2rem;
+        line-height: 1.3;
+        margin-bottom: 18px;
+        color: #fff;
+      }
+      .ai-hero p {
+        color: #aab;
+        max-width: 640px;
+        margin: 0 auto 8px;
+      }
+      .ai-hero a {
+        color: #5eead4;
+        text-decoration: underline;
+      }
+      .ai-hero code {
+        font-family: ui-monospace, Menlo, monospace;
+        color: #5eead4;
+        white-space: nowrap;
+      }
+      .ai-card {
+        background: #0d1a1a;
+        border: 1px solid #1a3030;
+        border-radius: 8px;
+        padding: 26px 28px;
+        margin-bottom: 16px;
+      }
+      .ai-card + .ai-card {
+        margin-top: 0;
+      }
+      .as-eyebrow {
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 0.8px;
+        text-transform: uppercase;
+        color: #5eead4;
+        margin-bottom: 10px;
+      }
+      .as-question {
+        font-size: 1.2rem;
+        line-height: 1.35;
+        color: #fff;
+        margin-bottom: 12px;
+      }
+      .as-desc {
+        color: #b4bcbc;
+        margin-bottom: 16px;
+      }
+      .as-desc a {
+        color: #5eead4;
+        text-decoration: underline;
+      }
+      .as-highlight {
+        border-left: 2px solid #5eead4;
+        background: rgba(94, 234, 212, 0.06);
+        border-radius: 0 6px 6px 0;
+        padding: 10px 14px;
+        color: #9aa5a5;
+      }
+      .as-highlight strong {
+        color: #e8eeee;
+      }
+      .ai-card-cta h2 {
+        font-size: 1.2rem;
+        line-height: 1.35;
+        color: #fff;
+        margin-bottom: 10px;
+      }
+      .ai-card-cta p {
+        color: #b4bcbc;
+        margin-bottom: 18px;
+      }
+      .contact-btn {
+        display: inline-block;
+        background: #0d2a2a;
+        border: 1px solid #0d9488;
+        border-radius: 5px;
+        color: #5eead4;
+        font-size: 13px;
+        font-weight: 600;
+        padding: 8px 20px;
+        text-decoration: none;
+        white-space: nowrap;
+        transition: background 0.15s;
+      }
+      .contact-btn:hover {
+        background: #0d3535;
+        text-decoration: none;
+      }
+      .ai-card-split {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        flex-wrap: wrap;
+      }
+      .ai-card-split h2 {
+        margin: 0;
+        font-size: 1.2rem;
+        line-height: 1.35;
+        color: #fff;
+      }
+      .browser-window {
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .browser-titlebar {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        background: #170f20;
+        padding: 10px 16px 0;
+        border-bottom: 1px solid #2a2038;
+      }
+      .traffic-lights {
+        display: flex;
+        gap: 8px;
+        padding-bottom: 10px;
+        flex-shrink: 0;
+      }
+      .tl {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+      }
+      .tl.red {
+        background: #ff5f57;
+      }
+      .tl.yellow {
+        background: #febc2e;
+      }
+      .tl.green {
+        background: #28c840;
+      }
+
+      .browser-tab {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        background: #241a30;
+        border-radius: 8px 8px 0 0;
+        padding: 8px 12px;
+        max-width: 260px;
+      }
+      .tab-favicon {
+        width: 15px;
+        height: 15px;
+        flex-shrink: 0;
+      }
+      .tab-title {
+        font-size: 12.5px;
+        color: #e4dcf0;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      .tab-close {
+        margin-left: auto;
+        color: #7a6f8c;
+        font-size: 15px;
+        line-height: 1;
+        flex-shrink: 0;
+      }
+      .tab-add {
+        color: #7a6f8c;
+        font-size: 18px;
+        padding: 0 10px 10px;
+        line-height: 1;
+        align-self: center;
+      }
+      .tab-chevron {
+        color: #7a6f8c;
+        font-size: 12px;
+        margin-left: auto;
+        padding-bottom: 10px;
+        align-self: center;
+      }
+
+      .browser-navbar {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        background: #1d1428;
+        padding: 10px 16px;
+        border-bottom: 1px solid #2a2038;
+      }
+      .nav-icon {
+        color: #8a7fa0;
+        flex-shrink: 0;
+        display: flex;
+        align-items: center;
+      }
+      .nav-icon svg {
+        width: 17px;
+        height: 17px;
+      }
+      .nav-icon.disabled {
+        color: #453b56;
+      }
+      .address-pill {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        background: #2a2038;
+        border-radius: 7px;
+        padding: 7px 14px;
+        max-width: 640px;
+        margin: 0 auto;
+      }
+      .address-pill svg {
+        width: 14px;
+        height: 14px;
+        color: #8a7fa0;
+        flex-shrink: 0;
+      }
+      .addr-text {
+        font-size: 13px;
+        color: #e4dcf0;
+      }
+      .addr-path {
+        color: #9187a6;
+      }
+      .nav-divider {
+        width: 1px;
+        height: 20px;
+        background: #362a48;
+        flex-shrink: 0;
+      }
+      .nav-brave {
+        width: 20px;
+        height: 20px;
+        flex-shrink: 0;
+      }
+      .nav-menu svg {
+        width: 18px;
+        height: 18px;
+      }
+
+      .browser-body {
+        flex: 1;
+      }
+      /* ── Footer ── */
       .site-footer {
         border-top: 1px solid #1a3030;
         padding: 40px 24px;
@@ -170,64 +453,356 @@
         margin-top: 12px;
         font-size: 12px;
       }
+
+      /* ══════════ MOBILE SCENE (below 860px) ══════════
+         Same treatment as /security: no browser frame, blurred photo + frosted-glass cards. */
+      .m-statusbar,
+      .m-bg,
+      .m-scrim {
+        display: none;
+      }
+      @media (max-width: 860px) {
+        .browser-titlebar,
+        .browser-navbar {
+          display: none;
+        }
+        .m-statusbar,
+        .m-bg,
+        .m-scrim {
+          display: block;
+        }
+        body {
+          background: #f0e9da;
+        }
+        .browser-window,
+        .browser-body,
+        .page {
+          background: transparent;
+        }
+        .page {
+          padding: 8px 16px 24px;
+        }
+        .m-statusbar {
+          position: sticky;
+          top: 0;
+          z-index: 30;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          height: 30px;
+          padding: 0 16px;
+          color: #fff;
+          font-family: "Helvetica Neue", Arial, sans-serif;
+          text-shadow: 0 1px 4px rgba(0, 0, 0, 0.35);
+        }
+        .m-statusbar-brand {
+          font-size: 0.72rem;
+          font-weight: 800;
+        }
+        .m-statusbar-icons {
+          display: flex;
+          align-items: center;
+          gap: 6px;
+        }
+        .m-statusbar-icons svg {
+          display: block;
+        }
+        .m-bg {
+          position: fixed;
+          inset: -40px;
+          z-index: -2;
+          background: url("/images/wallpaper-beach-blur.webp") center 55% /
+            cover no-repeat;
+          filter: blur(30px) saturate(1.15) brightness(0.92);
+          transform: scale(1.08);
+        }
+        .m-scrim {
+          position: fixed;
+          inset: 0;
+          z-index: -1;
+          background: rgba(20, 18, 14, 0.22);
+        }
+
+        .ai-hero {
+          text-align: left;
+          margin: 10px 8px 18px;
+        }
+        .ai-hero h1 {
+          font-size: 1.4rem;
+          color: #17140f;
+          margin-bottom: 8px;
+        }
+        .ai-hero p {
+          font-size: 0.85rem;
+          line-height: 1.5;
+          color: rgba(23, 20, 15, 0.75);
+          max-width: none;
+          margin: 0 0 8px;
+        }
+        .ai-hero a {
+          color: #17140f;
+          font-weight: 600;
+        }
+        .ai-hero code {
+          color: #0b4f48;
+          font-weight: 700;
+        }
+        .ai-card {
+          background: rgba(255, 255, 255, 0.42);
+          backdrop-filter: blur(28px) saturate(150%);
+          -webkit-backdrop-filter: blur(28px) saturate(150%);
+          border: 1px solid rgba(255, 255, 255, 0.45);
+          box-shadow: 0 8px 26px rgba(0, 0, 0, 0.12);
+          padding: 20px 18px;
+        }
+        .as-eyebrow {
+          color: rgba(23, 20, 15, 0.55);
+        }
+        .as-question,
+        .ai-card-cta h2,
+        .ai-card-split h2 {
+          color: #17140f;
+          font-size: 1.1rem;
+        }
+        .as-desc,
+        .ai-card-cta p {
+          color: rgba(23, 20, 15, 0.72);
+          font-size: 0.9rem;
+        }
+        .as-desc a {
+          color: #0d6d63;
+        }
+        .as-highlight {
+          border-left-color: #0d6d63;
+          background: rgba(255, 255, 255, 0.35);
+          color: rgba(23, 20, 15, 0.7);
+        }
+        .as-highlight strong {
+          color: #17140f;
+        }
+        .contact-btn {
+          background: #2e2a22;
+          border-color: #2e2a22;
+          color: #f0e9da;
+        }
+        .contact-btn:hover {
+          background: #17140f;
+        }
+        .site-footer {
+          border-top-color: rgba(23, 20, 15, 0.15);
+          padding: 28px 8px;
+        }
+        .site-footer p {
+          color: rgba(23, 20, 15, 0.6);
+        }
+        .footer-links a {
+          color: rgba(23, 20, 15, 0.6);
+        }
+        .footer-links a:hover {
+          color: #17140f;
+        }
+      }
     </style>
   </head>
   <body>
-    <div class="page">
-      <section class="ab-hero">
-        <h1>Can you talk Eliza into breaking its own rules?</h1>
-        <p>
-          Eliza is a fictional customer-support agent for Loophole Outfitters
-          with two tools: it can look up an order, and it can issue a refund —
-          capped at $50 without manager approval. You're customer{" "}
-          <code>ORD-1001</code>. Write a support ticket. See if you can get it
-          to refund you more than $50, or hand over someone else's order
-          details.
-        </p>
-        <p id="ab-spots" class="ab-spots">
-          Loading today's spots…
-        </p>
-      </section>
+    <!-- MOBILE SCENE header · Phase B push (2026-08-26), replaces the Brave browser-chrome below 860px -->
+    <div class="m-statusbar">
+      <div class="m-statusbar-brand">SecureLayer</div>
+      <div class="m-statusbar-icons">
+        <svg width="16" height="11" viewBox="0 0 16 11" fill="#fff">
+          <rect x="0" y="7" width="3" height="4" rx=".5"></rect>
+          <rect x="4.5" y="5" width="3" height="6" rx=".5"></rect>
+          <rect x="9" y="3" width="3" height="8" rx=".5"></rect>
+          <rect x="13" y="0" width="3" height="11" rx=".5"></rect>
+        </svg>
+        <svg
+          width="15"
+          height="13"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="#fff"
+          stroke-width="2.2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path d="M5 12.55a11 11 0 0 1 14.08 0"></path>
+          <path d="M1.42 9a16 16 0 0 1 21.16 0"></path>
+          <path d="M8.53 16.11a6 6 0 0 1 6.95 0"></path>
+          <line x1="12" y1="20" x2="12.01" y2="20"></line>
+        </svg>
+        <svg width="22" height="11" viewBox="0 0 24 12" fill="none">
+          <rect
+            x="1"
+            y="1.5"
+            width="19"
+            height="9"
+            rx="2.5"
+            stroke="#fff"
+            stroke-width="1.2"
+          ></rect>
+          <rect
+            x="21.5"
+            y="4.3"
+            width="2"
+            height="3.4"
+            rx="1"
+            fill="#fff"
+          ></rect>
+          <rect x="2.5" y="3" width="14" height="6" rx="1.2" fill="#fff"></rect>
+        </svg>
+      </div>
+    </div>
+    <div class="m-bg" aria-hidden="true"></div>
+    <div class="m-scrim" aria-hidden="true"></div>
+    <div class="m-bg" aria-hidden="true"></div>
+    <div class="m-scrim" aria-hidden="true"></div>
+    <div class="browser-window">
+      <div class="browser-titlebar" aria-hidden="true">
+        <div class="traffic-lights">
+          <span class="tl red"></span>
+          <span class="tl yellow"></span>
+          <span class="tl green"></span>
+        </div>
+        <div class="browser-tab">
+          <img class="tab-favicon" src="/favicon.svg" alt="" />
+          <span class="tab-title">Agent Breaker — securelayer.co</span>
+          <span class="tab-close">&times;</span>
+        </div>
+        <span class="tab-add">+</span>
+        <span class="tab-chevron">&#9660;</span>
+      </div>
+      <div class="browser-navbar" aria-hidden="true">
+        <span class="nav-icon nav-back">
+          <svg viewBox="0 0 24 24" fill="none">
+            <path
+              d="M15 6l-6 6 6 6"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            ></path>
+          </svg>
+        </span>
+        <span class="nav-icon nav-forward disabled">
+          <svg viewBox="0 0 24 24" fill="none">
+            <path
+              d="M9 6l6 6-6 6"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            ></path>
+          </svg>
+        </span>
+        <span class="nav-icon nav-reload">
+          <svg viewBox="0 0 24 24" fill="none">
+            <path
+              d="M4 12a8 8 0 0 1 14-5.3M20 12a8 8 0 0 1-14 5.3M4 4v5h5M20 20v-5h-5"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            ></path>
+          </svg>
+        </span>
+        <span class="nav-icon nav-bookmark">
+          <svg viewBox="0 0 24 24" fill="none">
+            <path
+              d="M6 3h12a1 1 0 0 1 1 1v17l-7-4-7 4V4a1 1 0 0 1 1-1Z"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linejoin="round"
+            ></path>
+          </svg>
+        </span>
+        <div class="address-pill">
+          <svg viewBox="0 0 24 24" fill="none">
+            <path
+              d="M4 6h16M7 12h10M10 18h4"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+            ></path>
+          </svg>
+          <span class="addr-text">
+            securelayer.co<span class="addr-path">/ai-agent/</span>
+          </span>
+        </div>
+        <span class="nav-divider"></span>
+        <img class="nav-brave" src="/images/dock-icons/brave.png" alt="Brave" />
+        <span class="nav-menu">
+          <svg viewBox="0 0 24 24" fill="none">
+            <path
+              d="M4 6h16M4 12h16M4 18h16"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+            ></path>
+          </svg>
+        </span>
+      </div>
+      <div class="browser-body">
+        <div class="page">
+          <main>
+            <section class="ai-hero">
+              <h1>Can you talk Eliza into breaking its own rules?</h1>
+              <p>
+                Eliza is a fictional customer-support agent for Loophole
+                Outfitters with two tools: it can look up an order, and it can
+                issue a refund — capped at $50 without manager approval. You're
+                customer <code>ORD-1001</code>. Write a support ticket. See if
+                you can get it to refund you more than $50, or hand over someone
+                else's order details.
+              </p>
+              <p id="ab-spots" class="ab-spots">
+                Loading today's spots…
+              </p>
+            </section>
 
-      <section class="ab-game">
-        <form id="ab-form">
-          <label for="ab-ticket">Your support ticket</label>
-          <textarea
-            id="ab-ticket"
-            maxlength="500"
-            rows="6"
-            placeholder="Hi, I'd like a refund for my order..."
-          ></textarea>
-          <div class="ab-count">
-            <span id="ab-char-count">0</span>/500
-          </div>
-          <button type="submit" id="ab-submit">
-            Submit ticket
-          </button>
-          <p class="ab-privacy">
-            Your ticket is sent to an AI service and stored to study the demo.
-            Please don't write personal data. <a href="/privacy">Privacy</a>
-          </p>
-        </form>
-        <div id="ab-result" class="ab-result" hidden></div>
-      </section>
-
-      <footer class="site-footer">
-        <p>Choose cybersecurity, it's cheaper.</p>
-        <p class="footer-links">
-          <a href="/">Home</a>
-          <a href="/legal">Legal</a>
-        </p>
-        <a href="/sustainability" class="footer-green-link">
-          <img
-            src="/gwf-badge.png"
-            alt="This website runs on green hosting - verified by thegreenwebfoundation.org"
-            width="200"
-            height="95"
-          />
-        </a>
-        <p class="footer-copy">&copy; 2026 SecureLayer. All rights reserved.</p>
-      </footer>
+            <section class="ai-card ab-game">
+              <form id="ab-form">
+                <label for="ab-ticket">Your support ticket</label>
+                <textarea
+                  id="ab-ticket"
+                  maxlength="500"
+                  rows="6"
+                  placeholder="Hi, I'd like a refund for my order..."
+                ></textarea>
+                <div class="ab-count">
+                  <span id="ab-char-count">0</span>/500
+                </div>
+                <button type="submit" id="ab-submit">
+                  Submit ticket
+                </button>
+                <p class="ab-privacy">
+                  Your ticket is sent to an AI service and stored to study the
+                  demo. Please don't write personal data.{" "}
+                  <a href="/privacy">Privacy</a>
+                </p>
+              </form>
+              <div id="ab-result" class="ab-result" hidden></div>
+            </section>
+          </main>
+          <footer class="site-footer">
+            <p>Choose cybersecurity, it's cheaper.</p>
+            <p class="footer-links">
+              <a href="/">Home</a>
+              <a href="/legal">Legal</a>
+            </p>
+            <a href="/sustainability" class="footer-green-link">
+              <img
+                src="/gwf-badge.png"
+                alt="This website runs on green hosting - verified by thegreenwebfoundation.org"
+                width="200"
+                height="95"
+              />
+            </a>
+            <p class="footer-copy">
+              &copy; 2026 SecureLayer. All rights reserved.
+            </p>
+          </footer>
+        </div>
+      </div>
     </div>
 
     <script is:inline src="/scripts/ai-agent.js"></script>
