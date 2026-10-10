@@ -325,7 +325,7 @@ const logoMark = logoSource
         display: block;
         height: 100%;
         min-height: 78px;
-        padding: 16px;
+        padding: 20px 20px 18px;
         border: 1px solid var(--door-border);
         border-radius: var(--door-radius);
         background: var(--door-bg);
@@ -346,8 +346,13 @@ const logoMark = logoSource
         letter-spacing: 0.1em;
         text-transform: uppercase;
       }
+      /* the title of each box is what the visitor picks, so it is the biggest thing in it */
       .wdwd-door-label {
         display: block;
+        font-size: clamp(21px, 2.1vw, 26px);
+        font-weight: 800;
+        line-height: 1.18;
+        letter-spacing: -0.01em;
       }
       /* the two "act now" doors (incident, standards) stand out in blue */
       .wdwd-door[data-tone="blue"] {
@@ -611,6 +616,20 @@ const logoMark = logoSource
         color: var(--wdwd-label);
         text-shadow: var(--wdwd-shadow);
       }
+      /* the green-hosting badge sits under the Home link */
+      .wdwd-foot .wdwd-green {
+        display: inline-block;
+        margin: 10px 0 0;
+        opacity: 0.85;
+      }
+      .wdwd-foot .wdwd-green:hover {
+        opacity: 1;
+      }
+      .wdwd-foot .wdwd-green img {
+        display: block;
+        width: 80px;
+        height: auto;
+      }
       /* seven links: wrap cleanly (centred, no sideways overflow) instead of running past the edge */
       .wdwd-foot nav {
         display: flex;
@@ -620,7 +639,14 @@ const logoMark = logoSource
       }
       @media (max-width: 860px) {
         .wdwd-foot {
+          padding-top: 4px;
           padding-bottom: 12px;
+        }
+        .wdwd-foot .wdwd-green {
+          margin-top: 6px;
+        }
+        .wdwd-foot .wdwd-green img {
+          width: 60px;
         }
         .wdwd-foot a {
           margin: 0 8px;
@@ -704,11 +730,11 @@ const logoMark = logoSource
           padding: 40px 6%;
         }
         /* phones: the card fills the visible screen (100svh minus the page
-                     margins and the footer links) so a slide never needs scrolling, and
+                     margins, the footer links and the green badge) so a slide never needs scrolling, and
                      the type grows with the screen to use that space */
         .wdwd-js .wdwd-stage {
-          min-height: calc(100vh - 128px);
-          min-height: calc(100svh - 128px);
+          min-height: calc(100vh - 176px);
+          min-height: calc(100svh - 176px);
         }
         /* short slides sit in the middle of the card instead of hugging the top */
         .wdwd-js .wdwd-slide {
@@ -753,6 +779,14 @@ const logoMark = logoSource
         }
         .wdwd-door small {
           margin-bottom: 10px;
+        }
+        /* phones: a chevron on the title says "tap me" (a background image, so the link's
+           accessible name stays exactly the label) */
+        .wdwd-door-label {
+          padding-right: 26px;
+          font-size: clamp(20px, 5.6vw, 23px);
+          background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 16' fill='none' stroke='%2317140f' stroke-opacity='.6' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M2 2l6 6-6 6'/%3E%3C/svg%3E")
+            no-repeat right center / 10px 16px;
         }
         .wdwd-props {
           margin-top: 14px;
@@ -980,7 +1014,8 @@ const logoMark = logoSource
               <div class="wdwd-logo" aria-hidden="true" set:html={logoMark} />
               <p class="wdwd-k">SecureLayer · What we do</p>
               <h2 class="wdwd-h" id="wdwd-chooser-title" tabindex="-1">
-                What do you need{" "}
+                What do you need
+                <br />
                 <span class="wdwd-acc">from cybersecurity?</span>
               </h2>
               <ul class="wdwd-doors">
@@ -1060,19 +1095,16 @@ const logoMark = logoSource
         <footer class="wdwd-foot">
           <nav aria-label="Site">
             <a href="/">Home</a>
-            <a href="/why-us/">Why us</a>
-            <a href="/security/">Security</a>
-            <a href="/sustainability/">Environment</a>
             <a href="/legal/">Legal</a>
-            <a href="/privacy/">Privacy</a>
-            <a
-              href="https://github.com/SecureLayer/landing"
-              target="_blank"
-              rel="noopener"
-            >
-              Source
-            </a>
           </nav>
+          <a href="/sustainability/" class="wdwd-green">
+            <img
+              src="/gwf-badge.png"
+              alt="This website runs on green hosting - verified by thegreenwebfoundation.org"
+              width="200"
+              height="95"
+            />
+          </a>
         </footer>
       </div>
     </div>

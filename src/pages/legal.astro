@@ -300,6 +300,23 @@ cmd(
           font-size: 12px;
         }
       }
+      /* the green-hosting badge, centred under the terminal */
+      .legal-green {
+        position: relative;
+        z-index: 2;
+        display: block;
+        width: 100px;
+        margin: 14px auto 28px;
+        opacity: 0.85;
+      }
+      .legal-green:hover {
+        opacity: 1;
+      }
+      .legal-green img {
+        display: block;
+        width: 100%;
+        height: auto;
+      }
     </style>
   </head>
   <body>
@@ -327,5 +344,13 @@ cmd(
         ))}
       </div>
     </div>
+    <a href="/sustainability" class="legal-green">
+      <img
+        src="/gwf-badge.png"
+        alt="This website runs on green hosting - verified by thegreenwebfoundation.org"
+        width="200"
+        height="95"
+      />
+    </a>
   </body>
 </html>

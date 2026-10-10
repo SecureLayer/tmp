@@ -809,30 +809,92 @@ try {
     await context.close();
   }
 
-  // --- the page links out to home, why us, security, environment, legal, privacy, source --
+  // --- every page's footer has two links: Home and Legal -------------------
   for (const [label, js] of [
     ["deck", true],
     ["stacked", false],
   ]) {
     const { context, page } = await open({ javaScriptEnabled: js });
-    for (const href of [
-      "/",
+    assert(
+      JSON.stringify(
+        (await page.locator("footer nav a").allInnerTexts()).map((x) =>
+          x.trim(),
+        ),
+      ) === JSON.stringify(["Home", "Legal"]),
+      `${label} view: the footer has two links, Home and Legal`,
+    );
+    assert(
+      await page
+        .locator('footer a[href="/sustainability/"] img[src="/gwf-badge.png"]')
+        .isVisible(),
+      `${label} view: the green-hosting badge sits under the Home link`,
+    );
+    await context.close();
+  }
+  {
+    const context = await browser.newContext({
+      viewport: { width: 1280, height: 800 },
+    });
+    const page = await context.newPage();
+    page.on("pageerror", (e) => pageErrors.push(e.message));
+    for (const route of [
       "/why-us/",
       "/security/",
       "/sustainability/",
-      "/legal/",
-      "/privacy/",
-      "https://github.com/SecureLayer/landing",
+      "/ai-security/",
+      "/ai-agent/",
     ]) {
+      await page.goto(`http://localhost:${PORT}${route}`, {
+        waitUntil: "networkidle",
+      });
+      const texts = await page
+        .locator("footer .footer-links a, footer.wdwd-foot nav a")
+        .allInnerTexts();
       assert(
-        await page.locator(`footer a[href="${href}"]`).isVisible(),
-        `${label} view: footer links to ${href}`,
+        JSON.stringify(texts.map((x) => x.trim())) ===
+          JSON.stringify(["Home", "Legal"]),
+        `${route}: the footer text links are Home and Legal`,
+      );
+      assert(
+        (await page
+          .locator('a[href^="/sustainability"] img[src="/gwf-badge.png"]')
+          .count()) === 1,
+        `${route}: the green-hosting badge is there`,
+      );
+    }
+    {
+      // /ai-agent collects the ticket text, so the privacy notice is next to the input
+      await page.goto(`http://localhost:${PORT}/ai-agent/`, {
+        waitUntil: "networkidle",
+      });
+      const line = page.locator("#ab-form .ab-privacy");
+      assert(
+        (await line.isVisible()) &&
+          (await line.locator('a[href="/privacy"]').isVisible()) &&
+          /sent to an AI service/.test(await line.innerText()) &&
+          /personal data/.test(await line.innerText()),
+        "/ai-agent: a short privacy line with a link to /privacy sits under the ticket box",
+      );
+    }
+    for (const route of ["/legal/", "/privacy/"]) {
+      await page.goto(`http://localhost:${PORT}${route}`, {
+        waitUntil: "networkidle",
+      });
+      assert(
+        (await page.locator("footer a").count()) === 0,
+        `${route}: no footer links (it has its own back-home line)`,
+      );
+      assert(
+        await page
+          .locator('a[href^="/sustainability"] img[src="/gwf-badge.png"]')
+          .isVisible(),
+        `${route}: the green-hosting badge is there`,
       );
     }
     await context.close();
   }
 
-  // --- homepage: one shortcut to this page, desktop and mobile ----------
+  // --- homepage: two shortcuts on desktop, one card on mobile -------------
   {
     const home = async (options) => {
       const context = await browser.newContext(options);
@@ -848,22 +910,54 @@ try {
     await d.page.locator(".d-lock-input").focus();
     await d.page.keyboard.press("Enter");
     await d.page.waitForTimeout(2200);
-    const icon = d.page.locator("a.widget-file");
-    assert((await icon.count()) === 1, "desktop: exactly one file shortcut");
     assert(
-      (await icon.first().getAttribute("href")) === "/what-we-do/",
-      "desktop: the shortcut points to /what-we-do/",
+      (await d.page.locator("a.widget-file").count()) === 3,
+      "desktop: exactly three file shortcuts",
     );
-    assert(
-      (await icon.first().getAttribute("target")) === null,
-      "desktop: the shortcut opens in the same tab",
-    );
-    assert(
-      (await icon.first().locator("span").textContent())?.trim() ===
-        "What we do",
-      'desktop: the shortcut is labelled "What we do"',
-    );
-    assert(await icon.first().isVisible(), "desktop: the shortcut is visible");
+    for (const [href, label] of [
+      ["/what-we-do/", "What do you need?"],
+      ["/why-us/", "Why choose us?"],
+      ["/ai-agent/", "Can you break our AI agent?"],
+    ]) {
+      const icon = d.page.locator(`a.widget-file[href="${href}"]`);
+      assert((await icon.count()) === 1, `desktop: one shortcut to ${href}`);
+      assert(
+        (await icon.getAttribute("target")) === null,
+        `desktop: the ${href} shortcut opens in the same tab`,
+      );
+      assert(
+        (await icon.locator("span").textContent())?.trim() === label,
+        `desktop: the ${href} shortcut is labelled "${label}"`,
+      );
+      assert(
+        await icon.isVisible(),
+        `desktop: the ${href} shortcut is visible`,
+      );
+    }
+    {
+      const a = await d.page
+        .locator('a.widget-file[href="/what-we-do/"]')
+        .boundingBox();
+      const b = await d.page
+        .locator('a.widget-file[href="/why-us/"]')
+        .boundingBox();
+      assert(
+        b.x + b.width < a.x && a.y === b.y,
+        "desktop: the two shortcuts sit side by side, Why choose us? on the left",
+      );
+      const c = await d.page
+        .locator('a.widget-file[href="/ai-agent/"]')
+        .boundingBox();
+      const note = await d.page.locator(".widget-note").boundingBox();
+      const cx = c.x + c.width / 2;
+      assert(
+        c.y >= note.y + note.height &&
+          cx > note.x &&
+          cx < note.x + note.width &&
+          c.x + c.width < a.x,
+        "desktop: the AI agent shortcut sits just under the yellow note, clear of the other two files",
+      );
+    }
     assert(
       (await d.page.locator('a[href$=".pdf"]').count()) === 0,
       "desktop: nothing on the homepage links to a PDF",
@@ -881,6 +975,10 @@ try {
           getComputedStyle(document.querySelector(".widget-todo-item")).display,
       )) === "flex",
       "desktop: the Reminders list keeps its styling",
+    );
+    assert(
+      (await d.page.locator(".d-links").count()) === 0,
+      "desktop: no link wording on the homepage scene (the visitor finds the pages through the icons)",
     );
     await d.context.close();
 
@@ -934,8 +1032,8 @@ try {
       await phone.page.locator("#mStand").click();
       await phone.page.waitForTimeout(1800);
       assert(
-        (await phone.page.locator(".m-row2").count()) === 2,
-        `${width}px: two rows of tiles`,
+        (await phone.page.locator(".m-row2").count()) === 3,
+        `${width}px: three rows of tiles (the last one holds the AI agent tile and the social box)`,
       );
       for (const r of [0, 1]) {
         const row = await phone.page.locator(".m-row2").nth(r).boundingBox();
@@ -961,8 +1059,101 @@ try {
           `${width}px: row ${r + 1} is two equal halves of the same height (at least 212px) (${Math.round(left.width)}x${Math.round(left.height)} + ${Math.round(right.width)}x${Math.round(right.height)} in ${Math.round(row.width)})`,
         );
       }
+      {
+        // third row: the AI agent tile (left) and the social box (right), equal halves
+        const row3 = phone.page.locator(".m-row2").nth(2);
+        const rowBox = await row3.boundingBox();
+        const ai = await row3.locator("> a.m-card-ai").boundingBox();
+        const social = await row3.locator("> .m-card-social").boundingBox();
+        assert(
+          Math.abs(ai.x - rowBox.x) <= 1 &&
+            Math.abs(ai.x + ai.width + 12 - social.x) <= 1 &&
+            Math.abs(ai.width - social.width) <= 1 &&
+            Math.abs(social.x + social.width - (rowBox.x + rowBox.width)) <=
+              1 &&
+            Math.abs(ai.height - social.height) <= 1,
+          `${width}px: the AI agent tile sits left of the social box, equal halves of the same height (${Math.round(ai.width)}x${Math.round(ai.height)} + ${Math.round(social.width)}x${Math.round(social.height)})`,
+        );
+        const icons = await row3
+          .locator(".m-social-icon-row .m-icon-chip")
+          .count();
+        let inside = icons === 3;
+        for (let i = 0; i < icons; i++) {
+          const b = await row3
+            .locator(".m-social-icon-row .m-icon-chip")
+            .nth(i)
+            .boundingBox();
+          if (
+            b.x < social.x - 0.5 ||
+            b.x + b.width > social.x + social.width + 0.5
+          )
+            inside = false;
+        }
+        assert(
+          inside,
+          `${width}px: the three social icons fit inside the half-width social box`,
+        );
+        assert(
+          (await row3.locator("> a.m-card-ai h3").innerText()).trim() ===
+            "Can you break our AI agent?" &&
+            (await row3.locator("> a.m-card-ai").getAttribute("href")) ===
+              "/ai-agent/",
+          `${width}px: the AI agent tile is titled "Can you break our AI agent?" and links to /ai-agent/`,
+        );
+      }
+      if (width === 390) {
+        assert(
+          (await phone.page
+            .getByRole("link", {
+              name: "Can you break our AI agent?",
+              exact: true,
+            })
+            .count()) === 1,
+          "the animated AI agent tile keeps the title as its accessible name",
+        );
+        assert(
+          (await phone.page.evaluate(() => {
+            const p = document.querySelector(".m-ai-prompt");
+            const c = document.querySelector(".m-card-ai .m-emoji-chip");
+            return (
+              getComputedStyle(p).animationName.includes("m-ai-type") &&
+              getComputedStyle(c).animationName === "m-ai-nope"
+            );
+          })) === true,
+          "the AI agent tile animates (prompt typing and the robot shaking its head)",
+        );
+      }
       await phone.context.close();
     }
+  }
+
+  // --- reduced motion: the AI agent tile does not move, the prompt stays typed --
+  {
+    const context = await browser.newContext({
+      viewport: { width: 390, height: 844 },
+      hasTouch: true,
+      isMobile: true,
+      reducedMotion: "reduce",
+    });
+    const page = await context.newPage();
+    page.on("pageerror", (e) => pageErrors.push(e.message));
+    await page.goto(`http://localhost:${PORT}/`, { waitUntil: "networkidle" });
+    await page.locator("#mStand").click();
+    await page.waitForTimeout(1800);
+    const state = await page.evaluate(() => {
+      const p = document.querySelector(".m-ai-prompt");
+      const c = document.querySelector(".m-card-ai .m-emoji-chip");
+      return {
+        promptAnim: getComputedStyle(p).animationName,
+        chipAnim: getComputedStyle(c).animationName,
+        typed: p.getBoundingClientRect().width > 60,
+      };
+    });
+    assert(
+      state.promptAnim === "none" && state.chipAnim === "none" && state.typed,
+      "reduced motion: the AI agent tile is still and the prompt line is fully shown",
+    );
+    await context.close();
   }
 
   // --- /why-us/: one path, four slides, opens straight on the first --------
@@ -1133,11 +1324,37 @@ try {
       assert(
         (await secTile.locator("p").innerText()).trim() ===
           "Before we secure yours, see ours" &&
-          (await whyTile.locator("h3").innerText()).trim() === "Why us?" &&
+          (await whyTile.locator("h3").innerText()).trim() ===
+            "Why choose us?" &&
           (await whyTile.locator("p").innerText())
             .replace(/\s+/g, " ")
             .trim() === "Don't believe us, check us",
         'phone: the security tile keeps only "Before we secure yours, see ours" and the Why us tile says "Don\'t believe us, check us"',
+      );
+    }
+    {
+      const links = (
+        await lock.page.locator(".m-footer-links a").allInnerTexts()
+      ).map((x) => x.trim());
+      assert(
+        JSON.stringify(links) ===
+          JSON.stringify([
+            "Why choose us?",
+            "Security",
+            "Environment",
+            "Legal",
+            "Privacy",
+            "Source",
+          ]),
+        "phone: the homepage footer lists the other pages and has no Home link",
+      );
+      assert(
+        (await lock.page
+          .locator(
+            '.m-footer a[href="/sustainability"] img[src="/gwf-badge.png"]',
+          )
+          .count()) === 1,
+        "phone: the homepage footer carries the green-hosting badge",
       );
     }
     const social = await lock.page.evaluate(() => {
