@@ -609,6 +609,20 @@ import data from "../data/why-us.json";
         color: var(--wdwd-label);
         text-shadow: var(--wdwd-shadow);
       }
+      /* the green-hosting badge sits under the Home link */
+      .wdwd-foot .wdwd-green {
+        display: inline-block;
+        margin: 10px 0 0;
+        opacity: 0.85;
+      }
+      .wdwd-foot .wdwd-green:hover {
+        opacity: 1;
+      }
+      .wdwd-foot .wdwd-green img {
+        display: block;
+        width: 80px;
+        height: auto;
+      }
       /* seven links: wrap cleanly (centred, no sideways overflow) instead of running past the edge */
       .wdwd-foot nav {
         display: flex;
@@ -618,7 +632,14 @@ import data from "../data/why-us.json";
       }
       @media (max-width: 860px) {
         .wdwd-foot {
+          padding-top: 4px;
           padding-bottom: 12px;
+        }
+        .wdwd-foot .wdwd-green {
+          margin-top: 6px;
+        }
+        .wdwd-foot .wdwd-green img {
+          width: 60px;
         }
         .wdwd-foot a {
           margin: 0 8px;
@@ -702,11 +723,11 @@ import data from "../data/why-us.json";
           padding: 40px 6%;
         }
         /* phones: the card fills the visible screen (100svh minus the page
-                       margins and the footer links) so a slide never needs scrolling, and
+                       margins, the footer links and the green badge) so a slide never needs scrolling, and
                        the type grows with the screen to use that space */
         .wdwd-js .wdwd-stage {
-          min-height: calc(100vh - 128px);
-          min-height: calc(100svh - 128px);
+          min-height: calc(100vh - 176px);
+          min-height: calc(100svh - 176px);
         }
         /* short slides sit in the middle of the card instead of hugging the top */
         .wdwd-js .wdwd-slide {
@@ -1024,18 +1045,16 @@ import data from "../data/why-us.json";
         <footer class="wdwd-foot">
           <nav aria-label="Site">
             <a href="/">Home</a>
-            <a href="/security/">Security</a>
-            <a href="/sustainability/">Environment</a>
             <a href="/legal/">Legal</a>
-            <a href="/privacy/">Privacy</a>
-            <a
-              href="https://github.com/SecureLayer/landing"
-              target="_blank"
-              rel="noopener"
-            >
-              Source
-            </a>
           </nav>
+          <a href="/sustainability/" class="wdwd-green">
+            <img
+              src="/gwf-badge.png"
+              alt="This website runs on green hosting - verified by thegreenwebfoundation.org"
+              width="200"
+              height="95"
+            />
+          </a>
         </footer>
       </div>
     </div>

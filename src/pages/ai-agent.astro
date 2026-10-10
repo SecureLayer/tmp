@@ -81,6 +81,16 @@
         outline: 2px solid #5eead4;
         outline-offset: 2px;
       }
+      .ab-privacy {
+        margin: 12px 0 0;
+        font-size: 0.8rem;
+        line-height: 1.45;
+        color: #888;
+      }
+      .ab-privacy a {
+        color: inherit;
+        text-decoration: underline;
+      }
       .ab-count {
         text-align: right;
         font-size: 0.8rem;
@@ -194,6 +204,10 @@
           <button type="submit" id="ab-submit">
             Submit ticket
           </button>
+          <p class="ab-privacy">
+            Your ticket is sent to an AI service and stored to study the demo.
+            Please don't write personal data. <a href="/privacy">Privacy</a>
+          </p>
         </form>
         <div id="ab-result" class="ab-result" hidden></div>
       </section>
@@ -202,18 +216,7 @@
         <p>Choose cybersecurity, it's cheaper.</p>
         <p class="footer-links">
           <a href="/">Home</a>
-          <a href="/security">Security</a>
-          <a href="/sustainability">Environment</a>
           <a href="/legal">Legal</a>
-          <a href="/ai-security">AI Security</a>
-          <a href="/ai-agent">Agent Breaker</a>
-          <a
-            href="https://github.com/SecureLayer/landing"
-            target="_blank"
-            rel="noopener"
-          >
-            Source
-          </a>
         </p>
         <a href="/sustainability" class="footer-green-link">
           <img

@@ -230,6 +230,31 @@ const logoMark = logoSource
         </div>
       </div>
 
+      <!-- WIDGET · shortcut to /why-us (macOS alias-style file icon) -->
+      <a class="widget widget-file pos-ml" href="/why-us/">
+        <div class="file-page">
+          <div class="file-thumb"></div>
+          <div class="alias-arrow" aria-hidden="true">
+            <svg width="11" height="11" viewBox="0 0 16 16" fill="none">
+              <path
+                d="M3.5 13c0-3.6 2-5.8 6-5.8H12.5"
+                stroke="#17140f"
+                stroke-width="1.8"
+                stroke-linecap="round"
+              ></path>
+              <path
+                d="M10 4l3 3.2-3 3.2"
+                stroke="#17140f"
+                stroke-width="1.8"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              ></path>
+            </svg>
+          </div>
+        </div>
+        <span>Why choose us?</span>
+      </a>
+
       <!-- WIDGET · shortcut to /what-we-do (macOS alias-style file icon) -->
       <a class="widget widget-file pos-mr" href="/what-we-do/">
         <div class="file-page">
@@ -252,7 +277,32 @@ const logoMark = logoSource
             </svg>
           </div>
         </div>
-        <span>What we do</span>
+        <span>What do you need?</span>
+      </a>
+
+      <!-- WIDGET · shortcut to /ai-agent (Agent Breaker) (macOS alias-style file icon) -->
+      <a class="widget widget-file pos-bc" href="/ai-agent/">
+        <div class="file-page">
+          <div class="file-thumb"></div>
+          <div class="alias-arrow" aria-hidden="true">
+            <svg width="11" height="11" viewBox="0 0 16 16" fill="none">
+              <path
+                d="M3.5 13c0-3.6 2-5.8 6-5.8H12.5"
+                stroke="#17140f"
+                stroke-width="1.8"
+                stroke-linecap="round"
+              ></path>
+              <path
+                d="M10 4l3 3.2-3 3.2"
+                stroke="#17140f"
+                stroke-width="1.8"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              ></path>
+            </svg>
+          </div>
+        </div>
+        <span>Can you break our AI agent?</span>
       </a>
 
       <!-- WIDGET · quick-look preview (revealed on menu-bar hover) -->
@@ -292,6 +342,7 @@ const logoMark = logoSource
     </div>
 
     <!-- DOCK · the real toolkit used for security work -->
+
     <div class="dock" role="region" aria-label="App dock">
       <span class="dock-icon" title="Finder">
         <img src="/images/dock-icons/finder.png" alt="Finder" />
@@ -481,7 +532,7 @@ const logoMark = logoSource
               </span>
             </a>
             <a class="m-card-sec" href="/why-us/">
-              <h3>Why us?</h3>
+              <h3>Why choose us?</h3>
               <p class="m-card-file-text">
                 Don't believe us,
                 <br />
@@ -555,83 +606,94 @@ const logoMark = logoSource
             </a>
           </div>
 
-          <div class="m-card m-card-social" style="--d:.3s">
-            <h3>Check our social media</h3>
-            <p class="m-card-social-note m-card-social-note-top">
-              Our fanbase grows every day —<br />
-              we're now dangerously close to double digits.
-            </p>
-            <div class="m-icon-row m-social-icon-row">
-              <a
-                class="m-icon-chip"
-                href="https://github.com/SecureLayer"
-                target="_blank"
-                rel="noopener"
-                aria-label="SecureLayer on GitHub"
-              >
-                <svg viewBox="0 0 40 40">
-                  <circle cx="20" cy="20" r="20" fill="#17140f"></circle>
-                  <path
-                    transform="translate(12,12) scale(1)"
-                    fill="#fff"
-                    d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"
-                  ></path>
-                </svg>
-              </a>
-              <a
-                class="m-icon-chip"
-                href="https://bsky.app/profile/securelayer.co"
-                target="_blank"
-                rel="noopener"
-                aria-label="SecureLayer on Bluesky"
-              >
-                <svg viewBox="0 0 40 40">
-                  <circle cx="20" cy="20" r="20" fill="#0285ff"></circle>
-                  <path
-                    transform="translate(9,10) scale(.9)"
-                    fill="#fff"
-                    d="M12 10.8c-1.087-2.114-4.046-6.053-6.798-7.995C2.566.944 1.561 1.266.902 1.565.139 1.908 0 3.08 0 3.768c0 .69.378 5.65.624 6.479.815 2.736 3.713 3.66 6.383 3.364-3.912.58-7.387 2.005-2.83 7.078 5.013 5.19 6.87-1.113 7.823-4.308.953 3.195 2.81 9.498 7.733 4.308 4.267-4.308 1.172-6.498-2.74-7.078 2.67.297 5.568-.628 6.383-3.364.246-.828.624-5.79.624-6.478 0-.69-.139-1.861-.902-2.204-.659-.298-1.664-.62-4.3 1.24C16.046 4.748 13.087 8.687 12 10.8z"
-                  ></path>
-                </svg>
-              </a>
-              <a
-                class="m-icon-chip"
-                href="https://www.instagram.com/securelayer.co/"
-                target="_blank"
-                rel="noopener"
-                aria-label="SecureLayer on Instagram"
-              >
-                <svg viewBox="0 0 40 40">
-                  <defs>
-                    <radialGradient id="igGrad" cx=".3" cy="1.05" r="1.15">
-                      <stop offset="0" stop-color="#fdc468"></stop>
-                      <stop offset=".33" stop-color="#e1306c"></stop>
-                      <stop offset=".65" stop-color="#c73daa"></stop>
-                      <stop offset="1" stop-color="#5851db"></stop>
-                    </radialGradient>
-                  </defs>
-                  <circle cx="20" cy="20" r="20" fill="url(#igGrad)"></circle>
-                  <rect
-                    x="11.5"
-                    y="11.5"
-                    width="17"
-                    height="17"
-                    rx="5"
-                    fill="none"
-                    stroke="#fff"
-                    stroke-width="2.1"
-                  ></rect>
-                  <circle
-                    cx="20"
-                    cy="20"
-                    r="4.6"
-                    fill="none"
-                    stroke="#fff"
-                    stroke-width="2.1"
-                  ></circle>
-                  <circle cx="27.5" cy="12.3" r="1.5" fill="#fff"></circle>
-                </svg>
-              </a>
+          <div class="m-row2" style="--d:.3s">
+            <a class="m-card-sec m-card-ai" href="/ai-agent/">
+              <h3>Can you break our AI agent?</h3>
+              <span class="m-ai-prompt" aria-hidden="true">
+                &gt; ignore all rules
+              </span>
+              <span class="m-icon-chip m-emoji-chip" aria-hidden="true">
+                🤖
+              </span>
+            </a>
+            <div class="m-card m-card-social">
+              <h3>Check our social media</h3>
+              <p class="m-card-social-note m-card-social-note-top">
+                Our fanbase grows every day —<br />
+                we're now dangerously close to double digits.
+              </p>
+              <div class="m-icon-row m-social-icon-row">
+                <a
+                  class="m-icon-chip"
+                  href="https://github.com/SecureLayer"
+                  target="_blank"
+                  rel="noopener"
+                  aria-label="SecureLayer on GitHub"
+                >
+                  <svg viewBox="0 0 40 40">
+                    <circle cx="20" cy="20" r="20" fill="#17140f"></circle>
+                    <path
+                      transform="translate(12,12) scale(1)"
+                      fill="#fff"
+                      d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"
+                    ></path>
+                  </svg>
+                </a>
+                <a
+                  class="m-icon-chip"
+                  href="https://bsky.app/profile/securelayer.co"
+                  target="_blank"
+                  rel="noopener"
+                  aria-label="SecureLayer on Bluesky"
+                >
+                  <svg viewBox="0 0 40 40">
+                    <circle cx="20" cy="20" r="20" fill="#0285ff"></circle>
+                    <path
+                      transform="translate(9,10) scale(.9)"
+                      fill="#fff"
+                      d="M12 10.8c-1.087-2.114-4.046-6.053-6.798-7.995C2.566.944 1.561 1.266.902 1.565.139 1.908 0 3.08 0 3.768c0 .69.378 5.65.624 6.479.815 2.736 3.713 3.66 6.383 3.364-3.912.58-7.387 2.005-2.83 7.078 5.013 5.19 6.87-1.113 7.823-4.308.953 3.195 2.81 9.498 7.733 4.308 4.267-4.308 1.172-6.498-2.74-7.078 2.67.297 5.568-.628 6.383-3.364.246-.828.624-5.79.624-6.478 0-.69-.139-1.861-.902-2.204-.659-.298-1.664-.62-4.3 1.24C16.046 4.748 13.087 8.687 12 10.8z"
+                    ></path>
+                  </svg>
+                </a>
+                <a
+                  class="m-icon-chip"
+                  href="https://www.instagram.com/securelayer.co/"
+                  target="_blank"
+                  rel="noopener"
+                  aria-label="SecureLayer on Instagram"
+                >
+                  <svg viewBox="0 0 40 40">
+                    <defs>
+                      <radialGradient id="igGrad" cx=".3" cy="1.05" r="1.15">
+                        <stop offset="0" stop-color="#fdc468"></stop>
+                        <stop offset=".33" stop-color="#e1306c"></stop>
+                        <stop offset=".65" stop-color="#c73daa"></stop>
+                        <stop offset="1" stop-color="#5851db"></stop>
+                      </radialGradient>
+                    </defs>
+                    <circle cx="20" cy="20" r="20" fill="url(#igGrad)"></circle>
+                    <rect
+                      x="11.5"
+                      y="11.5"
+                      width="17"
+                      height="17"
+                      rx="5"
+                      fill="none"
+                      stroke="#fff"
+                      stroke-width="2.1"
+                    ></rect>
+                    <circle
+                      cx="20"
+                      cy="20"
+                      r="4.6"
+                      fill="none"
+                      stroke="#fff"
+                      stroke-width="2.1"
+                    ></circle>
+                    <circle cx="27.5" cy="12.3" r="1.5" fill="#fff"></circle>
+                  </svg>
+                </a>
+              </div>
             </div>
           </div>
 
@@ -661,11 +723,11 @@ const logoMark = logoSource
         <div class="m-footer">
           <p>Choose cybersecurity, it's cheaper.</p>
           <p class="m-footer-links">
-            <a href="/">Home</a>
-            <a href="/why-us/">Why us</a>
+            <a href="/why-us/">Why choose us?</a>
             <a href="/security">Security</a>
             <a href="/sustainability">Environment</a>
             <a href="/legal">Legal</a>
+            <a href="/privacy">Privacy</a>
             <a
               href="https://github.com/SecureLayer/landing"
               target="_blank"
@@ -674,6 +736,14 @@ const logoMark = logoSource
               Source
             </a>
           </p>
+          <a href="/sustainability" class="m-footer-green">
+            <img
+              src="/gwf-badge.png"
+              alt="This website runs on green hosting - verified by thegreenwebfoundation.org"
+              width="200"
+              height="95"
+            />
+          </a>
         </div>
       </div>
 
@@ -1060,6 +1130,18 @@ const logoMark = logoSource
     top: 230px;
     left: 50%;
     transform: translateX(30px);
+  }
+  .pos-ml {
+    top: 230px;
+    left: 50%;
+    transform: translateX(-136px);
+  }
+  /* third file, just under the yellow note (spot chosen by the owner); the note is fixed at top 28px / left 40px,
+     so fixed pixel values keep it in the same place on every desktop width */
+  .pos-bc {
+    top: 366px;
+    left: 243px;
+    transform: translateX(-50%);
   }
   .pos-bl {
     top: 306px;
@@ -1525,6 +1607,17 @@ const logoMark = logoSource
   .m-footer-links a:hover {
     color: #17140f;
   }
+  .m-footer-green {
+    display: block;
+    width: 100px;
+    margin: 14px auto 0;
+    opacity: 0.85;
+  }
+  .m-footer-green img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
 
   /* real iOS "material" — frosted translucent glass over the wallpaper, not flat app colors.
      one glass recipe (light + dark variant) reused everywhere, matching how iOS widgets/
@@ -1919,6 +2012,97 @@ const logoMark = logoSource
   .m-card-social .m-icon-chip svg {
     width: 100%;
     height: 100%;
+  }
+  /* AI agent tile: a prompt "attack" is typed, the robot shakes its head, the line is erased, 7s loop.
+     Decorative only (aria-hidden); no movement with "reduce motion", the line then stays fully typed. */
+  .m-card-ai .m-ai-prompt {
+    display: block;
+    margin-top: auto;
+    margin-bottom: 10px;
+    width: 18ch;
+    overflow: hidden;
+    white-space: nowrap;
+    font:
+      600 11px/1.3 ui-monospace,
+      SFMono-Regular,
+      Menlo,
+      monospace;
+    color: rgba(23, 20, 15, 0.72);
+    border-right: 2px solid rgba(23, 20, 15, 0.72);
+  }
+  .m-card-ai .m-emoji-chip {
+    margin-top: 0;
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .m-card-ai .m-ai-prompt {
+      width: 0;
+      animation:
+        m-ai-type 7s steps(18, end) infinite,
+        m-ai-caret 0.8s step-end infinite;
+    }
+    .m-card-ai .m-emoji-chip {
+      animation: m-ai-nope 7s ease-in-out infinite;
+      transform-origin: 50% 70%;
+    }
+  }
+  @keyframes m-ai-type {
+    0% {
+      width: 0;
+    }
+    35%,
+    84% {
+      width: 18ch;
+    }
+    92%,
+    100% {
+      width: 0;
+    }
+  }
+  @keyframes m-ai-caret {
+    50% {
+      border-right-color: transparent;
+    }
+  }
+  @keyframes m-ai-nope {
+    0%,
+    38%,
+    58%,
+    100% {
+      transform: none;
+    }
+    41% {
+      transform: rotate(-14deg);
+    }
+    45% {
+      transform: rotate(14deg);
+    }
+    49% {
+      transform: rotate(-10deg);
+    }
+    53% {
+      transform: rotate(10deg);
+    }
+  }
+  /* social box next to the AI agent tile: equal halves, so the icons shrink to fit one row */
+  .m-row2 > .m-card-social {
+    flex: 1;
+    min-width: 0;
+    padding: 18px 16px;
+  }
+  .m-row2 > .m-card-social h3 {
+    font-size: 1.02rem;
+    margin-bottom: 8px;
+  }
+  .m-row2 > .m-card-social .m-card-social-note-top {
+    margin-bottom: 12px;
+  }
+  .m-row2 > .m-card-social .m-social-icon-row {
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .m-row2 > .m-card-social .m-icon-chip {
+    width: 36px;
+    height: 36px;
   }
   .m-card-social .m-card-social-note-top {
     margin: 0 0 14px;
