@@ -1,0 +1,1027 @@
+---
+import data from "../data/why-us.json";
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Why us — securelayer.co</title>
+    <meta
+      name="description"
+      content="Experienced, independent, in plain language. 10+ years of cybersecurity experience across public and private organisations, practical reviews and a short fix list in priority order."
+    />
+    <link rel="canonical" href="https://securelayer.co/why-us" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Fraunces:ital,opsz,wght@1,9..144,600&family=Nunito:wght@700;900&display=swap"
+      rel="stylesheet"
+    />
+    <script is:inline src="/scripts/what-we-do.js"></script>
+    <style is:global>
+      /* ≤860px: no panel, the page sits straight on the blurred wallpaper (white text,
+         frosted-glass doors). ≥861px: the dark theme of /security and /sustainability. */
+      :root {
+        --wdwd-green: #2d6a4f;
+        --wdwd-text: #fff;
+        --wdwd-label: rgba(255, 255, 255, 0.85);
+        --wdwd-body: rgba(255, 255, 255, 0.94);
+        --wdwd-accent: #b9f6d3;
+        --wdwd-hl: #aed6ff;
+        --wdwd-line: rgba(255, 255, 255, 0.25);
+        --wdwd-dot: rgba(255, 255, 255, 0.45);
+        --wdwd-shadow: 0 1px 8px rgba(0, 0, 0, 0.45);
+        --door-bg: rgba(255, 255, 255, 0.42);
+        --door-border: rgba(255, 255, 255, 0.45);
+        --door-text: #17140f;
+        --door-label: rgba(23, 20, 15, 0.7);
+        --door-body: rgba(23, 20, 15, 0.88);
+        --door-radius: 20px;
+        --door-hover-bg: #17140f;
+        --door-hover-fg: #fff;
+        --door-hover-label: #d8cfbf;
+        --blue-bg: rgba(206, 226, 246, 0.62);
+        --blue-border: #1f4e79;
+        --blue-label: #163a5c;
+        --blue-body: rgba(10, 30, 52, 0.9);
+      }
+      @media (min-width: 861px) {
+        :root {
+          --wdwd-text: #f2f6f6;
+          --wdwd-label: #9aa8a8;
+          --wdwd-body: #b6c2c2;
+          --wdwd-accent: #3ddc84;
+          --wdwd-hl: #4ea1f5;
+          --wdwd-line: #1d2c2c;
+          --wdwd-dot: #33403f;
+          --wdwd-shadow: none;
+          --door-bg: #101a1a;
+          --door-border: #1d2b2b;
+          --door-text: #e8eeee;
+          --door-label: #9aa8a8;
+          --door-body: #b6c2c2;
+          --door-radius: 8px;
+          --door-hover-bg: #172828;
+          --door-hover-fg: #fff;
+          --door-hover-label: #c8d4d4;
+          --blue-bg: #0f2236;
+          --blue-border: #3b82c4;
+          --blue-label: #7fb4e6;
+          --blue-body: #b9d2ea;
+        }
+      }
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        background: #0d1212;
+        color: var(--wdwd-text);
+        font-family: "Inter", system-ui, sans-serif;
+        line-height: 1.5;
+        min-height: 100vh;
+      }
+      a:focus-visible,
+      button:focus-visible {
+        outline: 3px solid var(--wdwd-accent);
+        outline-offset: 2px;
+      }
+      /* headings take focus only so screen readers follow the slide change;
+         they are not interactive, so they get no focus box */
+      .wdwd h2:focus,
+      .wdwd h3:focus {
+        outline: none;
+      }
+
+      /* ── Browser chrome (Brave) ── */
+      .browser-window {
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .browser-titlebar {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        background: #170f20;
+        padding: 10px 16px 0;
+        border-bottom: 1px solid #2a2038;
+      }
+      .traffic-lights {
+        display: flex;
+        gap: 8px;
+        padding-bottom: 10px;
+        flex-shrink: 0;
+      }
+      .tl {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+      }
+      .tl.red {
+        background: #ff5f57;
+      }
+      .tl.yellow {
+        background: #febc2e;
+      }
+      .tl.green {
+        background: #28c840;
+      }
+
+      .browser-tab {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        background: #241a30;
+        border-radius: 8px 8px 0 0;
+        padding: 8px 12px;
+        max-width: 260px;
+      }
+      .tab-favicon {
+        width: 15px;
+        height: 15px;
+        flex-shrink: 0;
+      }
+      .tab-title {
+        font-size: 12.5px;
+        color: #e4dcf0;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      .tab-close {
+        margin-left: auto;
+        color: #7a6f8c;
+        font-size: 15px;
+        line-height: 1;
+        flex-shrink: 0;
+      }
+      .tab-add {
+        color: #7a6f8c;
+        font-size: 18px;
+        padding: 0 10px 10px;
+        line-height: 1;
+        align-self: center;
+      }
+      .tab-chevron {
+        color: #7a6f8c;
+        font-size: 12px;
+        margin-left: auto;
+        padding-bottom: 10px;
+        align-self: center;
+      }
+
+      .browser-navbar {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        background: #1d1428;
+        padding: 10px 16px;
+        border-bottom: 1px solid #2a2038;
+      }
+      .nav-icon {
+        color: #8a7fa0;
+        flex-shrink: 0;
+        display: flex;
+        align-items: center;
+      }
+      .nav-icon svg {
+        width: 17px;
+        height: 17px;
+      }
+      .nav-icon.disabled {
+        color: #453b56;
+      }
+      .address-pill {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        background: #2a2038;
+        border-radius: 7px;
+        padding: 7px 14px;
+        max-width: 640px;
+        margin: 0 auto;
+      }
+      .address-pill svg {
+        width: 14px;
+        height: 14px;
+        color: #8a7fa0;
+        flex-shrink: 0;
+      }
+      .addr-text {
+        font-size: 13px;
+        color: #e4dcf0;
+      }
+      .addr-path {
+        color: #9187a6;
+      }
+      .nav-divider {
+        width: 1px;
+        height: 20px;
+        background: #362a48;
+        flex-shrink: 0;
+      }
+      .nav-brave {
+        width: 20px;
+        height: 20px;
+        flex-shrink: 0;
+      }
+      .nav-menu svg {
+        width: 18px;
+        height: 18px;
+      }
+
+      .browser-body {
+        flex: 1;
+      }
+
+      .wdwd {
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 16px;
+      }
+      /* clip, not hidden: a hidden box can still be scrolled sideways by the browser (the
+         "Change my answer" anchor jump scrolled it 17px, so the chooser sat off-centre) */
+      .wdwd-stage {
+        position: relative;
+        overflow: hidden;
+        overflow: clip;
+        text-shadow: var(--wdwd-shadow);
+      }
+      .wdwd-sr {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+        clip: rect(0 0 0 0);
+        white-space: nowrap;
+      }
+      .wdwd-k {
+        font-size: 12px;
+        letter-spacing: 0.14em;
+        color: var(--wdwd-label);
+        font-weight: 700;
+        text-transform: uppercase;
+      }
+      .wdwd-h {
+        font-family: "Nunito", system-ui, sans-serif;
+        font-weight: 900;
+        letter-spacing: -0.02em;
+        line-height: 1.08;
+      }
+      .wdwd-acc {
+        font-family: "Fraunces", Georgia, serif;
+        font-style: italic;
+        font-weight: 600;
+        color: var(--wdwd-hl);
+      }
+
+      /* stacked layout: this is what a visitor without JavaScript sees */
+      .wdwd-chooser,
+      .wdwd-path {
+        padding: 48px 8%;
+      }
+      .wdwd-chooser {
+        text-align: center;
+      }
+      .wdwd-chooser .wdwd-h {
+        font-size: clamp(28px, 4.6vw, 56px);
+        margin-top: 10px;
+      }
+      .wdwd-logo {
+        width: 64px;
+        height: 64px;
+        margin: 0 auto 18px;
+        color: var(--wdwd-text);
+      }
+      .wdwd-logo svg {
+        width: 100%;
+        height: 100%;
+        display: block;
+      }
+      .wdwd-doors {
+        list-style: none;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 12px;
+        margin-top: 22px;
+        text-align: left;
+      }
+      .wdwd-door {
+        display: block;
+        height: 100%;
+        min-height: 78px;
+        padding: 16px;
+        border: 1px solid var(--door-border);
+        border-radius: var(--door-radius);
+        background: var(--door-bg);
+        backdrop-filter: blur(28px) saturate(150%);
+        -webkit-backdrop-filter: blur(28px) saturate(150%);
+        color: var(--door-text);
+        text-shadow: none;
+        text-decoration: none;
+        font-weight: 600;
+        font-size: clamp(13px, 1.4vw, 16px);
+      }
+      .wdwd-door small {
+        display: block;
+        margin-bottom: 4px;
+        color: var(--door-label);
+        font-weight: 700;
+        font-size: 11px;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+      }
+      .wdwd-door-label {
+        display: block;
+      }
+      /* the two "act now" doors (incident, standards) stand out in blue */
+      .wdwd-door[data-tone="blue"] {
+        background: var(--blue-bg);
+        border-color: var(--blue-border);
+        box-shadow: inset 0 0 0 1px var(--blue-border);
+      }
+      .wdwd-door[data-tone="blue"] small {
+        color: var(--blue-label);
+      }
+      .wdwd-props {
+        list-style: none;
+        display: grid;
+        gap: 4px;
+        margin-top: 10px;
+        font-weight: 400;
+        font-size: 12px;
+        line-height: 1.35;
+        color: var(--door-label);
+      }
+      .wdwd-props li {
+        position: relative;
+        padding-left: 12px;
+      }
+      .wdwd-props li::before {
+        content: "›";
+        position: absolute;
+        left: 0;
+      }
+      .wdwd-door:hover .wdwd-props,
+      .wdwd-door:focus-visible .wdwd-props {
+        color: var(--door-hover-label);
+      }
+      .wdwd-door:hover,
+      .wdwd-door:focus-visible {
+        background: var(--door-hover-bg);
+        border-color: var(--door-hover-bg);
+        box-shadow: none;
+        color: var(--door-hover-fg);
+      }
+      .wdwd-door:hover small,
+      .wdwd-door:focus-visible small {
+        color: var(--door-hover-label);
+      }
+
+      .wdwd-path {
+        border-top: 1px solid var(--wdwd-line);
+      }
+      .wdwd-path-head {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        gap: 16px;
+        margin-bottom: 24px;
+      }
+      .wdwd-path-head h2 {
+        font-family: "Nunito", system-ui, sans-serif;
+        font-weight: 900;
+        font-size: clamp(20px, 2.4vw, 28px);
+      }
+      .wdwd-again {
+        font-size: 13px;
+        color: var(--wdwd-label);
+      }
+      /* each slide sits in a framed box, same colours as its door on the chooser */
+      .wdwd-slide {
+        margin-bottom: 28px;
+        padding: clamp(20px, 3.2vw, 36px);
+        border: 1px solid var(--door-border);
+        border-radius: var(--door-radius);
+        background: var(--door-bg);
+        backdrop-filter: blur(28px) saturate(150%);
+        -webkit-backdrop-filter: blur(28px) saturate(150%);
+        color: var(--door-text);
+        text-shadow: none;
+      }
+      .wdwd-slide .wdwd-k {
+        color: var(--door-label);
+      }
+      .wdwd-slide .wdwd-body,
+      .wdwd-slide .wdwd-extra p:last-child {
+        color: var(--door-body);
+      }
+      .wdwd-slide .wdwd-note {
+        color: var(--door-label);
+      }
+      .wdwd-path[data-tone="blue"] .wdwd-slide {
+        background: var(--blue-bg);
+        border-color: var(--blue-border);
+        box-shadow: inset 0 0 0 1px var(--blue-border);
+      }
+      .wdwd-path[data-tone="blue"] .wdwd-slide .wdwd-k,
+      .wdwd-path[data-tone="blue"] .wdwd-slide .wdwd-note {
+        color: var(--blue-label);
+      }
+      .wdwd-path[data-tone="blue"] .wdwd-slide .wdwd-body,
+      .wdwd-path[data-tone="blue"] .wdwd-slide .wdwd-extra p:last-child {
+        color: var(--blue-body);
+      }
+      .wdwd-slide .wdwd-h {
+        font-size: clamp(26px, 4.4vw, 52px);
+        margin: 10px 0 16px;
+      }
+      .wdwd-body {
+        font-size: clamp(15px, 1.7vw, 20px);
+        max-width: 44ch;
+        color: var(--wdwd-body);
+      }
+      .wdwd-extra {
+        margin-top: 16px;
+        max-width: 52ch;
+      }
+      .wdwd-extra p:last-child {
+        margin-top: 2px;
+        font-size: 15px;
+        color: var(--wdwd-body);
+      }
+      .wdwd-note {
+        margin-top: 18px;
+        max-width: 52ch;
+        font-size: 13px;
+        color: var(--wdwd-label);
+      }
+      .wdwd-links {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+      .wdwd-btn {
+        display: inline-block;
+        margin-top: 22px;
+        padding: 12px 18px;
+        border: 1px solid var(--wdwd-green);
+        border-radius: 6px;
+        background: var(--wdwd-green);
+        color: #fff;
+        font-weight: 600;
+        text-decoration: none;
+      }
+      .wdwd-btn:hover {
+        background: #1f4d38;
+        border-color: #1f4d38;
+      }
+
+      /* deck layout: only when the script has enhanced the page */
+      .wdwd-js .wdwd-stage {
+        display: grid;
+        min-height: clamp(480px, 56vw, 640px);
+        padding-bottom: 56px;
+      }
+      .wdwd-js .wdwd-chooser,
+      .wdwd-js .wdwd-path {
+        grid-area: 1 / 1;
+        align-self: center;
+        border-top: 0;
+        opacity: 0;
+        visibility: hidden;
+        transition:
+          opacity 0.45s,
+          visibility 0s 0.45s;
+      }
+      .wdwd-js .wdwd-chooser {
+        transform: translateX(40px);
+        transition:
+          opacity 0.45s,
+          transform 0.45s,
+          visibility 0s 0.45s;
+      }
+      .wdwd-js .wdwd-path {
+        display: grid;
+      }
+      .wdwd-js .wdwd-path-head {
+        grid-area: 1 / 1;
+        height: 0;
+        margin: 0;
+      }
+      .wdwd-js .wdwd-path-head > :not(.wdwd-again) {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+        clip: rect(0 0 0 0);
+        white-space: nowrap;
+      }
+      .wdwd-js .wdwd-again {
+        position: absolute;
+        top: 14px;
+        right: 16px;
+      }
+      .wdwd-js .wdwd-slide {
+        grid-area: 1 / 1;
+        margin: 0;
+        opacity: 0;
+        visibility: hidden;
+        transform: translateX(40px);
+        transition:
+          opacity 0.45s,
+          transform 0.45s,
+          visibility 0s 0.45s;
+      }
+      .wdwd-js .wdwd-chooser.is-active,
+      .wdwd-js .wdwd-path.is-active,
+      .wdwd-js .wdwd-slide.is-active {
+        opacity: 1;
+        visibility: visible;
+        transform: none;
+        transition:
+          opacity 0.45s,
+          transform 0.45s,
+          visibility 0s;
+      }
+      /* only the open section sets the card's height: the chooser is the tallest
+         section on phones and must not stretch every path to its size */
+      .wdwd-js .wdwd-chooser:not(.is-active),
+      .wdwd-js .wdwd-path:not(.is-active) {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+      }
+      .wdwd-nav {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 14px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 14px;
+      }
+      .wdwd-nav button {
+        border: 0;
+        background: none;
+        font-size: 22px;
+        padding: 4px 12px;
+        color: var(--wdwd-text);
+        cursor: pointer;
+      }
+      .wdwd-nav button:disabled {
+        opacity: 0.3;
+        cursor: default;
+      }
+      .wdwd-dots {
+        display: flex;
+        gap: 8px;
+      }
+      .wdwd-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: var(--wdwd-dot);
+      }
+      .wdwd-dot.is-on {
+        background: var(--wdwd-accent);
+      }
+
+      .wdwd-foot {
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 8px 16px 32px;
+        text-align: center;
+        font-size: 13px;
+      }
+      .wdwd-foot a {
+        margin: 0 10px;
+        color: var(--wdwd-label);
+        text-shadow: var(--wdwd-shadow);
+      }
+
+      /* ≤860px: like /security and the homepage, the browser frame is dropped for the
+         blurred wallpaper + a phone status bar */
+      .m-statusbar,
+      .m-bg,
+      .m-scrim {
+        display: none;
+      }
+      @media (max-width: 860px) {
+        .wdwd-chooser .wdwd-acc {
+          display: block;
+        }
+        .browser-titlebar,
+        .browser-navbar {
+          display: none;
+        }
+        .browser-window {
+          min-height: 0;
+        }
+        body {
+          background: #2a4a72;
+        }
+        .m-statusbar,
+        .m-bg,
+        .m-scrim {
+          display: block;
+        }
+        .m-statusbar {
+          position: sticky;
+          top: 0;
+          z-index: 30;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          height: 30px;
+          padding: 0 16px;
+          color: #fff;
+          font-family: "Helvetica Neue", Arial, sans-serif;
+          text-shadow: 0 1px 4px rgba(0, 0, 0, 0.35);
+        }
+        .m-statusbar-brand {
+          font-size: 0.72rem;
+          font-weight: 800;
+        }
+        .m-statusbar-icons {
+          display: flex;
+          align-items: center;
+          gap: 6px;
+        }
+        .m-statusbar-icons svg {
+          display: block;
+        }
+        .m-bg {
+          position: fixed;
+          inset: -40px;
+          z-index: -2;
+          background: url("/images/wallpaper-beach-blur.webp") center 55% /
+            cover no-repeat;
+          filter: blur(30px) saturate(1.15) brightness(0.92);
+          transform: scale(1.08);
+        }
+        .m-scrim {
+          position: fixed;
+          inset: 0;
+          z-index: -1;
+          background: rgba(20, 18, 14, 0.22);
+        }
+      }
+
+      @media (max-width: 700px) {
+        .wdwd-doors {
+          grid-template-columns: 1fr 1fr;
+        }
+        .wdwd-chooser,
+        .wdwd-path {
+          padding: 40px 6%;
+        }
+        /* phones: the card fills the visible screen (100svh minus the page
+                       margins and the footer links) so a slide never needs scrolling, and
+                       the type grows with the screen to use that space */
+        .wdwd-js .wdwd-stage {
+          min-height: calc(100vh - 128px);
+          min-height: calc(100svh - 128px);
+        }
+        /* short slides sit in the middle of the card instead of hugging the top */
+        .wdwd-js .wdwd-slide {
+          align-self: center;
+        }
+        .wdwd-slide .wdwd-h {
+          font-size: clamp(24px, 8.8vw, 40px);
+          font-size: clamp(24px, min(8.8vw, 4.6svh), 40px);
+        }
+        .wdwd-body {
+          font-size: clamp(16px, 5vw, 22px);
+          font-size: clamp(16px, min(5vw, 2.7svh), 22px);
+        }
+        .wdwd-extra p:last-child {
+          font-size: clamp(15px, 4.7vw, 19px);
+          font-size: clamp(15px, min(4.7vw, 2.5svh), 19px);
+        }
+        .wdwd-k {
+          font-size: 13px;
+        }
+        .wdwd-note {
+          font-size: 14px;
+        }
+        .wdwd-again {
+          font-size: 14px;
+        }
+        .wdwd-btn {
+          padding: 14px 20px;
+          font-size: 16px;
+        }
+      }
+      /* phones: the small labels get a pill border, and the text parts get more air */
+      @media (max-width: 860px) {
+        .wdwd-door small,
+        .wdwd-slide .wdwd-k {
+          display: inline-block;
+          padding: 4px 11px;
+          border: 1px solid currentColor;
+          border: 1px solid color-mix(in srgb, currentColor 55%, transparent);
+          border-radius: 999px;
+          line-height: 1.3;
+        }
+        .wdwd-door small {
+          margin-bottom: 10px;
+        }
+        .wdwd-props {
+          margin-top: 14px;
+        }
+        .wdwd-path {
+          padding-top: 14px;
+          padding-bottom: 14px;
+        }
+        .wdwd-slide {
+          padding: 18px 20px 22px;
+        }
+        .wdwd-slide .wdwd-k {
+          margin-bottom: 10px;
+        }
+        .wdwd-slide .wdwd-h {
+          margin: 0 0 16px;
+        }
+        .wdwd-slide .wdwd-extra {
+          margin-top: 18px;
+        }
+        .wdwd-slide .wdwd-extra .wdwd-k {
+          margin-bottom: 8px;
+        }
+        .wdwd-slide .wdwd-note {
+          margin-top: 18px;
+        }
+        .wdwd-slide .wdwd-btn {
+          margin-top: 22px;
+        }
+      }
+      /* short phones: the status bar takes 30px, so the cards give some back */
+      @media (max-width: 700px) and (max-height: 700px) {
+        .wdwd-chooser,
+        .wdwd-path {
+          padding-top: 18px;
+          padding-bottom: 18px;
+        }
+        .wdwd-path {
+          padding-top: 8px;
+          padding-bottom: 8px;
+        }
+        .wdwd-slide {
+          padding: 12px 16px 14px;
+        }
+        .wdwd-slide .wdwd-k {
+          padding: 2px 9px;
+          margin-bottom: 6px;
+          font-size: 11px;
+          letter-spacing: 0.06em;
+        }
+        /* room for the "Change my answer" link above the card */
+        .wdwd-js .wdwd-stage {
+          padding-top: 22px;
+        }
+        .wdwd-slide .wdwd-h {
+          margin-bottom: 10px;
+        }
+        .wdwd-slide .wdwd-extra {
+          margin-top: 12px;
+        }
+        .wdwd-slide .wdwd-note {
+          margin-top: 12px;
+        }
+        .wdwd-slide .wdwd-btn {
+          margin-top: 16px;
+        }
+      }
+      @media (max-width: 480px) {
+        .wdwd-doors {
+          grid-template-columns: 1fr;
+        }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .wdwd-js .wdwd-chooser,
+        .wdwd-js .wdwd-path,
+        .wdwd-js .wdwd-slide {
+          transition: none !important;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="m-statusbar">
+      <div class="m-statusbar-brand">SecureLayer</div>
+      <div class="m-statusbar-icons">
+        <svg width="16" height="11" viewBox="0 0 16 11" fill="#fff">
+          <rect x="0" y="7" width="3" height="4" rx=".5"></rect>
+          <rect x="4.5" y="5" width="3" height="6" rx=".5"></rect>
+          <rect x="9" y="3" width="3" height="8" rx=".5"></rect>
+          <rect x="13" y="0" width="3" height="11" rx=".5"></rect>
+        </svg>
+        <svg
+          width="15"
+          height="13"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="#fff"
+          stroke-width="2.2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path d="M5 12.55a11 11 0 0 1 14.08 0"></path>
+          <path d="M1.42 9a16 16 0 0 1 21.16 0"></path>
+          <path d="M8.53 16.11a6 6 0 0 1 6.95 0"></path>
+          <line x1="12" y1="20" x2="12.01" y2="20"></line>
+        </svg>
+        <svg width="22" height="11" viewBox="0 0 24 12" fill="none">
+          <rect
+            x="1"
+            y="1.5"
+            width="19"
+            height="9"
+            rx="2.5"
+            stroke="#fff"
+            stroke-width="1.2"
+          ></rect>
+          <rect
+            x="21.5"
+            y="4.3"
+            width="2"
+            height="3.4"
+            rx="1"
+            fill="#fff"
+          ></rect>
+          <rect x="2.5" y="3" width="14" height="6" rx="1.2" fill="#fff"></rect>
+        </svg>
+      </div>
+    </div>
+    <div class="m-bg" aria-hidden="true"></div>
+    <div class="m-scrim" aria-hidden="true"></div>
+    <div class="browser-window">
+      <div class="browser-titlebar" aria-hidden="true">
+        <div class="traffic-lights">
+          <span class="tl red"></span>
+          <span class="tl yellow"></span>
+          <span class="tl green"></span>
+        </div>
+        <div class="browser-tab">
+          <img class="tab-favicon" src="/favicon.svg" alt="" />
+          <span class="tab-title">Why us — securelayer.co</span>
+          <span class="tab-close">&times;</span>
+        </div>
+        <span class="tab-add">+</span>
+        <span class="tab-chevron">&#9660;</span>
+      </div>
+      <div class="browser-navbar" aria-hidden="true">
+        <span class="nav-icon nav-back">
+          <svg viewBox="0 0 24 24" fill="none">
+            <path
+              d="M15 6l-6 6 6 6"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            ></path>
+          </svg>
+        </span>
+        <span class="nav-icon nav-forward disabled">
+          <svg viewBox="0 0 24 24" fill="none">
+            <path
+              d="M9 6l6 6-6 6"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            ></path>
+          </svg>
+        </span>
+        <span class="nav-icon nav-reload">
+          <svg viewBox="0 0 24 24" fill="none">
+            <path
+              d="M4 12a8 8 0 0 1 14-5.3M20 12a8 8 0 0 1-14 5.3M4 4v5h5M20 20v-5h-5"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            ></path>
+          </svg>
+        </span>
+        <span class="nav-icon nav-bookmark">
+          <svg viewBox="0 0 24 24" fill="none">
+            <path
+              d="M6 3h12a1 1 0 0 1 1 1v17l-7-4-7 4V4a1 1 0 0 1 1-1Z"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linejoin="round"
+            ></path>
+          </svg>
+        </span>
+        <div class="address-pill">
+          <svg viewBox="0 0 24 24" fill="none">
+            <path
+              d="M4 6h16M7 12h10M10 18h4"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+            ></path>
+          </svg>
+          <span class="addr-text">
+            securelayer.co<span class="addr-path">/why-us/</span>
+          </span>
+        </div>
+        <span class="nav-divider"></span>
+        <img class="nav-brave" src="/images/dock-icons/brave.png" alt="Brave" />
+        <span class="nav-menu">
+          <svg viewBox="0 0 24 24" fill="none">
+            <path
+              d="M4 6h16M4 12h16M4 18h16"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+            ></path>
+          </svg>
+        </span>
+      </div>
+      <div class="browser-body">
+        <main class="wdwd" id="wdwd">
+          <h1 class="wdwd-sr">Why us — SecureLayer</h1>
+          <div class="wdwd-stage" id="wdwd-stage">
+            <section
+              class="wdwd-path"
+              id="why-us"
+              aria-labelledby="why-us-title"
+            >
+              <header class="wdwd-path-head">
+                <p class="wdwd-k">{data.tag}</p>
+                <h2 id="why-us-title">{data.label}</h2>
+              </header>
+              {data.slides.map((slide, i) => (
+                <article class="wdwd-slide" data-index={i}>
+                  <p class="wdwd-k">{slide.kicker}</p>
+                  <h3 class="wdwd-h" tabindex="-1">
+                    {slide.heading}
+                  </h3>
+                  <p class="wdwd-body">{slide.body}</p>
+                  {"links" in slide && (
+                    <p class="wdwd-links">
+                      {slide.links.map((link) => (
+                        <a
+                          class="wdwd-btn"
+                          href={link.href}
+                          target={"external" in link ? "_blank" : undefined}
+                          rel={
+                            "external" in link
+                              ? "noopener noreferrer"
+                              : undefined
+                          }
+                        >
+                          {link.label}
+                        </a>
+                      ))}
+                    </p>
+                  )}
+                  {i === data.slides.length - 1 && (
+                    <p>
+                      <a
+                        class="wdwd-btn wdwd-cta"
+                        href="https://cal.com/securelayer"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        Book a call — cal.com/securelayer
+                      </a>
+                    </p>
+                  )}
+                </article>
+              ))}
+            </section>
+          </div>
+        </main>
+        <footer class="wdwd-foot">
+          <nav aria-label="Site">
+            <a href="/">Home</a>
+            <a href="/security/">Security</a>
+            <a href="/sustainability/">Environment</a>
+            <a href="/legal/">Legal</a>
+            <a
+              href="https://github.com/SecureLayer/landing"
+              target="_blank"
+              rel="noopener"
+            >
+              Source
+            </a>
+          </nav>
+        </footer>
+      </div>
+    </div>
+  </body>
+</html>

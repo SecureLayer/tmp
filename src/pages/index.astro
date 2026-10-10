@@ -470,41 +470,25 @@ const logoMark = logoSource
 
           <div class="m-row2" style="--d:.2s">
             <a class="m-card-file" href="/what-we-do/">
-              <h3>What we do</h3>
+              <h3>What do you need from cyber?</h3>
               <p class="m-card-file-text">
-                What do you need from cyber? - As a investor, a ceo, an ai
-                specialist?
+                A review,
+                <br />a recommendation,
+                <br />a solution, a plan...?
               </p>
-              <svg class="m-folder-icon" viewBox="0 0 64 50" fill="none">
-                <defs>
-                  <linearGradient id="folderGrad" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0" stop-color="#6dd0fa"></stop>
-                    <stop offset="1" stop-color="#0a84ff"></stop>
-                  </linearGradient>
-                </defs>
-                <path
-                  d="M2 10c0-2.2 1.8-4 4-4h16l5 5h31c2.2 0 4 1.8 4 4v29c0 2.2-1.8 4-4 4H6c-2.2 0-4-1.8-4-4V10z"
-                  fill="url(#folderGrad)"
-                ></path>
-                <rect
-                  x="8"
-                  y="17"
-                  width="48"
-                  height="3.4"
-                  rx="1.7"
-                  fill="#fff"
-                  opacity=".85"
-                ></rect>
-              </svg>
+              <span class="m-icon-chip m-emoji-chip" aria-hidden="true">
+                🧩
+              </span>
             </a>
-            <a class="m-card-sec" href="/security">
-              <h3>Check our security</h3>
+            <a class="m-card-sec" href="/why-us/">
+              <h3>Why us?</h3>
               <p class="m-card-file-text">
-                Before we secure yours, see ours — our own security scores are
-                right there
+                Don't believe us,
+                <br />
+                check us
               </p>
-              <span class="m-icon-chip">
-                <img src="/images/dock-icons/brave.png" alt="" />
+              <span class="m-icon-chip m-emoji-chip" aria-hidden="true">
+                🤝
               </span>
             </a>
           </div>
@@ -550,20 +534,25 @@ const logoMark = logoSource
             </div>
           </a>
 
-          <div class="m-card m-card-icons-full" style="--d:.25s">
-            <h3>Check our environmental impact</h3>
-            <p class="m-card-social-note">
-              We are engaged to a more sustainable tech. Check&nbsp;how
-            </p>
-            <div class="m-icon-row">
-              <a
-                class="m-icon-chip"
-                href="/sustainability/"
-                aria-label="Check our environmental impact"
-              >
-                <img src="/images/dock-icons/firefox.png" alt="" />
-              </a>
-            </div>
+          <div class="m-row2" style="--d:.25s">
+            <a class="m-card-sec" href="/security">
+              <h3>Check our security</h3>
+              <p class="m-card-file-text">Before we secure yours, see ours</p>
+              <span class="m-icon-chip m-emoji-chip" aria-hidden="true">
+                🛡️
+              </span>
+            </a>
+            <a class="m-card-sec m-card-eco" href="/sustainability/">
+              <h3>Check our environmental impact</h3>
+              <p class="m-card-file-text">
+                Green by design:
+                <br />
+                static, no tracking
+              </p>
+              <span class="m-icon-chip m-emoji-chip" aria-hidden="true">
+                ♻️
+              </span>
+            </a>
           </div>
 
           <div class="m-card m-card-social" style="--d:.3s">
@@ -1692,7 +1681,7 @@ const logoMark = logoSource
     flex: 1;
     min-width: 0;
     box-sizing: border-box;
-    min-height: 158px;
+    min-height: 212px;
     padding: 18px 16px;
     display: flex;
     flex-direction: column;
@@ -1717,6 +1706,34 @@ const logoMark = logoSource
   .m-card-sec .m-icon-chip {
     margin-top: auto;
   }
+  /* with the chip at the bottom, a 3-line title + 3-line text must still fit the 212px tile */
+  .m-card-file .m-card-file-text,
+  .m-card-sec .m-card-file-text {
+    margin-bottom: 8px;
+  }
+  /* emoji chip (Why us?, environmental impact) */
+  .m-emoji-chip {
+    font-size: 1.7rem;
+    line-height: 1;
+    padding: 0;
+    margin-top: auto;
+  }
+  /* environmental tile: dark green glass, same recipe as the "Found a security issue?" card */
+  .m-card-sec.m-card-eco {
+    background: rgba(16, 66, 40, 0.74);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+  }
+  .m-card-sec.m-card-eco h3 {
+    color: #fff;
+  }
+  .m-card-sec.m-card-eco .m-card-file-text {
+    color: rgba(255, 255, 255, 0.78);
+  }
+  .m-card-sec.m-card-eco .m-emoji-chip {
+    background: rgba(255, 255, 255, 0.1);
+    box-shadow: none;
+  }
+
   .m-folder-icon {
     width: 60px;
     height: 46px;
@@ -1730,7 +1747,7 @@ const logoMark = logoSource
     flex: 1;
     min-width: 0;
     box-sizing: border-box;
-    min-height: 158px;
+    min-height: 212px;
     padding: 18px 16px;
     display: flex;
     flex-direction: column;

@@ -10,11 +10,15 @@
     try {
       var stage = document.getElementById("wdwd-stage");
       var chooser = document.getElementById("wdwd-chooser");
-      if (!stage || !chooser) throw new Error("deck markup missing");
+      if (!stage) throw new Error("deck markup missing");
       var paths = Array.prototype.slice.call(
         stage.querySelectorAll(".wdwd-path"),
       );
       if (paths.length === 0) throw new Error("no paths");
+      // a page with a single path and no chooser (e.g. /why-us/) opens that path directly
+      if (!chooser && paths.length !== 1)
+        throw new Error("deck markup missing");
+      var chooserOffset = chooser ? 1 : 0;
 
       var live = document.createElement("p");
       live.id = "wdwd-live";
@@ -67,7 +71,7 @@
 
       function render(moveFocus) {
         var path = state.door ? pathById(state.door) : null;
-        chooser.classList.toggle("is-active", !path);
+        if (chooser) chooser.classList.toggle("is-active", !path);
         paths.forEach(function (p) {
           p.classList.toggle("is-active", p === path);
         });
@@ -86,9 +90,9 @@
           if (i === state.index) s.classList.add("is-active");
         });
 
-        var total = slides.length + 1;
-        var position = path ? state.index + 1 : 0;
-        prev.disabled = !path;
+        var total = slides.length + chooserOffset;
+        var position = path ? state.index + chooserOffset : 0;
+        prev.disabled = !path || (!chooser && state.index === 0);
         next.disabled = !path || state.index >= slides.length - 1;
         while (dots.firstChild) dots.removeChild(dots.firstChild);
         for (var d = 0; d < total; d++) {
@@ -123,7 +127,7 @@
       function go(delta) {
         if (!state.door) return;
         if (delta < 0 && state.index === 0) {
-          location.hash = "wdwd-chooser";
+          if (chooser) location.hash = "wdwd-chooser";
           return;
         }
         var path = pathById(state.door);
@@ -133,7 +137,10 @@
       }
 
       function onHash(moveFocus) {
-        state = { door: doorFromHash(), index: 0 };
+        state = {
+          door: doorFromHash() || (chooser ? null : paths[0].id),
+          index: 0,
+        };
         render(moveFocus);
       }
 
